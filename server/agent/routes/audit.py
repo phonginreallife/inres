@@ -2,7 +2,7 @@
 Audit log routes for AI Agent API.
 Provides endpoints to query and export audit logs.
 
-Split from claude_agent_api_v1.py for better code organization.
+Split from claude_agent.py for better code organization.
 """
 
 import sys

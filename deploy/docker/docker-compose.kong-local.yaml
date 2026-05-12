@@ -1,0 +1,36 @@
+# Kong gateway only — upstreams are processes on the host (Docker Desktop / Linux host-gateway).
+#
+# Prereqs on host:
+#   - Next.js dev: http://127.0.0.1:3000
+#   - Go API:      http://127.0.0.1:8080
+#   - Python agent: http://127.0.0.1:8002
+#
+# Start from this directory:
+#   docker compose -f docker-compose.kong-local.yaml up -d
+#
+# Then open http://127.0.0.1:8000 (or set frontend env to use :8000 for API/AI/WS — see frontend/inres/sample.env.local).
+
+services:
+  kong:
+    container_name: inres-kong-local
+    image: kong:2.8.1
+    platform: linux/amd64
+    ports:
+      - "8000:8000/tcp"
+    volumes:
+      - ./volumes/api/kong.local-host.yaml:/home/kong/temp.yml:ro,z
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
+      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
+      KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+      KONG_DNS_STALE_TTL: "1"
+      KONG_DNS_NOT_FOUND_TTL: "1"
+      KONG_DNS_ERROR_TTL: "1"
+      KONG_DNS_NO_SYNC: "off"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    entrypoint: bash -c 'eval "echo \"$$(cat ~/temp.yml)\"" > ~/kong.yml && /docker-entrypoint.sh kong docker-start'

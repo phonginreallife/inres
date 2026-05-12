@@ -14,7 +14,9 @@ Endpoints:
 import json
 import logging
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any, Dict, List
 
 # Add parent directory to path for sibling imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -59,7 +61,8 @@ async def save_conversation(
     title: str = None,
     model: str = "sonnet",
     workspace_path: str = None,
-    metadata: dict = None
+    metadata: dict = None,
+    initial_message_count: int | None = None,
 ) -> bool:
     """
     Save conversation metadata to database.
@@ -72,6 +75,7 @@ async def save_conversation(
         model: Model used for conversation
         workspace_path: User's workspace path when conversation started
         metadata: Additional metadata (org_id, project_id, etc.)
+        initial_message_count: If set, written on INSERT (e.g. 0 for "New conversation" placeholder rows)
 
     Returns:
         True if saved successfully, False otherwise
@@ -81,33 +85,84 @@ async def save_conversation(
         if not title:
             title = first_message[:50] + "..." if len(first_message) > 50 else first_message
 
-        execute_query(
-            """
-            INSERT INTO claude_conversations
-            (conversation_id, user_id, title, first_message, model, workspace_path, metadata)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            ON CONFLICT (conversation_id) DO UPDATE SET
-                last_message_at = NOW(),
-                message_count = claude_conversations.message_count + 1,
-                updated_at = NOW()
-            """,
-            (
-                conversation_id,
-                user_id,
-                title,
-                first_message,
-                model,
-                workspace_path,
-                json.dumps(metadata or {}),
-            ),
-            fetch="none"
-        )
+        if initial_message_count is not None:
+            execute_query(
+                """
+                INSERT INTO claude_conversations
+                (conversation_id, user_id, title, first_message, model, workspace_path, metadata, message_count)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (conversation_id) DO UPDATE SET
+                    last_message_at = NOW(),
+                    message_count = claude_conversations.message_count + 1,
+                    updated_at = NOW()
+                """,
+                (
+                    conversation_id,
+                    user_id,
+                    title,
+                    first_message,
+                    model,
+                    workspace_path,
+                    json.dumps(metadata or {}),
+                    initial_message_count,
+                ),
+                fetch="none"
+            )
+        else:
+            execute_query(
+                """
+                INSERT INTO claude_conversations
+                (conversation_id, user_id, title, first_message, model, workspace_path, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (conversation_id) DO UPDATE SET
+                    last_message_at = NOW(),
+                    message_count = claude_conversations.message_count + 1,
+                    updated_at = NOW()
+                """,
+                (
+                    conversation_id,
+                    user_id,
+                    title,
+                    first_message,
+                    model,
+                    workspace_path,
+                    json.dumps(metadata or {}),
+                ),
+                fetch="none"
+            )
 
         logger.info(f"Saved conversation {conversation_id} for user {user_id}")
         return True
 
     except Exception as e:
         logger.error(f"Failed to save conversation: {e}", exc_info=True)
+        return False
+
+
+async def promote_placeholder_conversation_preview(conversation_id: str, prompt: str) -> bool:
+    """
+    When the user sends their first real message while the row still has a placeholder preview,
+    set first_message (sidebar preview) to the prompt. Title stays the time-stamped
+    "New chat · …" name so threads stay distinguishable (like ChatGPT/Claude web).
+    """
+    if not prompt or not prompt.strip():
+        return True
+    try:
+        p = prompt.strip()
+        preview = p[:800]
+        execute_query(
+            """
+            UPDATE claude_conversations
+            SET first_message = %s, updated_at = NOW()
+            WHERE conversation_id = %s
+              AND first_message IN ('New chat', 'New conversation', 'Start typing to continue.')
+            """,
+            (preview, conversation_id),
+            fetch="none",
+        )
+        return True
+    except Exception as e:
+        logger.error(f"Failed to promote conversation preview: {e}", exc_info=True)
         return False
 
 
@@ -206,6 +261,66 @@ def get_conversation_messages(conversation_id: str, limit: int = 100) -> list:
     except Exception as e:
         logger.error(f"Failed to get messages: {e}", exc_info=True)
         return []
+
+
+def generate_new_chat_display_fields() -> tuple[str, str]:
+    """
+    Default title + list preview for a brand-new thread (similar to ChatGPT / Claude web).
+    Title is time-stamped so each new chat is distinguishable before the first user message.
+    """
+    now = datetime.now(timezone.utc)
+    title = f"New chat · {now.strftime('%b %d, %I:%M %p')} UTC"
+    first_message = "Start typing to continue."
+    return title, first_message
+
+
+def verify_conversation_owner(conversation_id: str, user_id: str) -> bool:
+    """Return True if this conversation row belongs to the user."""
+    try:
+        row = execute_query(
+            """
+            SELECT 1 FROM claude_conversations
+            WHERE conversation_id = %s AND user_id = %s
+            LIMIT 1
+            """,
+            (conversation_id, user_id),
+            fetch="one",
+        )
+        return bool(row)
+    except Exception as e:
+        logger.error(f"verify_conversation_owner failed: {e}", exc_info=True)
+        return False
+
+
+def conversation_rows_to_agent_api_messages(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Map claude_messages rows to Anthropic-style {role, content} for MessageHistory."""
+    out: List[Dict[str, Any]] = []
+    for row in rows:
+        role = (row.get("role") or "").strip()
+        if role not in ("user", "assistant"):
+            continue
+        content = row.get("content")
+        if content is None:
+            content = ""
+        elif not isinstance(content, str):
+            content = str(content)
+        if not content.strip():
+            continue
+        out.append({"role": role, "content": content})
+    return out
+
+
+def load_agent_messages_for_resume(
+    conversation_id: str, user_id: str, limit: int = 200
+) -> List[Dict[str, Any]]:
+    """
+    Load stored messages for the agent in-memory history (resume).
+    Caller must verify ownership with verify_conversation_owner first.
+    """
+    if not conversation_id or not user_id:
+        return []
+    raw = get_conversation_messages(conversation_id, limit=limit)
+    return conversation_rows_to_agent_api_messages(raw)
 
 
 # ==========================================

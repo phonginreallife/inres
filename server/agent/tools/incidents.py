@@ -1,18 +1,18 @@
 """
-inres Incident Management Tools for Claude Agent SDK
+inres Incident Management Tools (Anthropic tool format + async handlers).
 
 Tools for fetching and managing incidents from the inres backend API.
 """
 
 import os
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, Awaitable, Callable, Dict, List, Optional
 
 import aiohttp
-from claude_agent_sdk import create_sdk_mcp_server, tool
+
+from tools.inres_api import get_inres_api_base_url
 
 # Configuration
-API_BASE_URL = os.getenv("inres_API_URL", "http://localhost:8080")
 # API_TOKEN_KEY should be set to Supabase Service Role key for system access
 API_TOKEN_KEY = os.getenv("inres_API_KEY", "")
 
@@ -163,7 +163,7 @@ async def _get_incidents_by_time_impl(args: dict[str, Any]) -> dict[str, Any]:
             headers["X-Project-ID"] = project_id
 
         async with aiohttp.ClientSession() as session:
-            url = f"{API_BASE_URL}/incidents"
+            url = f"{get_inres_api_base_url()}/incidents"
 
             async with session.get(url, params=params, headers=headers) as response:
                 if response.status == 200:
@@ -239,7 +239,7 @@ async def _get_incidents_by_time_impl(args: dict[str, Any]) -> dict[str, Any]:
             "content": [
                 {
                     "type": "text",
-                    "text": f"Error: Network error occurred: {str(e)}\nPlease check if the inres API is running at {API_BASE_URL}",
+                    "text": f"Error: Network error occurred: {str(e)}\nPlease check if the inres API is running at {get_inres_api_base_url()}",
                 }
             ],
             "isError": True,
@@ -294,7 +294,7 @@ async def _get_incident_by_id_impl(args: dict[str, Any]) -> dict[str, Any]:
             headers["X-Project-ID"] = project_id
 
         async with aiohttp.ClientSession() as session:
-            url = f"{API_BASE_URL}/incidents/{incident_id}"
+            url = f"{get_inres_api_base_url()}/incidents/{incident_id}"
 
             async with session.get(url, params=params, headers=headers) as response:
                 if response.status == 200:
@@ -428,7 +428,7 @@ async def _get_incident_stats_impl(args: dict[str, Any]) -> dict[str, Any]:
             headers["X-Project-ID"] = project_id
 
         async with aiohttp.ClientSession() as session:
-            url = f"{API_BASE_URL}/incidents/stats"
+            url = f"{get_inres_api_base_url()}/incidents/stats"
             params = {"time_range": time_range}
             if org_id:
                 params["org_id"] = org_id
@@ -490,46 +490,6 @@ async def _get_incident_stats_impl(args: dict[str, Any]) -> dict[str, Any]:
         }
 
 
-# Create tool wrappers for Claude Agent SDK
-@tool(
-    "get_incidents_by_time",
-    "Fetch incidents from inres within a specific time range. Use this to retrieve incidents that occurred between start_time and end_time.",
-    {
-        "start_time": str,  # ISO 8601 format: 2024-01-01T00:00:00Z
-        "end_time": str,  # ISO 8601 format: 2024-01-01T23:59:59Z
-        "status": str,  # Optional: "triggered", "acknowledged", "resolved", "all"
-        "limit": int,  # Optional: Max number of incidents to return (default: 50)
-    },
-)
-async def get_incidents_by_time(args: dict[str, Any]) -> dict[str, Any]:
-    """Wrapper for Claude Agent SDK"""
-    return await _get_incidents_by_time_impl(args)
-
-
-@tool(
-    "get_incident_by_id",
-    "Fetch detailed information about a specific incident by its ID",
-    {
-        "incident_id": str,  # The incident ID
-    },
-)
-async def get_incident_by_id(args: dict[str, Any]) -> dict[str, Any]:
-    """Wrapper for Claude Agent SDK"""
-    return await _get_incident_by_id_impl(args)
-
-
-@tool(
-    "get_incident_stats",
-    "Get statistics about incidents in the system",
-    {
-        "time_range": str,  # "24h", "7d", "30d", or "all"
-    },
-)
-async def get_incident_stats(args: dict[str, Any]) -> dict[str, Any]:
-    """Wrapper for Claude Agent SDK"""
-    return await _get_incident_stats_impl(args)
-
-
 async def _get_current_time_impl(args: dict[str, Any]) -> dict[str, Any]:
     """
     Get the current date and time in ISO 8601 format (UTC).
@@ -557,16 +517,6 @@ async def _get_current_time_impl(args: dict[str, Any]) -> dict[str, Any]:
     )
 
     return {"content": [{"type": "text", "text": result_text}]}
-
-
-@tool(
-    "get_current_time",
-    "Get the current date and time in ISO 8601 format (UTC). Use this to determine time ranges for querying incidents.",
-    {},
-)
-async def get_current_time(args: dict[str, Any]) -> dict[str, Any]:
-    """Wrapper for Claude Agent SDK"""
-    return await _get_current_time_impl(args)
 
 
 async def _search_incidents_impl(args: dict[str, Any]) -> dict[str, Any]:
@@ -635,7 +585,7 @@ async def _search_incidents_impl(args: dict[str, Any]) -> dict[str, Any]:
             params["severity"] = severity
 
         async with aiohttp.ClientSession() as session:
-            url = f"{API_BASE_URL}/incidents"
+            url = f"{get_inres_api_base_url()}/incidents"
 
             async with session.get(url, params=params, headers=headers) as response:
                 if response.status == 200:
@@ -712,7 +662,7 @@ async def _search_incidents_impl(args: dict[str, Any]) -> dict[str, Any]:
             "content": [
                 {
                     "type": "text",
-                    "text": f"Error: Network error occurred: {str(e)}\nPlease check if the inres API is running at {API_BASE_URL}",
+                    "text": f"Error: Network error occurred: {str(e)}\nPlease check if the inres API is running at {get_inres_api_base_url()}",
                 }
             ],
             "isError": True,
@@ -730,51 +680,119 @@ async def _search_incidents_impl(args: dict[str, Any]) -> dict[str, Any]:
         }
 
 
-@tool(
-    "search_incidents",
-    "Search incidents using full-text search with semantic understanding. Use this to find incidents by keywords, phrases, or descriptions.",
+INCIDENT_TOOL_SCHEMAS: List[Dict[str, Any]] = [
     {
-        "query": str,  # Search query (e.g., "CPU high", "database connection")
-        "status": str,  # Optional: "triggered", "acknowledged", "resolved", "all"
-        "severity": str,  # Optional: "critical", "error", "warning", "info"
-        "limit": int,  # Optional: Max number of results (default: 20)
+        "name": "get_incidents_by_time",
+        "description": (
+            "Fetch incidents from inres within a specific time range. Use this to retrieve "
+            "incidents that occurred between start_time and end_time."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "start_time": {
+                    "type": "string",
+                    "description": "ISO 8601 start time, e.g. 2024-01-01T00:00:00Z",
+                },
+                "end_time": {
+                    "type": "string",
+                    "description": "ISO 8601 end time, e.g. 2024-01-01T23:59:59Z",
+                },
+                "status": {
+                    "type": "string",
+                    "description": 'Optional: "triggered", "acknowledged", "resolved", or "all"',
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Max incidents to return (default 50, max 1000)",
+                },
+            },
+            "required": ["start_time", "end_time"],
+        },
     },
-)
-async def search_incidents(args: dict[str, Any]) -> dict[str, Any]:
-    """Wrapper for Claude Agent SDK"""
-    return await _search_incidents_impl(args)
-
-
-# Export all tools as a list for easy registration
-INCIDENT_TOOLS = [
-    get_incidents_by_time,
-    get_incident_by_id,
-    get_incident_stats,
-    get_current_time,
-    search_incidents,
+    {
+        "name": "get_incident_by_id",
+        "description": "Fetch detailed information about a specific incident by its ID.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "incident_id": {"type": "string", "description": "The incident UUID or id"},
+            },
+            "required": ["incident_id"],
+        },
+    },
+    {
+        "name": "get_incident_stats",
+        "description": "Get statistics about incidents in the system.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "time_range": {
+                    "type": "string",
+                    "description": 'One of: "24h", "7d", "30d", "all"',
+                },
+            },
+        },
+    },
+    {
+        "name": "get_current_time",
+        "description": (
+            "Get the current date and time in ISO 8601 format (UTC). Use this to determine "
+            "time ranges for querying incidents."
+        ),
+        "input_schema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "search_incidents",
+        "description": (
+            "Search incidents using full-text search. Use this to find incidents by keywords, "
+            "phrases, or descriptions."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "Search query"},
+                "status": {
+                    "type": "string",
+                    "description": 'Optional: "triggered", "acknowledged", "resolved", "all"',
+                },
+                "severity": {
+                    "type": "string",
+                    "description": 'Optional: "critical", "error", "warning", "info"',
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Max results (default 20, max 100)",
+                },
+            },
+            "required": ["query"],
+        },
+    },
 ]
 
-
-# Create MCP server for incident tools
-def create_incident_tools_server():
-    """
-    Create and return an MCP server with incident management tools.
-
-    This centralizes tool management - when you add new tools to INCIDENT_TOOLS,
-    they will automatically be included in the MCP server.
-
-    Returns:
-        MCP server instance configured with all incident tools
-    """
-    return create_sdk_mcp_server(
-        name="incident_tools", version="1.0.0", tools=INCIDENT_TOOLS
-    )
+INCIDENT_TOOL_HANDLERS: Dict[str, Callable[[Dict[str, Any]], Awaitable[Dict[str, Any]]]] = {
+    "get_incidents_by_time": _get_incidents_by_time_impl,
+    "get_incident_by_id": _get_incident_by_id_impl,
+    "get_incident_stats": _get_incident_stats_impl,
+    "get_current_time": _get_current_time_impl,
+    "search_incidents": _search_incidents_impl,
+}
 
 
-# Export implementation functions for direct testing
+def filter_tool_schemas_by_name(
+    schemas: List[Dict[str, Any]], allowed_names: Optional[List[str]]
+) -> List[Dict[str, Any]]:
+    """If allowed_names is set, return only schemas whose name is in the list."""
+    if not allowed_names:
+        return list(schemas)
+    allowed = set(allowed_names)
+    return [s for s in schemas if s.get("name") in allowed]
+
+
 __all__ = [
-    "INCIDENT_TOOLS",
-    "create_incident_tools_server",
+    "INCIDENT_TOOL_SCHEMAS",
+    "INCIDENT_TOOL_HANDLERS",
+    "filter_tool_schemas_by_name",
     "_get_incidents_by_time_impl",
     "_get_incident_by_id_impl",
     "_get_incident_stats_impl",
@@ -786,6 +804,4 @@ __all__ = [
     "get_org_id",
     "set_project_id",
     "get_project_id",
-    "get_current_time",
-    "search_incidents",
 ]

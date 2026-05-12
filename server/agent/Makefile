@@ -75,6 +75,7 @@ stop-prod:
 dev:
 	@echo "Starting development server..."
 	@echo "Make sure ANTHROPIC_API_KEY is set!"
+	@test -n "$$SUPABASE_URL" || export SUPABASE_URL=http://127.0.0.1:54321; \
 	uvicorn main:app --host 0.0.0.0 --port 8002 --reload --log-level debug
 
 # Start with Docker Compose (development)

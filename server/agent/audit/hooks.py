@@ -176,30 +176,23 @@ def create_audit_hooks(user_id: str, session_id: str, org_id: Optional[str] = No
 
         return {}
 
-    # Return hook configuration
-    # Note: We use HookMatcher from claude_agent_sdk
+    # Return hook callables for application-level instrumentation (no Claude SDK HookMatcher).
     return {
-        'pre_tool_use': pre_tool_use_hook,
-        'post_tool_use': post_tool_use_hook,
-        'user_prompt_submit': user_prompt_submit_hook,
-        'stop': stop_hook,
+        "pre_tool_use": pre_tool_use_hook,
+        "post_tool_use": post_tool_use_hook,
+        "user_prompt_submit": user_prompt_submit_hook,
+        "stop": stop_hook,
     }
 
 
-def build_hooks_config(user_id: str, session_id: str, org_id: Optional[str] = None, project_id: Optional[str] = None):
+def build_hooks_config(
+    user_id: str, session_id: str, org_id: Optional[str] = None, project_id: Optional[str] = None
+):
     """
-    Build hooks configuration dict for ClaudeAgentOptions.
+    Build hooks configuration dict (plain callables) for audit logging.
 
-    Usage:
-        from audit_hooks import build_hooks_config
-        from claude_agent_sdk import ClaudeAgentOptions, HookMatcher
-
-        hooks_config = build_hooks_config(user_id, session_id, org_id, project_id)
-
-        options = ClaudeAgentOptions(
-            ...
-            hooks=hooks_config,
-        )
+    Previously wrapped hooks for ``ClaudeAgentOptions``; the agent now uses Anthropic
+    directly, so callers should invoke these hooks from the application layer if needed.
 
     Args:
         user_id: User ID for audit logging
@@ -208,18 +201,9 @@ def build_hooks_config(user_id: str, session_id: str, org_id: Optional[str] = No
         project_id: Project ID (optional)
 
     Returns:
-        Dict ready to use in ClaudeAgentOptions(hooks=...)
+        Dict of hook name -> async callable, same shape as ``create_audit_hooks``.
     """
-    from claude_agent_sdk import HookMatcher
-
-    hooks = create_audit_hooks(user_id, session_id, org_id, project_id)
-
-    return {
-        'PreToolUse': [HookMatcher(hooks=[hooks['pre_tool_use']])],
-        'PostToolUse': [HookMatcher(hooks=[hooks['post_tool_use']])],
-        'UserPromptSubmit': [HookMatcher(hooks=[hooks['user_prompt_submit']])],
-        'Stop': [HookMatcher(hooks=[hooks['stop']])],
-    }
+    return create_audit_hooks(user_id, session_id, org_id, project_id)
 
 
 # Cleanup function for long-running sessions

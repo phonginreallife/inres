@@ -45,6 +45,10 @@ from .conversations import (
     save_conversation,
     save_message,
     update_conversation_activity,
+    promote_placeholder_conversation_preview,
+    generate_new_chat_display_fields,
+    verify_conversation_owner,
+    load_agent_messages_for_resume,
 )
 
 __all__ = [
@@ -61,4 +65,8 @@ __all__ = [
     "save_conversation",
     "save_message",
     "update_conversation_activity",
+    "promote_placeholder_conversation_preview",
+    "generate_new_chat_display_fields",
+    "verify_conversation_owner",
+    "load_agent_messages_for_resume",
 ]

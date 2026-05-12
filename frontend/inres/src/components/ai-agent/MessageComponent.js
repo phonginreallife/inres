@@ -121,10 +121,17 @@ const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlwa
 
   // Memoize tool result summary
   const toolResultData = useMemo(() => {
-    if ((message.type === 'tool_result' || message.type === 'ToolCallExecutionEvent') && message.content) {
-      return summarizeToolResult(message.content);
+    if (message.type !== 'tool_result' && message.type !== 'ToolCallExecutionEvent') {
+      return null;
     }
-    return null;
+    const raw = message.content;
+    const str =
+      raw === undefined || raw === null
+        ? ''
+        : typeof raw === 'string'
+          ? raw
+          : JSON.stringify(raw, null, 2);
+    return summarizeToolResult(str);
   }, [message.type, message.content]);
 
   const markdownComponents = useMemo(() => ({
@@ -283,7 +290,11 @@ const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlwa
 
     // Tool result message with summary/expand
     if (message.type === 'tool_result' && toolResultData) {
-      const displayContent = isToolResultExpanded ? toolResultData.full : toolResultData.summary;
+      const rawDisplay = isToolResultExpanded ? toolResultData.full : toolResultData.summary;
+      const displayContent =
+        rawDisplay !== undefined && rawDisplay !== null && String(rawDisplay).trim() !== ''
+          ? rawDisplay
+          : '_(No text returned from the tool.)_';
 
       // Check if content looks like plain text output (not JSON/markdown)
       const isPlainTextOutput = !displayContent.startsWith('{') &&

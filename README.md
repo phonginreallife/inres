@@ -174,7 +174,7 @@ air  # Hot reload on http://localhost:8080
 cd api/ai
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-python claude_agent_api_v1.py  # http://localhost:8002
+python claude_agent.py  # http://localhost:8002
 ```
 
 ### Frontend (Next.js)

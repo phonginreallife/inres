@@ -110,6 +110,8 @@ func NewGinRouter(pg *sql.DB, redis *redis.Client) *gin.Engine {
 	orgHandler := handlers.NewOrgHandler(orgService)                                                                // Organization management
 	projectHandler := handlers.NewProjectHandler(projectService)                                                    // Project management
 	conversationShareHandler := handlers.NewConversationShareHandler(pg)                                            // Conversation sharing
+	releaseService := services.NewReleaseService(pg)                                                                // Release management
+	releaseHandler := handlers.NewReleaseHandler(releaseService)                                                    // Release handler
 
 	// Initialize monitor handlers
 	monitorHandler := monitor.NewMonitorHandler(pg)
@@ -601,6 +603,19 @@ func NewGinRouter(pg *sql.DB, redis *redis.Client) *gin.Engine {
 			agentRoutes.DELETE("/device-cert/:cert_id", agentHandler.RevokeDeviceCertificate)
 			agentRoutes.GET("/device-certs", agentHandler.ListDeviceCertificates)
 			agentRoutes.GET("/config", agentHandler.GetAgentConfig)
+		}
+
+		// RELEASE MANAGEMENT
+		releaseRoutes := protected.Group("/releases")
+		{
+			releaseRoutes.POST("", releaseHandler.CreateRelease)
+			releaseRoutes.GET("", releaseHandler.ListReleases)
+			releaseRoutes.GET("/:id", releaseHandler.GetRelease)
+			releaseRoutes.PATCH("/:id", releaseHandler.UpdateRelease)
+			releaseRoutes.GET("/:id/status", releaseHandler.GetReleaseStatus)
+			releaseRoutes.POST("/:id/cancel", releaseHandler.CancelRelease)
+			releaseRoutes.PATCH("/:id/steps/:step_type", releaseHandler.UpdateStep)
+			releaseRoutes.POST("/:id/steps/:step_id/approve", releaseHandler.ApproveStep)
 		}
 
 		// CONVERSATION SHARING

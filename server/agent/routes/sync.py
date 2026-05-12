@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from fastapi import APIRouter, Request
+from fastapi.responses import JSONResponse
 from services.storage import (
     extract_user_id_from_token,
     get_user_mcp_servers,
@@ -84,23 +85,28 @@ async def sync_workspace(request: Request):
 
         if not auth_token:
             logger.warning("No auth token provided for workspace sync")
-            return {
-                "success": False,
-                "message": "No auth token provided",
-            }
+            return JSONResponse(
+                status_code=200,
+                content={"success": False, "message": "No auth token provided"},
+            )
 
         user_id = extract_user_id_from_token(auth_token)
         if not user_id:
-            return {"success": False, "message": "Invalid auth token"}
+            return JSONResponse(
+                status_code=200,
+                content={"success": False, "message": "Invalid auth token"},
+            )
 
         logger.info(f"Starting workspace sync for user: {user_id}")
 
         # Step 1: Sync memory (CLAUDE.md) from PostgreSQL to workspace
         memory_result = await sync_memory_to_workspace(user_id)
-        if memory_result["success"]:
-            logger.info(f"Memory synced: {memory_result['message']}")
+        memory_ok = bool(memory_result.get("success"))
+        memory_msg = memory_result.get("message", "")
+        if memory_ok:
+            logger.info(f"Memory synced: {memory_msg}")
         else:
-            logger.warning(f"Memory sync failed: {memory_result['message']}")
+            logger.warning(f"Memory sync failed: {memory_msg}")
 
         # Step 2: Verify installed plugins exist (git-based approach)
         logger.info(f"Verifying installed plugins for user: {user_id}")
@@ -109,35 +115,45 @@ async def sync_workspace(request: Request):
         verified_count = verify_result.get("verified_count", 0)
         missing_plugins = verify_result.get("missing_plugins", [])
 
-        if verify_result["success"]:
+        if verify_result.get("success"):
             logger.info(f"Verified {verified_count} plugins")
 
             message = f"Verified {verified_count} plugins"
             if missing_plugins:
                 message += f" ({len(missing_plugins)} missing)"
 
-            return {
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "success": True,
+                    "message": message,
+                    "plugins_verified": verified_count,
+                    "missing_plugins": missing_plugins,
+                    "memory_synced": memory_ok,
+                },
+            )
+
+        verify_msg = verify_result.get("message", "unknown error")
+        logger.warning(f"Failed to verify plugins: {verify_msg}")
+        return JSONResponse(
+            status_code=200,
+            content={
                 "success": True,
-                "message": message,
-                "plugins_verified": verified_count,
-                "missing_plugins": missing_plugins,
-                "memory_synced": memory_result["success"],
-            }
-        else:
-            logger.warning(f"Failed to verify plugins: {verify_result['message']}")
-            return {
-                "success": True,  # Still success, just plugin verification issue
-                "message": f"Memory synced, but failed to verify plugins: {verify_result['message']}",
+                "message": f"Memory synced, but failed to verify plugins: {verify_msg}",
                 "plugins_verified": 0,
                 "missing_plugins": [],
-                "memory_synced": memory_result["success"],
-            }
+                "memory_synced": memory_ok,
+            },
+        )
 
     except Exception as e:
-        return {
-            "success": False,
-            "message": sanitize_error_message(e, "syncing workspace"),
-        }
+        return JSONResponse(
+            status_code=200,
+            content={
+                "success": False,
+                "message": sanitize_error_message(e, "syncing workspace"),
+            },
+        )
 
 
 @router.post("/sync-marketplaces")

@@ -227,7 +227,21 @@ def extract_user_id_from_token(auth_token: str) -> Optional[str]:
         logger.debug(f"Token algorithm: {alg}, kid: {kid}")
 
         # For ES256/RS256 (asymmetric), use JWKS public key verification
-        if alg in ["ES256", "RS256"] and kid and config.supabase_url:
+        if alg in ["ES256", "RS256"]:
+            if not kid:
+                logger.warning(
+                    "Cannot verify %s token: JWT header has no 'kid' (cannot match JWKS key).",
+                    alg,
+                )
+                return None
+            if not config.supabase_url:
+                logger.warning(
+                    "Cannot verify %s token: SUPABASE_URL is not set. "
+                    "Set it to your Supabase project URL so the agent can fetch "
+                    "<project>/auth/v1/.well-known/jwks.json. For legacy HS256 JWTs, set SUPABASE_JWT_SECRET instead.",
+                    alg,
+                )
+                return None
             decoded = _verify_with_jwks(token, alg, kid)
         # For HS256 (symmetric), use JWT secret
         elif alg == "HS256" and config.supabase_jwt_secret:
@@ -243,7 +257,10 @@ def extract_user_id_from_token(auth_token: str) -> Optional[str]:
                 }
             )
         else:
-            logger.warning(f"Cannot verify token: alg={alg}, has_secret={bool(config.supabase_jwt_secret)}, has_url={bool(config.supabase_url)}")
+            logger.warning(
+                "Cannot verify token: alg=%s. Use SUPABASE_URL for ES256/RS256 (JWKS) or SUPABASE_JWT_SECRET for HS256.",
+                alg,
+            )
             return None
 
         # Extract user ID from 'sub' claim
@@ -586,32 +603,19 @@ def load_user_plugins(user_id: str) -> List[Dict[str, str]]:
     Load user's installed plugins from PostgreSQL database.
 
     Queries the installed_plugins table for active plugins and
-    converts to format required by ClaudeAgentOptions.
+    returns plain dict configs (type/path) for local plugin directories.
 
     Args:
         user_id: User's UUID
 
     Returns:
-        List of plugin configs in format:
-        [
-            {"type": "local", "path": "/path/to/plugin1"},
-            {"type": "local", "path": "/path/to/plugin2"}
-        ]
-
-    Example:
-        plugins = load_user_plugins(user_id)
-        options = ClaudeAgentOptions(
-            plugins=plugins,
-            max_turns=3
-        )
+        List of plugin configs: [{"type": "local", "path": "relative/path"}, ...]
     """
-    from claude_agent_sdk import SdkPluginConfig
     if not user_id:
-        logger.debug(f"No user_id provided")
+        logger.debug("No user_id provided")
         return []
 
     try:
-        # Query installed plugins from PostgreSQL using raw SQL
         query = "SELECT * FROM installed_plugins WHERE user_id = %s AND status = 'active'"
         results = execute_query(query, (user_id,), fetch="all")
 
@@ -630,33 +634,31 @@ def load_user_plugins(user_id: str) -> List[Dict[str, str]]:
                 logger.warning(f"Plugin missing name or install_path, skipping: {plugin}")
                 continue
 
-            # Build absolute path from install_path
-            # install_path is relative to workspace root (e.g., ".claude/plugins/marketplaces/anthropics-skills/document-skills/xlsx")
-            # We use resolve() and is_relative_to() to satisfy security scans (CodeQL)
             try:
                 plugin_absolute_path = (workspace_path / install_path).resolve()
                 if not plugin_absolute_path.is_relative_to(workspace_path.resolve()):
-                    logger.warning(f"🚨 Potential path traversal detected in plugin path: {install_path}")
+                    logger.warning(
+                        f"🚨 Potential path traversal detected in plugin path: {install_path}"
+                    )
                     continue
             except Exception as e:
                 logger.warning(f"Error resolving plugin path {install_path}: {e}")
                 continue
 
-            # Check if plugin directory exists
             if not plugin_absolute_path.exists():
                 logger.warning(f"Plugin directory not found: {plugin_absolute_path}")
                 logger.debug(f"   Plugin: {plugin_name}, install_path: {install_path}")
                 continue
 
-            # Add plugin config using SdkPluginConfig
-            # Path should be relative to workspace (install_path), not absolute
-            plugin_config = SdkPluginConfig(
-                type="local",
-                path=str(install_path)
-            )
+            plugin_config = {
+                "type": "local",
+                "path": str(install_path),
+            }
             plugin_configs.append(plugin_config)
 
-            logger.debug(f"  Loaded plugin: {plugin_name} from {install_path} (path: {install_path})")
+            logger.debug(
+                f"  Loaded plugin: {plugin_name} from {install_path} (path: {install_path})"
+            )
 
         logger.info(f"📦 Loaded {len(plugin_configs)} plugins for user {user_id}")
         return plugin_configs

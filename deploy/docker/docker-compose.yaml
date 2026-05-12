@@ -53,6 +53,16 @@ services:
       - AGENT_MODE=sdk_hybrid
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - AI_RATE_LIMIT=${AI_RATE_LIMIT:-100}
+      # Release Management (optional)
+      - JIRA_BASE_URL=${JIRA_BASE_URL:-https://opswat.atlassian.net}
+      - JIRA_USER_EMAIL=${JIRA_USER_EMAIL:-}
+      - JIRA_API_TOKEN=${JIRA_API_TOKEN:-}
+      - CONFLUENCE_BASE_URL=${CONFLUENCE_BASE_URL:-https://opswat.atlassian.net/wiki}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - ARGOCD_SERVER_URL=${ARGOCD_SERVER_URL:-}
+      - ARGOCD_AUTH_TOKEN=${ARGOCD_AUTH_TOKEN:-}
+      - INFRA_REPO=${INFRA_REPO:-opswat-eng/mdaas-infrastructure-template-prod}
+      - RELEASE_WORKSPACE_DIR=/tmp/release-workspaces
     restart: unless-stopped
     networks:
       - inres-network
@@ -113,6 +123,8 @@ services:
     networks:
       - inres-network
 
+  # Full stack Kong (upstream: api, agent, web containers). For Kong + host-only processes, use
+  # docker-compose.kong-local.yaml and volumes/api/kong.local-host.yaml instead.
   kong:
     container_name: kong
     platform: linux/amd64

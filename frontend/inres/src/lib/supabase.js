@@ -11,18 +11,35 @@ const fetchConfig = async () => {
   if (configPromise) return configPromise;
 
   configPromise = (async () => {
+    // Prefer build-time public env (Next loads frontend/inres/.env.local).
+    // Avoids broken fallbacks when /api/env is unreachable or mis-proxied.
+    const fromEnv = {
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+      supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+      env: process.env.NODE_ENV || 'unknown',
+    };
+    if (fromEnv.supabaseUrl && fromEnv.supabaseAnonKey) {
+      return fromEnv;
+    }
+
     try {
       const data = await apiClient.getEnvConfig();
       return {
-        supabaseUrl: data.supabase_url || 'http://localhost:8000',
-        supabaseAnonKey: data.supabase_anon_key || '1234567890',
-        env: data.env || 'unknown',
+        supabaseUrl: data.supabase_url || fromEnv.supabaseUrl || '',
+        supabaseAnonKey: data.supabase_anon_key || fromEnv.supabaseAnonKey || '',
+        env: data.env || fromEnv.env,
       };
     } catch (err) {
       console.error('Failed to fetch config, using fallback:', err);
       return {
-        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:8000',
-        supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '1234567890',
+        supabaseUrl:
+          fromEnv.supabaseUrl ||
+          process.env.NEXT_PUBLIC_SUPABASE_URL ||
+          '',
+        supabaseAnonKey:
+          fromEnv.supabaseAnonKey ||
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+          '',
         env: 'error',
       };
     }
@@ -58,12 +75,24 @@ const getSupabaseClient = async () => {
       return supabaseInstance;
     }
 
+    if (!config.supabaseUrl || !config.supabaseAnonKey) {
+      throw new Error(
+        'Missing Supabase configuration. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in frontend/inres/.env.local, or ensure the Go API /env endpoint returns them (see next.config.mjs rewrites).'
+      );
+    }
+
+    const configSource =
+      process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        ? 'NEXT_PUBLIC_*'
+        : '/env';
+
     console.log('Creating Supabase client instance:', {
       url: config.supabaseUrl,
       hasAnonKey: !!config.supabaseAnonKey,
       anonKeyLength: config.supabaseAnonKey?.length,
       env: config.env,
-      source: '/api/env (unified config)'
+      source: configSource,
     });
 
     supabaseInstance = createClient(config.supabaseUrl, config.supabaseAnonKey, {

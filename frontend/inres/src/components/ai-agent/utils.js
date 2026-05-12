@@ -210,13 +210,10 @@ export const generatePermissionPattern = (toolName, toolInput) => {
       }
     }
 
-    // MCP tools
+    // MCP tools: store full Anthropic tool name so backend pattern matching works
     default: {
       if (toolName.startsWith('mcp__')) {
-        const parts = toolName.split('__');
-        const server = parts[1] || '';
-        const tool = parts[2] || '';
-        return `${server}:${tool}(*)`;
+        return `${toolName}(*)`;
       }
       return `${toolName}(*)`;
     }
