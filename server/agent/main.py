@@ -34,6 +34,6 @@ Usage:
     uvicorn main:app --host 0.0.0.0 --port 8002 --reload
 """
 
-from claude_agent_api_v1 import app
+from claude_agent import app
 
 __all__ = ["app"]

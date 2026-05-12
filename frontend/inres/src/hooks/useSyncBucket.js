@@ -54,7 +54,29 @@ export function useSyncBucket(authToken) {
         if (response.status === 401) {
           throw new Error('Session expired. Please login again.');
         }
-        throw new Error(`Server error: ${response.status}`);
+
+        let detail = '';
+        try {
+          const errBody = await response.json();
+          detail =
+            errBody?.message ||
+            errBody?.error ||
+            errBody?.detail ||
+            (typeof errBody === 'string' ? errBody : '');
+        } catch {
+          /* not JSON */
+        }
+
+        const gateway = [500, 502, 503, 504].includes(response.status);
+        const upstreamHint = gateway
+          ? ' The AI agent may be stopped or unreachable'
+          : '';
+
+        throw new Error(
+          detail
+            ? `Server error: ${response.status} — ${detail}`
+            : `Server error: ${response.status}${upstreamHint}`
+        );
       }
 
       const result = await response.json();
@@ -83,7 +105,13 @@ export function useSyncBucket(authToken) {
 
         return true;
       } else {
-        throw new Error(result.message || 'Sync failed');
+        const msg = result.message || 'Sync failed';
+        if (/invalid auth token/i.test(msg)) {
+          throw new Error(
+            `${msg} Sign out and sign in again, or confirm the agent’s SUPABASE_URL and SUPABASE_JWT_SECRET match this Supabase instance (reload the agent after env changes).`
+          );
+        }
+        throw new Error(msg);
       }
     } catch (error) {
       console.error('Sync error:', error);

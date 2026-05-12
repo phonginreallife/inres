@@ -18,7 +18,7 @@ import os
 import time
 import uuid
 from contextlib import asynccontextmanager
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 # Load config from YAML (unifies config with Go API)
 from config import loader as config_loader
@@ -38,6 +38,7 @@ from audit import (
 )
 from services import (
     extract_user_id_from_token,
+    get_user_allowed_tools,
     get_user_mcp_servers,
     start_pgmq_consumer,
     stop_pgmq_consumer,
@@ -56,15 +57,104 @@ from routes import (
     save_conversation,
     save_message,
     update_conversation_activity,
+    promote_placeholder_conversation_preview,
+    generate_new_chat_display_fields,
+    verify_conversation_owner,
+    load_agent_messages_for_resume,
 )
 
 # Import SDK Hybrid Agent (production agent with Claude Agent SDK)
 from hybrid import SDKHybridAgent, SDKHybridAgentConfig
 from streaming.mcp_client import MCPToolManager, get_mcp_pool
+from core.tool_approval import ToolApprovalPolicy, ToolApprovalSession
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+# ==========================================
+# Async Utilities for Non-Blocking Operations
+# ==========================================
+
+# Queue configuration for backpressure management
+OUTPUT_QUEUE_MAX_SIZE = 500  # Prevent unbounded memory growth
+SEND_TIMEOUT_SECONDS = 5.0  # Timeout for slow clients
+
+
+def fire_and_forget(coro) -> asyncio.Task:
+    """
+    Schedule a coroutine to run without blocking the caller.
+    
+    Used for non-critical operations like persistence that shouldn't
+    block the AI streaming response.
+    
+    Args:
+        coro: Coroutine to execute in background
+        
+    Returns:
+        Task handle (for tracking, usually ignored)
+    """
+    task = asyncio.create_task(coro)
+    
+    def _handle_exception(t: asyncio.Task):
+        if not t.cancelled():
+            exc = t.exception()
+            if exc:
+                logger.error(f"Fire-and-forget task failed: {exc}", exc_info=exc)
+    
+    task.add_done_callback(_handle_exception)
+    return task
+
+
+def schedule_save_ws_tool_event(conversation_id: Optional[str], event: Any) -> None:
+    """
+    Persist tool_use / tool_result rows so conversation resume/history matches live WebSocket UX.
+    Scheduled before send so traces survive slow clients that drop queued events.
+    """
+    if not conversation_id or not isinstance(event, dict):
+        return
+    et = event.get("type")
+    if et == "tool_use":
+        name = (event.get("name") or "").strip() or None
+        inp = event.get("input")
+        if not isinstance(inp, dict):
+            inp = {}
+        payload = json.dumps(
+            {"id": event.get("id"), "name": event.get("name"), "input": inp},
+            default=str,
+        )
+        fire_and_forget(
+            save_message(
+                conversation_id=conversation_id,
+                role="assistant",
+                content=payload,
+                message_type="tool_use",
+                tool_name=name,
+                tool_input=inp or None,
+            )
+        )
+    elif et == "tool_result":
+        raw = event.get("content")
+        if raw is None:
+            text_out = ""
+        elif isinstance(raw, str):
+            text_out = raw
+        else:
+            text_out = json.dumps(raw, default=str)
+        meta: Dict[str, Any] = {
+            "tool_use_id": event.get("tool_use_id"),
+            "is_error": bool(event.get("is_error")),
+        }
+        fire_and_forget(
+            save_message(
+                conversation_id=conversation_id,
+                role="assistant",
+                content=text_out,
+                message_type="tool_result",
+                metadata=meta,
+            )
+        )
 
 
 def sanitize_error_message(error: Exception, context: str = "") -> str:
@@ -134,36 +224,43 @@ async def rate_limit_middleware(request: Request, call_next):
     if request.url.path == "/health":
         return await call_next(request)
 
-    # Extract user_id from token
-    auth_token = (
-        request.query_params.get("auth_token")
-        or request.headers.get("authorization", "")
-    )
+    # Extract user_id from token (query or header only; JSON body is read in routes)
+    try:
+        auth_token = (
+            request.query_params.get("auth_token")
+            or request.headers.get("authorization", "")
+        )
 
-    if auth_token:
-        user_id = extract_user_id_from_token(auth_token)
-        if user_id:
-            # Check rate limit using Redis
-            if not await check_rate_limit(user_id):
-                # Log rate limit event
-                audit = get_audit_service()
-                await audit.log_security_event(
-                    event_type=EventType.AUTH_RATE_LIMITED,
-                    user_id=user_id,
-                    action="rate_limit_check",
-                    error_code="RATE_LIMIT_EXCEEDED",
-                    error_message=f"Exceeded {RATE_LIMIT_REQUESTS} requests per {RATE_LIMIT_WINDOW}s",
-                    source_ip=request.client.host if request.client else None,
-                    metadata={"path": str(request.url.path)}
-                )
-                return JSONResponse(
-                    status_code=429,
-                    content={
-                        "success": False,
-                        "error": "Rate limit exceeded. Please try again later.",
-                        "retry_after": RATE_LIMIT_WINDOW,
-                    },
-                )
+        if auth_token:
+            user_id = extract_user_id_from_token(auth_token)
+            if user_id:
+                # Check rate limit using Redis
+                if not await check_rate_limit(user_id):
+                    # Log rate limit event (must not take down the request if audit fails)
+                    try:
+                        audit = get_audit_service()
+                        await audit.log_security_event(
+                            event_type=EventType.AUTH_RATE_LIMITED,
+                            user_id=user_id,
+                            action="rate_limit_check",
+                            error_code="RATE_LIMIT_EXCEEDED",
+                            error_message=f"Exceeded {RATE_LIMIT_REQUESTS} requests per {RATE_LIMIT_WINDOW}s",
+                            source_ip=request.client.host if request.client else None,
+                            metadata={"path": str(request.url.path)}
+                        )
+                    except Exception as audit_err:
+                        logger.error(f"Rate limit audit log failed: {audit_err}", exc_info=True)
+
+                    return JSONResponse(
+                        status_code=429,
+                        content={
+                            "success": False,
+                            "error": "Rate limit exceeded. Please try again later.",
+                            "retry_after": RATE_LIMIT_WINDOW,
+                        },
+                    )
+    except Exception as e:
+        logger.error(f"Rate limit middleware error (fail-open): {e}", exc_info=True)
 
     return await call_next(request)
 
@@ -179,11 +276,11 @@ async def lifespan(app: FastAPI):
 
     # Initialize audit service
     await init_audit_service()
-    logger.info("📝 Audit service initialized")
+    logger.info("Audit service initialized")
 
     # Start PGMQ consumer for incident analytics
     await start_pgmq_consumer()
-    logger.info("🤖 Incident analytics PGMQ consumer started")
+    logger.info("Incident analytics PGMQ consumer started")
 
     # No background workers needed anymore:
     # - heartbeat_task is per-connection (called in websocket endpoint)
@@ -194,19 +291,19 @@ async def lifespan(app: FastAPI):
     yield
 
     # Shutdown
-    logger.info("🛑 Stopping application...")
+    logger.info("Stopping application...")
 
     # Stop PGMQ consumer
     await stop_pgmq_consumer()
-    logger.info("🤖 Incident analytics PGMQ consumer stopped")
+    logger.info("Incident analytics PGMQ consumer stopped")
 
     # Close Redis connection
     await close_redis()
-    logger.info("🔴 Redis connection closed")
+    logger.info("Redis connection closed")
 
     # Shutdown audit service (flush remaining events)
     await shutdown_audit_service()
-    logger.info("📝 Audit service stopped")
+    logger.info("Audit service stopped")
 
     logger.info("Application stopped")
 
@@ -224,7 +321,7 @@ app = FastAPI(
 # SECURITY: Using "*" with allow_credentials=True is a security vulnerability
 ALLOWED_ORIGINS = os.getenv(
     "AI_ALLOWED_ORIGINS",
-    "http://localhost:3000,http://localhost:8000"
+    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:8000",
 ).split(",")
 
 # Strip whitespace from origins
@@ -318,10 +415,13 @@ async def websocket_chat(websocket: WebSocket):
     Protocol:
     1. Client connects with ?token=JWT&org_id=...&project_id=...
     2. Server authenticates, loads MCP servers, creates HybridAgent
-    3. Client sends: {"prompt": "...", "session_id": "...", "conversation_id": "..."}
-    4. Server streams: {"type": "delta", "content": "token"}
-    5. Server sends tool events during processing
-    6. Server sends: {"type": "complete"} when done
+    3. Client sends: {"prompt": "...", "session_id": "...", "conversation_id": "<optional>"}
+       (omit conversation_id to keep the server's current thread; send id only to resume.)
+    4. Client may send {"type": "new_conversation"} to start a new DB thread without reconnecting.
+    5. Client may send {"type": "resume_conversation", "conversation_id": "..."} after loading history in the UI so the agent restores in-memory context.
+    6. Server streams: {"type": "delta", "content": "token"}
+    7. Server sends tool events during processing
+    8. Server sends: {"type": "complete"} when done
     """
     audit = get_audit_service()
     client_ip = websocket.client.host if websocket.client else None
@@ -335,7 +435,7 @@ async def websocket_chat(websocket: WebSocket):
     # Authenticate BEFORE accepting connection (prevents DoS)
     is_valid, result = await verify_websocket_auth(websocket)
     if not is_valid:
-        logger.warning(f"🚫 WebSocket auth failed: {result}")
+        logger.warning(f"WebSocket auth failed: {result}")
         await audit.log_auth_failed(
             user_id=None,
             error_code="INVALID_TOKEN",
@@ -374,55 +474,50 @@ async def websocket_chat(websocket: WebSocket):
     except Exception as e:
         logger.error(f"Failed to load MCP servers: {e}", exc_info=True)
         mcp_manager = MCPToolManager()
-    
-    # Build MCP servers dict for SDK (external tools only, incident tools are built-in to SDK)
-    mcp_servers_for_sdk = {}
-    if mcp_manager and mcp_manager.server_count > 0:
-        # Pass MCP servers to SDK orchestrator
-        mcp_servers_for_sdk = mcp_manager.get_server_configs()
-    
-    # Create SDKHybridAgent config
-    # Note: Incident tools are registered via Claude Agent SDK's @tool decorator
-    # in tools/incidents.py, so we don't need to pass them here
+
+    user_tool_patterns = await get_user_allowed_tools(user_id)
+    approval_session = ToolApprovalSession()
+    approval_policy = ToolApprovalPolicy(user_patterns=user_tool_patterns)
+
     config = SDKHybridAgentConfig(
         model="claude-sonnet-4-20250514",
-        streaming_model="claude-sonnet-4-20250514",
-        sdk_model="claude-sonnet-4-20250514",
         max_tokens=4096,
-        mcp_servers=mcp_servers_for_sdk,
+        max_turns=10,
         system_prompt="""You are an AI assistant specialized in incident response and DevOps.
 You help users manage incidents, analyze alerts, and troubleshoot issues.
 
-## Available Tools (via Claude Agent SDK)
+## Built-in tools
 
-**Incident Management Tools:**
-- get_incidents_by_time: Fetch incidents within a time range
-- get_incident_by_id: Get detailed incident information
-- get_incident_stats: Get incident statistics
-- get_current_time: Get current time for time-based queries
-- search_incidents: Full-text search for incidents
+**Incident management:**
+- get_incidents_by_time, get_incident_by_id, get_incident_stats, get_current_time, search_incidents
 
-**External Integrations (MCP):**
-- Coralogix MCP tools for querying logs
-- Confluence MCP tools for documentation
-- Other configured MCP tools
+**Release workflow (InRes API + local git only):**
+- release_integration_guide, release_get_status, release_update_step, release_create_workflow,
+  release_commit_and_push, release_record_pr, release_clone_and_branch, YAML/SOPS helpers
 
-Be concise but thorough in your responses."""
+**External integrations (MCP):**
+- Jira, Confluence, GitHub, ArgoCD, Coralogix, and other tools from MCP servers configured in InRes.
+
+**Tool approvals:** Read-only incident lookups, release status/listing, and the integration guide run without a prompt. Mutating release steps, git operations, and every MCP tool require an in-app approval when the server sends a permission request (unless the tool matches your saved \"always allow\" list).
+
+Be concise but thorough in your responses.""",
     )
-    
-    # Create SDKHybridAgent
-    agent = SDKHybridAgent(config=config)
-    
-    # Set auth context for SDK tools
+
+    agent = SDKHybridAgent(
+        config=config,
+        mcp_manager=mcp_manager,
+        approval_session=approval_session,
+        approval_policy=approval_policy,
+    )
+
+    # Set auth context for built-in tools (incidents / release)
     agent.set_auth_context(
         auth_token=token,
         org_id=ws_org_id,
-        project_id=ws_project_id
+        project_id=ws_project_id,
     )
 
-    # Track tool count for session info
-    # Note: SDK tools are loaded dynamically, so we estimate based on MCP tools + built-in tools
-    estimated_tool_count = len(mcp_tools) + 5  # 5 built-in incident tools
+    estimated_tool_count = len(agent.tool_router.get_tool_schemas())
     
     # Log session created
     await audit.log_session_created(
@@ -439,15 +534,15 @@ Be concise but thorough in your responses."""
         "type": "session_created",
         "session_id": session_id,
         "conversation_id": session_id,
-        "agent_type": "sdk_hybrid",
-        "message": "SDK Hybrid agent session established (Claude Agent SDK + Token Streaming)",
+        "agent_type": "inres_anthropic",
+        "message": "InRes agent session established (Anthropic streaming + tools + MCP)",
         "mcp_servers": mcp_manager.server_count if mcp_manager else 0,
         "total_tools": estimated_tool_count
     })
-    logger.info(f"📤 Sent session_created: {session_id}")
+    logger.info(f"Sent session_created: {session_id}")
 
-    # Output queue for streaming events
-    output_queue: asyncio.Queue = asyncio.Queue()
+    # Output queue for streaming events (bounded to prevent OOM)
+    output_queue: asyncio.Queue = asyncio.Queue(maxsize=OUTPUT_QUEUE_MAX_SIZE)
     
     # Track session state
     is_first_message = True
@@ -455,26 +550,75 @@ Be concise but thorough in your responses."""
     stream_task = None
     sender_task = None
     heartbeat_task_ref = None
+    client_healthy = True  # Track if client is responsive
 
     async def send_events():
-        """Send events from queue to WebSocket."""
+        """
+        Send events from queue to WebSocket with backpressure handling.
+        
+        If client is slow (send times out), we drain the queue to prevent
+        memory buildup and mark the client as unhealthy.
+        """
+        nonlocal client_healthy
         try:
             while True:
                 event = await output_queue.get()
                 if event is None:
                     break
-                await websocket.send_json(event)
+                try:
+                    schedule_save_ws_tool_event(conversation_id, event)
+                    await asyncio.wait_for(
+                        websocket.send_json(event),
+                        timeout=SEND_TIMEOUT_SECONDS
+                    )
+                except asyncio.TimeoutError:
+                    # Client is too slow - drain queue to prevent memory issues
+                    dropped_count = 0
+                    while not output_queue.empty():
+                        try:
+                            output_queue.get_nowait()
+                            dropped_count += 1
+                        except asyncio.QueueEmpty:
+                            break
+                    logger.warning(
+                        f"Client slow for session {session_id}, dropped {dropped_count} events"
+                    )
+                    client_healthy = False
+                    # Send a warning to client that they're lagging
+                    try:
+                        await websocket.send_json({
+                            "type": "warning",
+                            "message": "Connection slow, some events dropped"
+                        })
+                    except Exception:
+                        pass
         except WebSocketDisconnect:
             logger.info("WebSocket disconnected during send")
         except Exception as e:
             logger.error(f"Send error: {e}")
 
     async def heartbeat():
-        """Send periodic pings."""
+        """
+        Send periodic pings directly to WebSocket (separate from token queue).
+        
+        This ensures heartbeats aren't blocked by a full token queue,
+        allowing us to detect dead connections even under heavy streaming.
+        """
+        nonlocal client_healthy
         try:
             while True:
                 await asyncio.sleep(30)
-                await output_queue.put({"type": "ping", "timestamp": time.time()})
+                try:
+                    # Send directly, bypass the token queue
+                    await asyncio.wait_for(
+                        websocket.send_json({"type": "ping", "timestamp": time.time()}),
+                        timeout=SEND_TIMEOUT_SECONDS
+                    )
+                except asyncio.TimeoutError:
+                    logger.warning(f"Heartbeat timeout for session {session_id}")
+                    client_healthy = False
+                except WebSocketDisconnect:
+                    break
         except asyncio.CancelledError:
             pass
 
@@ -505,7 +649,21 @@ Be concise but thorough in your responses."""
                             pass
                     await websocket.send_json({"type": "interrupted"})
                     continue
-                
+
+                if msg_type == "permission_response":
+                    rid = message.get("request_id")
+                    if rid is None:
+                        await websocket.send_json(
+                            {"type": "error", "error": "permission_response requires request_id"}
+                        )
+                        continue
+                    allow = str(message.get("allow", "")).lower() in ("yes", "true", "1")
+                    approval_session.resolve(str(rid), allow)
+                    rp = message.get("remember_pattern")
+                    if allow and isinstance(rp, str) and rp.strip():
+                        approval_policy.add_runtime_pattern(rp.strip())
+                    continue
+
                 # Handle clear history
                 if msg_type == "clear_history":
                     agent.clear_history()
@@ -513,6 +671,73 @@ Be concise but thorough in your responses."""
                         "type": "history_cleared",
                         "message": "Conversation history cleared"
                     })
+                    continue
+
+                # New chat thread: same WebSocket session, new conversation_id for DB + fresh agent history
+                if msg_type == "new_conversation":
+                    if stream_task and not stream_task.done():
+                        stream_task.cancel()
+                        try:
+                            await stream_task
+                        except asyncio.CancelledError:
+                            pass
+                    agent.clear_history()
+                    conversation_id = str(uuid.uuid4())
+                    is_first_message = False
+                    _nt, _fp = generate_new_chat_display_fields()
+                    fire_and_forget(
+                        save_conversation(
+                            user_id=user_id,
+                            conversation_id=conversation_id,
+                            first_message=_fp,
+                            title=_nt,
+                            model="claude-sonnet-4-sdk-hybrid",
+                            metadata={
+                                "org_id": ws_org_id,
+                                "project_id": ws_project_id,
+                                "mode": "sdk_hybrid",
+                            },
+                            initial_message_count=0,
+                        )
+                    )
+                    await websocket.send_json({
+                        "type": "conversation_started",
+                        "conversation_id": conversation_id,
+                    })
+                    logger.info("Started new conversation thread: %s", conversation_id)
+                    continue
+
+                # Resume stored conversation into agent memory (same WebSocket)
+                if msg_type == "resume_conversation":
+                    rid = (message.get("conversation_id") or "").strip()
+                    if not rid:
+                        await websocket.send_json({
+                            "type": "error",
+                            "error": "conversation_id is required",
+                        })
+                        continue
+                    if not verify_conversation_owner(rid, user_id):
+                        await websocket.send_json({
+                            "type": "error",
+                            "error": "Conversation not found",
+                        })
+                        continue
+                    if stream_task and not stream_task.done():
+                        stream_task.cancel()
+                        try:
+                            await stream_task
+                        except asyncio.CancelledError:
+                            pass
+                    msgs = load_agent_messages_for_resume(rid, user_id)
+                    agent.set_history(msgs)
+                    conversation_id = rid
+                    is_first_message = False
+                    await websocket.send_json({
+                        "type": "conversation_resumed",
+                        "conversation_id": rid,
+                        "loaded_messages": len(msgs),
+                    })
+                    logger.info("Resumed conversation %s (%s messages)", rid, len(msgs))
                     continue
                 
                 # Handle chat message
@@ -534,43 +759,48 @@ Be concise but thorough in your responses."""
                         project_id=msg_project_id
                     )
                 
-                # Update conversation_id if provided (for resume)
-                if message.get("conversation_id"):
-                    conversation_id = message.get("conversation_id")
+                # Resume / explicit thread: only accept non-empty client id (empty would fight new_conversation)
+                cid = message.get("conversation_id")
+                if cid:
+                    conversation_id = cid
                 
                 logger.info(f"Processing: {prompt[:50]}...")
                 
-                # Audit: log chat message
-                await audit.log_chat_message(
+                # Fire-and-forget: Audit and persistence (non-blocking)
+                # These operations shouldn't delay the AI response stream
+                fire_and_forget(audit.log_chat_message(
                     user_id=user_id,
                     session_id=session_id,
                     conversation_id=conversation_id,
                     message_preview=prompt[:100],
                     org_id=msg_org_id,
                     project_id=msg_project_id
-                )
+                ))
                 
-                # Save conversation on first message
+                # Save conversation on first message (fire-and-forget)
                 if is_first_message:
-                    await save_conversation(
+                    _nt, _ = generate_new_chat_display_fields()
+                    fire_and_forget(save_conversation(
                         user_id=user_id,
                         conversation_id=conversation_id,
                         first_message=prompt,
+                        title=_nt,
                         model="claude-sonnet-4-sdk-hybrid",
                         metadata={
                             "org_id": msg_org_id,
                             "project_id": msg_project_id,
                             "mode": "sdk_hybrid"
                         }
-                    )
+                    ))
                     is_first_message = False
                 
-                # Save user message
-                await save_message(
+                # Save user message (fire-and-forget)
+                fire_and_forget(save_message(
                     conversation_id=conversation_id,
                     role="user",
                     content=prompt
-                )
+                ))
+                fire_and_forget(promote_placeholder_conversation_preview(conversation_id, prompt))
                 
                 # Cancel existing stream
                 if stream_task and not stream_task.done():
@@ -592,12 +822,13 @@ Be concise but thorough in your responses."""
                     )
                     
                     if response:
-                        await save_message(
+                        # Fire-and-forget: Save assistant response (non-blocking)
+                        fire_and_forget(save_message(
                             conversation_id=conversation_id,
                             role="assistant",
                             content=response
-                        )
-                        await update_conversation_activity(conversation_id)
+                        ))
+                        fire_and_forget(update_conversation_activity(conversation_id))
                     
                     return response
                 
@@ -640,6 +871,18 @@ Be concise but thorough in your responses."""
         except Exception as e:
             logger.error(f"Failed to release MCP servers: {e}")
         
+        # Log session ended (fire-and-forget to not delay cleanup)
+        fire_and_forget(audit.log_security_event(
+            event_type=EventType.SESSION_ENDED,
+            user_id=user_id,
+            action="session_cleanup",
+            session_id=session_id,
+            source_ip=client_ip,
+            org_id=ws_org_id,
+            project_id=ws_project_id,
+            metadata={"client_healthy": client_healthy}
+        ))
+        
         logger.info(f"Session cleanup complete: {session_id}")
 
 
@@ -678,7 +921,8 @@ async def websocket_secure_chat(websocket: WebSocket):
     stream_task = None
     sender_task = None
     heartbeat_task_ref = None
-    output_queue = asyncio.Queue()
+    output_queue = asyncio.Queue(maxsize=OUTPUT_QUEUE_MAX_SIZE)
+    client_healthy = True  # Track if client is responsive
 
     try:
         # Wait for authentication message
@@ -724,7 +968,7 @@ async def websocket_secure_chat(websocket: WebSocket):
         session, error = await verifier.authenticate(cert_dict, existing_session_id)
 
         if not session:
-            logger.warning(f"🚫 Zero-Trust authentication failed: {error}")
+            logger.warning(f"Zero-Trust authentication failed: {error}")
             error_code = "AUTH_FAILED"
             if "expired" in error.lower():
                 error_code = "CERTIFICATE_EXPIRED"
@@ -778,32 +1022,31 @@ async def websocket_secure_chat(websocket: WebSocket):
             logger.error(f"Failed to load MCP servers: {e}")
             mcp_manager = MCPToolManager()
 
-        # Build MCP servers dict for SDK
-        mcp_servers_for_sdk = {}
-        if mcp_manager and mcp_manager.server_count > 0:
-            mcp_servers_for_sdk = mcp_manager.get_server_configs()
-        
-        # Count tools for session info
-        estimated_tool_count = len(mcp_tools) + 5  # 5 built-in incident tools
+        user_tool_patterns = await get_user_allowed_tools(user_id)
+        approval_session = ToolApprovalSession()
+        approval_policy = ToolApprovalPolicy(user_patterns=user_tool_patterns)
 
-        # Create SDKHybridAgent
         config = SDKHybridAgentConfig(
             model="claude-sonnet-4-20250514",
-            streaming_model="claude-sonnet-4-20250514",
-            sdk_model="claude-sonnet-4-20250514",
             max_tokens=4096,
-            mcp_servers=mcp_servers_for_sdk,
+            max_turns=10,
             system_prompt="""You are an AI assistant specialized in incident response and DevOps.
 You help users manage incidents, analyze alerts, and troubleshoot issues.
-Be concise but thorough in your responses."""
+Be concise but thorough in your responses.""",
         )
-        agent = SDKHybridAgent(config=config)
+        agent = SDKHybridAgent(
+            config=config,
+            mcp_manager=mcp_manager,
+            approval_session=approval_session,
+            approval_policy=approval_policy,
+        )
+        estimated_tool_count = len(agent.tool_router.get_tool_schemas())
 
         # Set auth context (Zero-Trust doesn't need token, uses device cert)
         agent.set_auth_context(
             auth_token="",  # Zero-Trust uses device cert instead
             org_id=ws_org_id,
-            project_id=ws_project_id
+            project_id=ws_project_id,
         )
 
         # Send auth success with session info
@@ -813,7 +1056,7 @@ Be concise but thorough in your responses."""
             "conversation_id": session_id,
             "user_id": user_id,
             "permissions": session.permissions,
-            "agent_type": "sdk_hybrid",
+            "agent_type": "inres_anthropic",
             "mcp_servers": mcp_manager.server_count if mcp_manager else 0,
             "total_tools": estimated_tool_count
         })
@@ -823,24 +1066,64 @@ Be concise but thorough in your responses."""
         conversation_id = session_id
 
         async def send_events():
-            """Send events from queue to WebSocket."""
+            """
+            Send events from queue to WebSocket with backpressure handling.
+            """
+            nonlocal client_healthy
             try:
                 while True:
                     event = await output_queue.get()
                     if event is None:
                         break
-                    await websocket.send_json(event)
+                    try:
+                        schedule_save_ws_tool_event(conversation_id, event)
+                        await asyncio.wait_for(
+                            websocket.send_json(event),
+                            timeout=SEND_TIMEOUT_SECONDS
+                        )
+                    except asyncio.TimeoutError:
+                        # Client is too slow - drain queue
+                        dropped_count = 0
+                        while not output_queue.empty():
+                            try:
+                                output_queue.get_nowait()
+                                dropped_count += 1
+                            except asyncio.QueueEmpty:
+                                break
+                        logger.warning(
+                            f"Secure client slow for session {session_id}, dropped {dropped_count} events"
+                        )
+                        client_healthy = False
+                        try:
+                            await websocket.send_json({
+                                "type": "warning",
+                                "message": "Connection slow, some events dropped"
+                            })
+                        except Exception:
+                            pass
             except WebSocketDisconnect:
                 pass
             except Exception as e:
                 logger.error(f"Send error: {e}")
 
         async def heartbeat():
-            """Send periodic pings."""
+            """
+            Send periodic pings directly to WebSocket (separate from token queue).
+            """
+            nonlocal client_healthy
             try:
                 while True:
                     await asyncio.sleep(30)
-                    await output_queue.put({"type": "ping", "timestamp": time.time()})
+                    try:
+                        await asyncio.wait_for(
+                            websocket.send_json({"type": "ping", "timestamp": time.time()}),
+                            timeout=SEND_TIMEOUT_SECONDS
+                        )
+                    except asyncio.TimeoutError:
+                        logger.warning(f"Secure heartbeat timeout for session {session_id}")
+                        client_healthy = False
+                    except WebSocketDisconnect:
+                        break
             except asyncio.CancelledError:
                 pass
 
@@ -861,7 +1144,7 @@ Be concise but thorough in your responses."""
                 )
 
                 if not is_valid:
-                    logger.warning(f"🚫 Message verification failed: {error_msg}")
+                    logger.warning(f"Message verification failed: {error_msg}")
                     error_type = EventType.SIGNATURE_INVALID
                     if "nonce" in error_msg.lower() or "replay" in error_msg.lower():
                         error_type = EventType.NONCE_REPLAY
@@ -895,6 +1178,20 @@ Be concise but thorough in your responses."""
                     await websocket.send_json({"type": "interrupted"})
                     continue
 
+                if msg_type == "permission_response":
+                    rid = (data or {}).get("request_id")
+                    if not rid:
+                        await websocket.send_json(
+                            {"type": "error", "error": "permission_response requires request_id in data"}
+                        )
+                        continue
+                    allow = str((data or {}).get("allow", "")).lower() in ("yes", "true", "1")
+                    approval_session.resolve(str(rid), allow)
+                    rp = (data or {}).get("remember_pattern")
+                    if allow and isinstance(rp, str) and rp.strip():
+                        approval_policy.add_runtime_pattern(rp.strip())
+                    continue
+
                 # Handle clear history
                 if msg_type == "clear_history":
                     agent.clear_history()
@@ -902,6 +1199,65 @@ Be concise but thorough in your responses."""
                         "type": "history_cleared",
                         "message": "Conversation history cleared"
                     })
+                    continue
+
+                if msg_type == "new_conversation":
+                    if stream_task and not stream_task.done():
+                        stream_task.cancel()
+                        try:
+                            await stream_task
+                        except asyncio.CancelledError:
+                            pass
+                    agent.clear_history()
+                    conversation_id = str(uuid.uuid4())
+                    is_first_message = False
+                    _nt, _fp = generate_new_chat_display_fields()
+                    fire_and_forget(
+                        save_conversation(
+                            user_id=user_id,
+                            conversation_id=conversation_id,
+                            first_message=_fp,
+                            title=_nt,
+                            model="claude-sonnet-4-sdk-hybrid",
+                            metadata={
+                                "org_id": ws_org_id,
+                                "project_id": ws_project_id,
+                                "mode": "sdk_hybrid-secure",
+                            },
+                            initial_message_count=0,
+                        )
+                    )
+                    await websocket.send_json({
+                        "type": "conversation_started",
+                        "conversation_id": conversation_id,
+                    })
+                    logger.info("Secure WS: new conversation thread %s", conversation_id)
+                    continue
+
+                if msg_type == "resume_conversation":
+                    rid = (data.get("conversation_id") or "").strip()
+                    if not rid:
+                        await websocket.send_json({"type": "error", "error": "conversation_id is required"})
+                        continue
+                    if not verify_conversation_owner(rid, user_id):
+                        await websocket.send_json({"type": "error", "error": "Conversation not found"})
+                        continue
+                    if stream_task and not stream_task.done():
+                        stream_task.cancel()
+                        try:
+                            await stream_task
+                        except asyncio.CancelledError:
+                            pass
+                    msgs = load_agent_messages_for_resume(rid, user_id)
+                    agent.set_history(msgs)
+                    conversation_id = rid
+                    is_first_message = False
+                    await websocket.send_json({
+                        "type": "conversation_resumed",
+                        "conversation_id": rid,
+                        "loaded_messages": len(msgs),
+                    })
+                    logger.info("Secure WS resumed %s (%s messages)", rid, len(msgs))
                     continue
 
                 # Handle chat message
@@ -924,41 +1280,46 @@ Be concise but thorough in your responses."""
                             project_id=msg_project_id
                         )
 
-                    if data.get("conversation_id"):
-                        conversation_id = data.get("conversation_id")
+                    cid = data.get("conversation_id")
+                    if cid:
+                        conversation_id = cid
 
                     logger.info(f"Processing: {prompt[:50]}...")
 
-                    # Audit
-                    await audit.log_chat_message(
+                    # Fire-and-forget: Audit and persistence (non-blocking)
+                    fire_and_forget(audit.log_chat_message(
                         user_id=user_id,
                         session_id=session_id,
                         conversation_id=conversation_id,
                         message_preview=prompt[:100],
                         org_id=msg_org_id,
                         project_id=msg_project_id
-                    )
+                    ))
 
-                    # Save conversation on first message
+                    # Save conversation on first message (fire-and-forget)
                     if is_first_message:
-                        await save_conversation(
+                        _nt, _ = generate_new_chat_display_fields()
+                        fire_and_forget(save_conversation(
                             user_id=user_id,
                             conversation_id=conversation_id,
                             first_message=prompt,
+                            title=_nt,
                             model="claude-sonnet-4-sdk-hybrid",
                             metadata={
                                 "org_id": msg_org_id,
                                 "project_id": msg_project_id,
                                 "mode": "sdk_hybrid-secure"
                             }
-                        )
+                        ))
                         is_first_message = False
 
-                    await save_message(
+                    # Save user message (fire-and-forget)
+                    fire_and_forget(save_message(
                         conversation_id=conversation_id,
                         role="user",
                         content=prompt
-                    )
+                    ))
+                    fire_and_forget(promote_placeholder_conversation_preview(conversation_id, prompt))
 
                     # Cancel existing stream
                     if stream_task and not stream_task.done():
@@ -978,12 +1339,13 @@ Be concise but thorough in your responses."""
                             project_id=msg_project_id
                         )
                         if response:
-                            await save_message(
+                            # Fire-and-forget: Save assistant response (non-blocking)
+                            fire_and_forget(save_message(
                                 conversation_id=conversation_id,
                                 role="assistant",
                                 content=response
-                            )
-                            await update_conversation_activity(conversation_id)
+                            ))
+                            fire_and_forget(update_conversation_activity(conversation_id))
                         return response
 
                     stream_task = asyncio.create_task(process_and_save())
@@ -993,7 +1355,7 @@ Be concise but thorough in your responses."""
                 break
 
     except asyncio.TimeoutError:
-        logger.warning("⏰ Zero-Trust authentication timeout")
+        logger.warning("Zero-Trust authentication timeout")
         try:
             await websocket.send_json({
                 "type": "auth_error",
@@ -1002,7 +1364,7 @@ Be concise but thorough in your responses."""
         except:
             pass
     except WebSocketDisconnect:
-        logger.info("🔌 Secure WebSocket disconnected")
+        logger.info("Secure WebSocket disconnected")
     except Exception as e:
         logger.error(f"Secure WebSocket error: {e}", exc_info=True)
         try:
@@ -1032,8 +1394,20 @@ Be concise but thorough in your responses."""
                 await pool.release_servers_for_user(user_id)
             except Exception as e:
                 logger.error(f"Failed to release MCP servers: {e}")
+            
+            # Log session ended (fire-and-forget)
+            fire_and_forget(audit.log_security_event(
+                event_type=EventType.SESSION_ENDED,
+                user_id=user_id,
+                action="secure_session_cleanup",
+                session_id=session_id,
+                source_ip=client_ip,
+                org_id=ws_org_id,
+                project_id=ws_project_id,
+                metadata={"client_healthy": client_healthy}
+            ))
 
-        logger.info("🧹 Secure WebSocket cleanup complete")
+        logger.info("Secure WebSocket cleanup complete")
 
 
 if __name__ == "__main__":
@@ -1055,5 +1429,5 @@ if __name__ == "__main__":
     reload_enabled = os.getenv("DEV_MODE", "false").lower() == "true"
 
     uvicorn.run(
-        "claude_agent_api_v1:app", host="0.0.0.0", port=8002, reload=reload_enabled
+        "claude_agent:app", host="0.0.0.0", port=8002, reload=reload_enabled
     )

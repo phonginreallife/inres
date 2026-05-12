@@ -95,17 +95,18 @@ func (m *SupabaseAuthMiddleware) SupabaseAuthMiddleware() gin.HandlerFunc {
 		c.Set("user", userInfo)
 
 		// Ensure user exists in database (auto-sync)
-		err = m.ensureUserExists(claims.UserID, claims)
+		subjectID := services.SupabaseSubjectID(claims)
+		err = m.ensureUserExists(subjectID, claims)
 		if err != nil {
 			log.Printf("Failed to sync user to database: %v", err)
 			// Don't fail the request, just log the error
 		}
 
-		c.Set("user_id", claims.UserID)
+		c.Set("user_id", subjectID)
 		c.Set("user_email", claims.Email)
 		c.Set("user_role", claims.Role)
 
-		log.Printf("AUTH SUCCESS - User: %s (%s)", claims.Email, claims.UserID)
+		log.Printf("AUTH SUCCESS - User: %s (%s)", claims.Email, subjectID)
 
 		c.Next()
 	}
@@ -151,7 +152,7 @@ func (m *SupabaseAuthMiddleware) OptionalSupabaseAuth() gin.HandlerFunc {
 // transformUserIDForDatabase converts user_id to database format based on OAuth provider
 func (m *SupabaseAuthMiddleware) transformUserIDForDatabase(claims *services.SupabaseClaims) string {
 	// Try to detect OAuth provider from various sources in JWT claims
-	return claims.UserID
+	return services.SupabaseSubjectID(claims)
 }
 
 // ensureUserExists checks if user exists in database and creates if not

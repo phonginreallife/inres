@@ -9,14 +9,22 @@ import asyncio
 import json
 import logging
 import os
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from claude_agent_sdk import ClaudeAgentOptions, ClaudeSDKClient
 from config import config
-from tools import create_incident_tools_server, set_auth_token, set_org_id, set_project_id
+from anthropic_tool_loop import run_anthropic_tools_nonstreaming
+from streaming.mcp_client import MCPToolManager
+from tool_router import ToolRouter
+from tools import (
+    filter_tool_schemas_by_name,
+    set_auth_token,
+    set_org_id,
+    set_project_id,
+)
+from tools.incidents import INCIDENT_TOOL_HANDLERS, INCIDENT_TOOL_SCHEMAS
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +67,7 @@ class IncidentAnalyticsPGMQ:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT * FROM pgmq.read(%s, %s, %s);",
-                    (self.queue_name, vt, 1)
+                    (self.queue_name, vt, 1),
                 )
                 result = cursor.fetchone()
             conn.close()
@@ -75,7 +83,7 @@ class IncidentAnalyticsPGMQ:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT pgmq.delete(%s, %s);",
-                    (self.queue_name, msg_id)
+                    (self.queue_name, msg_id),
                 )
                 conn.commit()
             conn.close()
@@ -139,36 +147,24 @@ Keep it practical and action-oriented for on-call engineers.
         return prompt
 
     def get_analytics_config(self) -> Dict[str, Any]:
-        """Get AI analytics configuration from centralized config
-
-        Uses the global config object loaded at startup.
-        Returns configuration dict for ClaudeAgentOptions.
-        """
+        """Get AI analytics configuration from centralized config"""
         ai_config = config.ai_analytics
 
         logger.info(
             f"🤖 AI Analytics Config: model={ai_config.model}, "
-            f"permission_mode={ai_config.permission_mode}, "
             f"tools={len(ai_config.allowed_tools)}"
         )
 
         return {
             "model": ai_config.model,
-            "permission_mode": ai_config.permission_mode,
-            "setting_sources": ai_config.setting_sources,
             "allowed_tools": ai_config.allowed_tools,
         }
 
     async def analyze_incident(self, incident: Dict[str, Any]) -> str:
-        """Analyze incident using Claude Agent SDK"""
-        from claude_agent_sdk import query, ClaudeAgentOptions
-
+        """Analyze incident using Anthropic API + incident tools."""
         prompt = self.build_analysis_prompt(incident)
+        ai_cfg = self.get_analytics_config()
 
-        # Load configuration dynamically from environment
-        config = self.get_analytics_config()
-
-        # 🔑 Set Auth Context BEFORE creating MCP server
         api_key = os.getenv("inres_API_KEY", "")
         if api_key:
             set_auth_token(api_key)
@@ -176,7 +172,6 @@ Keep it practical and action-oriented for on-call engineers.
         else:
             logger.warning("inres_API_KEY not set - API calls may fail")
 
-        # Set tenant context from incident data (ReBAC tenant isolation)
         org_id = incident.get("organization_id") or incident.get("org_id")
         if org_id:
             set_org_id(org_id)
@@ -189,35 +184,28 @@ Keep it practical and action-oriented for on-call engineers.
             set_project_id(project_id)
             logger.info(f"📁 Project context set for incident analysis: {project_id}")
 
-        # Load MCP servers (AFTER auth context is set)
-        incident_tools_server = create_incident_tools_server()
-        mcp_servers = {"incident_tools": incident_tools_server}
-        
-        logger.info(f" INCIDENT TOOLS SERVER: {incident_tools_server}")
-
-        # Configure options for one-off analysis
-        options = ClaudeAgentOptions(
-            permission_mode=config["permission_mode"],
-            model=config["model"],
-            setting_sources=config["setting_sources"],
-            allowed_tools=config["allowed_tools"],
-            mcp_servers=mcp_servers,
-            max_turns=10
+        filtered_schemas = filter_tool_schemas_by_name(
+            INCIDENT_TOOL_SCHEMAS, ai_cfg["allowed_tools"]
         )
+        if not filtered_schemas:
+            logger.warning(
+                "AI_ANALYTICS allowed_tools matched no incident tools; using full incident tool set"
+            )
+            filtered_schemas = list(INCIDENT_TOOL_SCHEMAS)
+        router = ToolRouter(MCPToolManager(), INCIDENT_TOOL_HANDLERS, filtered_schemas)
 
-        full_response = ""
-
-        # Use query() for one-off analysis (creates new session each time)
-        async with ClaudeSDKClient(options=options) as client:
-            await client.query(prompt=prompt)
-            async for message in client.receive_response():
-                print(message)
-                if hasattr(message, 'content'):
-                    for block in message.content:
-                        if hasattr(block, 'text'):
-                            full_response += block.text
-
-        return full_response
+        return await run_anthropic_tools_nonstreaming(
+            user_prompt=prompt,
+            model=ai_cfg["model"],
+            max_tokens=4096,
+            system_prompt=(
+                "You are an expert SRE assistant. Use the provided tools when they help. "
+                "Follow the user's requested output format."
+            ),
+            tool_router=router,
+            max_turns=10,
+            api_key=os.getenv("ANTHROPIC_API_KEY"),
+        )
 
     def update_incident_description(self, incident_id: str, analysis: str) -> bool:
         """Update incident with AI analysis"""
@@ -227,7 +215,7 @@ Keep it practical and action-oriented for on-call engineers.
                 # Get current description
                 cursor.execute(
                     "SELECT description FROM incidents WHERE id = %s",
-                    (incident_id,)
+                    (incident_id,),
                 )
                 result = cursor.fetchone()
 
@@ -235,7 +223,7 @@ Keep it practical and action-oriented for on-call engineers.
                     logger.error(f"Incident {incident_id} not found")
                     return False
 
-                current_desc = result['description'] or ""
+                current_desc = result["description"] or ""
 
                 # Prepend analysis
                 new_description = f"""# 🤖 AI Analysis
@@ -255,7 +243,7 @@ Keep it practical and action-oriented for on-call engineers.
                     SET description = %s, updated_at = NOW()
                     WHERE id = %s
                     """,
-                    (new_description, incident_id)
+                    (new_description, incident_id),
                 )
                 conn.commit()
 
@@ -269,11 +257,11 @@ Keep it practical and action-oriented for on-call engineers.
 
     async def process_message(self, message: Dict):
         """Process one incident analysis request"""
-        msg_id = message.get('msg_id')
-        message_data = message.get('message', {})
+        msg_id = message.get("msg_id")
+        message_data = message.get("message", {})
 
-        incident_id = message_data.get('incident_id')
-        incident_data = message_data.get('incident_data', {})
+        incident_id = message_data.get("incident_id")
+        incident_data = message_data.get("incident_data", {})
 
         logger.info(f"📥 Analyzing incident {incident_id}")
 
@@ -301,7 +289,7 @@ Keep it practical and action-oriented for on-call engineers.
         self.running = True
         self.create_queue_if_not_exists()
 
-        logger.info(f"Starting PGMQ incident analytics consumer...")
+        logger.info("Starting PGMQ incident analytics consumer...")
 
         while self.running:
             try:

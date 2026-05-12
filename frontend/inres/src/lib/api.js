@@ -2316,6 +2316,54 @@ class APIClient {
       method: 'DELETE'
     });
   }
+
+  // ─── Release Management ──────────────────────────────────────────────────
+
+  async getReleases(filters = {}) {
+    const params = new URLSearchParams();
+    if (filters.org_id) params.append('org_id', filters.org_id);
+    if (filters.status) params.append('status', filters.status);
+    if (filters.region) params.append('region', filters.region);
+    if (filters.limit) params.append('limit', filters.limit);
+    if (filters.offset) params.append('offset', filters.offset);
+    const qs = params.toString();
+    return this.request(`/releases${qs ? `?${qs}` : ''}`);
+  }
+
+  async getRelease(releaseId) {
+    return this.request(`/releases/${releaseId}`);
+  }
+
+  async createRelease(data) {
+    return this.request('/releases', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateRelease(releaseId, data) {
+    return this.request(`/releases/${releaseId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async getReleaseStatus(releaseId) {
+    return this.request(`/releases/${releaseId}/status`);
+  }
+
+  async cancelRelease(releaseId) {
+    return this.request(`/releases/${releaseId}/cancel`, {
+      method: 'POST',
+    });
+  }
+
+  async approveReleaseStep(releaseId, stepId, decision, comment = '') {
+    return this.request(`/releases/${releaseId}/steps/${stepId}/approve`, {
+      method: 'POST',
+      body: JSON.stringify({ decision, comment }),
+    });
+  }
 }
 
 export const apiClient = new APIClient();

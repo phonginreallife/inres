@@ -18,30 +18,45 @@ const USE_TOKEN_STREAMING = process.env.NEXT_PUBLIC_USE_TOKEN_STREAMING === 'tru
 // Build WebSocket URL dynamically (handles SSR where window is undefined)
 function getWebSocketUrl() {
   if (typeof window === 'undefined') return '';
-  
-  // Check for explicit WS URL override
+
   if (process.env.NEXT_PUBLIC_AI_WS_URL) {
     console.log(`[WebSocket] Using configured URL: ${process.env.NEXT_PUBLIC_AI_WS_URL}`);
     return process.env.NEXT_PUBLIC_AI_WS_URL;
   }
-  
-  const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+
   const endpoint = USE_TOKEN_STREAMING ? '/ws/stream' : '/ws/chat';
-  
-  // In production (HTTPS), use the same host without explicit port (nginx handles routing)
-  // In development (HTTP), use Kong port 8000 directly
-  let host;
+  const aiPublic = process.env.NEXT_PUBLIC_AI_API_URL || '/ai';
+
   if (window.location.protocol === 'https:') {
-    // Production: nginx on 443 proxies /ws/* to Kong
-    host = window.location.hostname;
-  } else {
-    // Development: connect directly to Kong on port 8000
-    const wsPort = process.env.NEXT_PUBLIC_WS_PORT || '8000';
-    host = window.location.hostname + ':' + wsPort;
+    const protocol = 'wss';
+    const host = window.location.hostname;
+    console.log(`[WebSocket] Using ${USE_TOKEN_STREAMING ? 'TOKEN' : 'BLOCK'} streaming: ${protocol}://${host}${endpoint}`);
+    return `${protocol}://${host}${endpoint}`;
   }
-  
-  console.log(`[WebSocket] Using ${USE_TOKEN_STREAMING ? 'TOKEN' : 'BLOCK'} streaming: ${protocol}://${host}${endpoint}`);
-  return `${protocol}://${host}${endpoint}`;
+
+  // HTTP dev: Python agent listens on 8002 (see server/agent/main.py). Kong-era default was 8000.
+  if (aiPublic.startsWith('http://') || aiPublic.startsWith('https://')) {
+    try {
+      const u = new URL(aiPublic);
+      const wsProto = u.protocol === 'https:' ? 'wss' : 'ws';
+      const host = u.host;
+      const url = `${wsProto}://${host}${endpoint}`;
+      console.log(`[WebSocket] Using ${USE_TOKEN_STREAMING ? 'TOKEN' : 'BLOCK'} streaming (from NEXT_PUBLIC_AI_API_URL): ${url}`);
+      return url;
+    } catch {
+      /* fall through */
+    }
+  }
+
+  // Same host: Kong on :8000 terminates WS too; Next-only dev (:3000) talks to agent on :8002.
+  const wsPort =
+    process.env.NEXT_PUBLIC_WS_PORT ||
+    (window.location.port === '8000' ? '8000' : '8002');
+  const host = `${window.location.hostname}:${wsPort}`;
+  const protocol = 'ws';
+  const url = `${protocol}://${host}${endpoint}`;
+  console.log(`[WebSocket] Using ${USE_TOKEN_STREAMING ? 'TOKEN' : 'BLOCK'} streaming: ${url}`);
+  return url;
 }
 
 /**
@@ -383,17 +398,24 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
               });
               break;
 
-            case 'tool_use':
-              console.log('Tool executing:', data.content);
-              // Add tool use message
+            case 'tool_use': {
+              const toolInput = data.input && typeof data.input === 'object' ? data.input : {};
+              const toolPayload = {
+                id: data.id,
+                name: data.name,
+                input: toolInput,
+              };
+              console.log('Tool executing:', toolPayload.name, toolPayload.input);
               setMessages(prev => [...prev, {
                 role: 'assistant',
                 source: 'assistant',
-                content: JSON.stringify(data.content, null, 2),
+                content: JSON.stringify(toolPayload, null, 2),
                 type: 'tool_use',
+                tool_name: data.name,
                 timestamp: new Date().toISOString()
               }]);
               break;
+            }
 
             case 'tool_result':
               // Add tool result message (NOT streaming - this is a complete result)
@@ -492,13 +514,19 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
         }
       };
 
-      ws.onerror = (error) => {
+      ws.onerror = (event) => {
         // Don't log error if it's an intentional disconnect
         if (isIntentionalDisconnect.current) {
           console.log('[WS] Suppressing error for intentional disconnect');
           return;
         }
-        console.error('WebSocket error:', error);
+        const rawUrl = ws.url || '';
+        const safeUrl = rawUrl.replace(/([?&])token=[^&]*/g, '$1token=***');
+        console.error('[WebSocket] connection error', {
+          url: safeUrl,
+          readyState: ws.readyState,
+          eventType: event?.type,
+        });
         setConnectionStatus('error');
       };
 
@@ -613,11 +641,14 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
       const wsMessage = {
         prompt: message,
         session_id: sessionId || "",
-        conversation_id: options.conversationId || conversationId || "",
         auth_token: authTokenRef.current || "",
         org_id: options.orgId || "",
         project_id: options.projectId || ""
       };
+      const cid = options.conversationId || conversationId;
+      if (cid) {
+        wsMessage.conversation_id = cid;
+      }
 
       console.log('Sending message:', { ...wsMessage, auth_token: authTokenRef.current ? '***' : '' });
       wsRef.current.send(JSON.stringify(wsMessage));
@@ -635,20 +666,23 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
     }
   }, [sessionId, conversationId, connect]);
 
-  // Approve tool
-  const approveTool = useCallback((requestId, reason = 'Approved by user') => {
+  // Approve tool (optional rememberPattern: sync current session allowlist without reload)
+  const approveTool = useCallback((requestId, reason = 'Approved by user', rememberPattern = null) => {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
       console.error('WebSocket not connected');
       return;
     }
 
     try {
-      // Send approval with request_id so SDK knows which request to approve
-      wsRef.current.send(JSON.stringify({
+      const payload = {
         type: 'permission_response',
-        request_id: requestId, // Use request_id to match backend
-        allow: 'yes'
-      }));
+        request_id: requestId,
+        allow: 'yes',
+      };
+      if (rememberPattern) {
+        payload.remember_pattern = rememberPattern;
+      }
+      wsRef.current.send(JSON.stringify(payload));
 
       // Agent will continue processing after approval
       setIsSending(true);
@@ -693,8 +727,8 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
         }
       }
 
-      // 2. Approve current request
-      approveTool(requestId, 'Approved always by user');
+      // 2. Approve current request and extend in-memory allowlist for this WebSocket session
+      approveTool(requestId, 'Approved always by user', permissionPattern || null);
 
     } catch (error) {
       console.error('Error approving tool always:', error);
@@ -748,9 +782,16 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
   // Start a new conversation (keeps WebSocket session, clears conversation)
   const newConversation = useCallback(() => {
     setMessages([]);
-    setConversationId(null);
     setTodos([]);
     localStorage.removeItem('claude_conversation_id');
+    setConversationId(null);
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      try {
+        wsRef.current.send(JSON.stringify({ type: 'new_conversation' }));
+      } catch (e) {
+        console.error('Failed to notify server of new conversation:', e);
+      }
+    }
     console.log('Started new conversation');
   }, []);
 
@@ -783,6 +824,18 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
           }));
           setMessages(loadedMessages);
           console.log('Loaded', loadedMessages.length, 'messages from history');
+        }
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          try {
+            wsRef.current.send(
+              JSON.stringify({
+                type: 'resume_conversation',
+                conversation_id: convId,
+              })
+            );
+          } catch (sendErr) {
+            console.error('Failed to sync resume to agent:', sendErr);
+          }
         }
       }
     } catch (err) {

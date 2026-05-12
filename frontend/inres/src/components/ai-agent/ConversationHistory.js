@@ -37,6 +37,7 @@ export function ConversationHistory({
   onResumeConversation,
   currentConversationId,
   authToken,
+  listRefreshKey = 0,
 }) {
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -99,7 +100,7 @@ export function ConversationHistory({
     if (isOpen && authToken) {
       loadConversations();
     }
-  }, [isOpen, authToken, loadConversations]);
+  }, [isOpen, authToken, loadConversations, listRefreshKey]);
 
   // Handle archive conversation
   const handleArchive = async (conversationId, e) => {
@@ -250,7 +251,10 @@ export function ConversationHistory({
 
                       {/* Preview */}
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
-                        {truncateText(conversation.first_message, 80)}
+                        {truncateText(
+                          conversation.first_message || conversation.title || 'No preview yet',
+                          80
+                        )}
                       </p>
 
                       {/* Meta & Actions */}

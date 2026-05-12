@@ -20,6 +20,23 @@ import {
 import MCPServerModal from './MCPServerModal';
 import MCPServerDetailModal from './MCPServerDetailModal';
 
+/** Built-in MCP servers (SDK); not stored in user_mcp_servers — always loaded with the agent */
+const BUNDLED_MCP_SERVERS = [
+  {
+    id: 'incident_tools',
+    title: 'incident_tools',
+    summary: 'InRes incidents API (list, search, stats, time range). Uses your session JWT and org/project context.',
+    configure: 'Requires the Go API reachable from the agent (inres_API_URL / INRES_API_URL).',
+  },
+  {
+    id: 'release_tools',
+    title: 'release_tools',
+    summary: 'Release workflow: Jira, Confluence, Git/YAML, GitHub PR, SOPS, ArgoCD, and release API steps.',
+    configure:
+      'Set agent env: JIRA_USER_EMAIL, JIRA_API_TOKEN, GITHUB_TOKEN, ARGOCD_SERVER_URL, ARGOCD_AUTH_TOKEN, INFRA_REPO, etc. Optional: add separate MCP servers below (e.g. Coralogix) for extra tools.',
+  },
+];
+
 export default function MCPServersTab() {
   const { session } = useAuth();
   const [servers, setServers] = useState([]);
@@ -146,10 +163,12 @@ export default function MCPServersTab() {
     setIsEditModalOpen(true);
   };
 
-  const filteredServers = servers.filter(server => {
-    const matchesSearch = server.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         server.command.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSearch;
+  const filteredServers = servers.filter((server) => {
+    const q = searchTerm.toLowerCase();
+    const name = (server.name || '').toLowerCase();
+    const cmd = (server.command || '').toLowerCase();
+    const url = (server.url || '').toLowerCase();
+    return name.includes(q) || cmd.includes(q) || url.includes(q);
   });
 
   if (loading) {
@@ -167,6 +186,28 @@ export default function MCPServersTab() {
 
   return (
     <div className="space-y-3 sm:space-y-4">
+      <div className="rounded-lg border border-emerald-200 bg-emerald-50/80 p-3 sm:p-4 dark:border-emerald-800 dark:bg-emerald-950/30">
+        <h2 className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">
+          Bundled MCP (always on)
+        </h2>
+        <p className="mt-1 text-xs text-emerald-900/85 dark:text-emerald-200/85">
+          These servers ship with the InRes agent and are not edited here. Add entries below only for
+          extra integrations (Coralogix MCP, Atlassian remote MCP, custom stdio servers, etc.).
+        </p>
+        <ul className="mt-3 space-y-2">
+          {BUNDLED_MCP_SERVERS.map((s) => (
+            <li
+              key={s.id}
+              className="rounded-md border border-emerald-100 bg-white/90 px-3 py-2 text-xs dark:border-emerald-900 dark:bg-gray-900/60"
+            >
+              <div className="font-mono font-medium text-emerald-900 dark:text-emerald-100">{s.title}</div>
+              <p className="mt-0.5 text-gray-700 dark:text-gray-300">{s.summary}</p>
+              <p className="mt-1 text-gray-600 dark:text-gray-400">{s.configure}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* Header with Add Button and Search */}
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
         <div className="flex-1 relative">

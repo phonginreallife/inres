@@ -60,7 +60,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
    cd api && air
    
    # AI Agent
-   cd api/ai && source venv/bin/activate && python claude_agent_api_v1.py
+   cd server/agent && source venv/bin/activate && python claude_agent.py
    ```
 
 4. **Start frontend**:

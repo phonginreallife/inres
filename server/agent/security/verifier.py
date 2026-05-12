@@ -563,7 +563,7 @@ class ZeroTrustVerifier:
 
         if msg_type == 'chat_message' and not session.has_permission('chat'):
             return False, "Permission denied: chat", None
-        if msg_type == 'tool_approval' and not session.has_permission('tools'):
+        if msg_type in ("tool_approval", "permission_response") and not session.has_permission('tools'):
             return False, "Permission denied: tools", None
 
         return True, "OK", data

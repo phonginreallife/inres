@@ -41,7 +41,7 @@ source venv/bin/activate  # or: source env/bin/activate
 pip install -r requirements.txt
 
 # Run AI agent service
-python claude_agent_api_v1.py
+python claude_agent.py
 # Runs on http://localhost:8002
 ```
 
@@ -107,8 +107,8 @@ inres is a multi-service on-call management platform with AI-powered incident re
 - **Database**: PostgreSQL via Supabase (uses `database/sql` with `lib/pq` driver)
 - **Runs on**: Port 8080
 
-### 2. AI Agent Service (`api/ai/`)
-- **Entry Point**: `api/ai/claude_agent_api_v1.py`
+### 2. AI Agent Service (`server/agent/`)
+- **Entry Point**: `server/agent/claude_agent.py`
 - **Framework**: FastAPI with Claude Agent SDK
 - **Purpose**: AI-powered incident analysis and response using Anthropic Claude
 - **Key Features**:
@@ -116,10 +116,12 @@ inres is a multi-service on-call management platform with AI-powered incident re
   - MCP (Model Context Protocol) server integration for tools
   - Supabase storage for conversation persistence
   - Tool approval system for security
+  - Persistent memory with lifecycle hooks (claude-mem style)
 - **Key Files**:
-  - `claude_agent_api_v1.py` - Main FastAPI server with WebSocket endpoints
-  - `mcp_config_manager.py` - MCP server configuration and management
-  - `supabase_storage.py` - Conversation and session storage
+  - `claude_agent.py` - Main FastAPI server with WebSocket endpoints
+  - `hybrid/sdk_agent.py` - SDKHybridAgent for production use
+  - `services/memory_service.py` - Persistent memory system
+  - `core/lifecycle_hooks.py` - Memory lifecycle hooks
   - `incident_tools.py` - Tools for incident management
 - **Runs on**: Port 8002
 

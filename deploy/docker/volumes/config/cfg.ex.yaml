@@ -63,6 +63,25 @@ slack_bot_token: "xoxb-..."
 slack_app_token: "xapp-..."
 
 # =============================================================================
+# RELEASE MANAGEMENT
+# =============================================================================
+release:
+  jira:
+    base_url: "https://opswat.atlassian.net"
+    # API token: set via env JIRA_API_TOKEN
+    # User email: set via env JIRA_USER_EMAIL
+  confluence:
+    base_url: "https://opswat.atlassian.net/wiki"
+  github:
+    infra_repo: "opswat-eng/mdaas-infrastructure-template-prod"
+    base_branch: "master"
+    # Token: set via env GITHUB_TOKEN (or use gh CLI auth)
+  argocd:
+    server_url: ""
+    # Token: set via env ARGOCD_AUTH_TOKEN
+  workspace_dir: "/tmp/release-workspaces"
+
+# =============================================================================
 # AI INCIDENT ANALYTICS
 # =============================================================================
 ai_incident_analytics:

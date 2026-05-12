@@ -361,10 +361,23 @@ func (s *SupabaseAuthService) ExtractTokenFromHeader(authHeader string) (string,
 	return parts[1], nil
 }
 
+// SupabaseSubjectID returns the auth user id from JWT `sub`.
+// SupabaseClaims embeds jwt.RegisteredClaims, both map `sub`; decoders may fill Subject only,
+// leaving UserID empty — always prefer a non-empty UserID, then RegisteredClaims.Subject.
+func SupabaseSubjectID(c *SupabaseClaims) string {
+	if c == nil {
+		return ""
+	}
+	if uid := strings.TrimSpace(c.UserID); uid != "" {
+		return uid
+	}
+	return strings.TrimSpace(c.Subject)
+}
+
 // GetUserInfo extracts user information from Supabase claims
 func (s *SupabaseAuthService) GetUserInfo(claims *SupabaseClaims) map[string]interface{} {
 	userInfo := map[string]interface{}{
-		"id":    claims.UserID,
+		"id":    SupabaseSubjectID(claims),
 		"email": claims.Email,
 		"role":  claims.Role,
 	}

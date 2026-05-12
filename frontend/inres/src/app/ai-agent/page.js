@@ -23,17 +23,27 @@ function AIAgentContent() {
   const { currentOrg, currentProject } = useOrg();
   const searchParams = useSearchParams();
   const incidentId = searchParams.get('incident');
+  const releaseIdParam = searchParams.get('release');
   const [input, setInput] = useState("");
   const [showHistory, setShowHistory] = useState(false);
+  const [conversationListRefreshKey, setConversationListRefreshKey] = useState(0);
   const endRef = useRef(null);
   const messageAreaRef = useRef(null);
 
-  // Pre-fill input with incident context if available
+  // Pre-fill input from URL context (release workflow vs incident)
   useEffect(() => {
+    if (releaseIdParam) {
+      setInput(
+        `Continue the release workflow for release ${releaseIdParam}. ` +
+          'Call release_get_status with this release_id first, then release_integration_guide. ' +
+          'Use your project Jira/Confluence/GitHub/ArgoCD MCP tools for vendor APIs; use release_* tools for InRes state and local git/YAML.'
+      );
+      return;
+    }
     if (incidentId) {
       setInput(`Analyze incident ${incidentId}`);
     }
-  }, [incidentId]);
+  }, [incidentId, releaseIdParam]);
 
   // Extract auth token from session
   const authToken = session?.access_token || null;
@@ -97,6 +107,7 @@ function AIAgentContent() {
   // Handle new conversation from history sidebar
   const handleNewConversation = useCallback(() => {
     newConversation();
+    setConversationListRefreshKey((k) => k + 1);
     console.log('Started new conversation');
   }, [newConversation]);
 
@@ -171,6 +182,7 @@ function AIAgentContent() {
         onResumeConversation={handleResumeConversation}
         currentConversationId={conversationId}
         authToken={authToken}
+        listRefreshKey={conversationListRefreshKey}
       />
 
       {/* History Toggle Button - Fixed Position Right */}

@@ -35,7 +35,8 @@ const tabs = [
     name: 'MCP Servers',
     icon: ServerIcon,
     component: MCPServersTab,
-    description: 'Configure Model Context Protocol servers'
+    description:
+      'Bundled incident_tools and release_tools are always on. Add optional MCP servers here (Coralogix, custom Atlassian MCP, etc.) for the agent.',
   },
   {
     name: 'Allowed Tools',

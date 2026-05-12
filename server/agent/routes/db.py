@@ -2,7 +2,7 @@
 Database routes for AI Agent API.
 Handles CRUD operations for installed_plugins, marketplaces via raw SQL.
 
-Split from claude_agent_api_v1.py for better code organization.
+Split from claude_agent.py for better code organization.
 """
 
 import sys

@@ -21,6 +21,20 @@ import yaml
 logger = logging.getLogger(__name__)
 
 
+def _bootstrap_env_from_dotenv_files() -> None:
+    """Load server/agent/.env then .env.dev so local secrets apply before Config reads os.environ."""
+    try:
+        from dotenv import load_dotenv
+    except ImportError:
+        return
+    root = Path(__file__).parent.parent
+    load_dotenv(root / ".env")
+    load_dotenv(root / ".env.dev", override=True)
+
+
+_bootstrap_env_from_dotenv_files()
+
+
 class AIAnalyticsConfig:
     """AI Incident Analytics configuration section"""
 
@@ -99,11 +113,13 @@ class Config:
             else:
                 logger.warning(f"  inres_CONFIG_PATH set but file not found: {config_path}")
 
-        # Fallback search paths
+        # Fallback search paths (agent package root = parent of config/)
+        agent_root = Path(__file__).parent.parent
         search_paths = [
-            Path("/app/config.yaml"),  # Docker mount point
-            Path(__file__).parent.parent / "config" / "dev.config.yaml",  # api/config/dev.config.yaml
-            Path(__file__).parent.parent / "cmd" / "server" / "dev.config.yaml",  # Legacy
+            Path("/app/config.yaml"),  # Docker mount point (see docker-compose.dev.yaml)
+            agent_root / "config.dev.yaml",  # Local dev defaults when running uvicorn on the host
+            agent_root / "config" / "dev.config.yaml",
+            agent_root / "cmd" / "server" / "dev.config.yaml",  # Legacy
             Path("/etc/inres/config.yaml"),  # System-wide
             Path.home() / ".inres" / "config.yaml",  # User
         ]
@@ -115,6 +131,25 @@ class Config:
 
         logger.warning("No config file found, using environment variables only")
         return None
+
+    def _apply_host_dev_url_rewrites(self) -> None:
+        """
+        config.dev.yaml targets Docker service names / host.docker.internal.
+        When uvicorn runs on the host, rewrite to loopback so Postgres / JWKS / Redis work.
+        """
+        if Path("/.dockerenv").exists():
+            return
+
+        def rewrite_docker_internal(val: Optional[str]) -> Optional[str]:
+            if val and "host.docker.internal" in val:
+                return val.replace("host.docker.internal", "127.0.0.1")
+            return val
+
+        self.database_url = rewrite_docker_internal(self.database_url)
+        self.supabase_url = rewrite_docker_internal(self.supabase_url)
+        self.redis_url = rewrite_docker_internal(self.redis_url)
+        if self.redis_url and self.redis_url.startswith("redis://redis:"):
+            self.redis_url = self.redis_url.replace("redis://redis:", "redis://127.0.0.1:", 1)
 
     def _load_config(self):
         """Load configuration from file and environment variables"""
@@ -141,9 +176,17 @@ class Config:
         self.supabase_service_role_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or config_dict.get("supabase_service_role_key")
         self.supabase_jwt_secret = os.getenv("SUPABASE_JWT_SECRET") or config_dict.get("supabase_jwt_secret")
 
-        # External services
-        self.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY") or config_dict.get("anthropic_api_key")
-        self.slack_bot_token = os.getenv("SLACK_BOT_TOKEN") or config_dict.get("slack_bot_token")
+        self._apply_host_dev_url_rewrites()
+
+        # External services (YAML often has anthropic_api_key: "" — treat blank as unset)
+        self.anthropic_api_key = (
+            (os.getenv("ANTHROPIC_API_KEY") or "").strip()
+            or (str(config_dict.get("anthropic_api_key") or "").strip() or None)
+        )
+        self.slack_bot_token = (
+            (os.getenv("SLACK_BOT_TOKEN") or "").strip()
+            or (str(config_dict.get("slack_bot_token") or "").strip() or None)
+        )
 
         # AI Analytics
         ai_analytics_dict = config_dict.get("ai_incident_analytics", {})
