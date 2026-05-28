@@ -15,18 +15,6 @@ InRes is an open-source on-call and incident management platform with an integra
 
 ---
 
-## Why InRes?
-
-| Traditional Tools | InRes |
-|-------------------|-------|
-| Alert fatigue from noise | AI-powered deduplication & analysis |
-| Manual investigation | AI agent investigates for you |
-| Copy-paste runbooks | AI executes with approval |
-| Context switching | Everything in one place |
-| Expensive per-seat pricing | Open source, self-hosted |
-
----
-
 ## Features
 
 ### Incident Management
