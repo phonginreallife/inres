@@ -20,7 +20,11 @@ const ChatInput = ({
   syncStatus = 'idle',
   todos = [],
   conversationId = null,
-  hasMessages = false
+  hasMessages = false,
+  model = null,
+  availableModels = [],
+  modelPending = false,
+  onModelChange = null
 }) => {
   const [showShareModal, setShowShareModal] = useState(false);
 
@@ -83,6 +87,76 @@ const ChatInput = ({
                     </svg>
                   </button>
                 </div>
+              )}
+
+              {/* Model Selector - only when the server offered a choice */}
+              {onModelChange && availableModels.length > 1 && (
+                <Menu as="div" className="relative">
+                  <Menu.Button
+                    className="flex items-center gap-1 rounded-md px-2 py-1.5 text-xs font-medium
+                               text-gray-600 dark:text-gray-300
+                               hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    title="Switch model"
+                  >
+                    <span className="max-w-[9rem] truncate">
+                      {(availableModels.find(m => m.id === model) || {}).label || model || 'Model'}
+                    </span>
+                    {modelPending && (
+                      <span
+                        className="h-1.5 w-1.5 rounded-full bg-blue-500"
+                        title="Applies from your next message"
+                      />
+                    )}
+                    <svg className="h-3.5 w-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </Menu.Button>
+
+                  <Transition
+                    enter="transition duration-100 ease-out"
+                    enterFrom="transform scale-95 opacity-0"
+                    enterTo="transform scale-100 opacity-100"
+                    leave="transition duration-75 ease-out"
+                    leaveFrom="transform scale-100 opacity-100"
+                    leaveTo="transform scale-95 opacity-0"
+                  >
+                    <Menu.Items className="absolute bottom-full left-0 mb-2 w-72 bg-white dark:bg-gray-800
+                                           rounded-lg shadow-lg border border-gray-200 dark:border-gray-700
+                                           py-1 z-50 focus:outline-none">
+                      {availableModels.map((m) => (
+                        <Menu.Item key={m.id}>
+                          {({ active }) => (
+                            <button
+                              type="button"
+                              onClick={() => onModelChange(m.id)}
+                              className={`w-full px-4 py-2.5 text-left flex items-start gap-3
+                                ${active ? 'bg-gray-50 dark:bg-gray-700' : ''}
+                                ${m.id === model ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}
+                            >
+                              <span className="mt-0.5 w-4 shrink-0 text-blue-600 dark:text-blue-400">
+                                {m.id === model && (
+                                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                )}
+                              </span>
+                              <span className="min-w-0">
+                                <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">
+                                  {m.label || m.id}
+                                </span>
+                                {m.description && (
+                                  <span className="block text-xs text-gray-500 dark:text-gray-400">
+                                    {m.description}
+                                  </span>
+                                )}
+                              </span>
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
               )}
 
               {/* Mode Selector */}
