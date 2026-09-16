@@ -37,17 +37,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install kubectl
-RUN curl -fsSL https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
+# TARGETARCH is supplied by BuildKit; without it an arm64 build would silently
+# fetch the amd64 binary and produce a kubectl that cannot execute.
+ARG TARGETARCH
+RUN curl -fsSL "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${TARGETARCH:-amd64}/kubectl" -o /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl
 
 # Install Google Cloud SDK
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg \
     && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
-    && apt-get update && apt-get install -y google-cloud-cli google-cloud-sdk-gke-gcloud-auth-plugin \
+    && apt-get update && apt-get install -y google-cloud-cli google-cloud-cli-gke-gcloud-auth-plugin \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Claude Code CLI globally (required by claude-agent-sdk)
-RUN npm install -g @anthropic-ai/claude-code
+# Pinned so two builds of the same commit behave identically. Unpinned, a CLI
+# release can start emitting message types the pinned SDK has never seen.
+ARG CLAUDE_CODE_VERSION=2.1.197
+RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}
 
 # Copy installed packages from builder
 COPY --from=builder /root/.local /root/.local
