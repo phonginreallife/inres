@@ -1,32 +1,22 @@
 """
-Streaming Module - Token-level LLM Streaming.
+MCP client plumbing.
 
-This module provides true token-by-token streaming from the Anthropic API,
-delivering a fast and responsive user experience.
+Named for the token-streaming agent that used to live here; streaming is now
+handled by the Claude Agent SDK inside the ``session`` package, and what remains
+is the pool that manages the user's external MCP servers.
 
 Components:
-- agent.py: StreamingAgent and INCIDENT_TOOLS definitions
 - mcp_client.py: MCP server pool for external tool integrations
-
-Features:
-- True token streaming (not block streaming)
-- MCP tool support via subprocess/connection pool
-- Compatible with audit and conversation history modules
+- mcp_config.py: MCP server configuration
 
 Usage:
-    from streaming import INCIDENT_TOOLS, MCPToolManager, get_mcp_pool
+    from streaming import MCPToolManager, get_mcp_pool
 """
 
-from .agent import StreamingAgent, create_streaming_agent, INCIDENT_TOOLS
 from .mcp_client import MCPToolManager, MCPServerPool, get_mcp_pool
 from .mcp_config import MCPConfigManager
 
 __all__ = [
-    # Agent
-    "StreamingAgent",
-    "create_streaming_agent", 
-    "INCIDENT_TOOLS",
-    # MCP
     "MCPToolManager",
     "MCPServerPool",
     "get_mcp_pool",

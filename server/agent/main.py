@@ -1,32 +1,31 @@
 """
 InRes AI Agent API - Main Entry Point.
 
-This is the main FastAPI application using SDKHybridAgent that combines:
-1. Claude Agent SDK for planning, tools, and MCP integration
-2. Direct Anthropic API for token-level streaming
+FastAPI application serving chat over persistent Claude Agent SDK sessions.
 
 Architecture:
     main.py (this file)
-    ├── /ws/chat        → SDKHybridAgent (SDK tools + token streaming)
-    ├── /ws/secure/chat → SDKHybridAgent with Zero-Trust auth
+    ├── /ws/chat        → ChatSession (JWT auth)
+    ├── /ws/secure/chat → ChatSession (zero-trust signed messages)
     └── /api/*          → REST endpoints (routes/)
 
-Data Flow:
-    UI ◄── token stream ── Direct Anthropic API
-                               ▲
-                  Claude Agent SDK (planning / tools / MCP)
-                               ▼
-                         Business logic (InRes API)
+Data flow: one Claude Agent SDK client stays connected for the life of a
+WebSocket. It plans, runs tools (incident tools + the user's MCP servers) and
+streams tokens in a single pass; the session layer translates its message
+stream into WebSocket events.
+
+    UI ◄── delta / tool events ── ChatSession ◄── Claude Agent SDK ──► tools
+                                                                       │
+                                                        Business logic (InRes API)
 
 Packages:
-    - hybrid/       SDKHybridAgent + SDKOrchestrator (production agent)
+    - session/      ChatSession, event translation, tool approval (the agent)
     - tools/        @tool decorated functions for Claude Agent SDK
     - streaming/    MCP client pool
     - routes/       HTTP API endpoints
     - services/     Business logic (storage, analytics)
     - audit/        Security audit logging
     - security/     Zero trust verification
-    - core/         Shared abstractions (BaseAgent)
     - config/       Configuration
     - utils/        Utilities
 

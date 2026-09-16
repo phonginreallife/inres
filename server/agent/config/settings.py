@@ -62,6 +62,123 @@ class AIAnalyticsConfig:
         return default
 
 
+# Offered in the model picker when the config file does not say otherwise.
+DEFAULT_AVAILABLE_MODELS: List[Dict[str, str]] = [
+    {
+        "id": "claude-opus-5",
+        "label": "Opus 5",
+        "description": "Best judgment. Default for incident work.",
+    },
+    {
+        "id": "claude-sonnet-5",
+        "label": "Sonnet 5",
+        "description": "Faster and cheaper. Good for routine questions.",
+    },
+    {
+        "id": "claude-haiku-4-5",
+        "label": "Haiku 4.5",
+        "description": "Fastest. Best for simple lookups.",
+    },
+]
+
+
+class AgentConfig:
+    """
+    Interactive chat agent configuration section (YAML key: ai_agent).
+
+    Separate from AIAnalyticsConfig, which covers the background PGMQ-driven
+    incident analysis. Same precedence rule: environment beats YAML beats the
+    defaults here.
+    """
+
+    def __init__(self, config_dict: Dict[str, Any]):
+        self.model = os.getenv("AI_AGENT_MODEL") or config_dict.get("model", "claude-opus-5")
+        self.permission_mode = os.getenv("AI_AGENT_PERMISSION_MODE") or config_dict.get("permission_mode", "default")
+
+        # Ask the user before running a tool that isn't already allow-listed.
+        self.require_tool_approval = self._get_bool(
+            "AI_AGENT_REQUIRE_TOOL_APPROVAL", config_dict.get("require_tool_approval", True)
+        )
+
+        self.max_turns = self._get_int("AI_AGENT_MAX_TURNS", config_dict.get("max_turns", 10))
+        self.max_budget_usd = self._get_float("AI_AGENT_MAX_BUDGET_USD", config_dict.get("max_budget_usd", 0)) or None
+
+        # Drop the CLI subprocess after this long without traffic. The session id
+        # is kept, so the next message resumes rather than starting over.
+        self.idle_timeout_s = self._get_float("AI_AGENT_IDLE_TIMEOUT_S", config_dict.get("idle_timeout_s", 900))
+
+        # How long a tool approval prompt waits for the user before denying.
+        self.permission_timeout_s = self._get_float(
+            "AI_AGENT_PERMISSION_TIMEOUT_S", config_dict.get("permission_timeout_s", 300)
+        )
+
+        # Ceiling on live CLI subprocesses in this process - one per active
+        # session, so this bounds memory under many open tabs.
+        self.max_concurrent_cli = self._get_int(
+            "AI_AGENT_MAX_CONCURRENT_CLI", config_dict.get("max_concurrent_cli", 8)
+        )
+
+        self.system_prompt = config_dict.get("system_prompt") or None
+
+        # Models a user may switch to from the UI. This is an allowlist, not a
+        # suggestion: whatever arrives over the socket is checked against it
+        # before reaching the CLI, so a crafted message cannot pick an
+        # arbitrary model. The configured `model` is always included.
+        self.available_models = self._load_models(config_dict)
+
+    def _load_models(self, config_dict: Dict[str, Any]) -> List[Dict[str, str]]:
+        env_models = os.getenv("AI_AGENT_AVAILABLE_MODELS")
+        if env_models:
+            entries: List[Dict[str, str]] = [
+                {"id": m.strip(), "label": m.strip(), "description": ""}
+                for m in env_models.split(",")
+                if m.strip()
+            ]
+        else:
+            entries = []
+            for item in config_dict.get("available_models") or DEFAULT_AVAILABLE_MODELS:
+                if isinstance(item, str):
+                    entries.append({"id": item, "label": item, "description": ""})
+                elif isinstance(item, dict) and item.get("id"):
+                    entries.append({
+                        "id": str(item["id"]),
+                        "label": str(item.get("label") or item["id"]),
+                        "description": str(item.get("description") or ""),
+                    })
+
+        # The active model must always be selectable, or the UI would show a
+        # current value that cannot be chosen again after switching away.
+        if not any(e["id"] == self.model for e in entries):
+            entries.insert(0, {"id": self.model, "label": self.model, "description": ""})
+
+        return entries
+
+    def is_model_allowed(self, model: str) -> bool:
+        return any(e["id"] == model for e in self.available_models)
+
+    def _get_bool(self, env_var: str, default: bool) -> bool:
+        env_val = os.getenv(env_var)
+        if env_val is not None:
+            return env_val.lower() in ("true", "1", "yes")
+        return bool(default)
+
+    def _get_int(self, env_var: str, default: Any) -> int:
+        raw = os.getenv(env_var, default)
+        try:
+            return int(raw)
+        except (TypeError, ValueError):
+            logger.warning(f"Invalid integer for {env_var}: {raw!r}; using {default}")
+            return int(default)
+
+    def _get_float(self, env_var: str, default: Any) -> float:
+        raw = os.getenv(env_var, default)
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            logger.warning(f"Invalid number for {env_var}: {raw!r}; using {default}")
+            return float(default)
+
+
 class Config:
     """Central configuration object loaded from dev.config.yaml"""
 
@@ -83,6 +200,9 @@ class Config:
 
         # AI Analytics
         self.ai_analytics: Optional[AIAnalyticsConfig] = None
+
+        # Interactive chat agent
+        self.agent: Optional[AgentConfig] = None
 
         # Load configuration
         self._load_config()
@@ -149,6 +269,9 @@ class Config:
         ai_analytics_dict = config_dict.get("ai_incident_analytics", {})
         self.ai_analytics = AIAnalyticsConfig(ai_analytics_dict)
 
+        # Interactive chat agent
+        self.agent = AgentConfig(config_dict.get("ai_agent", {}))
+
         # Log what was loaded
         self._log_config()
 
@@ -161,6 +284,12 @@ class Config:
         logger.info(f"  - Supabase: {'OK' if self.supabase_url else 'MISSING'}")
         logger.info(f"  - Anthropic API: {'OK' if self.anthropic_api_key else 'MISSING'}")
         logger.info(f"  - AI Analytics: enabled={self.ai_analytics.enabled}, model={self.ai_analytics.model}")
+        logger.info(
+            f"  - Chat Agent: model={self.agent.model}, "
+            f"tool_approval={self.agent.require_tool_approval}, "
+            f"idle_timeout={self.agent.idle_timeout_s}s, "
+            f"max_concurrent={self.agent.max_concurrent_cli}"
+        )
 
 
 # Global singleton instance

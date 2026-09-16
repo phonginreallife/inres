@@ -11,6 +11,7 @@ Endpoints:
 - DELETE /api/conversations/{conversation_id} - Delete conversation
 """
 
+import asyncio
 import json
 import logging
 import sys
@@ -81,7 +82,11 @@ async def save_conversation(
         if not title:
             title = first_message[:50] + "..." if len(first_message) > 50 else first_message
 
-        execute_query(
+        # psycopg2 is blocking and opens its own connection, so this runs off
+        # the event loop - a stalled loop also stalls streaming and tool
+        # approvals for every other session in the process.
+        await asyncio.to_thread(
+            execute_query,
             """
             INSERT INTO claude_conversations
             (conversation_id, user_id, title, first_message, model, workspace_path, metadata)
@@ -114,7 +119,8 @@ async def save_conversation(
 async def update_conversation_activity(conversation_id: str) -> bool:
     """Update last_message_at and increment message_count for existing conversation."""
     try:
-        execute_query(
+        await asyncio.to_thread(
+            execute_query,
             """
             UPDATE claude_conversations
             SET last_message_at = NOW(),
@@ -129,6 +135,79 @@ async def update_conversation_activity(conversation_id: str) -> bool:
     except Exception as e:
         logger.error(f"Failed to update conversation activity: {e}", exc_info=True)
         return False
+
+
+async def update_conversation_session(conversation_id: str, claude_session_id: str) -> bool:
+    """
+    Record the Claude CLI session id against a conversation.
+
+    Stored in the existing ``metadata`` JSONB rather than in
+    ``conversation_id``: that column is the join key for ``claude_messages``
+    and must stay stable, while the Claude session id changes whenever a
+    session is restarted or forked.
+
+    Reading it back on a later connection is what lets a reload continue the
+    same conversation instead of starting cold.
+    """
+    if not conversation_id or not claude_session_id:
+        return False
+
+    try:
+        await asyncio.to_thread(
+            execute_query,
+            """
+            UPDATE claude_conversations
+            SET metadata = COALESCE(metadata, '{}'::jsonb)
+                           || jsonb_build_object('claude_session_id', %s::text),
+                updated_at = NOW()
+            WHERE conversation_id = %s
+            """,
+            (claude_session_id, conversation_id),
+            fetch="none"
+        )
+        return True
+    except Exception as e:
+        logger.error(f"Failed to record Claude session id: {e}", exc_info=True)
+        return False
+
+
+async def get_conversation_session(user_id: str, conversation_id: str):
+    """
+    Look up the Claude session id to resume for a conversation.
+
+    Scoped by ``user_id``: without that check a guessed conversation id would
+    resume somebody else's session.
+
+    Returns:
+        None  - no such conversation for this user; do not adopt the id.
+        ""    - the conversation exists but has no Claude session recorded yet
+                (its first turn never reached a result). Still adopt the id, or
+                new turns would be written to a different conversation than the
+                one the user is looking at.
+        str   - the Claude session id to resume.
+    """
+    if not user_id or not conversation_id:
+        return None
+
+    try:
+        row = await asyncio.to_thread(
+            execute_query,
+            """
+            SELECT metadata->>'claude_session_id' AS claude_session_id
+            FROM claude_conversations
+            WHERE conversation_id = %s AND user_id = %s
+            """,
+            (conversation_id, user_id),
+            fetch="one"
+        )
+        if row is None:
+            return None
+        if isinstance(row, dict):
+            return row.get("claude_session_id") or ""
+        return row[0] or ""
+    except Exception as e:
+        logger.error(f"Failed to look up Claude session id: {e}", exc_info=True)
+        return None
 
 
 async def save_message(
