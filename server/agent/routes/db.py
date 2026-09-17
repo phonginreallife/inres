@@ -193,6 +193,25 @@ async def add_installed_plugin(request: Request):
         }
 
 
+def _deactivate_skills_for_plugin(user_id: str, marketplace_name: str, plugin_name: str) -> list:
+    """Remove the .claude/skills entries a plugin installed, if any."""
+    from routes.marketplace import _deactivate_plugin_skills
+    from services.storage import get_user_workspace_path
+
+    record = execute_query(
+        "SELECT plugins FROM marketplaces WHERE user_id = %s AND name = %s",
+        (user_id, marketplace_name),
+        fetch="one"
+    )
+    if not record or not record.get("plugins"):
+        return []
+
+    for plugin_def in record["plugins"]:
+        if plugin_def.get("name") == plugin_name:
+            return _deactivate_plugin_skills(get_user_workspace_path(user_id), plugin_def)
+    return []
+
+
 @router.delete("/installed-plugins/{plugin_id}")
 async def delete_installed_plugin(plugin_id: str, request: Request):
     """
@@ -212,6 +231,14 @@ async def delete_installed_plugin(plugin_id: str, request: Request):
         if error:
             return error
 
+        # Look the row up before deleting it - we need its marketplace and name
+        # to find which skill directories to deactivate.
+        plugin_row = execute_query(
+            "SELECT plugin_name, marketplace_name FROM installed_plugins WHERE id = %s AND user_id = %s",
+            (plugin_id, user_id),
+            fetch="one"
+        )
+
         execute_query(
             """
             DELETE FROM installed_plugins
@@ -221,9 +248,26 @@ async def delete_installed_plugin(plugin_id: str, request: Request):
             fetch="none"
         )
 
+        # Uninstalling has to undo what installing did, or the skills stay
+        # live in .claude/skills/ with nothing recorded as owning them.
+        removed_skills = []
+        if plugin_row:
+            try:
+                removed_skills = _deactivate_skills_for_plugin(
+                    user_id,
+                    plugin_row["marketplace_name"],
+                    plugin_row["plugin_name"],
+                )
+            except Exception as exc:
+                logger.error(f"Failed to deactivate skills for '{plugin_id}': {exc}")
+
         logger.info(f"  User {user_id}: Deleted installed plugin '{plugin_id}'")
 
-        return {"success": True, "message": f"Plugin {plugin_id} deleted successfully"}
+        return {
+            "success": True,
+            "message": f"Plugin {plugin_id} deleted successfully",
+            "removed_skills": removed_skills,
+        }
 
     except Exception as e:
         return {

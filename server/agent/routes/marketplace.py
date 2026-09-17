@@ -33,6 +33,7 @@ import httpx
 from fastapi import APIRouter, Request
 
 from services.storage import (
+    ensure_claude_skills_dir,
     extract_user_id_from_token,
     get_supabase_client,
     get_user_workspace_path,
@@ -75,6 +76,88 @@ def sanitize_error_message(error: Exception, context: str = "") -> str:
     """Sanitize error messages to prevent information disclosure."""
     logger.error(f"Error {context}: {type(error).__name__}: {str(error)}", exc_info=True)
     return f"An error occurred {context}. Please try again."
+
+
+
+def _activate_plugin_skills(workspace_path: Path, marketplace_name: str, plugin_def: dict) -> list:
+    """
+    Copy a plugin's declared skill directories into .claude/skills/.
+
+    Installing a plugin used to record a database row and nothing else. The
+    files sat under .claude/plugins/marketplaces/<name>/ where nothing read
+    them, so the agent never gained the skill. Claude Code discovers project
+    skills at .claude/skills/<name>/SKILL.md - the same place
+    sync_user_skills() writes - so that is where they have to land.
+
+    Only the directories this plugin declares are copied, which keeps one
+    plugin from activating everything else in a shared marketplace repo.
+
+    Returns the skill names activated.
+    """
+    skills = plugin_def.get("skills") or []
+    if not skills:
+        return []
+
+    marketplace_dir = get_marketplace_dir(workspace_path, marketplace_name).resolve()
+    skills_root = ensure_claude_skills_dir(workspace_path).resolve()
+    activated = []
+
+    for entry in skills:
+        if not isinstance(entry, str) or not entry.strip():
+            continue
+
+        source = (marketplace_dir / entry.strip().lstrip("./")).resolve()
+
+        # marketplace.json comes from a third-party repository, so treat its
+        # paths as untrusted: a '../../..' entry must not be able to copy
+        # arbitrary files out of the workspace.
+        if not source.is_relative_to(marketplace_dir):
+            logger.warning(f"Skipping skill outside marketplace: {entry}")
+            continue
+
+        if not source.is_dir():
+            logger.warning(f"Declared skill directory missing: {source}")
+            continue
+
+        destination = skills_root / source.name
+        if not destination.resolve().is_relative_to(skills_root):
+            logger.warning(f"Skipping skill with unsafe name: {source.name}")
+            continue
+
+        try:
+            if destination.exists():
+                shutil.rmtree(destination)
+            shutil.copytree(source, destination)
+            activated.append(source.name)
+        except Exception as exc:
+            logger.error(f"Failed to activate skill {source.name}: {exc}")
+
+    if activated:
+        logger.info(f"Activated skills into .claude/skills: {', '.join(activated)}")
+    return activated
+
+
+def _deactivate_plugin_skills(workspace_path: Path, plugin_def: dict) -> list:
+    """Remove the skill directories a plugin activated. Mirrors install."""
+    removed = []
+    try:
+        skills_root = ensure_claude_skills_dir(workspace_path).resolve()
+    except Exception:
+        return removed
+
+    for entry in plugin_def.get("skills") or []:
+        if not isinstance(entry, str) or not entry.strip():
+            continue
+        name = Path(entry.strip().lstrip("./")).name
+        target = (skills_root / name).resolve()
+        if not target.is_relative_to(skills_root) or not target.is_dir():
+            continue
+        try:
+            shutil.rmtree(target)
+            removed.append(name)
+        except Exception as exc:
+            logger.error(f"Failed to remove skill {name}: {exc}")
+    return removed
 
 
 @router.post("/marketplace/install-plugin")
@@ -172,9 +255,12 @@ async def install_plugin_from_marketplace(request: Request):
         base_plugins_path = Path(".claude") / "plugins" / "marketplaces" / marketplace_name
         install_path = base_plugins_path / plugin_name
 
+        matched_plugin_def = None
+
         if marketplace_record.get("plugins"):
             for plugin_def in marketplace_record["plugins"]:
                 if plugin_def.get("name") == plugin_name:
+                    matched_plugin_def = plugin_def
                     source_path = plugin_def.get("source", "./")
                     logger.info(f"Found plugin '{plugin_name}' with source: {source_path}")
 
@@ -238,10 +324,32 @@ async def install_plugin_from_marketplace(request: Request):
         )
         logger.info("Plugin marked as installed in PostgreSQL")
 
+        # Recording the row is not the same as installing: copy the declared
+        # skills into .claude/skills/ so the agent can actually see them.
+        activated_skills = []
+        if matched_plugin_def:
+            activated_skills = await asyncio.get_event_loop().run_in_executor(
+                None,
+                _activate_plugin_skills,
+                workspace_path,
+                marketplace_name,
+                matched_plugin_def,
+            )
+        else:
+            logger.warning(
+                f"No metadata for plugin '{plugin_name}'; no skills activated"
+            )
+
+        plugin_record["activated_skills"] = activated_skills
+
         return {
             "success": True,
-            "message": f"Plugin '{plugin_name}' installed successfully",
+            "message": (
+                f"Plugin '{plugin_name}' installed successfully"
+                + (f" ({len(activated_skills)} skill(s) activated)" if activated_skills else "")
+            ),
             "plugin": plugin_record,
+            "activated_skills": activated_skills,
         }
 
     except Exception as e:
