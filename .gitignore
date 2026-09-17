@@ -200,3 +200,7 @@ docs/.jekyll-cache/
 docs/.jekyll-metadata
 docs/Gemfile.lock
 docs/vendor/
+
+# Personal AI assistant / editor config - belongs on the developer machine,
+# not in the repository.
+.gemini/

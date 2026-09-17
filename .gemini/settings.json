@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "k8s": {
-      "command": "http://localhost:3001/mcp",
-      "args": []
-    }
-  }
-}
