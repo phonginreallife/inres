@@ -1,7 +1,7 @@
 ---
 type: operations
 title: Data Model and Migrations
-description: How the Postgres/Supabase schema is owned and evolved — the timestamp-ordered migration convention, the three ways migrations are applied, the PGMQ queues and their producers and consumers, and the RLS policies that enforce organization isolation.
+description: How the Postgres/Supabase schema is owned and evolved - the timestamp-ordered migration convention, the three ways migrations are applied, the PGMQ queues and their producers and consumers, and the RLS policies that enforce organization isolation.
 tags: [database, postgres, supabase, migrations, pgmq, rls, tenant-isolation]
 verified:
   - by: openwiki/0.4.3
@@ -56,7 +56,7 @@ generated: { by: "claude-code", at: "2026-09-17T11:09:25.960Z" }
 
 # Data Model and Migrations
 
-Postgres is more than InRes's datastore — it is the integration bus between
+Postgres is more than InRes's datastore - it is the integration bus between
 services (see [architecture overview](../architecture/overview.md)). That makes
 the schema a cross-language contract shared by Go, Python and TypeScript, and
 makes migration discipline load-bearing.
@@ -71,7 +71,7 @@ Related: [Tenancy and authorization](../concepts/tenancy-and-authorization.md) �
 
 Migrations live in `supabase/migrations/` and are named
 `{YYYYMMDDHHMMSS}_{description}.sql`. **Ordering is lexicographic on that
-timestamp prefix** — `findMigrationFiles` walks the directory collecting `.sql`
+timestamp prefix** - `findMigrationFiles` walks the directory collecting `.sql`
 files and sorts the paths as strings, which works precisely because the prefix
 is zero-padded and fixed-width.
 
@@ -92,17 +92,17 @@ before either deploys.
 
 Three paths exist, for three environments.
 
-**Local development** — the Supabase CLI: `supabase link` then
+**Local development** - the Supabase CLI: `supabase link` then
 `supabase db push`.
 
-**The `inres` CLI** — `deploy/inres-cli` provides `inres migrate`, which
+**The `inres` CLI** - `deploy/inres-cli` provides `inres migrate`, which
 auto-detects the approach. It requires `DATABASE_URL`, and `SUPABASE_URL` unless
 `--direct` is passed; it extracts the project ref from the Supabase URL with a
 regex against `https://{ref}.supabase.co`, tries the Supabase CLI first, and
 falls back to direct `psql`. `--path` overrides the migrations directory and
 `--dry-run` lists what would be applied without applying it.
 
-**Kubernetes** — a Helm `Job` annotated as a `pre-install,pre-upgrade` hook with
+**Kubernetes** - a Helm `Job` annotated as a `pre-install,pre-upgrade` hook with
 `hook-weight: -5`, so it runs **before** any application pod starts and before
 other hooks. `restartPolicy: Never` with a `backoffLimit` (default 3) gives
 bounded retries, and `hook-delete-policy: before-hook-creation,hook-succeeded`
@@ -119,7 +119,7 @@ the general mechanism.
 
 PGMQ is installed as a Postgres extension in its own `pgmq` schema. Queues are
 created declaratively in migrations with `SELECT pgmq.create(...)`, and
-`IncidentAnalyticsService.CreateQueueIfNotExists` creates one at startup —
+`IncidentAnalyticsService.CreateQueueIfNotExists` creates one at startup -
 tolerating an error because PGMQ's create is idempotent.
 
 | Queue | Producer | Consumer |
@@ -129,7 +129,7 @@ tolerating an error because PGMQ's create is idempotent.
 | `incident_actions` | Slack worker (`slack_repository.py`) | Go notification worker |
 | `slack_feedback` | Go notification worker (`sendSlackFeedbackMessage`) | Python Slack worker |
 | `incident_analysis_queue` | Go `IncidentAnalyticsService` | Agent `services/analytics.py` |
-| `marketplace_cleanup_queue` | Created in a migration; no code reference | — |
+| `marketplace_cleanup_queue` | Created in a migration; no code reference | - |
 
 `incident_analysis_queue` is the one queue that crosses the language boundary by
 name alone: the Go analytics service enqueues onto it and the Python agent's
@@ -154,7 +154,7 @@ any service code in the tree.
 
 The migration creating `incident_actions` explains the reasoning directly: it
 handles actions triggered from external sources such as Slack and webhooks and
-**routes them through the proper API layer for consistent business logic** —
+**routes them through the proper API layer for consistent business logic** -
 rather than letting the Slack worker mutate incidents directly.
 
 ### Consumption pattern
@@ -162,14 +162,14 @@ rather than letting the Slack worker mutate incidents directly.
 Consumers use `pgmq.read(queue, vt, batch_size)` with a visibility timeout of 30
 seconds and explicitly `pgmq.delete(queue, msg_id)` after successful processing.
 Because a message becomes visible again if it is not deleted, a crashed consumer
-does not lose work — but handlers must be idempotent, since redelivery is
+does not lose work - but handlers must be idempotent, since redelivery is
 possible. `pgmq.send` accepts an optional delay, which is what schedules
 escalation steps into the future.
 
 `pgmq.metrics(queue)` backs the queue statistics the API exposes.
 
 Note that in the Go notification worker, the `incident_notifications` and
-`general_notifications` processing calls are commented out — the worker actively
+`general_notifications` processing calls are commented out - the worker actively
 processes only `incident_actions`, with Slack delivery delegated to the Python
 consumer.
 
@@ -183,9 +183,9 @@ plus per-table policies.
 
 The helpers are all `SECURITY DEFINER` and `STABLE`:
 
-- `get_user_organizations()` — org ids where `auth.uid()` has a membership.
-- `get_user_projects()` — project ids likewise.
-- `user_has_org_access(org_id)` — an `EXISTS` check.
+- `get_user_organizations()` - org ids where `auth.uid()` has a membership.
+- `get_user_projects()` - project ids likewise.
+- `user_has_org_access(org_id)` - an `EXISTS` check.
 
 `STABLE` matters for performance: it lets the planner evaluate the function once
 per statement rather than per row. `SECURITY DEFINER` lets the function read
@@ -193,7 +193,7 @@ per statement rather than per row. `SECURITY DEFINER` lets the function read
 
 All three read the **same `memberships` table** the Go authorizer queries, so
 the two enforcement layers cannot disagree about who belongs to what. Policies
-then restrict each table — for example, `organizations` is readable only where
+then restrict each table - for example, `organizations` is readable only where
 `id IN (SELECT get_user_organizations())`.
 
 The migration header notes an ordering dependency: it must run **after**
@@ -203,7 +203,7 @@ policies reference. The timestamp convention is what guarantees that.
 RLS applies to connections authenticated as a Supabase user, which is how the
 frontend's direct Supabase access (Realtime, Storage) stays tenant-isolated. The
 Go API connects with elevated credentials and enforces isolation in the
-application layer instead — the two mechanisms cover different access paths, and
+application layer instead - the two mechanisms cover different access paths, and
 neither alone is sufficient.
 
 ---
@@ -213,30 +213,30 @@ neither alone is sufficient.
 `server/api/db/model.go` (~1150 lines) carries the bulk of the Go-side model
 definitions, with `incident_models.go` separated out and `system_users.go` for
 system accounts. `db.go` itself is a thin constructor pair for the Postgres and
-Redis clients — there is no ORM, and services write SQL directly with
+Redis clients - there is no ORM, and services write SQL directly with
 parameterised queries.
 
 The migration history traces the product's growth in identifiable phases:
 
-- **Scheduling** (Oct 2025) — shift alterations, composite indexes for scheduler
+- **Scheduling** (Oct 2025) - shift alterations, composite indexes for scheduler
   performance, rotation metadata, and the `effective_shifts` view that
   materialises override resolution (see
   [on-call scheduling](../workflows/oncall-scheduling.md)).
-- **Agent extensibility** (Nov 2025) — storage RLS, skills storage,
+- **Agent extensibility** (Nov 2025) - storage RLS, skills storage,
   marketplaces, installed plugins, `user_mcp_servers`, `claude_memory`,
   `user_allowed_tools`, memory scopes.
-- **Monitoring** (Nov 2025) — monitor integrations and features, DNS and
+- **Monitoring** (Nov 2025) - monitor integrations and features, DNS and
   certificate monitoring, configurable webhook URLs, KV namespace and worker URL
   on deployments.
-- **Mobile and zero trust** (Nov–Dec 2025) — `mobile_sessions`,
+- **Mobile and zero trust** (Nov-Dec 2025) - `mobile_sessions`,
   `agent_device_certs`, `instance_identity` (see
   [authentication and identity](../concepts/authentication-and-identity.md)).
-- **Multi-tenancy** (Dec 2025) — org/project memberships, tenant isolation
+- **Multi-tenancy** (Dec 2025) - org/project memberships, tenant isolation
   columns, RLS policies, migration of `group_members` into `memberships`,
   `project_id` on integrations, API keys.
-- **Conversations** (Dec 2025) — `agent_sessions`, `claude_conversations`,
+- **Conversations** (Dec 2025) - `agent_sessions`, `claude_conversations`,
   `claude_messages`, `conversation_shares`, `agent_audit_logs`.
-- **Recent** (2026) — marketplace updates, an AI-pilot API key seed, org
+- **Recent** (2026) - marketplace updates, an AI-pilot API key seed, org
   scoping on monitors, uptime providers, realtime notifications, additional
   integration types.
 

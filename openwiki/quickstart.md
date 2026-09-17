@@ -67,8 +67,8 @@ still refers to `api/`, `api/ai/` and `web/inres/`. The real directories are:
 
 | Path | What it is |
 |---|---|
-| `server/api` | Go / Gin API — REST, webhooks, business logic, background workers |
-| `server/agent` | Python / FastAPI AI agent — WebSocket chat on the Claude Agent SDK |
+| `server/api` | Go / Gin API - REST, webhooks, business logic, background workers |
+| `server/agent` | Python / FastAPI AI agent - WebSocket chat on the Claude Agent SDK |
 | `server/slack-worker` | Python Slack notification consumer |
 | `frontend/inres` | Next.js 16 / React 19 web UI |
 | `worker` | Cloudflare Worker for edge uptime probing |
@@ -124,7 +124,7 @@ Both the Go API and the Python agent read the **same** YAML config file. See
 [configuration](./architecture/configuration.md).
 
 **"I'm adding a monitoring integration."**
-→ [Alert ingestion and routing](./workflows/alert-ingestion.md) — provider
+→ [Alert ingestion and routing](./workflows/alert-ingestion.md) - provider
 normalization, the common severity/status vocabulary, and deduplication.
 
 **"An alert didn't page anyone."**
@@ -134,18 +134,18 @@ resolution, then
 the escalation loop's timeout logic.
 
 **"The wrong person was paged."**
-→ [On-call scheduling and rotations](./workflows/oncall-scheduling.md) —
+→ [On-call scheduling and rotations](./workflows/oncall-scheduling.md) -
 especially override precedence and which code paths bypass it.
 
 **"Slack notifications aren't arriving."**
-→ [Escalation and notifications](./workflows/escalation-and-notifications.md) —
+→ [Escalation and notifications](./workflows/escalation-and-notifications.md) -
 the queue topology and the Python consumer's retry behaviour.
 
 **"I'm working on incident state or the timeline."**
 → [Incident lifecycle](./workflows/incident-lifecycle.md).
 
 **"I'm changing the AI agent."**
-→ [Session architecture](./ai-agent/session-architecture.md) first — the task
+→ [Session architecture](./ai-agent/session-architecture.md) first - the task
 layout and turn serialisation constrain almost every change. Then
 [streaming protocol](./ai-agent/streaming-protocol.md) for the WebSocket
 contract.
@@ -161,7 +161,7 @@ Read the deadlock-freedom argument before changing anything in that path.
 → [Authentication and identity](./concepts/authentication-and-identity.md).
 
 **"A user can't see data they should."**
-→ [Multi-tenancy and authorization](./concepts/tenancy-and-authorization.md) —
+→ [Multi-tenancy and authorization](./concepts/tenancy-and-authorization.md) -
 role matrices and the conditional org-to-project inheritance rule.
 
 **"I'm changing the schema."**
@@ -179,7 +179,7 @@ is a contract shared across Go, Python and TypeScript.
 
 **"My PR is failing CI."**
 → [CI pipelines and testing](./development/ci-and-testing.md). Note that only
-the Go test job actually blocks — frontend and agent tests run
+the Go test job actually blocks - frontend and agent tests run
 `continue-on-error`.
 
 ---
@@ -191,13 +191,13 @@ detail on its page:
 
 - **The webhook endpoint is public.** The integration id in the URL is the
   credential.
-- **Escalation already runs with zero worker replicas** — the API server starts
+- **Escalation already runs with zero worker replicas** - the API server starts
   the workers in-process. The standalone worker exists to move that load off the
   API pods.
 - **The agent cannot be horizontally scaled.** The Helm chart hard-fails if you
   try, because conversation resume reads a pod-local transcript.
 - **Adding the first explicit member to a project stops it inheriting access
-  from its organization** — which silently removes access from everyone who had
+  from its organization** - which silently removes access from everyone who had
   it by inheritance.
 - **Override resolution lives in a database view.** Code that queries `shifts`
   directly bypasses overrides, and some of it does.

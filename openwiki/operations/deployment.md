@@ -1,7 +1,7 @@
 ---
 type: operations
 title: Deployment and Operations
-description: How InRes is packaged and run — the Kong gateway routing model, the Docker Compose stack, the Helm chart's per-component scaling and persistence, the migration ordering constraint, and the deployment CLI.
+description: How InRes is packaged and run - the Kong gateway routing model, the Docker Compose stack, the Helm chart's per-component scaling and persistence, the migration ordering constraint, and the deployment CLI.
 tags: [deployment, docker-compose, helm, kubernetes, kong, gateway, persistence, scaling]
 sources:
   - id: openwiki-source-b677feaf4d6390ae5d7e5506
@@ -54,12 +54,12 @@ Related: [Configuration](../architecture/configuration.md) ·
 
 | Image | Built from |
 |---|---|
-| `ghcr.io/…/inres-api` | `server/api` (repo root as build context) |
-| `ghcr.io/…/inres-agent` | `server/agent` |
-| `ghcr.io/…/inres-frontend` | `frontend/inres` |
-| `ghcr.io/…/inres-slack-worker` | `server/slack-worker` |
+| `ghcr.io/.../inres-api` | `server/api` (repo root as build context) |
+| `ghcr.io/.../inres-agent` | `server/agent` |
+| `ghcr.io/.../inres-frontend` | `frontend/inres` |
+| `ghcr.io/.../inres-slack-worker` | `server/slack-worker` |
 
-The uptime Worker is not containerised — it deploys through the Cloudflare API
+The uptime Worker is not containerised - it deploys through the Cloudflare API
 (see [uptime monitoring](../monitoring/uptime-monitoring.md)). Tagging is
 handled by CI; see [CI and testing](../development/ci-and-testing.md).
 
@@ -82,7 +82,7 @@ the frontend catching everything left over:
 
 Two `strip_path` decisions carry meaning.
 
-`/api` **strips**, so `/api/incidents` reaches the Go service as `/incidents` —
+`/api` **strips**, so `/api/incidents` reaches the Go service as `/incidents` -
 which is why the router registers routes without an `/api` prefix, and why the
 frontend's default base URL of `/api` works unchanged.
 
@@ -104,7 +104,7 @@ proxy buffers (`160k`, `64 160k`), which matter for streamed agent responses.
 and kong. Only Kong (8000), the API (8080) and the web app (3000) publish ports;
 the rest use `expose` and are reachable only inside `inres-network`.
 
-Postgres is **not** in the stack — the API joins an external Supabase network.
+Postgres is **not** in the stack - the API joins an external Supabase network.
 That network's name depends on `project_id` in `supabase/config.toml`, so the
 compose file makes it overridable via `SUPABASE_NETWORK`, with comments
 directing you to confirm the real names with `docker network ls` and
@@ -113,7 +113,7 @@ directing you to confirm the real names with `docker network ls` and
 Two operational notes are documented inline:
 
 - **`.env` lives next to the compose file**, not in your shell's working
-  directory — Compose reads it from the directory containing the compose file.
+  directory - Compose reads it from the directory containing the compose file.
 - **Exactly one Anthropic credential.** An API key takes precedence wherever it
   is found, so using `CLAUDE_CODE_OAUTH_TOKEN` requires blanking
   `anthropic_api_key` in the config YAML too, since the agent copies that value
@@ -153,7 +153,7 @@ That directly enables the `worker` component's `replicas: 0` default.
 | `api` | global | 8080 | config secret + `emptyDir` at `/app/data` |
 | `worker` | **0** | none | same image as api, `command: ["./worker"]` |
 | `slack-worker` | global | none | poll interval, batch size, retries |
-| `web` | global | 3000 | — |
+| `web` | global | 3000 | - |
 | `kong` | global | 8000/8443/8001 | declarative config from a ConfigMap |
 
 ### Why the worker defaults to zero replicas
@@ -165,22 +165,22 @@ replicas**. The Deployment exists to move that work off the API pods when they
 become CPU-bound.
 
 Running both is safe rather than double-escalating, because the workers claim
-rows with `FOR UPDATE SKIP LOCKED`. The worker ships in the API image — which
-builds both binaries — so only the command differs.
+rows with `FOR UPDATE SKIP LOCKED`. The worker ships in the API image - which
+builds both binaries - so only the command differs.
 
 ### Persistence
 
 The agent declares two PVCs, and they are not optional:
 
-- **`/app/workspaces`** (10 Gi) — per-user workspaces holding synced memory,
+- **`/app/workspaces`** (10 Gi) - per-user workspaces holding synced memory,
   activated skills and cloned marketplaces. Without it, a restart wipes those
   files while their rows remain in Postgres, and the UI shows plugins as
   installed with their files gone. This is the same hazard the Compose stack's
   `agent_workspaces` volume addresses.
-- **`/root/.claude`** (5 Gi) — Claude CLI state.
+- **`/root/.claude`** (5 Gi) - Claude CLI state.
 
 Both default to `ReadWriteOnce`, which constrains the agent to a single node
-unless the storage class supports `ReadWriteMany` — worth knowing before raising
+unless the storage class supports `ReadWriteMany` - worth knowing before raising
 `ai.replicas`.
 
 The API's `/app/data` is an `emptyDir`, which is safe because the instance
@@ -205,7 +205,7 @@ The migration Job is a `pre-install,pre-upgrade` Helm hook with
 migration blocks the release** rather than letting pods start against an
 unmigrated schema.
 
-It is `enabled: false` by default — deployments using Supabase-managed
+It is `enabled: false` by default - deployments using Supabase-managed
 migrations do not need it.
 
 ### Other chart features
@@ -223,7 +223,7 @@ The chart **hard-fails** if `components.ai.autoscaling` is enabled, with a
    mount them.
 2. Conversation resume reads the CLI transcript under `/root/.claude` **on the
    pod that created the session**. A request landing on any other pod resumes
-   nothing and the conversation silently starts cold — the same pod-local
+   nothing and the conversation silently starts cold - the same pod-local
    transcript constraint that makes resume best-effort in
    [session architecture](../ai-agent/session-architecture.md).
 
@@ -232,7 +232,7 @@ session affinity in front of it first.
 
 Optional templates cover Ingress, Gloo (for `/webhook/*` routing with TLS), a
 ServiceAccount, and a ClusterRole/ClusterRoleBinding granting the agent pod read
-access to Kubernetes resources — which is how the agent can inspect the cluster
+access to Kubernetes resources - which is how the agent can inspect the cluster
 during an incident.
 
 ### Image tags follow the chart

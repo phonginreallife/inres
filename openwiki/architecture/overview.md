@@ -1,7 +1,7 @@
 ---
 type: architecture
 title: System Architecture
-description: The processes that make up InRes — a Go API, a Python AI agent, a Slack worker, a Cloudflare uptime worker and a Next.js frontend — and why they coordinate through Postgres tables and PGMQ queues rather than calling each other.
+description: The processes that make up InRes - a Go API, a Python AI agent, a Slack worker, a Cloudflare uptime worker and a Next.js frontend - and why they coordinate through Postgres tables and PGMQ queues rather than calling each other.
 tags: [architecture, services, pgmq, postgres, redis, workers, kong]
 verified:
   - by: openwiki/0.4.3
@@ -39,7 +39,7 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 # System Architecture
 
 InRes is five deployable processes plus a database. The database is not merely
-storage — it is the **integration bus**. Almost every cross-process interaction
+storage - it is the **integration bus**. Almost every cross-process interaction
 happens through a Postgres table or a PGMQ queue rather than an HTTP call
 between services.
 
@@ -56,17 +56,17 @@ Related: [Configuration](../architecture/configuration.md) ·
 |---|---|---|---|
 | **API** (`server/api`) | Go / Gin | 8080 | REST surface, webhooks, business logic, in-process workers |
 | **Agent** (`server/agent`) | Python / FastAPI | 8002 | WebSocket chat backed by the Claude Agent SDK |
-| **Slack worker** (`server/slack-worker`) | Python | — | Consumes the Slack notification queue |
+| **Slack worker** (`server/slack-worker`) | Python | - | Consumes the Slack notification queue |
 | **Frontend** (`frontend/inres`) | Next.js 16 / React 19 | 3000 | Web UI |
-| **Uptime worker** (`worker`) | Cloudflare Worker | — | Cron-driven probes from the edge |
-| **Worker binary** (`server/api/cmd/worker`) | Go | — | Optional standalone queue consumer |
+| **Uptime worker** (`worker`) | Cloudflare Worker | - | Cron-driven probes from the edge |
+| **Worker binary** (`server/api/cmd/worker`) | Go | - | Optional standalone queue consumer |
 
 Kong sits in front on port 8000 as the single external entry point, routing to
 the API, the frontend and the agent. See
 [deployment](../operations/deployment.md).
 
 Note that the actual layout is `server/api`, `server/agent`,
-`server/slack-worker`, `frontend/inres` and `worker` — the repository's
+`server/slack-worker`, `frontend/inres` and `worker` - the repository's
 top-level `CLAUDE.md` describes an older `api/`, `api/ai/`, `web/inres/` layout
 that no longer matches the tree.
 
@@ -112,7 +112,7 @@ worker as goroutines **inside the API process**, and `cmd/worker/main.go` starts
 the same two workers as a standalone binary. Both exist on purpose.
 
 Running both from one image makes a single-container deployment work with no
-extra orchestration — Docker Compose runs only the `api` service and escalation
+extra orchestration - Docker Compose runs only the `api` service and escalation
 still fires. When throughput or isolation demands it, the worker binary is
 deployed separately and scaled on its own; the Helm chart exposes this as a
 separate component.
@@ -128,7 +128,7 @@ The split is visible in how the API and the worker satisfy the same
 In the API process, `NewLightweightNotificationSender` is installed. Its methods
 build a notification payload and do exactly one thing:
 `SELECT pgmq.send('incident_notifications', ...)`. It **enqueues without
-processing** — the request path never blocks on Slack or FCM.
+processing** - the request path never blocks on Slack or FCM.
 
 In the worker process, the full `NotificationWorker` is installed instead, and
 it both enqueues and drains. Swapping the implementation behind one interface is
@@ -154,7 +154,7 @@ answers.
 
 The API then runs Gin in a goroutine and selects on either a server error or
 `SIGINT`/`SIGTERM`. The worker binary waits on the same signals. Its shutdown
-path is honest about its limits — the code notes that workers stop when the main
+path is honest about its limits - the code notes that workers stop when the main
 goroutine exits and that a production system would want real graceful shutdown.
 
 ---
@@ -162,8 +162,8 @@ goroutine exits and that a production system would want real graceful shutdown.
 ## The agent process
 
 The agent is a FastAPI application whose entrypoint (`main.py`) re-exports the
-app from `claude_agent_api_v1.py`. It serves two WebSocket endpoints —
-`/ws/chat` (JWT) and `/ws/secure/chat` (zero-trust signed envelopes) — plus REST
+app from `claude_agent_api_v1.py`. It serves two WebSocket endpoints -
+`/ws/chat` (JWT) and `/ws/secure/chat` (zero-trust signed envelopes) - plus REST
 routers for conversations, audit, MCP, plugins and memory.
 
 Its distinguishing property is that **one Claude Agent SDK client stays
@@ -184,7 +184,7 @@ binding; its `scheduled` handler reads active monitors from D1, probes them
 concurrently, and batch-inserts results back into D1 before reporting upward.
 
 Running checks at the edge is what makes them independent of the InRes
-deployment itself — a probe from inside the same cluster cannot tell you the
+deployment itself - a probe from inside the same cluster cannot tell you the
 cluster is unreachable. See [uptime monitoring](../monitoring/uptime-monitoring.md).
 
 ---
@@ -202,7 +202,7 @@ Two volumes matter for correctness rather than convenience:
 - `agent_workspaces` → `/app/workspaces`
 
 Without the workspace volume, every rebuild wipes synced memory, activated
-skills and cloned marketplaces **while their rows stay in Postgres** — the UI
+skills and cloned marketplaces **while their rows stay in Postgres** - the UI
 then shows plugins as installed with their files gone. The Helm chart always had
 a PVC here; Compose did not, and this volume is the fix.
 

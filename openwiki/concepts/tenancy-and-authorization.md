@@ -1,7 +1,7 @@
 ---
 type: concept
 title: Multi-Tenancy and Authorization
-description: The organization/project tenancy model, the role–action permission matrices, how project roles are inherited from organizations, and the ReBAC middleware that scopes every protected route.
+description: The organization/project tenancy model, the role-action permission matrices, how project roles are inherited from organizations, and the ReBAC middleware that scopes every protected route.
 tags: [authorization, rebac, multi-tenancy, organizations, projects, roles, permissions]
 verified:
   - by: openwiki/0.4.3
@@ -30,7 +30,7 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 
 # Multi-Tenancy and Authorization
 
-InRes has two levels of tenancy — **organizations** contain **projects** — and
+InRes has two levels of tenancy - **organizations** contain **projects** - and
 one authorization package, `authz`, that decides what a user may do at each
 level. Everything under the protected route group passes through it.
 
@@ -55,9 +55,9 @@ The split exists for a specific reason: **`Authorizer` is meant to be swappable
 to OpenFGA or SpiceDB without touching business logic.** That constraint shapes
 its shape. `Check(ctx, userID, action, resourceType, resourceID)` is written to
 be signature-compatible with those systems, and the convenience methods
-(`CanAccessOrg`, `CanPerformProjectAction`, …) are wrappers around it rather
+(`CanAccessOrg`, `CanPerformProjectAction`, ...) are wrappers around it rather
 than independent logic. Keeping CRUD out of the interface is what makes the
-substitution possible — a policy engine answers questions, it does not own your
+substitution possible - a policy engine answers questions, it does not own your
 organization records.
 
 `NewSimpleBackend(db)` returns all four in one call, and `router/api.go` wires
@@ -86,7 +86,7 @@ part.
 | member | ✓ | ✓ | ✗ | ✗ | ✗ |
 | viewer | ✓ | ✗ | ✗ | ✗ | ✗ |
 
-An org **admin can manage members but cannot delete the organization** — that
+An org **admin can manage members but cannot delete the organization** - that
 stays with the owner alone.
 
 ### Project permissions
@@ -99,7 +99,7 @@ stays with the owner alone.
 | viewer | ✓ | ✗ | ✗ | ✗ | ✗ |
 
 At project level, **owner and admin are equivalent** (the code comments say so),
-and **members may update** — a project member can edit resources, where an org
+and **members may update** - a project member can edit resources, where an org
 member cannot edit the organization. The narrower blast radius of a project
 justifies the wider grant.
 
@@ -114,10 +114,10 @@ A user need not be an explicit member of a project to access it.
 `GetProjectRole` resolves an **effective** role in a single SQL query using
 three CTEs:
 
-1. `project_info` — the project's `organization_id`, and whether the project has
+1. `project_info` - the project's `organization_id`, and whether the project has
    **any** explicit members.
-2. `explicit_role` — this user's own project membership, at priority 0.
-3. `inherited_role` — this user's org membership, at priority 1, **but only when
+2. `explicit_role` - this user's own project membership, at priority 0.
+3. `inherited_role` - this user's org membership, at priority 1, **but only when
    the project has no explicit members at all.**
 
 The union is ordered by priority and limited to one row, so an explicit project
@@ -126,7 +126,7 @@ membership always wins over inheritance.
 The conditional inheritance is the subtle rule: **once a project has any
 explicit member, it stops inheriting from the organization entirely.** Adding
 the first explicit member converts a project from "open to the org" to
-"restricted to its member list" — which is how a project is made private, but
+"restricted to its member list" - which is how a project is made private, but
 also a sharp edge, because adding one member silently removes access from
 everyone who previously had it by inheritance.
 
@@ -139,11 +139,11 @@ When a role is inherited, `MapOrgRoleToProjectRole` translates it:
 | member | member |
 | viewer | viewer |
 
-Org **owner maps down to project admin**, not project owner — project ownership
+Org **owner maps down to project admin**, not project owner - project ownership
 is not something inheritance confers. An unrecognised org role maps to the empty
 role, which means no access.
 
-The comment records that this single query replaced 4–5 separate queries, so the
+The comment records that this single query replaced 4-5 separate queries, so the
 optimisation is deliberate rather than incidental.
 
 A failed lookup logs (except for the expected `sql.ErrNoRows`) and returns the
@@ -172,7 +172,7 @@ check, then store the resource id and the user's role in context for handlers.
 `RequirePermission` resolves the resource id from `{resourceType}_id` and falls
 back to `:id`. If **no id is present it skips the check and calls `c.Next()`**,
 delegating to the handler. This is what makes it usable on `POST` routes where
-the resource does not exist yet — and it means a route registered with this
+the resource does not exist yet - and it means a route registered with this
 middleware but no id parameter is *not* protected by it, so the handler must
 enforce access itself.
 
@@ -190,7 +190,7 @@ different paths.
 ### For API-key callers
 
 An API key may carry a stored `organization_id`. If it does, a mismatching
-`X-Org-ID` header is **rejected with 403** — a key scoped to one organization
+`X-Org-ID` header is **rejected with 403** - a key scoped to one organization
 cannot be pointed at another. If the key carries no org restriction, the header
 value is accepted as legacy behaviour and a warning is logged. `X-Project-ID` is
 passed through.
@@ -201,17 +201,17 @@ The project id is read from the URL param, then the `project_id` query
 parameter, then the `X-Project-ID` header. When present it is validated with
 `CanAccessProject` and set in context; when absent **no accessible-project list
 is precomputed**. The comment is explicit that the service layer instead uses
-`EXISTS` for relationship traversal — filtering happens in SQL rather than by
+`EXISTS` for relationship traversal - filtering happens in SQL rather than by
 passing a potentially large id list through the request.
 
 ### `GetReBACFilters`
 
 Handlers call this to build a standard filter map for the service layer:
 
-- `current_user_id` — always, for relationship traversal.
-- `current_org_id` — **mandatory for tenant isolation**, resolved from context,
+- `current_user_id` - always, for relationship traversal.
+- `current_org_id` - **mandatory for tenant isolation**, resolved from context,
   then query parameter, then `X-Org-ID` header.
-- `project_id` — optional, same precedence.
+- `project_id` - optional, same precedence.
 
 Every list handler passing through this helper gets the same isolation
 semantics, which is what keeps tenant scoping from being re-implemented (and
@@ -227,14 +227,14 @@ with mutating routes carrying their own stricter `RequirePermission` for
 `update`, `delete` or `manage`. Incident routes instead use
 `InjectProjectContext`, because they are project-scoped resources rather than
 projects themselves. Creation endpoints deliberately check membership inside the
-handler — `POST /orgs` is open to any authenticated user, and `ListOrgs` returns
+handler - `POST /orgs` is open to any authenticated user, and `ListOrgs` returns
 only the caller's organizations.
 
 ---
 
 ## Tests
 
-`authz_test.go` covers the pure policy layer — `HasPermission` across the
+`authz_test.go` covers the pure policy layer - `HasPermission` across the
 matrices, `MapOrgRoleToProjectRole`, and the role, action and resource-type
 constants. `simple_test.go` covers `SimpleAuthorizer` against a mocked database,
 including `GetProjectRole` with its inheritance logic and the generic `Check`

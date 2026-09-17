@@ -1,7 +1,7 @@
 ---
 type: subsystem
 title: Web Application
-description: The Next.js App Router frontend — how it bootstraps its Supabase client from the API, propagates auth tokens and org/project scope into every request, receives realtime updates, and transforms schedules for the on-call timeline.
+description: The Next.js App Router frontend - how it bootstraps its Supabase client from the API, propagates auth tokens and org/project scope into every request, receives realtime updates, and transforms schedules for the on-call timeline.
 tags: [frontend, nextjs, react, supabase, websocket, realtime, scheduling]
 verified:
   - by: openwiki/0.4.3
@@ -35,8 +35,8 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 # Web Application
 
 `frontend/inres` is a Next.js 16 / React 19 application using the App Router.
-It talks to two backends — the Go API for REST and the Python agent over a
-WebSocket — and receives push updates through Supabase Realtime.
+It talks to two backends - the Go API for REST and the Python agent over a
+WebSocket - and receives push updates through Supabase Realtime.
 
 Related: [Streaming protocol](../ai-agent/streaming-protocol.md) ·
 [Tenancy and authorization](../concepts/tenancy-and-authorization.md) ·
@@ -75,8 +75,8 @@ because its realtime subscription is scoped to the current organization.
 
 The root `<html>` carries `suppressHydrationWarning` and a default `dark` class,
 the usual accommodation for a theme applied before React hydrates. The app also
-declares PWA metadata — a manifest, Apple web-app settings and a viewport with
-`viewportFit: 'cover'` — and ships a `PWAInstallPrompt`.
+declares PWA metadata - a manifest, Apple web-app settings and a viewport with
+`viewportFit: 'cover'` - and ships a `PWAInstallPrompt`.
 
 ---
 
@@ -88,7 +88,7 @@ API's `/env` endpoint, falling back to `NEXT_PUBLIC_SUPABASE_URL` and
 `NEXT_PUBLIC_SUPABASE_ANON_KEY` only if that call fails.
 
 This is what lets one prebuilt container image be deployed against different
-Supabase projects — the image does not need rebuilding per environment.
+Supabase projects - the image does not need rebuilding per environment.
 
 The client is a guarded singleton: `configPromise` deduplicates concurrent
 config fetches, an `isInitializing` flag makes late callers wait rather than
@@ -101,7 +101,7 @@ subscriptions, so the guarding matters.
 ## Authentication and token propagation
 
 `AuthContext` owns the session. On mount it reads the existing session,
-**validates it by fetching the user**, and clears it from storage if invalid —
+**validates it by fetching the user**, and clears it from storage if invalid -
 specifically handling stale-token errors such as a bad `session_id` claim, which
 a plain presence check would miss. It then subscribes to `onAuthStateChange`.
 
@@ -119,7 +119,7 @@ component remount.
 ## Org and project scope
 
 `OrgContext` holds organizations and projects, the current selection for each,
-and separate `loading` and `isRefreshing` flags — the distinction exists so a
+and separate `loading` and `isRefreshing` flags - the distinction exists so a
 background refresh does not unmount children the way an initial load does.
 
 Selections persist in `localStorage`. On load the saved id is restored if it is
@@ -129,7 +129,7 @@ one org is meaningless in another.
 
 Scope reaches the backend through `APIClient._buildReBACParams`, which appends
 `org_id` and `project_id` as query parameters. `org_id` is mandatory for tenant
-isolation and `project_id` optional — the mirror image of `GetReBACFilters` on
+isolation and `project_id` optional - the mirror image of `GetReBACFilters` on
 the Go side (see
 [tenancy and authorization](../concepts/tenancy-and-authorization.md)).
 
@@ -142,9 +142,9 @@ handles what every call would otherwise repeat:
 
 - **Timeouts** via `AbortController`, 15 seconds by default, surfaced as a
   `Request timeout` error rather than a hang.
-- **Error extraction** — on a non-OK response it parses the body for `error` and
+- **Error extraction** - on a non-OK response it parses the body for `error` and
   `details` to produce a readable message instead of a bare status code.
-- **Empty responses** — `204` or zero-length bodies return `{ success: true }`
+- **Empty responses** - `204` or zero-length bodies return `{ success: true }`
   rather than failing to parse.
 
 Two base URLs are held: `NEXT_PUBLIC_API_URL` (default `/api`) and
@@ -176,7 +176,7 @@ stale closures.
 `useClaudeWebSocket` is the client half of the
 [streaming protocol](../ai-agent/streaming-protocol.md). It connects to
 `/ws/chat`, passing the auth token, `org_id`, `project_id` and any
-`conversation_id` as **query parameters** — a browser `WebSocket` cannot set
+`conversation_id` as **query parameters** - a browser `WebSocket` cannot set
 request headers, so the token travels in the URL.
 
 The token is held in a ref rather than a closure variable, so a reconnect uses
@@ -187,10 +187,10 @@ delay. Two cases suppress it: a normal closure (code 1000) and an explicit
 intentional disconnect. On reconnect the hook resumes the matching Claude
 session, so conversation context survives a dropped socket.
 
-The hook's message handler is a `switch` over the event types the agent emits —
+The hook's message handler is a `switch` over the event types the agent emits -
 `delta`, `thinking`, `tool_use`, `tool_result`, `permission_request`,
 `todo_update`, `complete`, `error`, `interrupted`, `model_changed`,
-`history_cleared`, `session_init`, `processing`, `ping` — appending tokens to
+`history_cleared`, `session_init`, `processing`, `ping` - appending tokens to
 the in-flight assistant message as they arrive. A comment notes that the agent
 streams tokens over `/ws/chat` itself, with no separate streaming endpoint.
 
@@ -206,7 +206,7 @@ logic-dense part of the frontend, and the only part with a unit test
 It maps shift-length names to day counts (`one_day` → 1, `one_week` → 7,
 `two_weeks` → 14, `one_month` → 30, defaulting to 7), validates that dates parse
 and that the end follows the start, and exposes several transformation entry
-points for single-shift, simple, rotating and yearly-rotation schedules —
+points for single-shift, simple, rotating and yearly-rotation schedules -
 `generateRotationShifts` projecting 52 weeks ahead by default.
 
 ### The coverage-gap fix
@@ -224,7 +224,7 @@ Bob:   2025-01-08T09:00Z → 2025-01-15T02:00Z
 
 The fix tracks the previous shift's end time and starts the next shift there,
 producing continuous coverage. This is exactly the kind of off-by-one that is
-invisible in a UI and severe in production — an alert firing in that window
+invisible in a UI and severe in production - an alert firing in that window
 would route to nobody.
 
 ---

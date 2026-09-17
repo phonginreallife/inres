@@ -1,7 +1,7 @@
 ---
 type: protocol
 title: Agent Streaming and WebSocket Event Contract
-description: How the Claude Agent SDK message stream is translated into the WebSocket events the InRes browser client consumes, and the invariants — no duplicate text, no subagent noise, exactly one terminal event — that keep the UI consistent.
+description: How the Claude Agent SDK message stream is translated into the WebSocket events the InRes browser client consumes, and the invariants - no duplicate text, no subagent noise, exactly one terminal event - that keep the UI consistent.
 tags: [ai-agent, websocket, streaming, protocol, events, frontend-contract]
 sources:
   - id: openwiki-source-dd49ab36cb3e010f4fbdd495
@@ -22,11 +22,11 @@ verified:
 
 Two modules own the wire between the agent and the browser:
 
-- **`session/translate.py`** decides *what happened* — a pure function over the
+- **`session/translate.py`** decides *what happened* - a pure function over the
   SDK message stream plus a mutable `TurnState`, with no I/O, no SDK client and
   no asyncio. Everything that can be got wrong about the stream is decided here,
   so it can be tested exhaustively against synthetic message sequences.
-- **`session/events.py`** decides *what goes on the wire* — every frame the
+- **`session/events.py`** decides *what goes on the wire* - every frame the
   agent pushes is built here, so the contract lives in one place instead of
   being spelled out at each emit site.
 
@@ -43,7 +43,7 @@ Related: [Session architecture](../ai-agent/session-architecture.md) ·
 
 ```
 SystemMessage(subtype="init")   session id
-StreamEvent * N                 raw Anthropic events — token deltas
+StreamEvent * N                 raw Anthropic events - token deltas
 AssistantMessage * M            complete messages; M > 1 when tools are used
 UserMessage * M-1               tool results, despite the "user" role
 ResultMessage                   session id, cost, usage; ends the turn
@@ -69,7 +69,7 @@ three cases:
 | Case | Behaviour |
 |---|---|
 | Deltas add up to exactly the final text | Emit nothing (the normal case) |
-| Nothing was streamed (partials off) | Emit the whole message in one frame — degraded, not broken |
+| Nothing was streamed (partials off) | Emit the whole message in one frame - degraded, not broken |
 | Genuine divergence | Emit nothing, and log loudly |
 
 Divergence suppresses the re-emit because **duplicating text is worse than
@@ -81,7 +81,7 @@ accumulates the authoritative final text.
 
 `TurnState` keeps `assistant_text` (messages the SDK has completed) separate
 from `stream_buf` (the message still arriving). An interrupt lands between the
-two, and `text_for_persistence` — their concatenation — is what survives it, so
+two, and `text_for_persistence` - their concatenation - is what survives it, so
 an interrupted turn keeps the partial answer the user actually read.
 
 `message_start` clears only `stream_buf`; whatever it held has already been
@@ -118,7 +118,7 @@ unparseable tool arguments) are ignored. So are `content_block_start`,
 `content_block_stop`, `message_delta` and `message_stop`.
 
 A `ThinkingBlock` on a completed `AssistantMessage` is emitted **only when
-nothing was streamed** — otherwise the thinking deltas already covered it and
+nothing was streamed** - otherwise the thinking deltas already covered it and
 re-emitting would rewind the UI to a stale snapshot.
 
 ---
@@ -135,7 +135,7 @@ render a checklist.
 `tool_events` records tool activity **in the order it happened**, so the
 transcript can be replayed with its tool cards intact. The comment states the
 failure it prevents: without it a reloaded conversation shows the prose and
-silently drops every tool the agent ran — usually the part worth reviewing. The
+silently drops every tool the agent ran - usually the part worth reviewing. The
 persister writes these as messages; see
 [session architecture](../ai-agent/session-architecture.md).
 
@@ -157,7 +157,7 @@ content is scanned for `ToolResultBlock`s.
 
 ### Truncation
 
-Tool output can run to megabytes — `Bash`, `Grep`, log queries. Past
+Tool output can run to megabytes - `Bash`, `Grep`, log queries. Past
 `MAX_TOOL_RESULT_CHARS` (8000), `tool_result` sends a truncated copy with a
 `\n... [N characters truncated]` marker and sets `truncated: true` on the event.
 The **full** text is still available for persistence; only the transported copy
@@ -171,7 +171,7 @@ each item's `text` field when present.
 Two rules hold for everything in `events.py`:
 
 1. **Payloads must be JSON-serialisable.** `websocket.send_json` raises on
-   anything else, and the sender task treats a raise as fatal — a single bad
+   anything else, and the sender task treats a raise as fatal - a single bad
    frame would silence the socket for the rest of the session. `jsonable()` is
    the guard, applied to every value originating outside our code: tool inputs,
    tool results, permission suggestions.
@@ -180,7 +180,7 @@ Two rules hold for everything in `events.py`:
 
 `jsonable()` handles dataclasses (such as the SDK's `PermissionUpdate`), dicts,
 sequences and pydantic models (`model_dump`, as used by MCP), and degrades
-unknown objects to `repr` — a slightly ugly frame beats a dead socket. A depth
+unknown objects to `repr` - a slightly ugly frame beats a dead socket. A depth
 guard at 8 levels prevents cycles from hanging the coercion.
 
 ---
@@ -206,13 +206,13 @@ not recorded as empty. It never overwrites text that did stream.
 | Event | Meaning |
 |---|---|
 | `delta` | One increment of assistant text |
-| `thinking` | Reasoning text — **running total**, not an increment |
+| `thinking` | Reasoning text - **running total**, not an increment |
 | `tool_use` | A tool call (flat and nested shapes) |
 | `tool_result` | A tool's output, possibly `truncated` |
 | `todo_update` | Task-list state |
-| `complete` / `error` / `interrupted` | Terminal — exactly one per turn |
+| `complete` / `error` / `interrupted` | Terminal - exactly one per turn |
 | `session_init` | The Claude session id, once the CLI reports it |
-| `processing` | Work started — covers reconnect latency after an idle park |
+| `processing` | Work started - covers reconnect latency after an idle park |
 | `model_changed` | Active model, with `pending` when queued behind a running turn |
 | `history_cleared` | Context dropped; new conversation id |
 | `ping` | Keepalive |

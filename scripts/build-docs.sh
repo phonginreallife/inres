@@ -63,7 +63,7 @@ front_matter_value() {
                 exit
             }
         }
-    ' "$file"
+    ' "$file" | ascii_punctuation
 }
 
 # Strip the OpenWiki front matter, leaving the body.
@@ -78,6 +78,16 @@ strip_front_matter() {
 #   ./workflows/foo.md  ->  ./workflows/foo.html
 rewrite_links() {
     sed -E 's/\(([^()]*)\.md(#[^()]*)?\)/(\1.html\2)/g'
+}
+
+# House style is ASCII punctuation - the Go and Python sources contain no em
+# dashes at all. The openwiki/ pages are regenerated on a schedule, so cleaning
+# them once is not enough: this keeps the published site consistent no matter
+# what a later run emits.
+ascii_punctuation() {
+    sed -e 's/\xe2\x80\x94/-/g' \
+        -e 's/\xe2\x80\x93/-/g' \
+        -e 's/\xe2\x80\xa6/.../g'
 }
 
 emit_page() {
@@ -97,7 +107,7 @@ emit_page() {
         [[ -n "$description" ]] && echo "description: \"${description//\"/\\\"}\""
         echo "---"
         echo
-        strip_front_matter "$src" | rewrite_links
+        strip_front_matter "$src" | rewrite_links | ascii_punctuation
     } > "$dest"
 }
 

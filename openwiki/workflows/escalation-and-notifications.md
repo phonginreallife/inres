@@ -1,7 +1,7 @@
 ---
 type: workflow
 title: Escalation and Notification Delivery
-description: How an unacknowledged incident climbs its escalation policy — the polling worker, its SQL-side timeout evaluation and concurrency-safe claim, the five target types — and how notifications fan out to Slack, push and in-app realtime through PGMQ.
+description: How an unacknowledged incident climbs its escalation policy - the polling worker, its SQL-side timeout evaluation and concurrency-safe claim, the five target types - and how notifications fan out to Slack, push and in-app realtime through PGMQ.
 tags: [escalation, notifications, pgmq, slack, fcm, workers, oncall]
 verified:
   - by: openwiki/0.4.3
@@ -53,15 +53,15 @@ Related: [Incident lifecycle](../workflows/incident-lifecycle.md) ·
 
 Two implementations exist and it matters which is live.
 
-`services/escalation.go` owns escalation **policy CRUD** — creating, updating
-and reading policies, levels and their target metadata — and this part is fully
+`services/escalation.go` owns escalation **policy CRUD** - creating, updating
+and reading policies, levels and their target metadata - and this part is fully
 used. It also contains an alert-driven `ProcessAlert` chain, but that path's
 `notifyCurrentSchedule`, `notifyUser`, `notifyGroup`, `notifyExternal` and
 `scheduleNextEscalationStep` methods are **`TODO` stubs that log and return
 `nil`**. Only `notifyScheduler` is implemented.
 
 The escalation that actually pages people is
-`internal/background/incident.go` — `IncidentWorker`, started as a goroutine by
+`internal/background/incident.go` - `IncidentWorker`, started as a goroutine by
 both `cmd/server` and `cmd/worker`.
 
 ---
@@ -78,9 +78,9 @@ loading incidents and testing them in Go. An incident is due when it is
 `status = 'triggered'`, has an escalation policy, has `escalation_status` in
 (`none`, `pending`), and satisfies one of:
 
-- **Never escalated** — `last_escalated_at IS NULL` and `created_at` is older
+- **Never escalated** - `last_escalated_at IS NULL` and `created_at` is older
   than level 1's `timeout_minutes`.
-- **Already escalated** — `last_escalated_at` is older than the *current*
+- **Already escalated** - `last_escalated_at` is older than the *current*
   level's `timeout_minutes`, **and** a next level exists.
 
 Two consequences follow. Timeouts are measured against the database clock, so
@@ -92,7 +92,7 @@ level to exist means an incident at the final level is simply never selected.
 The query ends with `ORDER BY created_at ASC LIMIT 50 FOR UPDATE SKIP LOCKED`.
 
 `FOR UPDATE SKIP LOCKED` is what makes it safe to run the in-process workers and
-the standalone worker Deployment simultaneously — each row is claimed by exactly
+the standalone worker Deployment simultaneously - each row is claimed by exactly
 one worker and the others skip past it rather than blocking. This is the
 guarantee the Helm chart's `worker` component relies on (see
 [deployment](../operations/deployment.md)). `LIMIT 50` bounds each pass; oldest
@@ -123,7 +123,7 @@ Otherwise it dispatches on the level's `target_type`:
 | `external` | External target |
 
 Note that `current_schedule` ignores `level.TargetID` and uses
-`incident.GroupID` instead — the level does not name the group, the incident
+`incident.GroupID` instead - the level does not name the group, the incident
 does.
 
 ### Overrides are respected automatically
@@ -139,13 +139,13 @@ worker knowing overrides exist. The view is where that resolution lives (see
 **escalation** notification explicitly. The distinction is deliberate: the user
 should be told "this was escalated to you", not "this was assigned to you".
 
-A notification failure is logged but does **not** fail the assignment — the
+A notification failure is logged but does **not** fail the assignment - the
 incident is assigned either way, and the person can still find it in the UI.
 
 On success the worker writes an incident event recording the level, target type
 and target id, so the escalation path is reconstructable afterwards. A failure
 leaves `escalation_status` as `pending`, and the comment notes no update is
-needed because `FOR UPDATE SKIP LOCKED` already handles the concurrency —
+needed because `FOR UPDATE SKIP LOCKED` already handles the concurrency -
 retry happens on the next tick.
 
 ---
@@ -179,8 +179,8 @@ an already-posted message, for optimistic UI). The Python worker drains both and
 produces onto `incident_actions` when a user clicks a Slack button, which the Go
 worker drains and applies.
 
-`LightweightNotificationSender` in the API process only enqueues —
-`SELECT pgmq.send('incident_notifications', ...)` — so the HTTP request path
+`LightweightNotificationSender` in the API process only enqueues -
+`SELECT pgmq.send('incident_notifications', ...)` - so the HTTP request path
 never waits on Slack or FCM. The payload carries type, user id, incident id,
 `channels`, priority and a retry count.
 
@@ -191,7 +191,7 @@ never waits on Slack or FCM. The payload carries type, user id, incident id,
 step:
 
 - A message whose payload will not parse as JSON, or is not a dict, is **deleted
-  immediately** rather than retried — a malformed message can never succeed, so
+  immediately** rather than retried - a malformed message can never succeed, so
   retrying it would block the queue.
 - `process_notification` checks the `channels` list and **returns success when
   `slack` is absent**, so a push-only notification is consumed rather than
@@ -211,7 +211,7 @@ redelivers rather than loses.
 
 **Push (FCM).** `FCMService` uses the Firebase Admin SDK directly, and also
 supports a **cloud relay** (`inres_CLOUD_URL`, token, instance id) for
-self-hosted deployments that cannot hold Firebase credentials — the relay
+self-hosted deployments that cannot hold Firebase credentials - the relay
 forwards on their behalf.
 
 **In-app realtime.** `RealtimeBroadcastService` posts to Supabase's Realtime
@@ -239,5 +239,5 @@ queue-driven worker path.
 | Policy has no next level | Chain marked `completed` |
 
 The consistent bias is **toward assigning and recording the incident even when
-telling someone about it fails** — a visible unnotified incident is recoverable,
+telling someone about it fails** - a visible unnotified incident is recoverable,
 a lost one is not.

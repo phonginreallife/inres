@@ -72,3 +72,13 @@ kramdown:
   syntax_highlighter_opts:
     block:
       line_numbers: false
+  # Kramdown rewrites ASCII punctuation into typographic characters by default:
+  # "..." becomes an ellipsis, "--" an en dash, "---" an em dash, and straight
+  # quotes become curly. House style is ASCII, so map them back to themselves.
+  typographic_symbols:
+    hellip: "..."
+    mdash: "---"
+    ndash: "--"
+    laquo: "<<"
+    raquo: ">>"
+  smart_quotes: ["apos", "apos", "quot", "quot"]
