@@ -149,7 +149,7 @@ class AuditEvent:
     def __post_init__(self):
         """Sanitize UUID fields - convert empty strings to None"""
         # Optional UUID fields that cannot accept empty strings (convert to NULL)
-        optional_uuid_fields = ['org_id', 'project_id', 'session_id']
+        optional_uuid_fields = ['user_id', 'org_id', 'project_id', 'session_id']
         for field_name in optional_uuid_fields:
             value = getattr(self, field_name, None)
             if value == '':
@@ -600,7 +600,7 @@ class AuditService:
         """Log authentication failure"""
         await self.log(AuditEvent(
             event_type=EventType.AUTH_FAILED,
-            user_id=user_id or "unknown",
+            user_id=user_id,
             action="authenticate",
             status=EventStatus.FAILURE,
             error_code=error_code,
@@ -762,7 +762,7 @@ class AuditService:
         """Log security-related event"""
         await self.log(AuditEvent(
             event_type=event_type,
-            user_id=user_id or "unknown",
+            user_id=user_id,
             action=action,
             status=EventStatus.FAILURE,
             error_code=error_code,

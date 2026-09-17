@@ -81,8 +81,12 @@ class TurnState:
     usage: Optional[Dict[str, Any]] = None
     num_turns: int = 0
 
-    # Tool calls seen this turn, for logging and audit correlation.
+    # Tool activity seen this turn, in the order it happened. Kept so the
+    # transcript can be replayed with its tool cards intact: without this a
+    # reloaded conversation shows the prose and silently drops every tool the
+    # agent ran, which is usually the part worth reviewing.
     tool_calls: List[Dict[str, Any]] = field(default_factory=list)
+    tool_events: List[Dict[str, Any]] = field(default_factory=list)
 
     @property
     def text_for_persistence(self) -> str:
@@ -179,6 +183,12 @@ def _assistant(msg: AssistantMessage, st: TurnState) -> List[Dict[str, Any]]:
     for block in blocks:
         if isinstance(block, ToolUseBlock):
             st.tool_calls.append({"id": block.id, "name": block.name})
+            st.tool_events.append({
+                "kind": "tool_use",
+                "id": block.id,
+                "name": block.name,
+                "input": block.input,
+            })
             out.append(events.tool_use(block.id, block.name, block.input))
             if block.name == "TodoWrite":
                 todos = (block.input or {}).get("todos", [])
@@ -236,13 +246,21 @@ def _user(msg: UserMessage, st: TurnState) -> List[Dict[str, Any]]:
     out: List[Dict[str, Any]] = []
     for block in content:
         if isinstance(block, ToolResultBlock):
-            out.append(
-                events.tool_result(
-                    block.tool_use_id,
-                    block.content,
-                    bool(block.is_error),
-                )
+            event = events.tool_result(
+                block.tool_use_id,
+                block.content,
+                bool(block.is_error),
             )
+            st.tool_events.append({
+                "kind": "tool_result",
+                "tool_use_id": block.tool_use_id,
+                # The transport-truncated text, not the raw payload: a replayed
+                # transcript should match what was on screen, and a multi-megabyte
+                # tool result does not belong in the message table.
+                "content": event["content"],
+                "is_error": bool(block.is_error),
+            })
+            out.append(event)
     return out
 
 

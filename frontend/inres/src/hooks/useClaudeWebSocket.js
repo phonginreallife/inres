@@ -855,14 +855,25 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
       const response = await apiClient.getConversationMessages(convId);
       if (!response.success || !response.messages) return null;
 
-      return response.messages.map(msg => ({
-        role: msg.role,
-        content: msg.content || '',
-        type: msg.message_type || 'text',
-        timestamp: msg.created_at,
-        isStreaming: false,
-        isHistory: true  // Mark as history so UI can style differently if needed
-      }));
+      return response.messages.map(msg => {
+        // metadata arrives as jsonb; tolerate either a string or an object.
+        let meta = msg.metadata;
+        if (typeof meta === 'string') {
+          try { meta = JSON.parse(meta); } catch { meta = {}; }
+        }
+
+        return {
+          role: msg.role,
+          content: msg.content || '',
+          type: msg.message_type || 'text',
+          // Restored so a failed tool call replays as Failed rather than
+          // showing a success tick.
+          is_error: Boolean(meta?.is_error),
+          timestamp: msg.created_at,
+          isStreaming: false,
+          isHistory: true  // Mark as history so UI can style differently if needed
+        };
+      });
     } catch (err) {
       console.error('Failed to load conversation messages:', err);
       return null;

@@ -275,6 +275,23 @@ logger.info("[Marketplace] Marketplace routes loaded from routes_marketplace.py"
 
 logger.info("[Agent] Persistent SDK sessions serve /ws/chat and /ws/secure/chat")
 
+
+@app.get("/health")
+async def health():
+    """
+    Liveness probe.
+
+    Deliberately shallow: it answers whether this process can serve, not
+    whether every dependency is reachable. A probe that fails when Postgres
+    blips would restart a container that was working fine and would have
+    recovered on its own.
+
+    The Docker healthcheck and any Kubernetes probe target this path; before
+    it existed both reported the container permanently unhealthy.
+    """
+    return {"status": "ok", "service": "agent", "model": config.agent.model}
+
+
 # The incident tools MCP server registered with every session.
 BUILTIN_TOOL_COUNT = 5
 

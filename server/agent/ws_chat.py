@@ -21,6 +21,7 @@ the handler as well would interleave frames with the sender task.
 
 import asyncio
 import contextlib
+import json
 import logging
 import time
 import uuid
@@ -337,6 +338,37 @@ class ChatConnection:
             )
 
             await turn.done.wait()
+
+            # Tool activity goes in before the reply so a replay renders in the
+            # order it happened: user -> tool_use -> tool_result -> assistant.
+            # The columns for this have existed since the table was created;
+            # nothing had ever written them, so reloading a conversation
+            # silently dropped every tool the agent ran.
+            for event in turn.tool_events:
+                if event.get("kind") == "tool_use":
+                    await save_message(
+                        conversation_id=turn.conversation_id,
+                        role="assistant",
+                        content=json.dumps({
+                            "id": event.get("id"),
+                            "name": event.get("name"),
+                            "input": event.get("input"),
+                        }),
+                        message_type="tool_use",
+                        tool_name=event.get("name"),
+                        tool_input=event.get("input"),
+                    )
+                elif event.get("kind") == "tool_result":
+                    await save_message(
+                        conversation_id=turn.conversation_id,
+                        role="assistant",
+                        content=event.get("content") or "",
+                        message_type="tool_result",
+                        metadata={
+                            "tool_use_id": event.get("tool_use_id"),
+                            "is_error": event.get("is_error", False),
+                        },
+                    )
 
             if turn.text:
                 await save_message(

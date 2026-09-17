@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "inres — Incident Response Platform",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1370,
+      780
+    ]
+  },
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Kubernetes cluster — 6 Deployments",
+      "wraps": [
+        "kong",
+        "web",
+        "api",
+        "agent",
+        "cli",
+        "workers",
+        "pvc"
+      ],
+      "pad": 34
+    },
+    {
+      "kind": "security-group",
+      "label": "Agent pod — pinned to 1 replica",
+      "wraps": [
+        "agent",
+        "cli"
+      ],
+      "pad": 20
+    }
+  ],
+  "components": [
+    {
+      "id": "operators",
+      "type": "external",
+      "label": "On-call engineers",
+      "sublabel": "Browser · wss",
+      "pos": [
+        130,
+        70
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "alerts",
+      "type": "external",
+      "label": "Alert sources",
+      "sublabel": "Alertmanager · PagerDuty",
+      "pos": [
+        420,
+        70
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "kong",
+      "type": "security",
+      "label": "Kong gateway",
+      "sublabel": ":8000 · sole ingress",
+      "tag": "kong:2.8.1",
+      "pos": [
+        275,
+        200
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web UI",
+      "sublabel": "Next.js · :3000",
+      "pos": [
+        100,
+        350
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Core API",
+      "sublabel": "Go · :8080",
+      "pos": [
+        360,
+        350
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "agent",
+      "type": "backend",
+      "label": "AI agent",
+      "sublabel": "FastAPI · :8002",
+      "pos": [
+        640,
+        350
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "cli",
+      "type": "backend",
+      "label": "Claude Code CLI",
+      "sublabel": "One per socket",
+      "pos": [
+        910,
+        350
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "anthropic",
+      "type": "cloud",
+      "label": "Anthropic API",
+      "sublabel": "claude-opus-5",
+      "pos": [
+        1160,
+        280
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "mcp",
+      "type": "external",
+      "label": "MCP servers",
+      "sublabel": "Per-user tools",
+      "pos": [
+        1160,
+        440
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "Supabase Postgres",
+      "sublabel": "Managed · Auth · PGMQ",
+      "pos": [
+        380,
+        670
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "workers",
+      "type": "messagebus",
+      "label": "Queue workers",
+      "sublabel": "escalation · slack",
+      "pos": [
+        80,
+        550
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "pvc",
+      "type": "database",
+      "label": "Agent PVCs",
+      "sublabel": "ReadWriteOnce",
+      "pos": [
+        910,
+        550
+      ],
+      "size": [
+        180,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "ops-kong",
+      "from": "operators",
+      "to": "kong",
+      "label": "HTTPS · wss",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "alerts-kong",
+      "from": "alerts",
+      "to": "kong",
+      "label": "POST /webhook",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "kong-web",
+      "from": "kong",
+      "to": "web",
+      "label": "/",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "kong-api",
+      "from": "kong",
+      "to": "api",
+      "label": "/api",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "kong-agent",
+      "from": "kong",
+      "to": "agent",
+      "label": "/ws/chat",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "agent-cli",
+      "from": "agent",
+      "to": "cli",
+      "label": "spawns",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "cli-anthropic",
+      "from": "cli",
+      "to": "anthropic",
+      "label": "inference",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "cli-mcp",
+      "from": "cli",
+      "to": "mcp",
+      "label": "tool calls",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "agent-api",
+      "from": "agent",
+      "to": "api",
+      "label": "incident tools",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "agent-pvc",
+      "from": "agent",
+      "to": "pvc",
+      "label": "transcripts",
+      "fromSide": "bottom",
+      "toSide": "left"
+    },
+    {
+      "id": "api-db",
+      "from": "api",
+      "to": "postgres",
+      "label": "incidents",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "db-workers",
+      "from": "postgres",
+      "to": "workers",
+      "label": "PGMQ",
+      "fromSide": "left",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Request paths",
+      "items": [
+        "Kong :8000 is the only ingress, so UI and WebSocket share one origin",
+        "Alerts arrive at /webhook, route against the on-call schedule, then notify",
+        "Chat runs over /ws/chat and streams tokens as the CLI generates them"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Agent session",
+      "items": [
+        "One SDK client stays connected for the life of the WebSocket",
+        "Context survives between turns and resumes from the CLI transcript",
+        "Conversations persist to Postgres; tools need approval unless allow-listed"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Operational limits",
+      "items": [
+        "The agent must stay at 1 replica — RWO volumes and pod-local session state",
+        "api and web are stateless behind Kong and scale horizontally",
+        "Losing the PVCs costs conversation context, not conversation history"
+      ]
+    }
+  ]
+}
