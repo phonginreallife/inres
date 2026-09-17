@@ -9,10 +9,12 @@ replicaCount: 1
 image:
   repository: ghcr.io/phonginreallife/
   pullPolicy: IfPresent
-  # Pin to a released version. "latest" is not reproducible - a rollback has
-  # nothing to roll back to, and two nodes pulling at different times can end
-  # up running different code. Override per deploy: --set image.tag=1.10.0
-  tag: "1.10.0"
+  # Empty means "use Chart.AppVersion", so the chart version and the images it
+  # deploys move together and cannot drift apart. Override per deploy with
+  # --set image.tag=X. Never set this to "latest": a rollback then has nothing
+  # to roll back to, and two nodes pulling at different times can run
+  # different code.
+  tag: ""
 
 # Image pull secrets for private registries
 imagePullSecrets: []
@@ -259,14 +261,19 @@ components:
     ingress:
       enabled: false
 
-  # Escalation worker - consumes the PGMQ escalation_queue.
-  # Without this, alerts create incidents and notify, but an unacknowledged
-  # incident is never escalated. Chart.yaml has always described this
-  # component; it simply had no values entry, so nothing rendered.
+  # Standalone escalation/notification worker.
   #
-  # Ships in the API image, which builds both binaries (server and worker);
-  # only the command differs.
+  # Disabled by default, and not because it is unused: cmd/server already
+  # starts StartIncidentWorker and StartNotificationWorker in-process, so
+  # escalation runs today with zero replicas here. This Deployment exists to
+  # move that work off the API pods when they are CPU-bound, and the workers
+  # claim rows with FOR UPDATE SKIP LOCKED, so running both is safe rather
+  # than double-escalating.
+  #
+  # Ships in the API image, which builds both binaries; only the command
+  # differs. Set replicas to 1+ to scale workers independently.
   worker:
+    replicas: 0
     image:
       name: inres-api
     command: ["./worker"]
