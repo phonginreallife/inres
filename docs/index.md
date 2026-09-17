@@ -15,7 +15,7 @@ alongside you — and asks before it touches anything.
 
 [Get started](#running-it-locally){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Architecture diagram](architecture.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[View on GitHub](https://github.com/phonginreallife/InRes){: .btn .fs-5 .mb-4 .mb-md-0 }
+[View on GitHub](https://github.com/phonginreallife/inres){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -75,8 +75,8 @@ are deliberate but surprising.
 ## Running it locally
 
 ```bash
-git clone https://github.com/phonginreallife/InRes.git
-cd InRes/deploy/docker
+git clone https://github.com/phonginreallife/inres.git
+cd inres/deploy/docker
 cp ../../.env.example .env        # then fill it in
 docker compose up -d
 ```
@@ -122,6 +122,6 @@ See the [full architecture](wiki/architecture/overview.html), or the
 ## Contributing
 
 Issues and pull requests are welcome — see
-[CONTRIBUTING.md](https://github.com/phonginreallife/InRes/blob/main/CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/phonginreallife/inres/blob/main/CONTRIBUTING.md).
 If you are changing behaviour these docs describe, regenerate them with OpenWiki
 in the same pull request so the citations stay accurate.

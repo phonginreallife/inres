@@ -1,7 +1,10 @@
 title: InRes
 description: AI-native on-call and incident response platform
 url: https://phonginreallife.github.io
-baseurl: /InRes
+# The repository is canonically named "inres" (lowercase), so the project site
+# is served at /inres. The Pages workflow overrides this with the value
+# configure-pages reports, so the two cannot drift; this is the local default.
+baseurl: /inres
 
 remote_theme: just-the-docs/just-the-docs@v0.10.1
 
@@ -37,13 +40,8 @@ color_scheme: dark
 
 aux_links:
   "GitHub":
-    - "https://github.com/phonginreallife/InRes"
+    - "https://github.com/phonginreallife/inres"
 aux_links_new_tab: true
-
-nav_external_links:
-  - title: Architecture diagram
-    url: /InRes/architecture.html
-    hide_icon: false
 
 back_to_top: true
 back_to_top_text: "Back to top"
