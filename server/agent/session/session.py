@@ -34,7 +34,7 @@ import contextlib
 import logging
 import time
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from errors import sanitize_error_message
 
@@ -100,6 +100,8 @@ class Turn:
     interrupted: bool = False
     cost_usd: Optional[float] = None
     usage: Optional[Dict[str, Any]] = None
+    # Tool activity, in order, for the persister to store alongside the reply.
+    tool_events: List[Dict[str, Any]] = field(default_factory=list)
 
     @property
     def auth_key(self) -> Tuple[Optional[str], Optional[str], Optional[str]]:
@@ -492,6 +494,7 @@ class ChatSession:
         turn.interrupted = st.interrupted or self._interrupt_requested
         turn.cost_usd = st.cost_usd
         turn.usage = st.usage
+        turn.tool_events = st.tool_events
 
         if turn.interrupted:
             self._out.put_nowait(events.interrupted())
