@@ -34,6 +34,18 @@ func NewGinRouter(pg *sql.DB, redis *redis.Client) *gin.Engine {
 		c.Next()
 	})
 
+	// Liveness probe. Deliberately shallow and unauthenticated: it reports
+	// whether this process can serve, not whether every dependency is
+	// reachable. A probe that failed on a database blip would restart a
+	// container that was working and would have recovered on its own.
+	//
+	// main.go has always advertised this endpoint in its startup banner, but
+	// nothing registered it, so /health returned 404 and the container
+	// healthcheck could never pass.
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "ok", "service": "api"})
+	})
+
 	// Initialize services
 	fcmService, _ := services.NewFCMService(pg)
 	slackService, _ := services.NewSlackService(pg)
