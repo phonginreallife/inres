@@ -31,9 +31,9 @@ help:
 	@echo "  make dev-debug     Start Docker with Redis UI"
 	@echo ""
 	@echo "Testing:"
-	@echo "  make test          Run pytest"
-	@echo "  make test-agent    Test SDKHybridAgent directly"
-	@echo "  make test-ws       Test WebSocket /ws/chat"
+	@echo "  make test          Run unit tests (no API key or CLI needed)"
+	@echo "  make test-cov      Run unit tests with coverage"
+	@echo "  make test-ws       End-to-end /ws/chat check (TOKEN=<jwt>)"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make build         Build Docker image"
@@ -97,29 +97,17 @@ dev-bg:
 # TESTING
 # =============================================================================
 
-# Run pytest
+# Unit tests: no API key, no CLI, no database required
 test:
 	pytest -v
 
-# Test SDK hybrid agent directly (no WebSocket)
-test-agent:
-	@echo "Testing SDKHybridAgent..."
-	python3 scripts/test_sdk_hybrid.py "Hello, what can you help me with?"
+test-cov:
+	pytest --cov=session --cov-report=term-missing
 
-# Test SDK hybrid with tool prompt
-test-agent-tools:
-	@echo "Testing SDKHybridAgent with tools..."
-	python3 scripts/test_sdk_hybrid.py "What is the current time?" --tools
-
-# Test legacy hybrid agent (for comparison)
-test-agent-legacy:
-	@echo "Testing legacy HybridAgent..."
-	python3 scripts/test_hybrid.py "Hello, what can you help me with?"
-
-# Test WebSocket endpoint
+# End-to-end check against a running server (needs a valid JWT)
 test-ws:
-	@echo "Testing /ws/chat endpoint..."
-	python3 scripts/test_websocket.py
+	@echo "Testing /ws/chat endpoint (set TOKEN=<jwt>)..."
+	python3 scripts/test_websocket.py --token "$${TOKEN}"
 
 # =============================================================================
 # DOCKER

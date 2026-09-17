@@ -82,3 +82,39 @@ ai_incident_analytics:
     - "Read"
     - "Grep"
     - "Glob"
+
+# =============================================================================
+# INTERACTIVE CHAT AGENT (/ws/chat)
+# =============================================================================
+# Every value here can be overridden with an AI_AGENT_* environment variable,
+# e.g. AI_AGENT_MODEL. Env wins over this file.
+ai_agent:
+  # Any model id the Claude Code CLI accepts, or an alias like "sonnet".
+  model: "claude-opus-5"
+
+  permission_mode: "default"
+
+  # Ask the user before running a tool that isn't already allow-listed.
+  # Per-user allowances come from the user_allowed_tools table.
+  require_tool_approval: true
+
+  # How long an approval prompt waits before being denied, in seconds.
+  permission_timeout_s: 300
+
+  # Shut down the CLI subprocess after this long with no traffic. The session
+  # id is kept, so the next message resumes instead of starting over.
+  idle_timeout_s: 900
+
+  # Live CLI subprocesses allowed at once - one per active chat session. Raise
+  # only alongside the container's memory limit.
+  max_concurrent_cli: 8
+
+  # Agent turns per message before the SDK stops.
+  max_turns: 10
+
+  # Optional hard spend cap per session, in USD. 0 disables it.
+  max_budget_usd: 0
+
+  # Optional: replaces the built-in incident-response system prompt.
+  # system_prompt: |
+  #   You are ...

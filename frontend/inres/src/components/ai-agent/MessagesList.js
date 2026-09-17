@@ -1,7 +1,8 @@
 import { memo, useMemo } from 'react';
 import MessageComponent from './MessageComponent';
+import EmptyState from './EmptyState';
 
-const MessagesList = memo(({ messages, isSending, endRef, onRegenerate, onApprove, onApproveAlways, onDeny, pendingApprovals = [] }) => {
+const MessagesList = memo(({ messages, isSending, endRef, onRegenerate, onApprove, onApproveAlways, onDeny, pendingApprovals = [], onSelectSuggestion, incidentId = null }) => {
   // Tối ưu hóa: chỉ render một số lượng messages nhất định để tránh lag
   const MAX_VISIBLE_MESSAGES = 50;
   const visibleMessages = useMemo(() => {
@@ -28,6 +29,14 @@ const MessagesList = memo(({ messages, isSending, endRef, onRegenerate, onApprov
       className="flex-1 overflow-y-auto scroll-smooth will-change-scroll [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar]:w-2 [-ms-overflow-style:none] [scrollbar-width:thin] [scrollbar-color:rgb(209_213_219)_transparent]"
     >
       <div className="max-w-3xl mx-auto px-2 sm:px-4 pt-4 pb-28 sm:pb-32">
+        {/* Nothing said yet - offer somewhere to start rather than a blank page */}
+        {messages.length === 0 && !isSending && onSelectSuggestion && (
+          <EmptyState
+            onSelectSuggestion={onSelectSuggestion}
+            incidentId={incidentId}
+          />
+        )}
+
         {visibleMessages.map((message, idx) => (
           <MessageComponent
             key={`${message.role}-${idx}-${message.content?.slice(0, 50) || ''}`}

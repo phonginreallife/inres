@@ -8,13 +8,25 @@ The InRes Agent provides an intelligent conversational interface for incident ma
 
 ## Architecture
 
+Each WebSocket connection owns one `ChatSession`, which holds a single Claude
+Agent SDK client open for the life of the conversation. That one client does the
+planning, runs the tools and streams tokens — so context survives between turns,
+and there is no second model call to produce the streaming text.
+
 ```
 agent/
 ├── main.py                    # Entry point (uvicorn)
-├── claude_agent_api_v1.py     # Legacy block-based agent
-├── streaming/                 # Token-level streaming (new)
-│   ├── agent.py              # Streaming agent implementation
-│   ├── routes.py             # WebSocket endpoints
+├── claude_agent_api_v1.py     # FastAPI app + WebSocket endpoints
+├── ws_chat.py                 # Shared connection driver (queue, persistence)
+├── errors.py                  # Error sanitisation
+├── session/                   # The agent
+│   ├── session.py            # ChatSession: client lifecycle + turn loop
+│   ├── translate.py          # SDK messages -> WebSocket events
+│   ├── permissions.py        # Tool approval broker
+│   ├── events.py             # Every event payload, in one place
+│   ├── config.py             # SessionConfig -> ClaudeAgentOptions
+│   └── _sdk_types.py         # SDK types, with a shim for tests
+├── streaming/                 # MCP client pool
 │   ├── mcp_client.py         # MCP client integration
 │   └── mcp_config.py         # MCP configuration
 ├── routes/                    # REST API endpoints
@@ -29,7 +41,7 @@ agent/
 ├── security/                  # Zero-trust verification
 ├── audit/                     # Security audit logging
 ├── config/                    # Configuration loader
-├── core/                      # Shared abstractions
+├── tests/                     # Unit tests (no API key or CLI needed)
 └── utils/                     # Utilities
 ```
 
@@ -37,10 +49,44 @@ agent/
 
 | Endpoint | Type | Description |
 |----------|------|-------------|
-| `/ws/chat` | WebSocket | Legacy block-based chat |
-| `/ws/stream` | WebSocket | Token-level streaming chat |
-| `/ws/secure/chat` | WebSocket | Zero-trust secured chat |
-| `/api/*` | REST | Various REST endpoints |
+| `/ws/chat` | WebSocket | Chat, authenticated by JWT query param |
+| `/ws/secure/chat` | WebSocket | Same, with zero-trust signed messages |
+| `/api/*` | REST | Conversations, audit, MCP, plugins, memory |
+
+### `/ws/chat` protocol
+
+Connect with `?token=<jwt>&org_id=…&project_id=…`, optionally
+`&conversation_id=…` to resume a previous conversation.
+
+Client sends:
+
+| Message | Purpose |
+|---------|---------|
+| `{"prompt": "...", "conversation_id": "..."}` | Ask something |
+| `{"type": "interrupt"}` | Stop the turn in flight |
+| `{"type": "clear_history"}` | Start a fresh conversation |
+| `{"type": "permission_response", "request_id": "...", "allow": "yes"\|"no"}` | Answer a tool approval |
+| `{"type": "pong"}` | Reply to a heartbeat |
+
+Server sends `session_created`, then per turn: `processing`, `session_init`,
+`delta`, `thinking`, `tool_use`, `tool_result`, `todo_update`,
+`permission_request` / `permission_timeout`, and exactly one of `complete`,
+`error` or `interrupted`. Plus `ping` every 30s and `history_cleared` on reset.
+
+## Configuration
+
+The agent reads the `ai_agent` section of the shared config YAML; every key can
+be overridden with an `AI_AGENT_*` environment variable. See
+`deploy/docker/volumes/config/cfg.ex.yaml` for the annotated list — the ones
+worth knowing about are `model`, `require_tool_approval`, `idle_timeout_s` and
+`max_concurrent_cli` (one CLI subprocess per active session).
+
+## Tests
+
+```bash
+make test          # unit tests: no API key, no CLI, no database
+make test-ws TOKEN=<jwt>   # end-to-end against a running server
+```
 
 ## Tech Stack
 

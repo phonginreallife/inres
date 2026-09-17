@@ -7,7 +7,10 @@ anyio==4.11.0
 attrs==25.4.0
 certifi==2025.10.5
 cffi==2.0.0
-claude-agent-sdk==0.1.8
+# 0.1.8 raised MessageParseError on message types it did not recognise, so any
+# newer Claude Code CLI broke mid-turn (e.g. "rate_limit_event"). 0.2.x skips
+# unknown types instead, which is what makes an unpinned CLI safe.
+claude-agent-sdk>=0.2.153,<0.3
 click==8.3.0
 cryptography==46.0.3
 fastapi==0.120.4
@@ -44,7 +47,13 @@ watchfiles==1.1.1
 websockets==15.0.1
 yarl==1.22.0
 supabase==2.23.0
-anthropic>=0.40.0
 redis>=5.0.0
 
 psycopg2-binary
+
+# The direct Anthropic SDK is no longer needed: all inference goes through
+# claude-agent-sdk, which drives the Claude Code CLI.
+
+# Tests
+pytest>=8.0.0
+pytest-asyncio>=0.24.0

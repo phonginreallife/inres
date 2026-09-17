@@ -12,8 +12,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import apiClient from '../lib/api';
 
-// Use /ws/stream for token-level streaming, /ws/chat for block streaming
-const USE_TOKEN_STREAMING = process.env.NEXT_PUBLIC_USE_TOKEN_STREAMING === 'true';
+// The agent streams tokens over /ws/chat. There is no separate streaming
+// endpoint - /ws/stream never existed on the server.
+const WS_ENDPOINT = '/ws/chat';
 
 // Build WebSocket URL dynamically (handles SSR where window is undefined)
 function getWebSocketUrl() {
@@ -26,8 +27,7 @@ function getWebSocketUrl() {
   }
   
   const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-  const endpoint = USE_TOKEN_STREAMING ? '/ws/stream' : '/ws/chat';
-  
+
   // In production (HTTPS), use the same host without explicit port (nginx handles routing)
   // In development (HTTP), use Kong port 8000 directly
   let host;
@@ -40,8 +40,8 @@ function getWebSocketUrl() {
     host = window.location.hostname + ':' + wsPort;
   }
   
-  console.log(`[WebSocket] Using ${USE_TOKEN_STREAMING ? 'TOKEN' : 'BLOCK'} streaming: ${protocol}://${host}${endpoint}`);
-  return `${protocol}://${host}${endpoint}`;
+  console.log(`[WebSocket] Connecting to ${protocol}://${host}${WS_ENDPOINT}`);
+  return `${protocol}://${host}${WS_ENDPOINT}`;
 }
 
 /**
@@ -57,7 +57,15 @@ function getWebSocketUrl() {
  * @param {WebSocketOptions} options - Configuration options
  */
 export function useClaudeWebSocket(authToken = null, options = {}) {
-  const { autoConnect = false, orgId = null, projectId = null } = options;
+  const {
+    autoConnect = false,
+    orgId = null,
+    projectId = null,
+    // Set false to land on a clean thread instead of continuing the last one.
+    // Used when arriving with a specific task in hand - analysing an incident
+    // from a deep link, say - where the previous conversation is just noise.
+    restoreHistory = true,
+  } = options;
 
   const [messages, setMessages] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState('disconnected');
@@ -66,6 +74,9 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
   const [conversationId, setConversationId] = useState(null); // Claude conversation ID for resume
   const [pendingApprovals, setPendingApprovals] = useState([]); // Changed to array for multiple approvals
   const [todos, setTodos] = useState([]);
+  const [model, setModelState] = useState(null);            // active model id
+  const [availableModels, setAvailableModels] = useState([]); // allowlist from the server
+  const [modelPending, setModelPending] = useState(false);   // queued behind a running turn
 
   const wsRef = useRef(null);
   const reconnectTimeoutRef = useRef(null);
@@ -94,6 +105,16 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
 
   // Load session ID and conversation ID from localStorage on mount
   useEffect(() => {
+    if (!restoreHistory) {
+      // Drop the pointer to the previous thread before anything can read it:
+      // connect() falls back to localStorage for the resume id, so leaving it
+      // would silently continue the old Claude session on a "new" chat.
+      // The conversation itself is untouched and still in the history sidebar.
+      localStorage.removeItem('claude_conversation_id');
+      console.log('Starting a fresh conversation (restoreHistory=false)');
+      return;
+    }
+
     const savedSessionId = localStorage.getItem('claude_session_id');
     const savedConversationId = localStorage.getItem('claude_conversation_id');
     if (savedSessionId) {
@@ -104,7 +125,9 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
       setConversationId(savedConversationId);
       console.log('Restored conversation ID:', savedConversationId);
     }
-  }, []);
+    // Keyed on restoreHistory, not [] - App Router can swap search params
+    // without remounting, and the flag must still take effect.
+  }, [restoreHistory]);
 
   // Save session ID to localStorage
   useEffect(() => {
@@ -115,7 +138,12 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
   }, [sessionId]);
 
   // Save conversation ID to localStorage
+  // Mirrored into a ref so connect() can read the current value without taking
+  // it as a dependency - otherwise every conversation change would tear down
+  // and rebuild the socket.
+  const conversationIdRef = useRef(null);
   useEffect(() => {
+    conversationIdRef.current = conversationId;
     if (conversationId) {
       localStorage.setItem('claude_conversation_id', conversationId);
       console.log('Saved conversation ID:', conversationId);
@@ -148,6 +176,13 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
       if (token) params.append('token', token);
       if (currentOrgId) params.append('org_id', currentOrgId);
       if (currentProjectId) params.append('project_id', currentProjectId);
+      // Asks the server to resume this conversation's Claude session, so the
+      // agent keeps its context instead of starting cold. Falls back to
+      // localStorage so this does not depend on the order in which the restore
+      // effect and connect() happen to run.
+      const resumeConversationId =
+        conversationIdRef.current || localStorage.getItem('claude_conversation_id');
+      if (resumeConversationId) params.append('conversation_id', resumeConversationId);
 
       const queryString = params.toString();
       const baseWsUrl = getWebSocketUrl();
@@ -156,7 +191,8 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
       console.log('Connecting to WebSocket:', baseWsUrl, {
         hasToken: !!token,
         orgId: currentOrgId || 'none',
-        projectId: currentProjectId || 'none'
+        projectId: currentProjectId || 'none',
+        conversationId: resumeConversationId || 'new'
       });
       setConnectionStatus('connecting');
       isIntentionalDisconnect.current = false;
@@ -240,10 +276,24 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
               break;
 
             case 'session_created':
-              // Session created IMMEDIATELY after WebSocket connects
-              // This provides session_id for interrupts before Claude starts responding
+              // Sent immediately on connect, before Claude starts responding, so
+              // interrupts have a session_id to reference.
               setSessionId(data.session_id);
-              console.log('Session created (for interrupts):', data.session_id);
+              // The server also decides the conversation_id here. Taking it now
+              // matters: otherwise a stale value from localStorage is sent back
+              // with every message and the turns are appended to an old thread.
+              if (data.conversation_id) {
+                setConversationId(data.conversation_id);
+              }
+              // The server owns the model list; it is an allowlist, so the UI
+              // must never invent entries of its own.
+              if (data.model) setModelState(data.model);
+              if (Array.isArray(data.available_models)) setAvailableModels(data.available_models);
+              console.log(
+                'Session created:', data.session_id,
+                'Conversation:', data.conversation_id,
+                'Model:', data.model
+              );
               break;
 
             case 'ping':
@@ -402,6 +452,9 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
                 source: 'assistant',
                 content: typeof data.content === 'string' ? data.content : JSON.stringify(data.content, null, 2),
                 type: 'tool_result',
+                // Carried through so a failed call reads as "Failed" rather
+                // than being indistinguishable from a successful one.
+                is_error: Boolean(data.is_error),
                 timestamp: new Date().toISOString(),
                 isStreaming: false  // Tool results are complete, not streaming
               }]);
@@ -481,6 +534,38 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
               // Todo list update from TodoWrite tool
               console.log('Todo list updated:', data.todos);
               setTodos(data.todos || []);
+              break;
+
+            case 'history_cleared':
+              // The server started a fresh conversation, so the transcript and
+              // the conversation id both have to be replaced - keeping the old
+              // id would append new turns to the thread just cleared.
+              console.log('History cleared, new conversation:', data.conversation_id);
+              setMessages([]);
+              setTodos([]);
+              setPendingApprovals([]);
+              if (data.conversation_id) {
+                setConversationId(data.conversation_id);
+              }
+              setIsSending(false);
+              break;
+
+            case 'model_changed':
+              // Authoritative: also fires when the server rejects a choice,
+              // which snaps the picker back to what is really in use.
+              setModelState(data.model);
+              setModelPending(Boolean(data.pending));
+              if (Array.isArray(data.available_models) && data.available_models.length) {
+                setAvailableModels(data.available_models);
+              }
+              console.log('Model:', data.model, data.pending ? '(next turn)' : '(active)');
+              break;
+
+            case 'permission_timeout':
+              // Nobody answered in time; the tool was denied server-side, so
+              // drop the approval card rather than leaving it hanging.
+              console.log('Approval timed out:', data.request_id);
+              setPendingApprovals(prev => prev.filter(a => a.request_id !== data.request_id));
               break;
 
             default:
@@ -608,18 +693,19 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
         }];
       });
 
-      // Prepare WebSocket message (Claude Agent API v1 format)
-      // conversation_id is used for Claude SDK resume functionality
+      // conversation_id ties the turn to a stored thread, and lets the server
+      // resume the matching Claude session after a reconnect. The socket is
+      // already authenticated via the token query param, so no credentials go
+      // in the body.
       const wsMessage = {
+        type: 'chat',
         prompt: message,
-        session_id: sessionId || "",
         conversation_id: options.conversationId || conversationId || "",
-        auth_token: authTokenRef.current || "",
         org_id: options.orgId || "",
         project_id: options.projectId || ""
       };
 
-      console.log('Sending message:', { ...wsMessage, auth_token: authTokenRef.current ? '***' : '' });
+      console.log('Sending message:', wsMessage);
       wsRef.current.send(JSON.stringify(wsMessage));
 
     } catch (error) {
@@ -754,6 +840,35 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
     console.log('Started new conversation');
   }, []);
 
+  // Fetch a conversation's stored messages and map them into UI shape.
+  // Returns null when there is nothing to show or the fetch fails - callers
+  // carry on regardless, since an unreadable transcript should never stop
+  // someone sending a new message.
+  const fetchConversationMessages = useCallback(async (convId) => {
+    if (!convId || !authTokenRef.current) return null;
+
+    try {
+      if (!apiClient.token) {
+        apiClient.setToken(authTokenRef.current);
+      }
+
+      const response = await apiClient.getConversationMessages(convId);
+      if (!response.success || !response.messages) return null;
+
+      return response.messages.map(msg => ({
+        role: msg.role,
+        content: msg.content || '',
+        type: msg.message_type || 'text',
+        timestamp: msg.created_at,
+        isStreaming: false,
+        isHistory: true  // Mark as history so UI can style differently if needed
+      }));
+    } catch (err) {
+      console.error('Failed to load conversation messages:', err);
+      return null;
+    }
+  }, []);
+
   // Resume an existing conversation by ID and load previous messages
   const resumeConversation = useCallback(async (convId) => {
     setMessages([]);
@@ -762,32 +877,57 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
     localStorage.setItem('claude_conversation_id', convId);
     console.log('Resuming conversation:', convId);
 
-    // Load previous messages from API
-    try {
-      if (authTokenRef.current) {
-        // Set token for API client if not already set
-        if (!apiClient.token) {
-          apiClient.setToken(authTokenRef.current);
-        }
+    const loaded = await fetchConversationMessages(convId);
+    if (loaded) {
+      setMessages(loaded);
+      console.log('Loaded', loaded.length, 'messages from history');
+    }
+  }, [fetchConversationMessages]);
 
-        const response = await apiClient.getConversationMessages(convId);
-        if (response.success && response.messages) {
-          // Convert DB messages to UI format
-          const loadedMessages = response.messages.map(msg => ({
-            role: msg.role,
-            content: msg.content || '',
-            type: msg.message_type || 'text',
-            timestamp: msg.created_at,
-            isStreaming: false,
-            isHistory: true  // Mark as history so UI can style differently if needed
-          }));
-          setMessages(loadedMessages);
-          console.log('Loaded', loadedMessages.length, 'messages from history');
-        }
-      }
-    } catch (err) {
-      console.error('Failed to load conversation messages:', err);
-      // Continue anyway - user can still send new messages
+  // Restore the transcript when the component remounts.
+  //
+  // Navigating to another tab unmounts this page, which drops `messages` and
+  // closes the socket. The conversation id survives in localStorage, but
+  // without this the user came back to an empty thread even though every turn
+  // was still in the database.
+  //
+  // Waits for the auth token, since the history endpoint needs it, and runs at
+  // most once per mount.
+  const historyRestoredRef = useRef(false);
+  useEffect(() => {
+    if (!restoreHistory || historyRestoredRef.current || !authToken) return;
+
+    const savedConversationId = localStorage.getItem('claude_conversation_id');
+    if (!savedConversationId) return;
+
+    historyRestoredRef.current = true;
+
+    (async () => {
+      const loaded = await fetchConversationMessages(savedConversationId);
+      if (!loaded || loaded.length === 0) return;
+
+      // Only seed an empty thread. If the user was quick enough to send
+      // something while this was in flight, their live messages win.
+      setMessages(prev => (prev.length === 0 ? loaded : prev));
+      console.log('Restored', loaded.length, 'messages for', savedConversationId);
+    })();
+  }, [authToken, fetchConversationMessages, restoreHistory]);
+
+  // Ask the server to switch models. Optimistic only in the UI sense - the
+  // server validates against its allowlist and replies with model_changed,
+  // which is what actually settles the value.
+  const setModel = useCallback((modelId) => {
+    if (!modelId) return;
+    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+      console.error('WebSocket not connected');
+      return;
+    }
+
+    try {
+      wsRef.current.send(JSON.stringify({ type: 'set_model', model: modelId }));
+      setModelState(modelId);
+    } catch (error) {
+      console.error('Error switching model:', error);
     }
   }, []);
 
@@ -864,6 +1004,10 @@ export function useClaudeWebSocket(authToken = null, options = {}) {
   }, [autoConnect]); // Re-run if autoConnect changes
 
   return {
+    model,
+    availableModels,
+    modelPending,
+    setModel,
     messages,
     setMessages,
     connectionStatus,

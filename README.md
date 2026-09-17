@@ -238,8 +238,8 @@ GET    /uptime/dashboard       Dashboard data
 
 ### AI Agent
 ```
-WS     /ws/chat                AI chat (block mode)
-WS     /ws/stream              AI chat (streaming mode)
+WS     /ws/chat                AI chat (token streaming)
+WS     /ws/secure/chat         AI chat (zero-trust signed)
 GET    /conversations          List conversations
 GET    /mcp/servers            List MCP tools
 ```

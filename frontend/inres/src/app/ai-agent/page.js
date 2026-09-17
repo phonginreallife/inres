@@ -64,11 +64,18 @@ function AIAgentContent() {
     approveToolAlways,
     denyTool,
     todos,
+    model,
+    availableModels,
+    modelPending,
+    setModel,
     connect: connectWebSocket,
   } = useClaudeWebSocket(authToken, {
     autoConnect: false,
     orgId: currentOrg?.id,
-    projectId: currentProject?.id
+    projectId: currentProject?.id,
+    // Deep-linked from an incident: open a clean thread for that incident
+    // rather than dropping the user into the middle of their last conversation.
+    restoreHistory: !incidentId
   });
 
   // Handle chat submit
@@ -86,7 +93,18 @@ function AIAgentContent() {
       orgId: currentOrg?.id,
       projectId: currentProject?.id
     });
-  }, [input, sendMessage]);
+  }, [input, sendMessage, currentOrg, currentProject]);
+
+  // Send a prompt straight from a suggestion card, bypassing the composer.
+  const handleSuggestion = useCallback(async (prompt) => {
+    if (!prompt || isSending) return;
+
+    setInput("");
+    await sendMessage(prompt, {
+      orgId: currentOrg?.id,
+      projectId: currentProject?.id
+    });
+  }, [sendMessage, isSending, currentOrg, currentProject]);
 
   // Handle session reset
   const handleSessionReset = useCallback(() => {
@@ -240,6 +258,8 @@ function AIAgentContent() {
                 messages={messages}
                 isSending={isSending}
                 endRef={endRef}
+                onSelectSuggestion={handleSuggestion}
+                incidentId={incidentId}
                 onRegenerate={handleRegenerate}
                 onApprove={approveTool}
                 onApproveAlways={approveToolAlways}
@@ -265,6 +285,10 @@ function AIAgentContent() {
             todos={todos}
             conversationId={conversationId}
             hasMessages={messages.length > 0}
+            model={model}
+            availableModels={availableModels}
+            modelPending={modelPending}
+            onModelChange={setModel}
           />
         </>
       )}

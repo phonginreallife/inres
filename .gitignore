@@ -182,3 +182,7 @@ config.*.yaml
 # CLI binaries
 deploy/inres-cli/inres
 deploy/inres-cli/slar
+
+# Local compose overrides (dev machine specific)
+docker-compose.override.yaml
+docker-compose.override.yml

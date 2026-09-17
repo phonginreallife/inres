@@ -103,15 +103,18 @@ const summarizeToolResult = (content, maxLength = 300) => {
 };
 
 // Memoized Message Component để tránh re-render không cần thiết
-const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlways, onDeny, pendingApprovals = [] }) => {
-  // Debug log
-  console.log('[MessageComponent] Rendering:', {
-    role: message.role,
-    type: message.type,
-    contentLen: message.content?.length || 0,
-    hasThought: !!message.thought
-  });
+// Message kinds that get no copy/regenerate footer.
+const NON_ACTIONABLE_TYPES = new Set([
+  'tool_use',
+  'tool_result',
+  'ToolCallExecutionEvent',
+  'permission_request',
+  'interrupted',
+  'error',
+  'system_info',
+]);
 
+const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlways, onDeny, pendingApprovals = [] }) => {
   // State for expandable tool results and thought
   const [isToolResultExpanded, setIsToolResultExpanded] = useState(false);
   const [isThoughtExpanded, setIsThoughtExpanded] = useState(false);
@@ -242,21 +245,33 @@ const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlwa
           return 'text';
         };
 
+        const expandable = Boolean(hasContent && contentToShow);
+
         return (
-          <div className="my-2">
-            <div className="flex items-center gap-2">
-              <code className="text-sm font-mono text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
-                {formattedCall}
-              </code>
-              {hasContent && contentToShow && (
-                <button
-                  onClick={() => setIsToolContentExpanded(!isToolContentExpanded)}
-                  className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  {isToolContentExpanded ? 'Hide' : 'Show'} content
-                </button>
-              )}
-            </div>
+          <div className="my-1">
+            {/* One compact row per call. The full command or file content is
+                one click away rather than always on screen. */}
+            <button
+              type="button"
+              onClick={() => expandable && setIsToolContentExpanded(!isToolContentExpanded)}
+              disabled={!expandable}
+              className={`group flex w-full items-center gap-2 rounded-md px-2 py-1 text-left transition-colors
+                ${expandable ? 'hover:bg-gray-100 dark:hover:bg-gray-800/60 cursor-pointer' : 'cursor-default'}`}
+            >
+              <svg
+                className={`h-3 w-3 shrink-0 text-gray-400 transition-transform
+                  ${isToolContentExpanded ? 'rotate-90' : ''} ${expandable ? '' : 'invisible'}`}
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              <span className="shrink-0 text-xs font-medium text-blue-600 dark:text-blue-400">
+                {toolName}
+              </span>
+              <span className="min-w-0 flex-1 truncate font-mono text-xs text-gray-500 dark:text-gray-400">
+                {(contentToShow || formattedCall || '').replace(/\s+/g, ' ').slice(0, 140)}
+              </span>
+            </button>
             {hasContent && contentToShow && isToolContentExpanded && (
               <div className="mt-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                 <div className="flex items-center justify-between px-3 py-1.5 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
@@ -291,25 +306,39 @@ const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlwa
                                 !displayContent.startsWith('#') &&
                                 !displayContent.startsWith('*');
 
+      // One quiet line by default. The output only takes over the transcript
+      // when the reader asks for it.
+      const isError = Boolean(message.is_error);
+      const firstLine = (toolResultData.full || '').split('\n').find(l => l.trim()) || '';
+      const lineCount = (toolResultData.full || '').split('\n').length;
+
       return (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-          <div className="flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-sm font-medium text-green-900 dark:text-green-100">Tool Result</span>
-            </div>
-            {toolResultData.needsSummary && (
-              <button
-                onClick={() => setIsToolResultExpanded(!isToolResultExpanded)}
-                className="text-xs text-green-600 dark:text-green-400 hover:underline"
-              >
-                {isToolResultExpanded ? 'Show Summary' : 'Show Full Result'}
-              </button>
-            )}
-          </div>
-          <div className="p-3 overflow-x-auto max-h-96 overflow-y-auto bg-gray-900 text-gray-100">
+        <div className="my-1">
+          <button
+            type="button"
+            onClick={() => setIsToolResultExpanded(!isToolResultExpanded)}
+            className="group flex w-full items-center gap-2 rounded-md px-2 py-1 text-left
+                       hover:bg-gray-100 dark:hover:bg-gray-800/60 transition-colors"
+          >
+            <svg
+              className={`h-3 w-3 shrink-0 text-gray-400 transition-transform ${isToolResultExpanded ? 'rotate-90' : ''}`}
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+            <span className={`shrink-0 text-xs font-medium ${isError ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'}`}>
+              {isError ? 'Failed' : 'Result'}
+            </span>
+            <span className="min-w-0 flex-1 truncate font-mono text-xs text-gray-400 dark:text-gray-500">
+              {firstLine.slice(0, 120)}
+            </span>
+            <span className="shrink-0 text-[11px] text-gray-400 dark:text-gray-600">
+              {lineCount > 1 ? `${lineCount} lines` : ''}
+            </span>
+          </button>
+
+          {isToolResultExpanded && (
+          <div className="mt-1 p-3 rounded-lg overflow-x-auto max-h-96 overflow-y-auto bg-gray-900 text-gray-100">
             {isPlainTextOutput ? (
               /* Plain text output (like kubectl, ls, etc.) - preserve formatting */
               <pre className="text-sm font-mono whitespace-pre-wrap leading-relaxed">
@@ -328,6 +357,7 @@ const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlwa
               </div>
             )}
           </div>
+          )}
         </div>
       );
     }
@@ -578,8 +608,11 @@ const MessageComponent = memo(({ message, onRegenerate, onApprove, onApproveAlwa
         {renderMessageContent()}
       </div>
 
-      {/* Action buttons - only for assistant messages */}
-      {message.role !== "user" && message.type !== 'permission_request' && (
+      {/* Action buttons - only on the assistant's actual prose. Tool calls,
+          results, approvals and system notices are not things you copy or
+          regenerate, and a pair of icons under each one was most of the
+          visual noise in a tool-heavy transcript. */}
+      {message.role !== "user" && !NON_ACTIONABLE_TYPES.has(message.type) && (
         <div className="mt-2 flex items-center text-gray-400">
           <button
             onClick={handleCopy}

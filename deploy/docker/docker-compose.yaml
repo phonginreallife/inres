@@ -1,13 +1,31 @@
 # version: "3.9"
 # Image version - set INRES_VERSION in .env or defaults to 0.1.0
 #
-# SDK Hybrid Agent Architecture:
-#   - Claude Agent SDK for planning, tools, MCP integration
-#   - Direct Anthropic API for token-level streaming
+# Agent architecture:
+#   - One persistent Claude Agent SDK session per WebSocket connection
+#   - That session handles planning, tools, MCP and token streaming in one pass
+#
+# The .env file belongs NEXT TO THIS FILE - Compose reads it from the directory
+# containing the compose file, not from your shell's working directory. Copy
+# .env.example from the repo root as a starting point.
 #
 # Required environment variables (.env):
-#   ANTHROPIC_API_KEY=sk-ant-...
 #   SUPABASE_SERVICE_ROLE_KEY=...
+#   SUPABASE_JWT_SECRET=...
+#
+#   Against a local `supabase start`, the container and network names come from
+#   project_id in supabase/config.toml ("inres-oss"), so also set:
+#     SUPABASE_NETWORK=supabase_network_inres-oss
+#     SUPABASE_URL=http://supabase_kong_inres-oss:8000
+#     DATABASE_URL=postgresql://postgres:postgres@supabase_db_inres-oss:5432/postgres?sslmode=disable
+#   Confirm the real names with `docker network ls` and `docker ps`.
+#
+#   Plus exactly one Anthropic credential. An API key takes precedence
+#   wherever it is found, so leave it empty to use the OAuth token - and blank
+#   anthropic_api_key in volumes/config/dev.config.yaml too, since the agent
+#   copies that value into the environment at startup.
+#   ANTHROPIC_API_KEY=sk-ant-...            metered, billed per token
+#   CLAUDE_CODE_OAUTH_TOKEN=...             from `claude setup-token`
 
 services:
   redis:
@@ -39,8 +57,10 @@ services:
     environment:
       # Config
       - inres_CONFIG_PATH=/app/config.yaml
-      # API Keys (required)
+      # Anthropic credential - set exactly one. An API key wins if both are
+      # present, so leave it empty to use the subscription token.
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CLAUDE_CODE_OAUTH_TOKEN=${CLAUDE_CODE_OAUTH_TOKEN:-}
       # Service URLs
       - INRES_API_URL=${INRES_API_URL:-http://api:8080}
       - SUPABASE_URL=${SUPABASE_URL:-http://supabase_kong_supabase:8000}
@@ -49,8 +69,8 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@supabase_db_supabase:5432/postgres?sslmode=disable}
       # Redis
       - REDIS_URL=redis://redis:6379
-      # Agent Settings
-      - AGENT_MODE=sdk_hybrid
+      # Agent Settings (see ai_agent in the config YAML for the rest)
+      - AI_AGENT_MODEL=${AI_AGENT_MODEL:-claude-opus-5}
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - AI_RATE_LIMIT=${AI_RATE_LIMIT:-100}
     restart: unless-stopped
@@ -144,8 +164,14 @@ services:
 networks:
   inres-network:
     driver: bridge
+  # The Supabase CLI names its network after the project_id in
+  # supabase/config.toml: supabase_network_<project_id>. This repo's config.toml
+  # uses "inres-oss", so a local `supabase start` creates
+  # supabase_network_inres-oss, not the self-hosted default below. Set
+  # SUPABASE_NETWORK in .env to match whatever `docker network ls` shows.
   supabase_network_supabase:
     external: true
+    name: ${SUPABASE_NETWORK:-supabase_network_supabase}
 
 volumes:
   claude_data:

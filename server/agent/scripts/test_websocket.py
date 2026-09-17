@@ -1,24 +1,17 @@
 #!/usr/bin/env python3
 """
-WebSocket Test Client for Agent Endpoints.
+Manual end-to-end check for /ws/chat.
 
-Tests the WebSocket streaming endpoints:
-- /ws/stream (pure streaming)
-- /hybrid/ws/stream (hybrid agent)
-- /ws/chat (legacy SDK)
+Drives a real server with a real Claude session, so it needs the stack running
+and a valid Supabase JWT. The automated suite lives in tests/ and needs neither.
 
 Usage:
-    # Test against local server
-    python scripts/test_websocket.py
-    
-    # Test specific endpoint
-    python scripts/test_websocket.py --endpoint hybrid
-    
-    # Test with custom prompt
-    python scripts/test_websocket.py --prompt "Show me incidents"
-    
-    # Test against custom host
-    python scripts/test_websocket.py --host ws://localhost:8002
+    python scripts/test_websocket.py --token "$JWT"
+    python scripts/test_websocket.py --token "$JWT" --prompt "Show me incidents"
+    python scripts/test_websocket.py --token "$JWT" --host ws://localhost:8002
+
+/ws/secure/chat is not covered here: every frame must be signed by a device
+certificate, which this script has no way to produce.
 """
 
 import argparse
@@ -116,7 +109,29 @@ async def test_websocket(
                     elif event_type == "thinking":
                         content = event.get("content", "")[:50]
                         print(f"\n[💭 Thinking: {content}...]", flush=True)
-                        
+
+                    elif event_type == "session_init":
+                        print(f"[Claude session: {event.get('session_id')}]", flush=True)
+
+                    elif event_type == "processing":
+                        print("[Starting...]", flush=True)
+
+                    elif event_type == "todo_update":
+                        print(f"\n[📋 {len(event.get('todos', []))} todos]", flush=True)
+
+                    elif event_type == "permission_request":
+                        tool = event.get("tool_name", "?")
+                        print(f"\n[🔐 Approval requested for {tool} - auto-approving]", flush=True)
+                        await ws.send(json.dumps({
+                            "type": "permission_response",
+                            "request_id": event.get("request_id"),
+                            "allow": "yes",
+                        }))
+
+                    elif event_type == "permission_timeout":
+                        print("\n[⏰ Approval timed out]", flush=True)
+
+
                     elif event_type == "complete":
                         print("\n")
                         print("-" * 60)
@@ -156,36 +171,12 @@ async def test_websocket(
         print(f"❌ Error: {e}")
 
 
-async def test_all_endpoints(host: str, prompt: str):
-    """Test all WebSocket endpoints."""
-    endpoints = [
-        ("ws/stream", "Pure Streaming"),
-        ("hybrid/ws/stream", "Hybrid Agent"),
-    ]
-    
-    for endpoint, name in endpoints:
-        print(f"\n\n{'#' * 60}")
-        print(f"# Testing: {name}")
-        print(f"{'#' * 60}\n")
-        
-        await test_websocket(host, endpoint, prompt)
-        
-        # Brief pause between tests
-        await asyncio.sleep(1)
-
-
 def main():
-    parser = argparse.ArgumentParser(description="Test WebSocket endpoints")
+    parser = argparse.ArgumentParser(description="Manual end-to-end check for /ws/chat")
     parser.add_argument(
         "--host",
         default="ws://localhost:8002",
         help="WebSocket host URL (default: ws://localhost:8002)"
-    )
-    parser.add_argument(
-        "--endpoint",
-        choices=["streaming", "hybrid", "legacy", "all"],
-        default="all",
-        help="Endpoint to test (default: all)"
     )
     parser.add_argument(
         "--prompt",
@@ -194,23 +185,20 @@ def main():
     )
     parser.add_argument(
         "--token",
-        default="dev-test-token",
-        help="Auth token (default: dev-test-token)"
+        required=True,
+        help="Supabase JWT - the server rejects anything else"
     )
-    
+    parser.add_argument(
+        "--org-id",
+        default="",
+        help="Organization ID for tenant isolation"
+    )
+
     args = parser.parse_args()
-    
-    endpoint_map = {
-        "streaming": "ws/stream",
-        "hybrid": "hybrid/ws/stream",
-        "legacy": "ws/chat",
-    }
-    
-    if args.endpoint == "all":
-        asyncio.run(test_all_endpoints(args.host, args.prompt))
-    else:
-        endpoint = endpoint_map.get(args.endpoint, args.endpoint)
-        asyncio.run(test_websocket(args.host, endpoint, args.prompt, args.token))
+
+    asyncio.run(
+        test_websocket(args.host, "ws/chat", args.prompt, args.token, args.org_id)
+    )
 
 
 if __name__ == "__main__":

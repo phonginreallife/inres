@@ -35,7 +35,7 @@ services:
     plugins:
       - name: cors
 
-  ## WebSocket for AI Chat (block streaming)
+  ## WebSocket for AI Chat (token streaming)
   - name: agent-websocket
     _comment: 'WebSocket: /ws/chat -> ws://agent:8002/ws/chat'
     url: http://agent:8002
@@ -48,19 +48,19 @@ services:
     plugins:
       - name: cors
 
-  ## WebSocket for AI Stream (token streaming)
-  - name: agent-stream-websocket
-    _comment: 'WebSocket: /ws/stream -> ws://agent:8002/ws/stream'
+  ## WebSocket for zero-trust AI Chat (signed messages)
+  - name: agent-secure-websocket
+    _comment: 'WebSocket: /ws/secure/chat -> ws://agent:8002/ws/secure/chat'
     url: http://agent:8002
     protocol: ws
     routes:
-      - name: ai-stream-ws-route
+      - name: ai-secure-ws-route
         strip_path: false
         paths:
-          - /ws/stream
+          - /ws/secure/chat
     plugins:
       - name: cors
-  
+
   ## WebSocket for AI Terminal
   - name: ai-terminal-websocket
     _comment: 'WebSocket: /ws/terminal?session_id=xxx -> ws://terminal:8003/ws/terminal?session_id=xxx'
