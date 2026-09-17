@@ -1,32 +1,68 @@
-{{- if .Values.autoscaling.enabled }}
+{{/*
+Per-component autoscaling.
+
+This was previously a single HPA pointing at a Deployment named after the
+release ("inres"), left over from `helm create`. No such Deployment exists -
+every workload is "inres-<component>" - so enabling autoscaling produced an
+HPA that silently targeted nothing.
+
+Enable it per component instead:
+
+  components:
+    api:
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 70
+
+Do NOT enable it for `ai`. Two things make that component single-instance:
+
+  1. Its PVCs (/app/workspaces and /root/.claude) are ReadWriteOnce, so a
+     second pod on another node cannot mount them.
+  2. Conversation resume reads the CLI transcript under /root/.claude on the
+     pod that created the session. A request landing on any other pod resumes
+     nothing and the conversation silently starts cold.
+
+Scale `ai` only after moving those volumes to ReadWriteMany and putting
+session affinity in front of it.
+*/}}
+{{- $root := . -}}
+{{- range $name, $comp := ( .Values.components | default dict ) }}
+{{- if and $comp.autoscaling $comp.autoscaling.enabled }}
+{{- if eq $name "ai" }}
+{{- fail "components.ai.autoscaling is unsupported: ReadWriteOnce volumes and pod-local session state require a single replica. See templates/hpa.yaml." }}
+{{- end }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "inres.fullname" . }}
+  name: {{ include "inres.componentFullname" (dict "root" $root "name" $name) }}
   labels:
-    {{- include "inres.labels" . | nindent 4 }}
+    {{- include "inres.componentLabels" (dict "root" $root "name" $name) | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "inres.fullname" . }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+    name: {{ include "inres.componentFullname" (dict "root" $root "name" $name) }}
+  minReplicas: {{ $comp.autoscaling.minReplicas | default 1 }}
+  maxReplicas: {{ $comp.autoscaling.maxReplicas | default 3 }}
   metrics:
-    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+    {{- if $comp.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+          averageUtilization: {{ $comp.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- if $comp.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+          averageUtilization: {{ $comp.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
+---
+{{- end }}
 {{- end }}
