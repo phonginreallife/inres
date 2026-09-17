@@ -9,7 +9,10 @@ replicaCount: 1
 image:
   repository: ghcr.io/phonginreallife/
   pullPolicy: IfPresent
-  tag: "latest"
+  # Pin to a released version. "latest" is not reproducible - a rollback has
+  # nothing to roll back to, and two nodes pulling at different times can end
+  # up running different code. Override per deploy: --set image.tag=1.10.0
+  tag: "1.10.0"
 
 # Image pull secrets for private registries
 imagePullSecrets: []
@@ -256,6 +259,43 @@ components:
     ingress:
       enabled: false
 
+  # Escalation worker - consumes the PGMQ escalation_queue.
+  # Without this, alerts create incidents and notify, but an unacknowledged
+  # incident is never escalated. Chart.yaml has always described this
+  # component; it simply had no values entry, so nothing rendered.
+  #
+  # Ships in the API image, which builds both binaries (server and worker);
+  # only the command differs.
+  worker:
+    image:
+      name: inres-api
+    command: ["./worker"]
+    service:
+      enabled: false
+    env:
+      - name: INRES_ENV
+        value: "production"
+      - name: INRES_CONFIG_PATH
+        value: "/app/config/config.yaml"
+    volumeMounts:
+      - name: app-config
+        mountPath: /app/config
+        readOnly: true
+    volumes:
+      - name: app-config
+        secret:
+          secretName: inres-secrets
+          items:
+            - key: config.yaml
+              path: config.yaml
+    resources:
+      limits:
+        cpu: "500m"
+        memory: 256Mi
+      requests:
+        cpu: "100m"
+        memory: 128Mi
+
   slack-worker:
     image:
       name: inres-slack-worker
@@ -290,7 +330,7 @@ components:
 
   web:
     image:
-      name: inres-web
+      name: inres-frontend
     service:
       enabled: true
       type: ClusterIP

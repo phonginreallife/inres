@@ -186,3 +186,6 @@ deploy/inres-cli/slar
 # Local compose overrides (dev machine specific)
 docker-compose.override.yaml
 docker-compose.override.yml
+
+# Archify visual-check evidence sidecars
+docs/*.visual-check.*
