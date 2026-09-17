@@ -47,16 +47,20 @@ jobs:
       # Only the deploying branch talks to the Pages API. A pull request just
       # needs to prove the site still compiles, and making it call
       # configure-pages meant every PR failed until Pages was enabled.
+      #
+      # No `enablement: true` here. Creating a Pages site needs `administration`
+      # permission on the repository, which is not a scope GITHUB_TOKEN can be
+      # granted - the workflow `permissions:` block has no such key - so the
+      # action can only ever return "Resource not accessible by integration".
+      #
+      # Pages must therefore be turned on once by a repository admin:
+      #   Settings -> Pages -> Build and deployment -> Source: GitHub Actions
+      # After that this step just reads the existing configuration and the
+      # deploy runs unattended.
       - name: Configure Pages
         id: pages
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
-        with:
-          # Create the Pages site if it does not exist yet. Without this the
-          # action fails with "Get Pages site failed / Not Found" until someone
-          # enables Pages by hand in repository settings, which makes a fresh
-          # clone or a fork unable to build its own docs.
-          enablement: true
 
       - name: Build with Jekyll
         working-directory: docs
