@@ -2,7 +2,7 @@
 title: Home
 layout: home
 nav_order: 1
-description: "InRes — an open-source, AI-native on-call and incident response platform."
+description: "InRes - an open-source, AI-native on-call and incident response platform."
 permalink: /
 ---
 
@@ -10,7 +10,7 @@ permalink: /
 {: .fs-9 }
 
 Open-source on-call and incident management, with an AI agent that investigates
-alongside you — and asks before it touches anything.
+alongside you - and asks before it touches anything.
 {: .fs-6 .fw-300 }
 
 [Get started](#running-it-locally){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -23,26 +23,26 @@ alongside you — and asks before it touches anything.
 
 An alert arrives by webhook. It becomes an incident, gets assigned to whoever is
 actually on call, and escalates if nobody responds. At any point you can ask an
-AI agent to investigate — it has read access to your incidents and whatever
+AI agent to investigate - it has read access to your incidents and whatever
 tools you have given it, and it asks for approval before running anything
 sensitive.
 
 <div class="code-example" markdown="1">
 
-**Incident management** — full lifecycle with an append-only audit trail,
-fingerprint-based deduplication, automatic resolution on recovery, and P1–P5
+**Incident management** - full lifecycle with an append-only audit trail,
+fingerprint-based deduplication, automatic resolution on recovery, and P1-P5
 priorities compatible with PagerDuty and Datadog.
 
-**On-call and escalation** — visual scheduling, rotations, overrides for
+**On-call and escalation** - visual scheduling, rotations, overrides for
 vacation swaps, and multi-level time-based escalation chains.
 
-**AI agent** — real-time streaming chat over WebSocket, human-in-the-loop tool
+**AI agent** - real-time streaming chat over WebSocket, human-in-the-loop tool
 approval, persistent conversation context, and an extensible MCP tool ecosystem.
 
-**Integrations** — Prometheus/Alertmanager, Datadog, Grafana, AWS CloudWatch,
+**Integrations** - Prometheus/Alertmanager, Datadog, Grafana, AWS CloudWatch,
 PagerDuty, Coralogix, generic webhooks, Slack, and edge uptime monitoring.
 
-**Multi-tenancy** — organizations and projects with relationship-based access
+**Multi-tenancy** - organizations and projects with relationship-based access
 control.
 
 </div>
@@ -57,11 +57,11 @@ changes. Every substantive claim is backed by a citation to the code that
 supports it, so the docs describe what the system actually does rather than what
 it was intended to do.
 
-New here? Start with the **[Quickstart](wiki/quickstart.html)** — it includes a
+New here? Start with the **[Quickstart](wiki/quickstart.html)** - it includes a
 task-routing map ("I want to do X → read page Y") and a list of behaviours that
 are deliberate but surprising.
 
-| If you want to… | Read |
+| If you want to... | Read |
 |:--|:--|
 | Understand the system | [System architecture](wiki/architecture/overview.html) |
 | Add a monitoring integration | [Alert ingestion and routing](wiki/workflows/alert-ingestion.html) |
@@ -92,7 +92,7 @@ Two things catch people out, both covered in
 
 {: .warning }
 > `.env` must sit **next to the compose file**, not in your shell's working
-> directory — Compose reads it from the directory containing the compose file.
+> directory - Compose reads it from the directory containing the compose file.
 >
 > Supply **exactly one** Anthropic credential. An API key takes precedence
 > wherever it is found, so to use `CLAUDE_CODE_OAUTH_TOKEN` you must also blank
@@ -102,7 +102,7 @@ Two things catch people out, both covered in
 
 ## The shape of it
 
-Five processes and a database. The database is not just storage — it is the
+Five processes and a database. The database is not just storage - it is the
 integration bus, and services coordinate through Postgres tables and PGMQ queues
 rather than calling each other.
 
@@ -121,7 +121,7 @@ See the [full architecture](wiki/architecture/overview.html), or the
 
 ## Contributing
 
-Issues and pull requests are welcome — see
+Issues and pull requests are welcome - see
 [CONTRIBUTING.md](https://github.com/phonginreallife/inres/blob/main/CONTRIBUTING.md).
 If you are changing behaviour these docs describe, regenerate them with OpenWiki
 in the same pull request so the citations stay accurate.

@@ -59,7 +59,7 @@ merge on test failures, which is worth knowing before relying on a green check.
 
 Every workflow sets a `concurrency` group keyed on `github.ref`. All cancel
 in-progress runs except `release.yaml`, which sets
-`cancel-in-progress: false` — cancelling a release midway could publish a tag
+`cancel-in-progress: false` - cancelling a release midway could publish a tag
 without its artifacts.
 
 Related: [Deployment](../operations/deployment.md) ·
@@ -74,7 +74,7 @@ Three parallel jobs, with meaningfully different strictness.
 **`test-api`** is the only job that genuinely gates. It spins up a
 `postgres:15` service container with a `pg_isready` health check and runs
 `go test -v -race -coverprofile=coverage.out ./...` against it. The `-race` flag
-matters here — the API runs background workers as goroutines, so data races are
+matters here - the API runs background workers as goroutines, so data races are
 a live risk. Coverage goes to Codecov with `fail_ci_if_error: false`.
 
 **`test-frontend`** type-checks with `npx tsc --noEmit` and runs `npm test`, but
@@ -82,7 +82,7 @@ a live risk. Coverage goes to Codecov with `fail_ci_if_error: false`.
 job. In practice the frontend gate is "it compiles", not "its tests pass".
 
 **`test-agent`** installs requirements plus pytest and runs
-`pytest --cov=. --cov-report=xml` — also `continue-on-error: true`. The agent's
+`pytest --cov=. --cov-report=xml` - also `continue-on-error: true`. The agent's
 test suite is the most rigorous in the repository, but CI does not currently
 enforce it.
 
@@ -92,7 +92,7 @@ enforce it.
 
 `go vet ./...` plus golangci-lint at `latest` for the API; `npm run lint`
 (ESLint) for the frontend; and for the agent, `flake8` restricted to
-`E9,F63,F7,F82` — syntax errors and undefined names, not style — with `black
+`E9,F63,F7,F82` - syntax errors and undefined names, not style - with `black
 --check` running non-blocking. The narrow flake8 selection means the Python gate
 catches breakage, not formatting drift.
 
@@ -114,7 +114,7 @@ images in a matrix with `fail-fast: false`:
 
 The API build uses the **repository root** as context while the others use their
 own directory, because the Go build needs files outside `server/api`. The
-Cloudflare uptime worker is explicitly excluded — a comment notes it deploys via
+Cloudflare uptime worker is explicitly excluded - a comment notes it deploys via
 wrangler, not Docker.
 
 ### Tag derivation
@@ -160,7 +160,7 @@ the next version) and `persist-credentials: false`.
 
 Release and build are separate workflows, so the release job exports
 `new_release_published` and `new_release_version` as outputs and a second job
-dispatches `build.yaml` at `v${version}` — but only when a release actually
+dispatches `build.yaml` at `v${version}` - but only when a release actually
 happened. This explicit dispatch exists because a tag created by a workflow
 using `GITHUB_TOKEN` does not trigger other workflows.
 
@@ -168,7 +168,7 @@ This handoff has been broken twice, and both fixes are preserved in the
 workflow's comments. They are worth reading before changing it.
 
 **The outputs were never set.** `npx semantic-release` writes nothing to
-`$GITHUB_OUTPUT` — the `new_release_*` outputs come from
+`$GITHUB_OUTPUT` - the `new_release_*` outputs come from
 `cycjimmy/semantic-release-action`, which this workflow does not use. The
 `trigger-builds` job was therefore evaluating `'' == 'true'` and **skipping on
 every release**, so tagged images were never built. The step now derives the
@@ -181,7 +181,7 @@ is accepted but produces no run is exactly what left **v1.10.0 without images**.
 Two guards now cover it: the step prefers a `RELEASE_PAT` secret when one is
 configured, and after dispatching it waits 15 seconds, lists recent
 `workflow_dispatch` runs of `build.yaml`, and **fails the job** unless a run for
-that tag appears — telling you to configure `RELEASE_PAT` with `actions: write`.
+that tag appears - telling you to configure `RELEASE_PAT` with `actions: write`.
 
 The pattern generalises: a fire-and-forget dispatch that reports success
 regardless is indistinguishable from a working one until someone goes looking
@@ -191,8 +191,8 @@ for the artifacts.
 
 ## `codeql.yaml`
 
-Analyses all three languages in a matrix — Go with `autobuild`, JavaScript/
-TypeScript and Python with `build-mode: none` — on push, PR, and a weekly cron
+Analyses all three languages in a matrix - Go with `autobuild`, JavaScript/
+TypeScript and Python with `build-mode: none` - on push, PR, and a weekly cron
 (Thursdays 21:15 UTC). It holds `security-events: write` to upload results.
 
 ---
@@ -203,22 +203,22 @@ TypeScript and Python with `build-mode: none` — on push, PR, and a weekly cron
 
 Twelve test files, concentrated where correctness is hardest to eyeball:
 
-- **Webhook normalization** — `webhook_prometheus_test.go`,
+- **Webhook normalization** - `webhook_prometheus_test.go`,
   `webhook_datadog_test.go`, `webhook_pagerduty_test.go`,
   `webhook_coralogix_test.go`. The Datadog file is the fullest example, covering
   payload processing, timestamp parsing, priority mapping and nested map
   extraction. These matter because each provider's payload shape is external and
   only a test pins the mapping. See
   [alert ingestion](../workflows/alert-ingestion.md).
-- **Authorization** — five files in `authz/`. `authz_test.go` tests the
+- **Authorization** - five files in `authz/`. `authz_test.go` tests the
   permission matrices and role mapping as pure data with no database;
   `simple_test.go` tests the SQL authorizer against `go-sqlmock`. See
   [tenancy and authorization](../concepts/tenancy-and-authorization.md).
-- **ReBAC at the handler boundary** — `incident_test.go` has
+- **ReBAC at the handler boundary** - `incident_test.go` has
   `TestIncidentHandler_GetIncident_ReBAC`, checking enforcement where HTTP meets
   the service layer.
-- **Config** — `config_test.go` pins environment-variable binding.
-- **Identity** — `identity_test.go` covers the instance keypair.
+- **Config** - `config_test.go` pins environment-variable binding.
+- **Identity** - `identity_test.go` covers the instance keypair.
 
 `go-sqlmock` is a direct dependency, which is what lets service-layer tests run
 without a live database.
@@ -228,19 +228,19 @@ without a live database.
 `pytest.ini` sets `testpaths = tests` and `asyncio_mode = auto`, so async tests
 need no per-test decorator. Three suites:
 
-- **`test_translate.py`** — the largest, exercising the SDK-to-WebSocket
+- **`test_translate.py`** - the largest, exercising the SDK-to-WebSocket
   translator against synthetic message sequences: duplicate-text reconciliation,
   subagent suppression, truncation, payload coercion. It can be exhaustive
   precisely because `translate()` is a pure function. See
   [streaming protocol](../ai-agent/streaming-protocol.md).
-- **`test_permissions.py`** — the tool-approval broker, including the
+- **`test_permissions.py`** - the tool-approval broker, including the
   invariants the deadlock-freedom argument depends on.
-- **`test_session.py`** — the full session lifecycle against an injected
+- **`test_session.py`** - the full session lifecycle against an injected
   `FakeClient`, so no SDK or CLI subprocess is needed.
 
 ### Frontend
 
-`scheduleTransformer.test.js` covers the schedule transformation layer — the
+`scheduleTransformer.test.js` covers the schedule transformation layer - the
 place where timeline correctness actually lives.
 
 ---
@@ -248,7 +248,7 @@ place where timeline correctness actually lives.
 ## Running tests locally
 
 ```bash
-# Go — matches CI
+# Go - matches CI
 cd server/api && go test -race ./...
 
 # Python agent

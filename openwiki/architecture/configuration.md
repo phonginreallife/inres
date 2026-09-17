@@ -36,7 +36,7 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 
 # Configuration and Environment
 
-InRes runs two independently written services — a Go API and a Python agent —
+InRes runs two independently written services - a Go API and a Python agent -
 that are deliberately configured from **one YAML file**. Docker Compose mounts
 the same `dev.config.yaml` into both containers at `/app/config.yaml` and points
 each at it with `inres_CONFIG_PATH`, so a deployment has a single file to edit
@@ -60,13 +60,13 @@ Related: [Architecture overview](../architecture/overview.md) ·
 `config.LoadConfig` builds a Viper instance and layers four sources:
 
 1. `godotenv.Load()` reads a `.env` file if present. A missing file is ignored
-   on purpose — it is a local-development convenience so `go run` works without
+   on purpose - it is a local-development convenience so `go run` works without
    exporting variables manually, and in Docker or production there is none.
 2. `v.SetDefault` supplies defaults: `port` → `8080`, `backend_url` →
    `http://localhost:8080`, `data_dir` → `./data`.
 3. The config file. An explicit `path` argument wins; otherwise Viper searches
    `./config`, `./cmd/server` (legacy) and `.` for `dev.config.yaml`. A missing
-   file is logged and tolerated — any *other* read error is returned as a fatal
+   file is logged and tolerated - any *other* read error is returned as a fatal
    error, so a malformed file fails loudly rather than silently falling back.
 4. Environment variables, via explicit `BindEnv` calls plus `AutomaticEnv`.
 
@@ -103,8 +103,8 @@ must be set in `dev.config.yaml` and not only in `.env`.
 ### Standard names, not prefixed ones
 
 The Go service registers `SetEnvPrefix("inres")` for legacy support, but then
-binds the **standard** names explicitly — `DATABASE_URL`, `REDIS_URL`, `PORT`,
-`SUPABASE_URL`, `ANTHROPIC_API_KEY`, `SLACK_BOT_TOKEN` and so on — so Docker and
+binds the **standard** names explicitly - `DATABASE_URL`, `REDIS_URL`, `PORT`,
+`SUPABASE_URL`, `ANTHROPIC_API_KEY`, `SLACK_BOT_TOKEN` and so on - so Docker and
 Kubernetes deployments can use conventional variable names rather than
 `inres_DATABASE_URL`. A few settings keep prefixed names because they have no
 conventional equivalent: `inres_CLOUD_URL`, `inres_CLOUD_TOKEN` and
@@ -143,7 +143,7 @@ backs the rate limiter and session store used for horizontal scaling.
 **The notification gateway is optional.** It is only required for mobile push
 notifications. `CloudRelayService.IsConfigured()` gates registration, and the
 registration attempt itself runs in a background goroutine whose failure is
-logged as a warning — a cloud relay that is down cannot delay or block API
+logged as a warning - a cloud relay that is down cannot delay or block API
 startup.
 
 **The identity service is optional at startup.** A failure to initialise logs a
@@ -175,8 +175,8 @@ triggers the background analysis.
 `ai_agent` is where the agent's operational envelope is set, and several values
 are load-bearing for stability:
 
-- `max_concurrent_cli` (default 8) caps live CLI subprocesses — one per active
-  chat session — so it bounds memory under many open tabs. The config comment
+- `max_concurrent_cli` (default 8) caps live CLI subprocesses - one per active
+  chat session - so it bounds memory under many open tabs. The config comment
   warns to raise it only alongside the container's memory limit.
 - `idle_timeout_s` (default 900) drops the CLI subprocess after silence while
   keeping the session id, so the next message resumes rather than starting over.
@@ -210,17 +210,17 @@ after switching away.
 
 Several URL keys look interchangeable and are not:
 
-- `supabase_url` — internal, for API→Supabase calls (a Docker service name).
-- `public_supabase_url` — external, for the browser; when running under HTTPS
+- `supabase_url` - internal, for API→Supabase calls (a Docker service name).
+- `public_supabase_url` - external, for the browser; when running under HTTPS
   this routes through nginx, which proxies `/auth`, `/rest`, `/realtime` and
   `/storage`.
-- `mobile_supabase_url` — the address mobile clients are handed.
-- `inres_api_url` — internal API URL used by the agent's incident tools.
-- `backend_url` — the API the agent's zero-trust verifier calls to fetch
+- `mobile_supabase_url` - the address mobile clients are handed.
+- `inres_api_url` - internal API URL used by the agent's incident tools.
+- `backend_url` - the API the agent's zero-trust verifier calls to fetch
   instance public keys.
-- `public_url` — the external API address given to mobile clients.
-- `agent_url` — the AI agent service address.
-- `webhook_api_base_url` — the base used when generating webhook URLs for
+- `public_url` - the external API address given to mobile clients.
+- `agent_url` - the AI agent service address.
+- `webhook_api_base_url` - the base used when generating webhook URLs for
   integrations.
 
 `data_dir` (default `./data`) is where the instance identity keypair is written,
@@ -228,6 +228,6 @@ as `identity.key`. It is not the only copy: `loadOrGenerateKey` resolves the key
 **database first, then file, then generate**, syncing a file-loaded or freshly
 generated key back to the `instance_identity` table. That ordering is what lets
 a Kubernetes pod without a persistent volume keep a stable instance identity
-across restarts — and a stable identity is what keeps previously issued device
+across restarts - and a stable identity is what keeps previously issued device
 certificates valid. `inres_INSTANCE_ID` selects which row is used, defaulting to
 `default`.

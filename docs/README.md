@@ -2,7 +2,7 @@
 
 ## architecture.html
 
-Interactive system diagram — pan/zoom, search, relationship tracing, light/dark,
+Interactive system diagram - pan/zoom, search, relationship tracing, light/dark,
 and PNG/SVG export. Self-contained; open it directly in a browser.
 
 `architecture.json` is its source. Edit that, then regenerate:
@@ -16,7 +16,7 @@ Without the source checked in, changing one box means rebuilding the whole
 diagram by hand.
 
 Regeneration writes `architecture.visual-check.*` screenshots and a JSON
-receipt beside the output. They are verification evidence, not artefacts —
+receipt beside the output. They are verification evidence, not artefacts -
 `.gitignore` keeps them out of the repository.
 
 ## The site
@@ -35,14 +35,14 @@ succeed:**
 
 The workflow cannot do this for you. Creating a Pages site requires
 `administration` permission on the repository, and that is not a scope
-`GITHUB_TOKEN` can be granted — the workflow `permissions:` block has no such
+`GITHUB_TOKEN` can be granted - the workflow `permissions:` block has no such
 key. `actions/configure-pages` with `enablement: true` therefore fails with
 `Resource not accessible by integration`. Once the setting above is flipped the
 workflow reads the existing configuration and deploys unattended.
 
 ### Where the content comes from
 
-`docs/wiki/` is **generated** — do not edit it, and do not commit it.
+`docs/wiki/` is **generated** - do not edit it, and do not commit it.
 [`scripts/build-docs.sh`](../scripts/build-docs.sh) derives it from `openwiki/`
 at build time, adding the navigation front matter the theme needs and rewriting
 `.md` links to `.html`. Keeping one copy in git means the wiki and the site
@@ -74,4 +74,4 @@ docker run --rm -e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 \
 
 `LANG`/`LC_ALL` matter: without a UTF-8 locale Jekyll reads em dashes and
 typographic quotes as Latin-1 and the pages come out as mojibake. `--baseurl ""`
-is for local preview only — the deployed site is served from `/inres`.
+is for local preview only - the deployed site is served from `/inres`.

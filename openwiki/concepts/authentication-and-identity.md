@@ -1,7 +1,7 @@
 ---
 type: concept
 title: Authentication and Identity
-description: The three ways a caller proves who it is in InRes — Supabase JWTs for users, bcrypt-hashed API keys for machine callers, and an instance-signed device certificate chain for zero-trust clients — and how the route groups differ.
+description: The three ways a caller proves who it is in InRes - Supabase JWTs for users, bcrypt-hashed API keys for machine callers, and an instance-signed device certificate chain for zero-trust clients - and how the route groups differ.
 tags: [authentication, jwt, supabase, api-keys, zero-trust, device-certificates, identity]
 verified:
   - by: openwiki/0.4.3
@@ -31,7 +31,7 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 # Authentication and Identity
 
 Three credential types reach the InRes API, and they are not alternatives for
-the same caller — each exists because a different kind of client has a different
+the same caller - each exists because a different kind of client has a different
 trust problem.
 
 | Credential | Who uses it | Verified by |
@@ -53,8 +53,8 @@ what is protected by what:
 
 **Public, no authentication.** `GET /env`, `GET /identity/public-key` (a
 verifier needs the instance public key *before* it can authenticate anything),
-`POST /webhook/:type/:integration_id` — the integration id in the path is the
-credential — and `GET /shared/:token` for publicly shared conversation links.
+`POST /webhook/:type/:integration_id` - the integration id in the path is the
+credential - and `GET /shared/:token` for publicly shared conversation links.
 
 **API-key authenticated.** The `/webhooks` group, gated by
 `APIKeyAuthMiddleware`: `POST /webhooks/incident`, `/webhooks/alert` (legacy)
@@ -87,7 +87,7 @@ token's `kid`. Keys are cached for **10 minutes**, matching Supabase's
 documented edge cache TTL, so verification does not make a network call per
 request.
 
-`SUPABASE_URL` is the one hard requirement — the middleware constructor calls
+`SUPABASE_URL` is the one hard requirement - the middleware constructor calls
 `log.Fatal` if it is missing, because without it no token can be verified at
 all.
 
@@ -98,7 +98,7 @@ inserts a record with `provider: "supabase"`, the claims' email and name, and a
 default role of `engineer`. Supabase owns authentication; the local `users`
 table is a projection kept in step lazily.
 
-A sync failure is **logged, not fatal** — the request proceeds. An
+A sync failure is **logged, not fatal** - the request proceeds. An
 authenticated user should not be locked out because a bookkeeping write failed.
 
 ### Optional authentication
@@ -116,7 +116,7 @@ and calls `c.Next()` regardless.
 `GenerateAPIKey` produces `{environment}_{24 hex chars}` from
 `crypto/rand`, so the environment is visible in the key itself. The key is
 stored **bcrypt-hashed** (`HashAPIKey`, default cost), and `GetAPIKeyByKey`
-verifies with `bcrypt.CompareHashAndPassword` — a database leak does not yield
+verifies with `bcrypt.CompareHashAndPassword` - a database leak does not yield
 usable keys.
 
 `ValidateAPIKey` then applies two further checks beyond the hash: the key must
@@ -135,7 +135,7 @@ carries one. `UpdateLastUsed` is fired in a goroutine so the bookkeeping write
 does not delay the response.
 
 `APIKeyAuthMiddleware` reads the key from the **`api_key` query parameter**
-instead — the shape most webhook senders can produce — and additionally checks
+instead - the shape most webhook senders can produce - and additionally checks
 per-endpoint permissions via `hasRequiredPermission`, returning 403 on a
 mismatch. Failed attempts are logged through `logFailedAuth`.
 
@@ -143,7 +143,7 @@ mismatch. Failed attempts are logged through `logFailedAuth`.
 
 `CheckRateLimit` enforces hourly and daily request ceilings from the key's own
 `rate_limit_per_hour` and `rate_limit_per_day`. If the *check itself* errors,
-the code logs and does not fail the request — an availability-over-enforcement
+the code logs and does not fail the request - an availability-over-enforcement
 trade-off that is deliberate and explicit in the comments.
 
 ---
@@ -162,7 +162,7 @@ InRes deployment.
    the file.
 
 That ordering is what gives a Kubernetes pod with no persistent volume a stable
-identity across restarts — and a stable identity is what keeps previously issued
+identity across restarts - and a stable identity is what keeps previously issued
 device certificates verifiable. `inres_INSTANCE_ID` selects the row, defaulting
 to `default`.
 
@@ -199,7 +199,7 @@ from context, so it sits inside the JWT-protected group). It:
    `permissions` (`chat` and `tools`), `issued_at` and `expires_at`.
 4. Signs it with `SignMap` using the instance private key.
 5. Upserts a tracking row into `agent_device_certs`, keyed on
-   `(device_id, user_id)` — so re-enrolling a device replaces its certificate
+   `(device_id, user_id)` - so re-enrolling a device replaces its certificate
    rather than accumulating rows.
 6. Returns the certificate with its `instance_signature`.
 
@@ -208,7 +208,7 @@ usability.
 
 The storage write is **best-effort**: a failure is logged as a warning and the
 signed certificate is still returned, because the certificate is
-self-authenticating — the signature is what proves it, not the row.
+self-authenticating - the signature is what proves it, not the row.
 
 ### Two keypairs, two roles
 

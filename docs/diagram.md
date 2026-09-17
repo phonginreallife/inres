@@ -6,7 +6,7 @@ description: "Interactive system architecture diagram for InRes."
 
 # Architecture diagram
 
-The diagram below is a standalone interactive page — pan, zoom, and toggle
+The diagram below is a standalone interactive page - pan, zoom, and toggle
 light/dark. It is checked into the repository at `docs/architecture.html`.
 
 [Open it full screen]({{ '/architecture.html' | relative_url }}){: .btn .btn-primary }

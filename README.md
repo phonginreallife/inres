@@ -97,7 +97,7 @@ DATABASE_URL=postgresql://postgres:postgres@supabase_db_supabase:5432/postgres
 EOF
 ```
 
-> **Two things catch people out.** `.env` must sit **next to the compose file** —
+> **Two things catch people out.** `.env` must sit **next to the compose file** -
 > Compose reads it from the directory containing the compose file, not your shell's
 > working directory. And supply **exactly one** Anthropic credential: an API key
 > takes precedence wherever it is found, so to use `CLAUDE_CODE_OAUTH_TOKEN` you

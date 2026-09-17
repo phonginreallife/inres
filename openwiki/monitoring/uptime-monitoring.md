@@ -1,7 +1,7 @@
 ---
 type: subsystem
 title: Uptime Monitoring
-description: How InRes probes services from Cloudflare's edge — the self-deploying Worker, its D1 storage and cron loop, the two paths by which a failed probe becomes an incident, and synchronization with UptimeRobot and Checkly.
+description: How InRes probes services from Cloudflare's edge - the self-deploying Worker, its D1 storage and cron loop, the two paths by which a failed probe becomes an incident, and synchronization with UptimeRobot and Checkly.
 tags: [uptime, monitoring, cloudflare-workers, d1, incidents, uptimerobot, checkly]
 verified:
   - by: openwiki/0.4.3
@@ -50,7 +50,7 @@ Related: [Architecture overview](../architecture/overview.md) ·
 
 `wrangler.toml` configures a one-minute cron (`* * * * *`) and a single D1
 binding. A comment states the storage decision plainly: **D1 is the only
-storage — no KV needed, simpler and cheaper.**
+storage - no KV needed, simpler and cheaper.**
 
 ### The scheduled loop
 
@@ -67,7 +67,7 @@ Four check types are dispatched by `method`: `TCP_PING`, `DNS`, `CERT_CHECK`,
 and HTTP for everything else.
 
 HTTP checks support a per-monitor timeout (10 s default) enforced with
-`AbortController`, custom headers (parsed defensively — a malformed header JSON
+`AbortController`, custom headers (parsed defensively - a malformed header JSON
 logs and falls back to empty rather than failing the check), optional request
 bodies for non-GET/HEAD methods, and redirect following controlled by
 `follow_redirect`. Success is `expect_status` when set, otherwise any 2xx.
@@ -84,7 +84,7 @@ loads the previous state from D1 and sends a webhook **only on a transition**:
 |---|---|---|
 | up | down | `trigger` |
 | down | up | `resolve` |
-| down | down | nothing — "still DOWN, no webhook sent" |
+| down | down | nothing - "still DOWN, no webhook sent" |
 | up | up | nothing |
 
 A monitor with no history is assumed up, so the first failing check does fire a
@@ -101,7 +101,7 @@ annotations, and `starts_at`.
 The important field is `fingerprint: monitor.id`. That is what makes the
 existing deduplication and auto-resolution in
 [alert ingestion](../workflows/alert-ingestion.md) work for uptime events
-without any special-casing — the uptime subsystem reuses the alert pipeline
+without any special-casing - the uptime subsystem reuses the alert pipeline
 rather than parallelling it.
 
 ### HTTP API and CDN caching
@@ -120,10 +120,10 @@ caching layer was added in D1.
 
 The Worker can report upward in two ways, and the priority is explicit:
 
-**`inres_WEBHOOK_URL`** — the preferred path. Events go through a normal
+**`inres_WEBHOOK_URL`** - the preferred path. Events go through a normal
 integration webhook and enter the standard alert pipeline.
 
-**`FALLBACK_WEBHOOK_URL`** — used only when the primary is unset, and only for
+**`FALLBACK_WEBHOOK_URL`** - used only when the primary is unset, and only for
 monitors that are currently down.
 
 A third path, `POST /monitors/report`, is **deprecated but retained for backward
@@ -139,7 +139,7 @@ incident.
 Two caveats are visible in the code and worth knowing. `HandleReport` carries a
 `TODO` noting that the `Authorization` header is **not yet validated** against
 the deployment token. And `resolveIncident` falls back to a direct SQL query
-because `ListIncidents` does not support filtering by `external_id` — the
+because `ListIncidents` does not support filtering by `external_id` - the
 comments in that function are an unresolved working note left in the source.
 
 ---
@@ -161,7 +161,7 @@ The flow then gets **or creates** the `inres_DB` D1 database (reusing an
 existing one rather than proliferating databases), ensures its schema, reads the
 Worker script, uploads it with its bindings, and registers the cron trigger.
 
-`CloudflareClient` wraps the Cloudflare REST API for all of this — KV namespace
+`CloudflareClient` wraps the Cloudflare REST API for all of this - KV namespace
 and D1 database creation, D1 SQL execution and querying, Worker upload and
 deletion, cron trigger creation, worker details and metrics, and subdomain
 lookup. `GetDeploymentStats` surfaces those Worker metrics, and
@@ -178,7 +178,7 @@ instead of deploying a Worker.
 
 `SyncProvider` dispatches to `syncUptimeRobot` or `syncCheckly`. Both
 authenticate with stored credentials, list the provider's monitors, and
-normalise them into InRes's own representation — `GetMonitorStatus` and
+normalise them into InRes's own representation - `GetMonitorStatus` and
 `GetMonitorType` map UptimeRobot's integer codes to names, `ParseUptimeRatios`
 splits its combined uptime-ratio string into 1-day, 7-day, 30-day and all-time
 figures, and `GetChecklyStatus` derives a status from a check's failure, error

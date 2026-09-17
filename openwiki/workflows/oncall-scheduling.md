@@ -37,8 +37,8 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 # On-Call Scheduling and Rotations
 
 Scheduling exists to answer one question at the moment an incident fires:
-**who is on call right now?** Everything else — rotations, swaps, vacation
-overrides — is machinery for making that answer correct.
+**who is on call right now?** Everything else - rotations, swaps, vacation
+overrides - is machinery for making that answer correct.
 
 Related: [Escalation and notifications](../workflows/escalation-and-notifications.md) ·
 [Web application](../frontend/web-application.md) ·
@@ -62,7 +62,7 @@ distinct from the group's.
 
 ---
 
-## `effective_shifts` — the centre of the design
+## `effective_shifts` - the centre of the design
 
 The most important decision in this subsystem is that **override resolution
 lives in a database view, not in Go**.
@@ -70,9 +70,9 @@ lives in a database view, not in Go**.
 `effective_shifts` joins `shifts` to `schedulers`, `users` and
 `schedule_overrides`, and exposes:
 
-- **`effective_user_id`** = `COALESCE(so.new_user_id, s.user_id)` — the person
+- **`effective_user_id`** = `COALESCE(so.new_user_id, s.user_id)` - the person
   actually on call.
-- `original_user_id` — who was scheduled.
+- `original_user_id` - who was scheduled.
 - `is_overridden`, and `is_full_override` (true only when the override's window
   fully covers the shift).
 - Both users' name, email, team and phone, plus `user_name`/`user_email`
@@ -89,7 +89,7 @@ LEFT JOIN schedule_overrides so ON s.id = so.original_schedule_id
 
 Three conditions must hold: the override targets this shift, it is active, and
 **the current moment falls inside its window**. An override that has expired
-stops applying automatically — nothing needs to deactivate it. The view also
+stops applying automatically - nothing needs to deactivate it. The view also
 filters to `s.is_active AND sc.is_active`, so deactivating a scheduler removes
 its shifts from every on-call answer at once.
 
@@ -102,7 +102,7 @@ override-aware for free (see
 [escalation and notifications](../workflows/escalation-and-notifications.md)).
 
 The cost is the mirror image: **any code that queries `shifts` directly bypasses
-overrides.** That is a real inconsistency in the tree —
+overrides.** That is a real inconsistency in the tree -
 `SchedulerService.getCurrentSchedule` and
 `OnCallService.GetCurrentOnCallUser` read `shifts` and join `users` themselves,
 so paths using them return the originally scheduled person even when an override
@@ -124,14 +124,14 @@ UTC regardless of server locale, and the frontend converts for display.
 - `override_type` must be `temporary`, `permanent` or `emergency`; anything else
   is **silently coerced to `temporary`** rather than rejected.
 - The end time must not precede the start time.
-- The original shift must exist and be active — `group_id` and the original user
+- The original shift must exist and be active - `group_id` and the original user
   are read from it rather than trusted from the request.
 - **The replacement must differ from the original user**, rejected with an
   explicit error. A no-op override would otherwise look like coverage while
   changing nothing.
 
 A failure to look up the replacement's name for the response is logged as a
-warning and the override still succeeds — display metadata is not worth failing
+warning and the override still succeeds - display metadata is not worth failing
 a coverage change over.
 
 ---
@@ -146,7 +146,7 @@ cycle without deleting history.
 
 `OnCallService.SwapSchedules` exchanges two shifts. `executeScheduleSwap` runs in
 a transaction and also calls `updateRotationCyclesForSwap` and
-`swapUsersInRotationCycle` — so a swap updates **both** the shifts and the
+`swapUsersInRotationCycle` - so a swap updates **both** the shifts and the
 underlying rotation membership. Swapping only the shifts would leave the
 rotation to regenerate the original assignment later and silently undo the swap.
 
@@ -195,8 +195,8 @@ original and one in the optimized version.
 
 Two endpoints exist specifically to justify the choice:
 
-- `GET /groups/:id/schedulers/stats` — scheduler performance statistics.
-- `POST /groups/:id/schedulers/benchmark` — runs both implementations over a
+- `GET /groups/:id/schedulers/stats` - scheduler performance statistics.
+- `POST /groups/:id/schedulers/benchmark` - runs both implementations over a
   configurable iteration count and **compares them directly**.
 
 Shipping a benchmark endpoint alongside the two implementations is what lets the
@@ -208,7 +208,7 @@ legacy path be retired on evidence.
 indexes covering the real query shapes: shifts by scheduler, group or user with
 time filtering, overlap detection, and service-scoped lookup. Each carries a
 `WHERE is_active = true` predicate, so the indexes cover only rows that can be
-returned — smaller and faster than full indexes, since inactive shifts are never
+returned - smaller and faster than full indexes, since inactive shifts are never
 part of an answer.
 
 ---
@@ -222,7 +222,7 @@ part of an answer.
 group need not be configured before it can be scheduled.
 
 On the client, `services/scheduleTransformer.js` converts between the UI's
-rotation configuration and this shift representation — including the
+rotation configuration and this shift representation - including the
 coverage-gap fix described in
 [web application](../frontend/web-application.md), where shifts were left with
 uncovered windows between them.

@@ -1,7 +1,7 @@
 ---
 type: subsystem
 title: "Agent Extensibility: MCP, Plugins and Memory"
-description: How the InRes AI agent gains capabilities beyond its built-in incident tools — per-user MCP servers drawn from Postgres, git-cloned marketplaces, synced skills and CLAUDE.md memory — and how each user's workspace is kept isolated.
+description: How the InRes AI agent gains capabilities beyond its built-in incident tools - per-user MCP servers drawn from Postgres, git-cloned marketplaces, synced skills and CLAUDE.md memory - and how each user's workspace is kept isolated.
 tags: [ai-agent, mcp, plugins, marketplace, extensibility, workspace, memory, skills]
 verified:
   - by: openwiki/0.4.3
@@ -27,8 +27,8 @@ generated: { by: "claude-code", at: "2026-09-17T10:09:55.322Z" }
 # Agent Extensibility: MCP, Plugins and Memory
 
 The agent service ships with a fixed set of incident tools. Everything else a
-user can give it — log search, documentation lookup, internal APIs, reusable
-skills, standing instructions — arrives through four extension seams that all
+user can give it - log search, documentation lookup, internal APIs, reusable
+skills, standing instructions - arrives through four extension seams that all
 converge on one place: the user's **workspace directory**, and the
 `ClaudeAgentOptions` built for their WebSocket connection.
 
@@ -116,14 +116,14 @@ index from user to server keys.
 **Identity is the config, not the user.** `_make_server_key()` hashes the
 command, the sorted args and the sorted env into a single string. Two users who
 configure the same server with the same arguments and environment therefore
-share one process. Anything that differs — a different API key in `env`, a
-different argument — produces a different key and a separate process, which is
+share one process. Anything that differs - a different API key in `env`, a
+different argument - produces a different key and a separate process, which is
 what keeps per-user credentials from leaking across tenants.
 
 **Reference counting, not immediate shutdown.** `get_servers_for_user()` adds
 the user id to the referencing set of each server it hands out;
 `release_servers_for_user()` discards it. Dropping to zero references does not
-stop the process — it only stamps `_last_access` with the current time, leaving
+stop the process - it only stamps `_last_access` with the current time, leaving
 the server warm for the next session that wants the same config.
 
 **Idle reaping is what actually stops processes.** A background task started
@@ -136,7 +136,7 @@ conversation.
 **Two limits bound the blast radius.** `MAX_MCP_SERVERS_PER_USER` (default 5)
 caps what one user can start in a single call, and `MAX_GLOBAL_MCP_SERVERS`
 (default 50) caps the pool. Hitting either logs a warning and stops starting
-further servers — the manager is returned with the servers that did start, so
+further servers - the manager is returned with the servers that did start, so
 the session proceeds with partial tooling rather than failing outright.
 
 ### Background config sync
@@ -164,8 +164,8 @@ skills repository transfers only the changed objects.
 `POST /api/marketplace/clone` shallow-clones (`depth=1`) `owner/repo@branch`
 into the user's workspace and records the marketplace row in Postgres.
 `POST /api/marketplace/update` reads that row for the branch, verifies the
-directory really is a git repository — refusing with an instruction to re-clone
-if it is not, which is how ZIP-era directories are detected — and then fetches
+directory really is a git repository - refusing with an instruction to re-clone
+if it is not, which is how ZIP-era directories are detected - and then fetches
 and hard-resets to the remote branch, reporting whether anything changed and at
 which commit.
 
@@ -178,7 +178,7 @@ the transition rather than a half-removed marketplace.
 Every marketplace route checks the name against
 `^[A-Za-z0-9_.-]+$` before it is used to build a directory path. Since the name
 is attacker-controlled input that becomes a filesystem path under the user's
-workspace, this pattern — which admits no `/` and no bare `..` segment — is what
+workspace, this pattern - which admits no `/` and no bare `..` segment - is what
 keeps a clone or delete from escaping the workspace.
 
 ---
@@ -187,7 +187,7 @@ keeps a clone or delete from escaping the workspace.
 
 **Skills** are synced from a per-user Supabase Storage bucket. `sync_user_skills`
 lists `.claude/skills/` in the bucket, downloads each file and extracts it into
-`.claude/skills/` in the workspace — the same relative path at both ends, which
+`.claude/skills/` in the workspace - the same relative path at both ends, which
 is what lets the agent discover them with no further configuration. Sync is
 hash-based, so unchanged files are not re-downloaded.
 
@@ -210,14 +210,14 @@ happens to everything else.
 ## Workspace isolation
 
 Each user gets a directory at `${USER_WORKSPACES_DIR}/{user_id}`, created by
-`ensure_user_workspace()` and passed to the SDK as `cwd`. Everything above —
-`.mcp.json`, cloned marketplaces, extracted skills, `CLAUDE.md` — lands inside
+`ensure_user_workspace()` and passed to the SDK as `cwd`. Everything above -
+`.mcp.json`, cloned marketplaces, extracted skills, `CLAUDE.md` - lands inside
 it, so the agent's working directory *is* the tenant boundary for files.
 
 Two settings in `build_options` are load-bearing for that boundary:
 
 - **`setting_sources` is `["project"]` only.** Adding `"user"` would make the
-  SDK read `$HOME/.claude`, which in the container is `/root` — a single
+  SDK read `$HOME/.claude`, which in the container is `/root` - a single
   directory shared by every tenant. The narrower setting is what keeps one
   user's configuration from being read during another user's session.
 - **`system_prompt` is passed as a preset with an `append`.** A bare string

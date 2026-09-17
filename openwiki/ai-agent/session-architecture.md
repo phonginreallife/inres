@@ -1,7 +1,7 @@
 ---
 type: subsystem
 title: AI Agent Session Architecture
-description: How the InRes agent holds one Claude Agent SDK client open for the life of a WebSocket — the four concurrent tasks, why a single task must own connect and disconnect, and why turns are serialised rather than cancelled.
+description: How the InRes agent holds one Claude Agent SDK client open for the life of a WebSocket - the four concurrent tasks, why a single task must own connect and disconnect, and why turns are serialised rather than cancelled.
 tags: [ai-agent, websocket, session, asyncio, lifecycle, streaming, concurrency]
 verified:
   - by: openwiki/0.4.3
@@ -28,7 +28,7 @@ fresh `ClaudeSDKClient`, discarded its context, and then ran a *second*
 inference against the raw Anthropic API purely to stream tokens. Keeping one
 client connected fixes both problems at once: context survives between turns,
 and `include_partial_messages` yields token-level streaming from the same pass
-that runs the tools — no second inference.
+that runs the tools - no second inference.
 
 Related: [Streaming protocol](../ai-agent/streaming-protocol.md) ·
 [Tool approval and security](../ai-agent/security-and-tool-approval.md) ·
@@ -45,9 +45,9 @@ UI ◄── delta / tool events ── ChatSession ◄── Claude Agent SDK �
 | Task | Responsibility | Must never |
 |---|---|---|
 | **WS receive loop** | Reads frames, submits `Turn`s, resolves approvals | Touch the SDK client; await a turn |
-| **Session runner** | connect → N turns → disconnect; owns the client | — |
+| **Session runner** | connect → N turns → disconnect; owns the client | - |
 | **Sender task** | Drains the output queue to the socket | Block on a full queue (it is unbounded) |
-| **SDK internals** | Tasks spawned by `connect()`; may call `can_use_tool` | — |
+| **SDK internals** | Tasks spawned by `connect()`; may call `can_use_tool` | - |
 
 ### Why one task owns connect *and* disconnect
 
@@ -67,7 +67,7 @@ Two rules keep the socket responsive while a turn runs:
 
 - `handle_chat` returns as soon as the turn is queued; all database work happens
   in a separate `persist-turn` task. The loop therefore stays free to read the
-  next frame — which may be the approval or interrupt the *running* turn is
+  next frame - which may be the approval or interrupt the *running* turn is
   waiting for.
 - `handle_permission_response` is synchronous by design. The receive loop holds
   the only key to a parked SDK callback and must not block while holding it.
@@ -87,11 +87,11 @@ client, and those messages then interleave with the next turn's output.
 
 `_serve()` runs turns against one open client until one of four things happens:
 
-1. **Idle timeout** (`idle_timeout_s`) — the CLI subprocess is parked, but
+1. **Idle timeout** (`idle_timeout_s`) - the CLI subprocess is parked, but
    `_claude_session_id` is kept so the next message resumes.
-2. **Reset** — a `None` sentinel with `_reset_requested` clears
+2. **Reset** - a `None` sentinel with `_reset_requested` clears
    `_claude_session_id`, so the next message starts a fresh conversation.
-3. **Tenant change** — `Turn.auth_key` is the `(auth_token, org_id, project_id)`
+3. **Tenant change** - `Turn.auth_key` is the `(auth_token, org_id, project_id)`
    triple; when it differs from the connected one the turn is stashed in
    `_carry` and the runner reconnects.
 4. **Close**.
@@ -100,7 +100,7 @@ client, and those messages then interleave with the next turn's output.
 
 `_apply_tool_context()` binds the auth token, org id and project id for the
 incident tools **before** `connect()`, and must run in the runner task. The
-tools read context variables, which are copied into each task at creation — so
+tools read context variables, which are copied into each task at creation - so
 the SDK's internal tasks inherit whatever was set at connect time, and nothing
 set afterwards can reach them. Serving a different tenant therefore requires a
 new client, not a mutated one.
@@ -111,7 +111,7 @@ new client, not a mutated one.
 `_pending_model`, drained at the top of the next turn. It is deliberately never
 awaited mid-turn: `client.set_model()` is a control request whose response only
 the SDK's reader task can deliver, and that task may be parked inside a pending
-tool approval — the same trap as `interrupt()`. The requested model is validated
+tool approval - the same trap as `interrupt()`. The requested model is validated
 against the configured allowlist in `handle_set_model` before it reaches the
 CLI, because the value arrives straight off a socket.
 
@@ -123,7 +123,7 @@ CLI, because the value arrives straight off a socket.
 whatever `translate()` produces onto the output queue, capturing the CLI's
 session id as it appears.
 
-Every path out of `_run_turn` — normal completion, cancellation, exception —
+Every path out of `_run_turn` - normal completion, cancellation, exception -
 lands in `_finish()`, which records the result on the `Turn` and emits **exactly
 one** terminal event: `interrupted`, `error`, or `complete`. That single
 convergence point is what guarantees the client's spinner always stops. The
@@ -138,7 +138,7 @@ so internal details do not leak to the browser.
 
 `interrupt()` is ordered deliberately:
 
-1. `broker.deny_all("Interrupted by user")` — **first**. The SDK's reader task
+1. `broker.deny_all("Interrupted by user")` - **first**. The SDK's reader task
    may be parked inside `can_use_tool`, and `client.interrupt()` awaits a
    control response that only that task can deliver. Interrupting first would
    deadlock the socket.
@@ -151,7 +151,7 @@ so internal details do not leak to the browser.
 The watchdog is the backstop: if the turn is still running `INTERRUPT_GRACE_S`
 (10 s) after the interrupt, `_force_restart()` cancels the runner and drops the
 subprocess. The session id is kept, so the next message reconnects and resumes,
-and `submit()` restarts a dead runner on demand — the session self-heals.
+and `submit()` restarts a dead runner on demand - the session self-heals.
 
 ---
 
@@ -162,13 +162,13 @@ blocks on the turn queue and connects only when real work arrives.
 
 **Concurrency ceiling.** A process-wide semaphore (`configure_concurrency`, set
 from `max_concurrent_cli` at startup, default 8) caps live CLI subprocesses. The
-slot is acquired in `_connect()` and released in `_disconnect()` — including
+slot is acquired in `_connect()` and released in `_disconnect()` - including
 when connect fails, which is covered by a dedicated test.
 
 **Resume is best-effort.** If `_claude_session_id` is set, the runner tries to
 resume; on failure it logs, clears the id and connects fresh. Session
 transcripts live on the pod that created them, so a restart or a different
-replica invalidates them — and losing history beats refusing the message.
+replica invalidates them - and losing history beats refusing the message.
 
 **Shielded disconnect.** `client.disconnect()` is wrapped in
 `asyncio.shield` with a 10-second timeout, so a cancelled runner still tears
@@ -187,9 +187,9 @@ stops the SDK waiting on a decision that can no longer arrive.
 writes the turn's tool activity, then the assistant reply. Two judgement calls
 are encoded there:
 
-- **Interrupted turns are still stored** — the partial answer the user actually
+- **Interrupted turns are still stored** - the partial answer the user actually
   read is worth keeping.
-- **Empty replies are skipped** — a blank row renders as an empty bubble and
+- **Empty replies are skipped** - a blank row renders as an empty bubble and
   inflates `message_count`.
 
 ### Tool activity is persisted too
@@ -203,7 +203,7 @@ The comment records why this was added: the columns for tool messages had
 existed since the table was created, but nothing had ever written them, so
 reloading a conversation **silently dropped every tool the agent ran**. A
 transcript showed the model's conclusions with no trace of the commands it
-executed to reach them — exactly the part an incident review needs.
+executed to reach them - exactly the part an incident review needs.
 
 `is_first` is captured synchronously in `handle_chat` before any await, so two
 messages in quick succession cannot both believe they are the first and create
@@ -212,7 +212,7 @@ the conversation twice.
 `resume_previous` separates two decisions that look like one: adopting a
 conversation id and resuming the Claude session. A conversation whose first turn
 never produced a session id still has messages on the user's screen, so new
-turns must append to it — otherwise the visible transcript and the rows being
+turns must append to it - otherwise the visible transcript and the rows being
 written drift apart. Only the model's context is lost, and that is recoverable.
 
 Clearing history mints a **new** conversation id, because reusing the old one
@@ -225,7 +225,7 @@ would append to the history the user just asked to forget.
 `_send_events` drains the queue and writes frames to the socket. A failure is
 classified by `_is_disconnect()`: a genuine disconnect (Starlette's
 `WebSocketDisconnect`, or a `RuntimeError` complaining about sending after
-close) ends the loop, while anything else — an unserialisable frame — drops that
+close) ends the loop, while anything else - an unserialisable frame - drops that
 one frame and continues. One bad frame must not silence the socket for the rest
 of the session. A heartbeat task emits periodic `ping` events to keep the
 connection alive.

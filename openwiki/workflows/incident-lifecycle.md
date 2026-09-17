@@ -52,7 +52,7 @@ triggered ──► acknowledged ──► resolved
 ```
 
 Alongside `status`, an incident carries `urgency` (`low` / `high`), a severity,
-a `P1`–`P5` priority, an `escalation_status` (`none` / `pending` /
+a `P1`-`P5` priority, an `escalation_status` (`none` / `pending` /
 `completed`), a `current_escalation_level`, and an `alert_count` that rises with
 deduplicated alerts.
 
@@ -60,11 +60,11 @@ deduplicated alerts.
 
 The guard is in the `WHERE` clause, not in Go:
 
-- **Acknowledge** — `WHERE id = $5 AND status = 'triggered'`. An incident that
+- **Acknowledge** - `WHERE id = $5 AND status = 'triggered'`. An incident that
   is already acknowledged or resolved cannot be acknowledged again, and two
   concurrent acknowledgements cannot both take effect.
-- **Resolve** — `WHERE id = $3 AND status != 'resolved'`. Resolution is
-  therefore permitted **from either `triggered` or `acknowledged`** — you need
+- **Resolve** - `WHERE id = $3 AND status != 'resolved'`. Resolution is
+  therefore permitted **from either `triggered` or `acknowledged`** - you need
   not acknowledge before resolving.
 
 Both record who acted (`acknowledged_by`, `resolved_by`) and when.
@@ -73,7 +73,7 @@ with the UTC session timezone both Go entrypoints set.
 
 Note that these updates do not report whether a row matched, so calling
 acknowledge on an already-acknowledged incident returns success while changing
-nothing — but it does still append an event.
+nothing - but it does still append an event.
 
 ---
 
@@ -104,13 +104,13 @@ The timeline stays readable even if a user is later renamed or removed.
 
 **Event failures never fail the operation.** Every call site discards the error
 with `_ = s.createIncidentEvent(...)`. Losing an audit line is treated as
-preferable to failing an acknowledgement — a deliberate trade-off worth knowing
+preferable to failing an acknowledgement - a deliberate trade-off worth knowing
 when relying on the log for completeness.
 
 ### A gap in assignment auditing
 
 `AssignIncident` updates `assigned_to`, then builds the `eventData` map
-including the resolved user name and optional note — and **returns `nil`
+including the resolved user name and optional note - and **returns `nil`
 without ever calling `createIncidentEvent`**. The payload is constructed and
 discarded, so a direct assignment through this method produces no `assigned`
 event.
@@ -129,7 +129,7 @@ incident carries an `OrganizationID`, calls
 
 The organization check is not incidental. Broadcast channels are per
 organization (see [web application](../frontend/web-application.md)), so an
-incident without one has no channel to be delivered on — the same field that
+incident without one has no channel to be delivered on - the same field that
 governs ReBAC visibility governs realtime delivery.
 
 Notification enqueueing, escalation eligibility and analytics all follow from
@@ -143,7 +143,7 @@ Three things happen off the request path.
 
 **Notifications.** Sent from goroutines in `AcknowledgeIncident` and
 `ResolveIncident`, so a slow Slack update does not delay the HTTP response. The
-notification tells Slack to update its existing message — which is why a web
+notification tells Slack to update its existing message - which is why a web
 acknowledgement is reflected in Slack.
 
 **Realtime broadcast.** `BroadcastIncidentAsync` is asynchronous by name; a
@@ -156,7 +156,7 @@ incident with Claude and writes insights back. Three properties matter:
 - It is **gated** on `config.App.AIIncidentAnalytics.Enabled`, returning early
   and logging when AI Pilot is off.
 - The payload includes `organization_id`, marked `Required for ReBAC tenant
-  isolation`, plus optional `project_id` — the consumer must know the tenant to
+  isolation`, plus optional `project_id` - the consumer must know the tenant to
   read anything else safely.
 - Handlers call `QueueIncidentForAnalysisAsync`, which runs in a goroutine and
   **logs rather than returns** errors, so an analysis failure can never block
@@ -197,5 +197,5 @@ an org, project and time range for charting.
 
 `TestIncidentHandler_GetIncident_ReBAC` pins enforcement at the handler
 boundary, running the real `IncidentService` against `go-sqlmock` with a mocked
-authorizer and asserting both the allowed and denied paths — so authorization
+authorizer and asserting both the allowed and denied paths - so authorization
 cannot regress to being enforced only in the service layer.

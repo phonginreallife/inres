@@ -2,7 +2,7 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "inres — Incident Response Platform",
+    "title": "inres - Incident Response Platform",
     "quality_profile": "showcase",
     "viewBox": [
       1370,
@@ -12,7 +12,7 @@
   "boundaries": [
     {
       "kind": "region",
-      "label": "Kubernetes cluster — 6 Deployments",
+      "label": "Kubernetes cluster - 6 Deployments",
       "wraps": [
         "kong",
         "web",
@@ -26,7 +26,7 @@
     },
     {
       "kind": "security-group",
-      "label": "Agent pod — pinned to 1 replica",
+      "label": "Agent pod - pinned to 1 replica",
       "wraps": [
         "agent",
         "cli"
@@ -326,7 +326,7 @@
       "dot": "amber",
       "title": "Operational limits",
       "items": [
-        "The agent must stay at 1 replica — RWO volumes and pod-local session state",
+        "The agent must stay at 1 replica - RWO volumes and pod-local session state",
         "api and web are stateless behind Kong and scale horizontally",
         "Losing the PVCs costs conversation context, not conversation history"
       ]
