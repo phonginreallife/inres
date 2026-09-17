@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:eeb315724a029a663ae9638d09341f1da753c5e9f9be413d2ec3354eec7882c1",
+  "claims": [
+    {
+      "id": "claim_0624e878c7db4cdfb0b46a6b81e0ed04",
+      "statement": "The agent holds one Claude Agent SDK client open for the life of a WebSocket, replacing a per-message pattern that discarded context and ran a second inference against the raw Anthropic API purely to stream tokens; the persistent client preserves context across turns and streams tokens from the same pass that runs the tools.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/main.py#L1-L20",
+          "version": "repo-lines-v1:sha256:2c841b082781ac09d0de20c59bb747ae1eed064a823118c917129269bff1b5c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFjN2RkZWJhYTAxYWU0MWVkZDE3YzMxNzlhNWQ2Yzc0ZmI1ZjliYTNiM2FhMTg1M2RjZGUxYjkxMjJmNDdlYzcifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L1-L12",
+          "version": "repo-lines-v1:sha256:7bc2496e2cca87a1a2b79857ada1f30ffe88ca5185373244004fce3de0293170:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlOWJkMDNlNDQwMzhjYjdkZWEzZTA4YjhmMjZlN2ViYmQyMjk0ZTFkZTE2MTZmNWYwNDA0YjgxNTA5OTQ2ZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmM2U4MjY2NWU2MGJlYjQyY2I2MTgyYTFiNmEyZWUwZDAwNDM2NDdiMTY0MGIzM2FiNWU5NWE2NGI3MWI2N2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f270fdfd5a454fa7a5c8b7d2c0b6a4f4",
+      "statement": "A single session runner task owns connect and disconnect because ClaudeSDKClient.connect() enters an anyio task group and anyio requires the task that entered a scope to exit it; connecting per message and disconnecting from the WebSocket handler's finally raises RuntimeError and leaks the CLI subprocess.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L13-L29",
+          "version": "repo-lines-v1:sha256:028dee11acdfeaa3011b85b190e5777e616490599079a1d888cc83e6e6124344:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3Y2FmNTU4NDhkYWRkZDQ2MmFhZTY1ZTBjYmIwOTBhMzBlOGU4ZjU0YWJmYjBmMTg4ZGJhNDMzNDU3NGQzZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1ZGYzOTdhYmQzM2Q0ZjMxZTBjZTNlOTM5N2QxYWNmNjQ4YzFmZTBmMzRkNWUyMTE0MjAwYjM2ODIzZjVjMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmNDY4NzZmMDNmYWM3NGIzOWY4MGZhYjI4YzQ1MGQ1ZGJlNjZlOWJlZDk3ZGM2YmRmYTMxY2EyNDYzMGRiYzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNjdmYjkyZjdmZjVhYzc5ZmU1MTc5YTYwMzk1ZDk4YjhkNjI4OGVkOGZiNmJlMGU3MzA4ZmIzNTk3YjYzYTAifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L276-L316",
+          "version": "repo-lines-v1:sha256:02cd5f7233623fb02037e9819971b981d04296da1524c3c2828cfd0ae095a702:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2YTM4MjQ2Yjc3OTY5ZjE4OWQ4NDViODIwYjIyYmJmNjllNTczZjIwYTMxMTNlMTc5ZTkwNGUwNDEyNWQyMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3Mjc2ZDUyN2MzZDkwNmFkYzlhNWVkNWJjMjE4ZjZhMDVjN2E5ZjgxMDk4MDA4ZjU1Y2FmY2MzZmZiMDRmYzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3MzkzN2UzMDNlMzViZmIxOTE2YjRkNGQ4ZjhhYzYxNTcwNDVkOWUyZWIxZmQwMDljMDYyNzc1NTdjYjJhMzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRhZjJkZDBhM2NkMzJhMzJmNjQzMGYxY2FlOGQxNTM2MWIzYWIxZmQ3MDYwNzBlZGNmNTE3ODc3YjY3NzdjMjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_235bb195be70433f8f9efd002fea06d6",
+      "statement": "The session is driven by four concurrent tasks — the WebSocket receive loop, the session runner, the sender task and SDK-internal tasks — where the receive loop never touches the SDK client and never awaits a turn.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L13-L24",
+          "version": "repo-lines-v1:sha256:5b0d549eee32e3123aa31e4fc98c1e05784d6d563105c26757a2491fd6dc86b0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3Y2FmNTU4NDhkYWRkZDQ2MmFhZTY1ZTBjYmIwOTBhMzBlOGU4ZjU0YWJmYjBmMTg4ZGJhNDMzNDU3NGQzZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyNmZiODcwODJhNmRkYTZlOWEzM2VkMGFjMDM4YzRiMGVmOWNiODkyZTE2NGEyN2JkZDg2ZDYxNjY0YjdiZDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmNDY4NzZmMDNmYWM3NGIzOWY4MGZhYjI4YzQ1MGQ1ZGJlNjZlOWJlZDk3ZGM2YmRmYTMxY2EyNDYzMGRiYzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlODE4ZWUxYjFmYWQzNDc4YTYzM2M0MjhmODc5Y2RiMDI3MTE2ZDVkNmQwZTU2ZmYxMDA4NGQzYmFmOTAyMzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b502519f656346ed801dba7c3b906b30",
+      "statement": "Turns are serialised through a queue rather than cancelled, because cancelling a turn mid-stream leaves unread messages queued in a persistent client and those messages then interleave with the next turn's output.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L29-L32",
+          "version": "repo-lines-v1:sha256:b34b8ffafad2158d77cfc9e652e6444578a3a0132a2e9803588d9aeb4e2fb0be:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODVkZjM5N2FiZDMzZDRmMzFlMGNlM2U5Mzk3ZDFhY2Y2NDhjMWZlMGYzNGQ1ZTIxMTQyMDBiMzY4MjNmNWMyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDM0YzljZGQ0MmY4ZDg4YzA0NDI1MzczYTczMzYyMDlmNmIyYTJkY2ViZWMzMmI0ZDQwNTkzZjkwYmUyYmIyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjM0N2E5MDRkZDBjMWI0MDZiMDQ1ODg2ODFkNzA2MzRiNjM3YTc4Yzg1ZmYwZWY3NTU2ZWJhMTc0ODE2ZDhiNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjkxNjhjNTM4MGE1MTE5ZGNkMmFjNWQ0NzI0NjRjM2NkY2IyZjIzNWY4OTNiZGY1NzQ4M2IwMTNjNTE5ZWY1NCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L320-L360",
+          "version": "repo-lines-v1:sha256:d6b8c1a6fb12f79c4f975f53ccf03e44970b24c3c3d4cc4cf708f37779bf443e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJkNGIwODZkYzUwZWYyMTk2OWQ4MDlhZjVjMGFjM2ViNTY3MDM1YzQ4OTQzYWNhYmMwZWIwZWI2YmNlMzZhMDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlkZjcxOWRlNjkwZjNlMjM2NThiNGQ0ZDAzMDI3ZDg0YmJiYmVlZmE5NmVhMzA3MjQ1MGE4NzE4NGIzY2I1NjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d3a160b7e8cb4a9397d943a62cc028bd",
+      "statement": "The WebSocket output queue is deliberately unbounded, because a bounded queue could block the permission callback before its request was transmitted, leaving nobody able to answer it.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L112-L120",
+          "version": "repo-lines-v1:sha256:b4179efcebbb6986c544b7326d176e219f6c70daa91dfdc272481238de284923:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNkZDM3MDlkZDQxZjYxM2YyNGFhNzA0YTEzNTc5ZDM2YmE5YjZjZTY1NmFhMDFhM2Q2YzljYzQzN2ZjMmEwZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTc1YzkwNTliZWY5ZDE3NmFkOWM1NjJiOTcwOTFiNDlkMWVkYmY4YmM3OTgzZWYwM2NhY2RiMzJjMjQxYjkwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTY2NGIzNTExOTNlMWI0NDBkNzIwZTdjNWZmNWM1NzIxZGE5NWUzNDcxNmVjZTM1MThiODZiODBkODQ5NjZkZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTQxODZjOGI3YzI4NjI4YmUwYjNkMTBkOGQ5YWVlNDhlNDI5MWNhY2QzZDBmNDFjMGFlMzQxYmM0NDkzMmYxNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_63cb252907d0414ebc0721789c79b505",
+      "statement": "handle_chat queues the turn and returns immediately while all database work runs in a separate persister task, so the receive loop stays free to read the approval or interrupt that the currently running turn is waiting for.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L269-L310",
+          "version": "repo-lines-v1:sha256:feb3537fde1e9ae00519d8c5d4d83d0150b9d6532ff6dedacb0c13728b1a8462:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5YWYyZDg1MzBlMzJlYTUwNmJkY2IwMjRkNzVjMzU5MGNlYTlmM2IyMzdhNTc0Y2M4YmZjMDdlZjNlYjk5NDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2OTZlNTAwMjc3ZjVlOTlkMWMzNmNjNDA3MzMxOTViYWU3NGJiM2UxOTFlNTRhZmM5ZTZkZmQyNDYxYmY4YTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5MGIxZDM5MDYwZWY4M2Y1MTlkNGRjZDBkNDhmOWMxOWZiMjliMTFiOGE0ZjFkZTc1ZmQwNDFmYmRhMDIyMGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiYzVhYmRlOTFiZjFkMTI3ZDM2MTc2YzZlMTE4NzBjOWU2NDhjNzBjODlhNWMwODE5MGZmYzU5YTk4ZGY1ZTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_88681050c4cc48f5b9db757e9f1e257f",
+      "statement": "The serve loop keeps one connected client until an idle timeout parks it, a reset clears the conversation, the tenant context changes, or the session closes.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L320-L360",
+          "version": "repo-lines-v1:sha256:d6b8c1a6fb12f79c4f975f53ccf03e44970b24c3c3d4cc4cf708f37779bf443e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJkNGIwODZkYzUwZWYyMTk2OWQ4MDlhZjVjMGFjM2ViNTY3MDM1YzQ4OTQzYWNhYmMwZWIwZWI2YmNlMzZhMDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlkZjcxOWRlNjkwZjNlMjM2NThiNGQ0ZDAzMDI3ZDg0YmJiYmVlZmE5NmVhMzA3MjQ1MGE4NzE4NGIzY2I1NjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_18de7622cf0445838d13b97704408911",
+      "statement": "An idle timeout parks the CLI subprocess but retains the Claude session id, so the next message reconnects and resumes rather than starting a new conversation.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L325-L338",
+          "version": "repo-lines-v1:sha256:fbf269362a870dbcc093d296dbb31970eecdd6d749e2a72442af1d73555592e4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0NmI1ZmUyNzU4MjRhNjRhNTM3ZTk0YTRhN2JjNjZhMDk3OWNlNTA3NjAzNTQ3ZmFhY2JkY2M5MWVmYzUyNDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2YmM1ODFlNjU0MzZlODFjNjk2ZDk3ZjdlM2RlMmY4Yzk3YjIyZmY2YmM1NmIwOTFkOWI1Y2RiNTQ1NTdkNjAifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L453-L468",
+          "version": "repo-lines-v1:sha256:82f1c1f6753769cb3e94bdf5943e0a116502e1cd6d6ada6b3b4fc8901d6210c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5ODg4ZWNmYjViZWMxNTQzZGIwY2Q4YjY0ZjkyYjg5Njc1ZWIzZjkyOWUzMTUzYzZmY2FkNjE2YzFhYjQzN2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MjY3NmM4ODhjMWE0ZDlmYTc3MmZjZGMzMDJmNzczYmM3MjkwZWViZmY5ZGEzNmEzOWY0NGMzMjExOTgzODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlODNhODJjYTk0NmU0MTY1OTM5YThmOWJiOTNhMDU1MGMwYzNmZmVhZDhmMmQzODk4NDJkOGVhMzRjNDBhYzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_77338457d2484427b3814be676c3a33c",
+      "statement": "A change in the (auth_token, org_id, project_id) tenant key forces a reconnect with the pending turn carried over, because tool auth is captured in context variables at connect time and cannot be changed on a live client.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L106-L109",
+          "version": "repo-lines-v1:sha256:5c9e5aaf6a72a8db2bf7346f4a43e6f80ffb8a1fa3ac86f174267fc1ccb91237:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjNkMDBjZjI3MDk2NGQ0NGExM2RmYWM4NzUyYjA5ZmNjNDM1YjBmMTliMzE2YWJjZjgxYTdhYTY0YmIxMjJkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGVlNGNmMmViNDczNmI0NDQzOWYzMDQ2NWIzN2RjOTE5OTRmZDViNWMyMTExYjE0ZDNhZGI0NTdlYjk5OTFjNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjAxYjlhNWY1NDNkZGMyNmQxZmIzZTc5YTAzNTU3NDhkNmJhNGYwOGY5NTc4YmQ4MzRhYzNhOTA0MjVlZjVhOCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L345-L353",
+          "version": "repo-lines-v1:sha256:c73349258f55ddbfdf65c73c38b69ac24a5b379f7ad15172d6dcd1992e4a80bb:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjJhYjU2YWMwYTg2OWJmODA5ZWVlMWJkZGNlMzg4YWYwNzdjOWZiMzY3MjUyMWRjN2ZjOTVlMjA5YTExNzdjYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDRkYTYwNDQ1MzFiOWFkZmU4MTAxODgwOGY4NDUwZTM3MGYzMTJmZmJlNjUzNzQxZDYyZTE5NjQ0ODc3NmZmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjIyM2FkNzA1YmEyZGNlNmMwM2ZmNTYzYmQwMDhjZDg0ZjUyODkxYjZkNWRiMjU0YzVkNDY5MzM4OTZlNjhmMCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L380-L400",
+          "version": "repo-lines-v1:sha256:b1586bab3e38445f0e606e9bab443bbc3d8074f74d32feb5a4096de9942d8793:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5NjlkN2ZhODRmOTJlODUzYjkzYjhmZjA2ZmNiNGFkOGQyMWJhZTVlYjRhZDk3MjUwNTMwN2VkNmUwZjZmOTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhNWZkZmE2YmNjM2EwZDgzNmVlMDBlYWRmZWE3MDk4OTY3MzA5NTUzMTYwNjllOWJkMjY5NzVlYjNjMGJkNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzMGJkZTMzZTY2MDI0MmE5YzdiMTVjMTUyNmE3NDlmYzcwZTdjODQ4MzU4NDVhMzdmMDNlNjczNTYwMDRmNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fee5416bd78e4eea885bee342a690a78",
+      "statement": "Tenant context for the incident tools is applied in the runner task before connect, because context variables are copied into each task at creation so SDK-internal tasks inherit only what was set at connect time.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L380-L400",
+          "version": "repo-lines-v1:sha256:b1586bab3e38445f0e606e9bab443bbc3d8074f74d32feb5a4096de9942d8793:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5NjlkN2ZhODRmOTJlODUzYjkzYjhmZjA2ZmNiNGFkOGQyMWJhZTVlYjRhZDk3MjUwNTMwN2VkNmUwZjZmOTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhNWZkZmE2YmNjM2EwZDgzNmVlMDBlYWRmZWE3MDk4OTY3MzA5NTUzMTYwNjllOWJkMjY5NzVlYjNjMGJkNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzMGJkZTMzZTY2MDI0MmE5YzdiMTVjMTUyNmE3NDlmYzcwZTdjODQ4MzU4NDVhMzdmMDNlNjczNTYwMDRmNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f40344e23fdb450dab2014f36776b453",
+      "statement": "A model switch requested mid-turn is deferred to the next turn boundary rather than awaited, because client.set_model() awaits a control response that only the SDK reader task can deliver and that task may be parked inside a pending tool approval.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L206-L232",
+          "version": "repo-lines-v1:sha256:4cc5b5d6ac220fb804647b5aa4060aaea5cbed9766ed2136a8993afa2f2fde67:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3OTBmOWRiMTEwY2ZlMTdhY2E5Y2I2MTYzNmE4MzE2ZDJlMzIwNjM2ZTdiYzgwY2EyMGU1ZDk1YjYzMTI0YmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmMTFlYTExZWYwMWUyZTk2OWU1ZjRjNjI3MmYzZGI2NmRlNWY4ZTU0ZDFjYWFhNGFmZWYyZDIwYmJhMmVmMjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhNTQ4ZjI1ZGUzMDNmZGVhYTI0NjFkNGNkMGFkMmYzYTJmMTljZDUxODk2MmRkMzExNjJlYzc4YmQ1MGYyZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjYzQwM2Y0ZTg0M2UzYzRkMjRiOTgxMDY2NzcxMDljNjEyOGZiZWM3Yjk2ZTM3ODVkOWUxMjZiMGFiMWVhOWQifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L354-L358",
+          "version": "repo-lines-v1:sha256:7b416e83585cc66b51e83fb007e812a626adffc8d9cebd4f4f90c7b08bc20bb4:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjIzNGQ4NDA5ZTU2NTZiNDZmZjFkNjYxNmZkNTRjMzBmZjBmN2EyNjlmYTZmOWU1OGNkN2I5MTI1MWRmZGNmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTkyNzBkZjEyNDlmYWQ2NTZiYmY0NGEwYzBiMjM5ZDM0MDc1OGY2YWVjMGM3YzViZTcxZTU4M2Q5OGM2OTcwMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmMxNTU3YjQ2ZjcyMDAyYjIzM2I1ZTYyOWQ4MjlhNWNlOGIxZjY3YTU4OWFhNmRmNDdjOGJkZDhiODMzY2YyNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e237fe535f464db4994ae882432a8466",
+      "statement": "A requested model is validated against the configured allowlist before it reaches the CLI, because the value arrives directly off the WebSocket and an unchecked string would let a caller select any model the credential can reach.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L228-L255",
+          "version": "repo-lines-v1:sha256:b4cded703386a3a2588208e1de87c8695946c2a8ca9c5834f9143e399aefc9ca:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MzEyZmU2M2Q3YWM5NDQ5NjA4MjRkN2I0YjBmOWRjZDExOTlkMWEzNjE3MmEwZDlmZTAwMWVkNjM0MDZiNmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjZjIwYmQyZTI4YWFkZjA0NDQ2OTUwNTQwZDkyOTdiYmRkMTc2MmQyNGM5NGE0YjZjZTNkN2RkOGE5NWMyMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ZDBlZTk4NDlmZDMyYTQ4OTJlMzViNzZlMDhkZDlkMGM5YzUyNmZkY2I4MDMxZWY4NWJlYjM3ZWI0NDBiNzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxM2UyOTNjYTViZjczZjhjMGJjYTY4ZTA5NjE2NmY1ZWJiOWRkNGNiMDAwMWQzM2ZiZDJiOTliOTVmNDVmMWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_534873d0b15c4f28a370c4a47ed1a5fb",
+      "statement": "Every path through a turn — completion, cancellation or exception — converges on _finish(), which emits exactly one terminal event of interrupted, error or complete, guaranteeing the client's spinner always stops.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L484-L512",
+          "version": "repo-lines-v1:sha256:ef04989b206e85d8eab2d6503a9937964d07716c3e41c49d13d3edf2d33954c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhOWZiOWIyYjcxYjVhMGJkYTAzMTRiNDAzYzMzOWU2Yzg2NjJhNGQ5ZDYyZjgxZjhjYjYyMjI1Y2YyMGNmZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxNmFiM2ZhNjdlZTZiZDVjNTNhOTdlNjYwNDViYzdlYTk3NzcwODU3YWQzYjFhNGM4OGMxMmQ1NTc4MDMxMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVlZjhjNzkzYjg3MmM2NDJkYWU1ODZkNDc4ZDU5ZmQ2Y2RiZTJmY2Q4YzcwZjc1Nzk3ZDA1NzM1NWMwM2ExYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5ZmM4N2FlNGZmZDY3MmQwNDFlMTJkNzQwMWZlNjc1NDAwOWUxZGE1ZWRhY2ExY2NkOWViMGM1OWFhZDJjOTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df1a1a1767824c82a09ea1e5e0da9ace",
+      "statement": "Errors surfaced to the browser pass through sanitize_error_message first, so internal failure detail does not leak over the socket.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L366-L375",
+          "version": "repo-lines-v1:sha256:0ec8dc4c0f56bcd0b036b9adf80f3aadd359526e3d568797c770fa9cb9a567ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2YWQ5ZmEzMzBkZjIzMzdkZmRjYWEyNzliOTEwMjQzMjkyZjc1MzhkYjdiOWY2OTIxMTBmNmY4MDYxZTIyNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NzA2YWFiNTY0ODQzNGI5NDBhNzRkYTc4YjhkMWY2OTYzYzAzZDg5MzU3NjQ3OGQxZGNiNWFkYzczMDYwMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhNjdhMzFjZjUwMmM0YmMwN2ViZTJhZWY4M2ZmZTRlNmUwN2EzNTY2YTQzZjQyMjVkZTE1NDNmOTMyM2VlNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5NmYzMzczYzA2ZWY5ZTg1MTdkNTcwZWQ3MzA0YTNlZjMwNWFjMWU5ZWMxYTZhMjIyMGVlMTM0MTM5YjhlMjYifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L470-L484",
+          "version": "repo-lines-v1:sha256:619930f11541cceacf2f2c04061b334c49da26f43f1666b909e8263ef36db1c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NWE4MDM2Njg3NjQxZWNhMzA1MzhhOWJjNTFhYjgyNTJmMDZkOTNlNTJmODE3NDU5OTNkZDExOGE5OGU3YTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhOWZiOWIyYjcxYjVhMGJkYTAzMTRiNDAzYzMzOWU2Yzg2NjJhNGQ5ZDYyZjgxZjhjYjYyMjI1Y2YyMGNmZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5OTE1OTIxODYzNWE5NmU4YjA3ZjQ5MmRhMjYyZTRjZDk3Y2M4MTkwNTMwODM1NWE1MTU1NTk3ZjMwZWE2MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjZmUwYzg1ZTc2YmQ4MWE0YjFiNjhkOGRiY2E3NDkzYjA0ZTFlYTM5MGUwOWE0NzE3YTZkMDkxMDQ2YzA1NWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c66864e1b59429f877a1c1ee2effa42",
+      "statement": "Interrupting releases pending approvals before calling client.interrupt(), acknowledges an interrupt while idle without sending a control request the CLI is not expecting, and falls back to a forced restart when the interrupt call fails.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L178-L207",
+          "version": "repo-lines-v1:sha256:3afd9a29f6debd77f29ec06b90b50b996ca52fd87201c5c5d8c65a005939b391:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyODMxMzNiM2FhZTU0ODZlYTE5Mjk5YjNlNWQ0Y2NmZWJiZmU4YzZhZDJlOTA3NjEyZTA4NjI4ZWFhZDk1ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmZTFiMDM3MTYxMmE3NTdmMTU2MzNiMjViN2M0MGM2ZjIxMTk1M2YyYzBlMGFkYTEyZWRjYzVhNDZkMWFjOTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1YzIzNzJhOTE3ZTI3MWNmM2I2ODY2NjA1ZDE3MDBhZjczNzkyOWM4MzhkYmNiZjlmMzI5Y2IxMjIyYzc2ZjQifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L335-L365",
+          "version": "repo-lines-v1:sha256:43c74561e5ea1ee6eff0882b3328e62d019e26048fa992958efc8e28cb1a05b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3NDdlYmQxODliZjI1MTZmNzc1ZWJkNjg4ZGE0Mzg2YWEyYzg0YzA4MjdiYzBiYTA0NDQwOTA0YWRjN2M0YmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3Y2MwMDA5MDM3YzUxMzUzOWFkZmJhMzMzNTIyOTNhMzkxOGYzMjg4MzI5YTEzNGRkZjY5ZjVjNjdjOTllNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdhMzA2NTBhN2E2MzA3YTdkYjA3OTEwMDExZGExOGNmMzljZjZiODdmNmIzNTRlYTY5MWRkOWZkNjQzNjIyMTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_50da20b27c194c77b273c89b8704b7f3",
+      "statement": "A watchdog forces a runner restart if a turn is still running INTERRUPT_GRACE_S (10 seconds) after an interrupt; the Claude session id is preserved so the next message reconnects and resumes, and submit() restarts a dead runner on demand.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L48-L50",
+          "version": "repo-lines-v1:sha256:1d3cc2012a1ce37f7fe3988179ea83886c1b062e1d2201c7930b4a0b3f09f0bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2E0ZmQ4MTRhMTQ4OTVmMmFjNzVmOThkZjYyNTE1OGI0Y2IwYTNkN2YwYmYzOWY1ODBmNGQ5NGMwMTczZDE0MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTVjMWM0NjJlMmEzOWQ3NDc1OWY1ZTFiMTI2Zjc2ODNhMmI3MzAxMThlMThmNTEyMmIwOGNlZGVlYjY1MGUyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2UwNWY5ZGQ0OGU2YjY5NTExMWEwYjZkZmJmZmNiOWE0N2Q0MWZhMTQ4ODdiYjRmOWY4ZWQwYWJhMzFiN2M5NCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L515-L549",
+          "version": "repo-lines-v1:sha256:e752c8fe53f6b95b2132e183f7c9031326d8581dceeabd3024e0b9370760a03e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyM2QwNmUxNjRjZDdiODM2ZTliMjkxMDU1MTI5MjI2ZGIzMTkzMGE4ZmIxYTQzZWY4MTg0ZGIwOWUyMmQwZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzODE1MWFmNzE4MTVmNmJiMzA2Y2RkMzY3OWNjNjY5ZjkxM2QxNGM4MGE0ZTI5MGNjY2M1MmZmOTdjZmEwMzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwN2E4ODdmY2I3MWE4M2Q0MjNkZTA0MDdhNTg4YzE0YjZiNTVlNWQ1MGM2YTNiMDBhZDZhMGRkNTFkOTA1NDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L485-L498",
+          "version": "repo-lines-v1:sha256:c74908caee66831c1bb617878b3034ebdfc28bc55f539b86f9920030a7e35ef0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2ODBjMDJjNTc1MWU0NzVmYTRmNmRjNTg4YTI1ODI3MDg4ZjlmN2Q4NzViZjgyYjU5YTgxNWVlMjM2YTY4MTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyYjYyM2U0NzcwYjM4OThjNmQ1OWVjYTBkODBlMjZmNDcwYjZhNzMzZTZkNjJkYWI1NWQyNWYyNTEwMGI1ZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwNTA2MTBkMWYyYzYwZDI2ZTE0NDk5OWVmZGQ3OGQwZjZkZjY0MDZhYjhhN2E3NDMyMDc5NGE0MWY4ZjI2ZTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ba8991a8648749f7ac2890a3767834fb",
+      "statement": "A process-wide semaphore configured at startup caps the number of live CLI subprocesses, and its slot is acquired on connect and released on disconnect including when connect fails.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L398-L405",
+          "version": "repo-lines-v1:sha256:f8e408b8b48ad7e48b02f41bd2f1ddb051a36f0813c56592e99522a3448b4c4f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWFlOWRlNGVmNTM2MzQ3NGUwNDQ1MTEzM2MzNTMwMzM5NTJmOTMzNmZkOGYyNzhiNjkxMTFjNWFmM2ZiMTEzNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTg0YmE4MjJmNzU2Mzc2MzZjMzhiZmVjZDJkOWJhNGUyZWZhYjhjZTkyMjZkODlkYjNmNTRlYmRiZGQ0NDRhMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzQ5NzU5NDRkNDdjODFmMGVjZTIxNjM1NzI2MGE4MGVmZGVhZTBjZDgyNzYwNjNkODgzMzU1ZmU1NmFmNzFkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTc2ZDRmNTdmMmUyM2ZhMGQ3NjExMzUxMWFjOGI0OGIzODk4NTRmYTBmMzBiNDk5ZmU0ZmM5MGE3OGMwNTgxZiJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L431-L448",
+          "version": "repo-lines-v1:sha256:befb50401a39dcbb7468bea9f0d20ddf71ca8e1887f9bd8af33b40ac5c53fe05:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjMjFiMTZlNjE2ZmVkYjY4ZGJhMmI4ZjMzMzc4MjU0ZmYxNzU3ZTdlMmMwMmY5YWVkNGFlNGMxZWUyYTlmZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2Y2Y5MzY4MTY1M2QxYjI4YmYwZTA5ZGEwZjNiMWRmYjVjYjYzOWU1YjVmNjBjYzJhNTlkMGYzZjYzMWIwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiZjkzOGUzZjhhMWY0MTc2ZWFkMzljMjE3MDU3ZTQyZjhjM2QyYjk3YTc2MWRkNjhjNjRlY2YwZjkxMDVjMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExZWI5ZmY1NGI4YjliNTM3NDA1OGE1YjA3MTAwY2QxNjQwMTgzNDFlM2VkNjlkZTI5NDg1ODkxYmYxYTExNTQifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L52-L70",
+          "version": "repo-lines-v1:sha256:f17084e6b484f8672086c07c3c3b0ed02dd00b21682c67f458a830a9cb567ab3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZmNlNTZmNzE2ODQwN2M3YTg2NWE2YmE1YTM1MTRkNTYzZGMxZTI4YmEyMzI5MTM3ZGJlYzI5MmJjNTQyNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4YjFkYmRhOGQ1MWJmMzMxNGE2MjM4MDU4M2U0NGY4MDJjZjg2YTkzOTlhODFhYzQ2NTFiYTM3MmE1OWJkZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwZGMzMDY5NTU3NjI4YjNjMDM1NjBkMDMyMGUxNjk4MTY2ZTA4NmM1NjEzMzQ2NjNiNGE2MTYxOWI3MjNkNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjNDg2MDAwM2MyMmM2NjczMmNmMTYyY2I3NDRlZTFkOGYzZTBmYjhlMTY3ZDUzNDBjZjk2OGMxZGVhZjI5MjgifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L499-L520",
+          "version": "repo-lines-v1:sha256:12153f4322686b660408d245aa005df8c49a7b255313404d5fc1b14fb58639b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNjE0ZjQyOTQ2ZTY2ZDJkZjQ0Yzg2YmY5ZmQwMmJiMTlmNjA0ZDgzY2FiYWJhMThhZDhmMTdmZTlmZDVmNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhZWIxOWY5YjNkNzIwYjA1ODZmY2NmZDQ2YTZjYjdhZjQ3ZjBmMmUxYzAwNDlkMTMxNjg0NDgyMWI5YjNhZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiZGEwYTgxMWYyYzBjNDRjZmZjM2VjMzQ5NjU3YzJhZTU3NjBjNGVhMjBlNDMwZDVjNWMzMWE5OGNhNWEzMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MTRhMWYwMjVkODQ4MWFkMmE1MmRhNDcxNzNlOTU1MDg5MjVlZjg1MDE2MzY2NTMxZTM4YTI1MmE3YzgxNWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_94562ebf2d7746dcb516b18d96413c2e",
+      "statement": "Resuming a previous Claude session is best-effort: a failed resume logs a warning, clears the session id and connects fresh, because session transcripts live on the pod that created them and losing history is preferable to refusing the message.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L398-L418",
+          "version": "repo-lines-v1:sha256:175a95110e1afd960a5c09af4bf427c62b2f9a313a19710dd048171db3aa1329:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZTlkZTRlZjUzNjM0NzRlMDQ0NTExMzNjMzUzMDMzOTUyZjkzMzZmZDhmMjc4YjY5MTExYzVhZjNmYjExMzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0ZThmMzZhYWEwZTNjNDI3YTlmNzUwNDEyZDMzYmI0NDk2MzkzNzJmOWI4YTAyN2NmYjFhZDY1NWU0ZTI3ZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0OTc1OTQ0ZDQ3YzgxZjBlY2UyMTYzNTcyNjBhODBlZmRlYWUwY2Q4Mjc2MDYzZDg4MzM1NWZlNTZhZjcxZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwYzIyMTlhYmE3YTg1NjBkYjNhNTRiYzJhZjQzNDFkYjZmYWQ2OWI3OGYwMjNiZGFiZjRjNTI1YTJiMTlhZjkifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L386-L407",
+          "version": "repo-lines-v1:sha256:f56ef8424c8f481b5be0c0a25ba221a45e9912a92b0ca6cb84762d503a482fc8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMWZmODEyYmFiNWYyMGUwNDM3MzNmNWI0NGM4YjcxYjQxNzFmMzIwMThkMmJiNGQ5YzQwOTNhZTcxY2U5MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmZTMyZTc3NzU1NzdhNjdmYzEzZTNhZWU2MTA3NmJmM2ZhMThjOWY0ODM1M2YyNzcwMjM5MWQ5ZDY3NWZjZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllYjU0ZTM2N2JiZDczNjBlOTIxNWI5MzJiZTA1NThmYTMwYTU4OWExMWEwNmYwODQyNWYxOGI1MzQ3YTVmY2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d46887dcd0943fe9ec10e36c515fdec",
+      "statement": "Client disconnect is shielded with a timeout so a cancelled runner still tears down the CLI subprocess rather than orphaning it.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L431-L448",
+          "version": "repo-lines-v1:sha256:befb50401a39dcbb7468bea9f0d20ddf71ca8e1887f9bd8af33b40ac5c53fe05:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjMjFiMTZlNjE2ZmVkYjY4ZGJhMmI4ZjMzMzc4MjU0ZmYxNzU3ZTdlMmMwMmY5YWVkNGFlNGMxZWUyYTlmZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2Y2Y5MzY4MTY1M2QxYjI4YmYwZTA5ZGEwZjNiMWRmYjVjYjYzOWU1YjVmNjBjYzJhNTlkMGYzZjYzMWIwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiZjkzOGUzZjhhMWY0MTc2ZWFkMzljMjE3MDU3ZTQyZjhjM2QyYjk3YTc2MWRkNjhjNjRlY2YwZjkxMDVjMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExZWI5ZmY1NGI4YjliNTM3NDA1OGE1YjA3MTAwY2QxNjQwMTgzNDFlM2VkNjlkZTI5NDg1ODkxYmYxYTExNTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7953acbb190348b8bc23b9a0c3a25219",
+      "statement": "ChatConnection.aclose() shuts down in dependency order — denying approvals first, then closing the session, draining persisters, cancelling the heartbeat and flushing the sender — so the SDK is never left waiting on a decision that can no longer arrive.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L161-L195",
+          "version": "repo-lines-v1:sha256:791c51c5eb0937bdb3c2237a2d08e6b69eb6990daadc1ba512db06a2aafda1ed:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MDMyZTk2NGQwOTMyMzUxZTVkMTg1MjY5MjgxYjE3MWEzYTA5YjA4YjI4NmU2NjFlYTQ3MDMyM2M4MmViNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2ZDA5MWNiYTdiYjBmMjU0Mjk4MmM0ZGNhMWRjYzdjYzIzMjRiODBmOGYwZWM1ODA5NTBhNGZjNGE5MjNkNjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzOGRmNjQ2MTgxNWU2OWYyZDJhZmQ4NjQyMGYyYzAzZTQ2ZTM1NDY2OTBmYzA1NGQ2YTBhYTU2ZDljZjMzMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzM2U2MTYyMDk5YjE3NTZkNDkyZjBlYjMwNGQ3NTI1ZjlhNmNiMWFjY2U0MGJhMTRjNjhkNTMyNDYyNGZlMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a85449ec25484a3196a142c8056b89f7",
+      "statement": "Turn persistence stores interrupted turns because the partial answer the user read is worth keeping, but skips empty replies because a blank row renders as an empty bubble and inflates message_count.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L312-L394",
+          "version": "repo-lines-v1:sha256:0653212541914d529c017851fe09a4807e14e72991924df4b9f18ca12d28ed02:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NTI3OTRjYzk3NTNjZDdlNDlmODM3OGNjZDRlMzUzZDJjNjFiNzFlOThlYTEyMzU3MWNhZmJkZjhmNDRhMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyOThmZWUzOTdhZDdkYWY4MTY4NmU3NjAwNzI2ZjBiYjVlMmQxZGYzYWQxY2Y1ZGJiM2IxZDUzMjY3YzA5OTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMGNhYzg3MzkzMmM4ZTNiMmNiM2M1MTViMWQ3YmU2MTVmOTA4Yzc0ODg1NjljYWQyM2E3ZTZhNDU3Nzc5ODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf6cad5ede3f4e33b9ede70462bb07e3",
+      "statement": "Whether a message is the conversation's first is decided synchronously before any await, so two messages in quick succession cannot both create the conversation.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L293-L300",
+          "version": "repo-lines-v1:sha256:9f840238377d090e731d29f9de338cf0caa74b1be5f94538abef9a9b3baf2b84:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmJlMTNiMzQxODE3NTU2ZDFkYmVmYzIzN2RmNGFhOTQ0NzdlZTg1NmZmYTIwNDNmOWM1ODhkYmY5NGI2YzBkYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzFhYWJjNGM0YzZjZmM2OWFiNTk1Yjg1ZDQyOTAzMjFhMzk2NGE0MWY5OGZjN2YxMzE2ZWU0NjJjZTFlZGMxZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac64c80d4c424a54bb7c8b00d88567c9",
+      "statement": "Resuming a conversation adopts its id even when no Claude session id was recorded, because the user is already looking at those messages and new turns must append to the same conversation or the visible transcript and the persisted rows diverge.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L129-L165",
+          "version": "repo-lines-v1:sha256:2db383c08c150b3e714ecb2c8a791364ff82b68385e3de59666f320c25c045c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5OTcyMjEwNDljZWNiMGYxYzIwOTYyNTJlZTA2ZDgyODA1ZDIxYTA4MzZkMTJiNDIwODA5Zjk0MGI0OGY2ZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmZGU5ZmYwYmNhYjEyY2ExOTEwNTc1YWQ4YzI2NWE0ZjlhMTFiMGFlMTlmYTFjZWY3MmNmMGIzYjE1Y2E4NGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiZTg5MDFiNjE5NDYzNTNjM2M2ZTIyNjk2MDJmMDhmYTY4NTVkNTQ1MGVlZjA5NTRmYjcxZmQ5OWEyMjkyYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0OTg0YTQ5OGQ5Yjc1YjdhM2MzNTQ5MTQzMmE3ODg3MjQ0NzkwYzU4YjM1YmY1OGFhOTRhMjNkYWJiNWY3YTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d738a3adc90b4a70a479a0d02a6d7d90",
+      "statement": "Clearing history mints a new conversation id rather than reusing the old one, so new messages are not appended to the history the user asked to forget.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L222-L232",
+          "version": "repo-lines-v1:sha256:039947eb953b18f4c564279abe282e9ec3e8a63f1dc8b9472cc515ab2e522546:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjNDU5ZjM1ZTI4Y2I2YTE2YmY4N2JlNzViZTY0NGUyNmZmYTRjOGU2Y2EyOWQwNDdjNDQ4OWQ5ZDYwY2Q1YWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMTZiZDgyYzg5OWQ2OGRiMDUxNTMyYWJlZTNlMzE3M2ExMmU1ZjA3NWY0YWRlNTQzYjFiN2VmOTE3M2M5ZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1ZTQ0YmQ5YTY0NTgxOTg2ZWFiN2RlYjIwNTBiMmM4MzNhZjZlYWQ1M2MzNDk5NzlhZWFmN2JlMmQ1MTc2MDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkOWQwMDRlNGE1NTQxNjlmNzlkMGE3NDE0YTFmNzA5ZjgyY2FlYTMyZjk4MWE5ZGE1MzY4M2NhNzlhYThlNzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bfe0fabe3f094970bd991c8a697d95ab",
+      "statement": "The sender task distinguishes a closed socket from a bad frame: a disconnect ends the loop while an unserialisable frame is dropped and the loop continues, so one bad frame cannot silence the socket for the rest of the session.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L355-L375",
+          "version": "repo-lines-v1:sha256:6e70cdc8f016b0040a33d771b45ce1a3d234fffb1b7ac9acc2fcd2d835a9af80:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4OWEyODQ0NmNiOTdmMGZmNzRiODUxOTYwYzQxNzA0ZWI2NDI2ZTIwMGI0MmNmN2NmYzRiZTlhOTU0M2NhMDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiNzNlM2VjZGUzOGQxNGI1NTdhNzIzMWEwMDUzYWVmZWJlMGIwYjlmNDhlNzAzZWVhYWZhODBlOGQ4NzRlZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjM2FiNWNlOGJlMzRiZjYzM2Q3Y2Q4MGQ3NGZjZGNmNjYzM2YzMDliMzdmNDNiMzczMmQwYzhhMTcyNTdjMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkMWM4NzM5MzhlMTk4NWQyNjBmZWM1MTBjNzg1MzNlZGU5YzBjODVhZGYzY2QxZmFkZDE1YThkZWVhNmM2OWEifQ"
+        },
+        {
+          "resource": "repo://server/agent/ws_chat.py#L395-L407",
+          "version": "repo-lines-v1:sha256:6d2def7dcc31ecbdde878c1acb5c4a331b6505100b86fb92801dde831baf6ccd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmOWNiMTM2NjFhZThmZjBmOGQ1ZTZiZDkwYjhmZjZiZDBmYjE2MmVhMTBiOGRkMTZmNGVjYjM3NjFiZjdkYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1YmM0NzExZWNjYTA0NTBhZmM4MzI3NzlhODg2NzZhN2M2OTYwZmEzZGE1YWY0MTBlZTAyZDFlMDE1MTU5MWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2ODYxOTkzZmI0NTAyZjRjMDdmNDRhNDRiOGNiZTBmNTc4MmIyNWRiMTIwN2JjNTRlMTRkZDM1NTAzODJjY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_68713fddaf4b49429f704927c99cf1fc",
+      "statement": "ChatSession accepts an injectable client factory, letting the whole turn loop be tested against a fake client with no SDK or CLI subprocess present.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L113-L125",
+          "version": "repo-lines-v1:sha256:d0c59b307d8d2ca6df2cab654f9d62ca94848627be84546f4c9ff6da8f01e880:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwMWI5YTVmNTQzZGRjMjZkMWZiM2U3OWEwMzU1NzQ4ZDZiYTRmMDhmOTU3OGJkODM0YWMzYTkwNDI1ZWY1YTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0NzhkZjI4NjYzYmM2Y2NlYWVhOGJhNTVjNWU2NjBiMWRiZDVjMTRjOTZmMTUzZTZiOTk3MjFlMTNjYjg2MmMifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L23-L131",
+          "version": "repo-lines-v1:sha256:f81739b4e7b946d4a7141395591d9e64159323b30aa1d10e91fca31599484970:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlN2JhODYzODQ4NDYyMmIxZTY2NGYyNTY0Nzc5MmJlMGVhYTc1MTFjNTNhNGVjMzMyYWU5ZDIyNTIyOWNiOWQ1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjNWZmOGVkZTg0NjdkOGJmZWFjMDNhNTgyODBkZjVjMzZjMTZiNGZjZmM3YjFiZTMxN2U0Mjc4OGFiNTg1YzIzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0YTFkZjg2ODIwZDkxYjQ3MzE3YWJlMjlhYTRhMTMyYzFmZjM1ODk3ZGMwNjM2OGM3OWQ2ZjgwYWYwMzM0YWM4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc782a4891de415fa34689ece2cd38a3",
+      "statement": "A turn accumulates its tool activity in order and the persister writes each tool_use and tool_result as its own message before the assistant reply, so a replayed conversation renders in the order events actually occurred.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/session.py#L100-L105",
+          "version": "repo-lines-v1:sha256:85f0e8c887079afa1392636252b94bedf588eb3df6b105a1143b77c2dac2838f:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjg0MWU2M2UyMWYxZTIwZmQ3MjllY2ZhZjFkMDQyNjc5Yzc3YjJkNzFiODRkNjIzZWRhYmRlOGVkNDMzNjNiNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzk0ZGQ4ZDZjZTRmMmUyNDk1YTI5Zjk1ZjA5YTBmZmU1ZDZhNzMxMjUxMTAxM2M0YTMzZTFlYzBjNDNiZmZhZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDVjODljNGNhOThhNTMxZmM3NmQwODZlMDUzNjQxYTM0MDI2ZjY1OTNkNDg4NGRmMjI0ODQwMzc0MTQyMmNmZiJ9"
+        },
+        {
+          "resource": "repo://server/agent/ws_chat.py#L340-L375",
+          "version": "repo-lines-v1:sha256:ae60f04d9159c49f7e6a4f0757842db1cb23170691221ea273622b0298321a84:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzZTQyZmU4ZmVlNzlkMDYyYTQ2MDI0MTBhZWIxNjE5ZjIyMTVkZTFkODFkZGI0MmM3MzIzODY5YmYwNDdhMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiNzNlM2VjZGUzOGQxNGI1NTdhNzIzMWEwMDUzYWVmZWJlMGIwYjlmNDhlNzAzZWVhYWZhODBlOGQ4NzRlZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2NGNkMWM1Y2U2YzlmY2FiZDA5MWZhZTc2MDljM2FhYmRmMmZkOGNmMDNmNTExOTYwYWE5ZjY5ZDZmN2Q1NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkMWM4NzM5MzhlMTk4NWQyNjBmZWM1MTBjNzg1MzNlZGU5YzBjODVhZGYzY2QxZmFkZDE1YThkZWVhNmM2OWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cdb3342ae554477bb1cad88facbd0005",
+      "statement": "Tool messages were added because the database columns for them had existed since the table was created but nothing ever wrote them, so reloading a conversation silently dropped every tool the agent had run.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/ws_chat.py#L340-L348",
+          "version": "repo-lines-v1:sha256:e72e78078df35178f887a1289509dbcf422b0c960f3a664ac0a5e13e6cc1134f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTNlNDJmZThmZWU3OWQwNjJhNDYwMjQxMGFlYjE2MTlmMjIxNWRlMWQ4MWRkYjQyYzczMjM4NjliZjA0N2EzOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGFjZWMxNzFmYzQ1ZDM1NzQ1Zjc4YzhhMGFlMjMyYTQ2M2I2ZDdiMDU0MDU0Y2YzNzg0MDgxNDZkNGJlYjcyYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjY0Y2QxYzVjZTZjOWZjYWJkMDkxZmFlNzYwOWMzYWFiZGYyZmQ4Y2YwM2Y1MTE5NjBhYTlmNjlkNmY3ZDU1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTM2NzllMDc5ODZlZDUwZWUzMjhjYzE5NjJjZWUxZTcyNGM4ZTJiMDhmOWE2MDM3ZmZhN2Q5ZGYwNGFlMTU0OCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T11:09:25.960Z"
+  }
+}

@@ -1,0 +1,6 @@
+# Files
+
+- [Alert Ingestion and Routing](alert-ingestion.md) - The path an external monitoring alert takes through InRes — webhook validation, per-provider normalization to a common severity and status vocabulary, fingerprint deduplication, service and assignee resolution, and the fallback chain that matches a resolve event to its incident.
+- [Escalation and Notification Delivery](escalation-and-notifications.md) - How an unacknowledged incident climbs its escalation policy — the polling worker, its SQL-side timeout evaluation and concurrency-safe claim, the five target types — and how notifications fan out to Slack, push and in-app realtime through PGMQ.
+- [Incident Lifecycle](incident-lifecycle.md) - The three incident states and the guarded transitions between them, what is recorded in the append-only event log, how tenant scoping is enforced at the handler, and why AI analysis and realtime broadcast are queued rather than performed inline.
+- [On-Call Scheduling and Rotations](oncall-scheduling.md) - How InRes models schedulers, shifts, rotation cycles and overrides, why override resolution lives in a database view rather than application code, and why a second optimized scheduler implementation exists alongside the original.

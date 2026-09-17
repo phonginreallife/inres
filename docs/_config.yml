@@ -1,0 +1,76 @@
+title: InRes
+description: AI-native on-call and incident response platform
+url: https://phonginreallife.github.io
+baseurl: /InRes
+
+remote_theme: just-the-docs/just-the-docs@v0.10.1
+
+# The generated wiki pages carry no layout of their own, and a remote theme does
+# not contribute its own defaults, so every page is given the theme layout here.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Pages contain em dashes and typographic quotes. Without this the build reads
+# them as Latin-1 on a runner with a non-UTF-8 locale and emits mojibake.
+encoding: utf-8
+
+# Content under docs/ only; the generated wiki is assembled by
+# scripts/build-docs.sh before the site is built.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - "*.visual-check.*"
+
+# just-the-docs
+search_enabled: true
+search:
+  heading_level: 3
+  previews: 3
+  tokenizer_separator: /[\s/]+/
+
+heading_anchors: true
+color_scheme: dark
+
+aux_links:
+  "GitHub":
+    - "https://github.com/phonginreallife/InRes"
+aux_links_new_tab: true
+
+nav_external_links:
+  - title: Architecture diagram
+    url: /InRes/architecture.html
+    hide_icon: false
+
+back_to_top: true
+back_to_top_text: "Back to top"
+
+last_edit_timestamp: true
+last_edit_time_format: "%b %e %Y"
+
+# Deliberately off. The wiki pages under /wiki are generated from openwiki/ by
+# scripts/build-docs.sh, so an "edit this page" link would invite edits to a
+# derived file that the next build overwrites. Change the source, or the code
+# the page describes, and regenerate.
+gh_edit_link: false
+
+callouts:
+  note:
+    title: Note
+    color: blue
+  warning:
+    title: Watch out
+    color: yellow
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false

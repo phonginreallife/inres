@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d75698d6ecb311a461348f99549b2bc1cae640e2991b69d3ec056859c07d9783",
+  "claims": [
+    {
+      "id": "claim_9b45e51bcd6a4624b306e60cc130e084",
+      "statement": "The root layout nests providers in a dependency order where OrgProvider sits inside AuthProvider because it requires a session to fetch organizations, and NotificationProvider sits inside OrgProvider because its realtime subscription is scoped to the current organization.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/app/layout.js#L42-L70",
+          "version": "repo-lines-v1:sha256:c1b0280175f19d468154158e86bb0c33980e5cc0659cde43df23af6ae18dbbe1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhNGYzZTVhOWMxZDQzMTg2ODYzMDRhMWMwYTkxZDI4ZTgwMmFmNDZlMDI5YTJlYWE3NGMwZTZmNzIwMTJjM2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwZDE2M2M3NjllZWEyM2I5NjZiYTAxMTE5YThhOTkxZGM0NDBlOTMyNDY3ZDIyYjVmMDEzMDdkM2YzYTdkOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlYTIwZjdmYWRhYmU1YTE3ZDIzYjQ1ZDJmNDEwN2QyZTRjZDljMDlmN2YwNGE1YjIwOGFhMmJiODJjNTc1MTkifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/contexts/OrgContext.tsx#L78-L82",
+          "version": "repo-lines-v1:sha256:0d3aeee98688698d4dba6e72caa34b5ed8250402459d2967ca09cb50e5d455f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzc5N2Q1ZTQ1YjllOTllYTI1MDRhZjVlZWNhOWI3YWVkN2I4Y2IzNzlkNTQ5NGIyNTlhYTA0YTAzMjViZjg3YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDc0OGQxYmYzM2RkYjNkYjM1MDFlZmM4OWVkOTc4MWRiYzU2NzA2NTU3OTQ2NWI0ZjRmODFmZGEwYWZkZjE5MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjljNzQ5N2M1Mjc1YmViZDUzMjkxODU0NzM1MDQ4MTc0N2I2NmNmNjNkMzgyYzE3YzY2MmI0MzFmYmVmOTJlNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f575e36b64d44fb4a18f44a45380bbaf",
+      "statement": "The frontend fetches its Supabase URL and anon key at runtime from the API's /env endpoint rather than from build-time environment variables, falling back to NEXT_PUBLIC_ variables only when that call fails, which lets one prebuilt image serve different Supabase projects without rebuilding.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/lib/supabase.js#L1-L33",
+          "version": "repo-lines-v1:sha256:27aff57564c9fe44408c9a7fd95901814f965caaac936fa04bb042e19976b928:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNGI1ZGRlOTAzYWE1ZTdlYTZjZjE3ZjFmZTU3ZjI3ZDlhYjBiNzU2YmNiNzU5NWU2NjM3NDA3ZDEwNjk2YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0NTY3MTQ0ZThkNzI0N2M0NDQwNDc4NTk2ODFmMTE1MTkyYzE5N2ZkNTYzYzRjNGMyN2I2OGI3ZTk4MmU5OTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7fd25b098e2d44459cf213a3da757c98",
+      "statement": "The Supabase client is a guarded singleton that deduplicates concurrent configuration fetches with a shared promise, makes late callers wait on an initializing flag, and re-checks the instance after awaiting, so a page never constructs two clients with duplicate auth listeners.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/lib/supabase.js#L1-L60",
+          "version": "repo-lines-v1:sha256:f7925e6f37f50abba7f409c9bfcce507a72b10b0a163291fd50e1e04cedeafb2:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNGI1ZGRlOTAzYWE1ZTdlYTZjZjE3ZjFmZTU3ZjI3ZDlhYjBiNzU2YmNiNzU5NWU2NjM3NDA3ZDEwNjk2YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyZDc0NDMzYTlhNzkyZjM0MTk5NTgxYzM3NmU1NmM5OGJhMmIzZDFiNWNhNmYxZTgzZTk5MDVlMTFmMTQyNWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab03ae96ea7840e685e7ad78cc6f6563",
+      "statement": "AuthContext validates a restored session by fetching the user and clears it from storage when invalid, explicitly handling stale-token errors such as a bad session_id claim that a mere presence check would miss.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/AuthContext.tsx#L80-L124",
+          "version": "repo-lines-v1:sha256:1fcbd6b84eed86dd4d83dabd41d20cee2b90f3cce50150f885371c9fdd4a84f7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlYjE2OGI4ODY5MjA0N2VkYzAwYTQxMTEwMDgzNThhMzQwNmY4OTZlYmFjMDU2Y2NmM2VmOTY1YWYyNjI2YjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MDdkOWJlYTFhZTczMjJmMTc0ZjM3ZjM0MzRhNzc1MTlhNTgyYjk4YzA0ZTk2MTJiZmEyNWQ3MDVhNzhmODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4YWI4MmNkNmRkZGM3ZmIyYzNmM2M2YzgzYzFkNjYzNzgzZTUwNmFiMmYwMGI0OTU0NGExOTI0NmY2ODI5YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlZDc0YTFkYWI0MWFiZTliZTg3YjhlMjA2OWQ1NzY0OGMxNWZiODBmYTBmN2ZkMTVjNTNkYjE0ZWZiYjFlODYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5aaf3c36b2894012b2077a32ecd57855",
+      "statement": "The access token is pushed into the shared API client with setToken, and the client attaches it as an Authorization Bearer header on every request, so individual call sites never handle authentication.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/AuthContext.tsx#L110-L140",
+          "version": "repo-lines-v1:sha256:e20acfe8fe302123ed64a53294ede1f69dec08d00df80c9eda9b6fd9e77b1387:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyNzUyNDViMjA3YjIwMzgzNzJjMmFhOGZhZmFmMjRkNTA0NDMxZjZiOWNkZTkyMDJjNzJlNmFhNjMyODFiYzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0MzkwNDNmNGRiNGQzOTFhMjhjY2I4YjI2MGQ1NzkzM2FlZDBmM2JkZmI3ZDUxNWE3NzE5NzljOTExYTllOTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4MDE3OTZiNGM4YjdjMWUzZWVjNzJiYjE2ZTkxZmM1ZDNmYmQwOWZlMmM5N2E5ZDliZDE3MDJmY2U2NjRjODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4MmRhZTQ2MmNhNWExNjJiYTMxMDU1YmI2OWFlNGI2N2U5NDQyYmQzMzRkMDU1ZTA2ODg5MDNiMGVlNGI2NzgifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/lib/api.js#L5-L32",
+          "version": "repo-lines-v1:sha256:285667c7cb936a9893f48f01427fdf51fee7ee2de204bb5baf9c0c068fa51413:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViMTJiNDQxNWYzNzA2NjQxNjFhNzNkMGNjYmFkY2E1NTkyZjJlNDEwYTk5Zjg2ODZmYTI2ZTU4MzAxYTY5N2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOWUxMjU0NjQyNTU3NmQzZGVhZThjOWI5ZGJmMTI4ZDVkNmRkYWY1ZDdmZTg1NzkzNDkyN2RlZmZhM2I5ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3MzdiYThmMWUxMDZkMmJlZjUwMWUxODU5NTcyZjI1ZGUwYTRkNTQ2NjRkMTNkN2EwYzFjMDgyZGE0M2E3ZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJhMGFmOGI1ODU3MzYwYjQ0YjVkNzBhMWMyYzBiOTZhNTMwODUzOGRmOWI1M2M1YmI1ODc0ZjJlZGJhZmIyNzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c871c4a3a9784f34b6792e9fbba9cffa",
+      "statement": "Session token changes are compared against a stored reference before state updates, so a refresh yielding the same token does not trigger unnecessary re-renders or component remounts.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/AuthContext.tsx#L125-L145",
+          "version": "repo-lines-v1:sha256:ec7a04db1164294228d52067dbb25921c884d96073cfd4f3d4fbf268d21a54ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDkwNDg1ODBhYWVmMDQzOGU4NTMwZTNjOWNmZmJjNGE3ZmFkODJlYzQ3NjAwNzRjNTk1NmJlMDRjZjc2MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhNWI0M2ZiMmIyNTM2OGIzYjhhY2ZmZDdjYjRmNTY1NGZiM2EzYjE4NjA3MGU3MWY2NjE1MDE0YjhiNDJkMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5MDBmMjg1YzBmZmE3YzY5ZThlYmM1YThiNmVkMGNmYWZjN2FlYjdiMzkyZTdiNjQ3ODkwNjllYmE3NGE2ZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzN2U0MTI4YjhhYWVmNWQ1MTViNTE4NjMyMGQ0ZDg5MjE1YmU4ODAyNGZjMmE1ZjVkOWRjZDY0Nzg0YTQ1YWEifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/contexts/AuthContext.tsx#L66-L70",
+          "version": "repo-lines-v1:sha256:fb5b67c627e4ace7da32bb3b5b4f87141e175196f70b7abfbf9c580602ac3a1e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODc0YzllOWU2ZmY2OGJhNzUxMDA5NGYzODY0ZDdjN2FkOWVmZmU1NzczNGYyNDY0Y2E0MDc4NzYyMWNmMzI3ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWE1ZmViYWVhODU1OTgzNDc4ZWU4MzllMWY0YzAzNWIzODcwOWZkNGU0YTk0NmFjYzY3N2M3YWFlZjRmMGZkMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI2MzM0ZTc1MTlmMjMyZTViZGMwM2JhYWMzMmMyYzgyMzQ3Zjc3MmU1MDY5Mzk3NDEwN2NlNGZmNjA1MmEzYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTc4ZDNkNDQ4OWE1Njc4OGM0MTAzMTU2MzZhMzczMWM4MTUxYmQ3YWZhZTM0OWIxZjlkNTBjMjA0MzE0OWJlNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_97094e172b774e63bb280b33bf634b51",
+      "statement": "OrgContext exposes separate loading and refreshing flags so that a background refresh does not unmount child components the way an initial load does.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/OrgContext.tsx#L21-L40",
+          "version": "repo-lines-v1:sha256:e57805bfe0a02e09b3b4c95cbe511a09d3a85325338e306a7678b7c44acbb274:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViMjQ0OTQwMDMzZTZmODk5NjVmOTBhYWY0YjFiYTg2MTZjYmNlNWFiNTJiYWI5NDc4MzQ3ODcwYzg1ZTgxOGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJhZGJmY2Q0ODk1ZDA3MjgxYzM1MTcyZjBhYzM5N2QwZjZjOWZjNWE5MjdlMDAxZjhiYzUxY2IzYzRkMWJlMTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwZWViYTMzMmRjMDJkODc1Y2Q5MGVlNzJkNjliYTJjZDc1NDI3YzBlMWE4MDFjOTYwM2Y2YzRiZDMyZDg0OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7f729c3946b24521afb34ce5cb612e84",
+      "statement": "The selected organization and project are persisted in localStorage and restored only when still present in the freshly fetched list, otherwise the first entry is selected and stored.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/OrgContext.tsx#L106-L124",
+          "version": "repo-lines-v1:sha256:9ae9a09fb8a8ca8e5b41c7fba9f842f2e7788a90595ce2a1ca5f15b9ef3f7da6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1ZTQzMWIxMGY4ZmVlZDU4NzhlYWVjMTU4NDc0Y2UzYWYzNTgzMDA3ZmZjZmRjY2UwZGM0ZDkwMzk4NTljZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjYThkYjM2NWVhOGI4MTZmODVjN2U5ODY2MzBjMzg0ODhiNjJlOWNhMzAwYjEwMzE4YTQxYTc0MjQxZGMzNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY1OThlY2M4YTA2ZTlhZTVmZTlmOWYzZmQ3YTYyNzM4YTAzN2JjOGMwMTA0MzA1MTRlY2ZlNjlhMTU2YzE1ZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlZGUyMDk0YzJkMWU0YjNjZWUzMDhhZTA2ZDlmNmQ1ZjI2NGI0MGQ2ZjAwNWJjMGMzMmY0NjQ5NDgzZmE3OWIifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/contexts/OrgContext.tsx#L171-L190",
+          "version": "repo-lines-v1:sha256:c5a6567710286eb61f1f6f7434242d1a99df82591975b19b7b1a59c77b4652d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3ZmJkNWUxOTY3NTc5NGZmOTEyYTEyYmIyYmUwZjYyMzc4M2RlNTJhOTJiYjFlMDY3YmI2NmY4ZDNjMTA1YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3NGEwYjFjNTgyMGZhNjUzN2E5OWViMGQ1MTM5MDY3NzNkOGExNWU5OWQ3YTQ1NTQ0NzQ0MzI2MzRmNTgyZDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljYTA3MjFhNmFjY2FjODllMDg4ZWU4MzQ1OTk3NjU2MWFjMzJmY2NkN2I5YWY2Y2RkNTUzODQ2MzRhMGI5M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhOWMyMGVlNzE1YzdiOGVmNjMwOTU1NDliZjlkMzQ4ZDNhMGQ4NDAyN2YyY2NhYWI1NjU1ZjQ2YzM1MmQwOTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f99a04a49194b52816da911766665b5",
+      "statement": "Switching organizations clears the persisted project selection, because a project id from one organization has no meaning in another.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/OrgContext.tsx#L221-L230",
+          "version": "repo-lines-v1:sha256:cc795e16a4d8a138ceb4d57dc8e81d69ddaef0a05818e9bcca931076e89291bf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0ZWI0NDM2OTllZmMwOWU5YjA5MjVhZWU0YjE0NGFlZWEyMGI2YmMwMGYzMmRmYmZlYmIyOTRmYWIxNTc5ZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0YzViZDJmZmEyMDBkMDdiMzQ0MzgxMDc2ODhjZTQyN2NkZGZhZmJlYmIzYjk2YjA5MmJhNmQxZjEzYThiYzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0NGU5NzZkYzI0NTVkYThhOGM5NTViMDkwMTQwMGM0YjZmMDdiM2ZjYWNmZjRlMzFhNzU5YjE3YTBjOTdlYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViOGEzNjQ1NmRiZWU1MjgzY2RlNjdlNmQ0NmJkYzRiODRhZWVlMmMwYzUzNzQwYTk2N2I5MDU5MDI4NjczYzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a3a3c740ac54f8398a493d025e80186",
+      "statement": "The API client appends org_id and project_id as ReBAC query parameters through a shared helper, mirroring the mandatory-org, optional-project filter contract the Go API enforces.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/lib/api.js#L16-L21",
+          "version": "repo-lines-v1:sha256:cd711b5dda4f57792a381b2b41065644930a6ee85a8f72da862a5db2848d7826:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjYxNWI1ZjQ3Yjg1MTYyMzExODI3MWViZTk5YzVlNDU3YjVmOGI2MjdmNWVkODc3ZWJjNWQ2YjE2M2FhYTZmZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmI3MDNmOGU3NWE0YTllOTNkY2QxNjU3YmFkNGFkYTBiYzAyZTRmNWUwNTFhNDgxYjFiNjM5YmNmYjdmMDkyZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWQ2NWRlNDI1NjYyZjE2YjZkZjJjMDQ0M2I4OWU1NWJjY2M1ZjljM2M3MDY1YWZiOTlkNjM2ZWRmMzczYzNlMyJ9"
+        },
+        {
+          "resource": "repo://frontend/inres/src/lib/api.js#L80-L90",
+          "version": "repo-lines-v1:sha256:b433941c79bf812f74ce8f7c2aea3e9b700ef767778fe1de4fe2b2b888904c53:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMTUxOWRjY2EwMWUyY2I0YWI3YzVhNjg1MzRjNzA4ZDI4YTAzYjkyNzI0ZTVkMWY5ZDZjZjc0ZTZiNjlhOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5MTczZTk3MGQzYzZlNmVmOTE3ZGRhOWRhOWEyNzhlYWE4ZmJkNzc2NTA2YmYyODM5NGQ3MjFhMDg0NGM3NjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3ZDg2MzJlNTRlOTI5OGFiYjk1ODcyN2UyZDUxNDA4YWJhZjEzNjYwMzUzNzkxMDE0MGFiZjY1YjMwYWI2MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhMGEzNmNlNjlkNjg2NzYzZjc0NmJhZmI1Yzc5ZDVjZDlkNTQ5OWNkYjQzMGU3ZDU0NjE3MmRmNmE1N2RmN2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_40623530901348579bda66795156e928",
+      "statement": "Every API request is bounded by an AbortController timeout defaulting to 15 seconds and surfaces a explicit timeout error rather than hanging.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/lib/api.js#L23-L78",
+          "version": "repo-lines-v1:sha256:2fab3cab797d4c8aa5eaaf654f6045868b3dee0bea1e0c924d4e49bae154206c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0ZTVmY2Y4ZWM3YzFkYTE3MzlmNzg3YmRlMmUzN2U5MjI4ZjkwNTNjZWEyOTlhYmM0ZDc1ZjQzYzUxYjk3N2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3Y2Q4M2QxMjFhMDVlMDMzYjVlZWMwYTQ3Y2I4MDRjNjg2ZmUwNWJiYTU5NmMyMDQyZmMzZmQxM2NhYjA2YjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5YTJkMzM0Yzk1YzBlZDRjMjQ4M2IyMWY3ZDc1NzcxYzQxMTM4OWJkYWM0NzNjMzZkZDM3MzliZmIyYjQyZjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3051cb3710e2417583b36f1bc806bd00",
+      "statement": "The API client parses error and details fields from a failed response body to produce a readable message instead of a bare HTTP status, and treats 204 or zero-length responses as success rather than failing to parse them.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/lib/api.js#L41-L70",
+          "version": "repo-lines-v1:sha256:5baca4ea76ab2b3bf6bbc5ca81c727457ee320e5900da4961c83bba719413261:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmOGVlNTM5NDUwYzIyY2E0ZTg3ZDg3ZGQ4YTIxNmFkN2ZiZDA1YjU0ZjE3ODg4N2FlYmM4ZjBiOWMyM2U2YmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmOGVlNTM5NDUwYzIyY2E0ZTg3ZDg3ZGQ4YTIxNmFkN2ZiZDA1YjU0ZjE3ODg4N2FlYmM4ZjBiOWMyM2U2YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNzU3MWEzZjA3MDg3YmJiMzJlNmIzYmJkYWU4ZTExNDgzMzNhZDQ5MjEyZmNjOGY4YjBlMDYwOTZlOWE5MDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiOTNjYWFjZGZmMTM1YTZkOTdlZjk1ZjlkOTliY2M5N2I2ZjRlZDNkOWZkMjdlMTY4ODYyYTJkOTMzYjgyNmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad4aa7c164bc42c9b87f1db573604f87",
+      "statement": "The client holds separate base URLs for the Go API and the AI agent, both defaulting to relative paths so a single gateway origin can route to both in production.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/lib/api.js#L1-L11",
+          "version": "repo-lines-v1:sha256:aff244e957824197d94b09ad3a80803b2bd668ea925ff4347711d45beb322b5f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhNGM0YmUzMTM0ZTVhYTBhMDU3YTBjN2MyZWU5NjgwZjVmNjBlNzA3M2VhNDhiOGNlOTI1M2Q4NmE2MDU0ZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmZWI1MWZmZmY0MDRjNjZjYmJhMzY2MTA1NGRjNDJjY2VhZThjNmRjMGU1NTU1MWE4YTdlYzcxMTRhYjVjYjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb04060183dc4b85904176bbd5111bd7",
+      "statement": "Realtime notifications are delivered over a Supabase channel named per organization, which separates tenants at the channel level, and the channel reference is retained so the application can also broadcast on it.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/NotificationContext.tsx#L107-L125",
+          "version": "repo-lines-v1:sha256:ea012bbab359e14eb4e02870de91c3214286cf0cdb4959a7c7623bb55bd58649:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkYzUyZjA4YjM5YjA4YjAxYzhkMzA4YmY4ODBiMGJlZjAyZmQxZGZjYzlkOWFhOTNhNGQxYjVmNGQ1OGI2Y2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmN2YyN2I3MTc5OTk0ZDdiNjk2NjBmZGFlNDYxYzIxYzE0ODdmOTQ2NTE3YjQ3MmMxMzk2Y2EwNjEyYTg3MzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlNTJkMDIwMTFlZDAyYTgwYzBhMDI4YmFmNmM0YjA4YjczNWNhNWQwN2I3ZDk0ZmRlMTZlY2JmMzlhYmM0NTEifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/contexts/NotificationContext.tsx#L153-L175",
+          "version": "repo-lines-v1:sha256:f73d8c2817d36a2d941121081a021130a417978d39d843ca11601dd9e5e68142:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0ZDFlYTI5OGNhZWIxMGU2ZjZjMmQ5M2M4MzFmNjQzMzlmNTM3OWZjYzA5ZDM2YzE2MzdiYmJkNjE0NmRlMDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyYmE0MDg4NTQyZjA3Zjg3MzNiMDZmMmM5OWQ3NTcyNGI5MTM0NjUxODk1YTY3ZmYxNjQxNWNmOTM0ZTk1NjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlMGI3MjYwODFkNmQ2YTExY2Q0N2MyYzI2MThhYmMwYjAyMGQ2OGUxYzQ5OWJhMDg5MGZiZDE3YzE0NzY0ODIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlNTE1ODZmZDc5YzhlZmVlN2NjYTgxM2E4YjcxMTg2ODNkNTFhOTRkNzIwZDRmMTZjY2E2MmI4ZmJhYzViMTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_356df9d8cf6f43aa88851f6a1d6288f2",
+      "statement": "Postgres change subscriptions were deliberately removed from the realtime channel in favour of API-driven broadcast alone, because running both delivered each event twice.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/NotificationContext.tsx#L240-L252",
+          "version": "repo-lines-v1:sha256:40bd018dc210906f2d4ff2ec2f32fe498d628493a80c1a1fdff303eeac82405c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhYzJiYzc1YjdhMWI4N2QwZjFlMjJjMGMyNDVmYmM5MzZiNmVkYzAyYzI2NjQ4OWMxMzliYWMxNjJhMjIwNzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwOGQ5ZTc2ZmQ0NDk5ODQ4YmZhOTQ1M2MzOGQxNzkyMTQwZGNlMmZmOTcxZTNiYzg2ODNiYmM4Y2QwMTA2NDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZhOTQ4NWYxNzVhMjIwZjQ5Y2FhNDcyNmFjY2Q0MGRkMmUwNzEzOGZjNmQ2Yjc0NDJiOThlYmM0N2M2MmFmZjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8baad2ee18c24924a8e6e68148a5b216",
+      "statement": "The realtime refresh hook debounces callbacks, tracks the last processed notification id so one event fires a callback exactly once, and stores callbacks in a ref to avoid stale closures.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/hooks/useRealtimeRefresh.js#L10-L45",
+          "version": "repo-lines-v1:sha256:32602e59155e5b25608684ed7ec48a481a2dfd0e7dcd3ffc89150aa824bf440b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NTBmZDc1NDI3ODVhYWE5ZTAyMGY0ZWFmZGMzOGI5Y2M0ZTM1YTBiOTNmMmEzNTFiMWVhMGEzMWVjNzdmZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NDM0N2IyOGZiYmZkNTBhNGQwZjAwOGYyZjllNWM5MjQ0MjVjZGM5NTY4NzU3MTExMjkzMTIwZTc0NDQ3ZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg0YWFmYjBmZTY0ZmU4MzNmMWMwZjQ2NDRkYThiYTIzZDg3NTNiOThlYzgzMzNiMzBmODE4OTdiNTQ1YjE4ZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1YzA1YjhiNDEyN2Q2OTY5NWVhMjdkYTQ4MzMyM2M3MjgzZjVmNDBiYzA3NmQ0YmExZTlhMWQyMjIwZjIxMmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_da85661c27c0494d8c74337244fae76b",
+      "statement": "The agent WebSocket passes the auth token, organization id, project id and conversation id as query parameters because a browser WebSocket cannot set request headers.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L167-L200",
+          "version": "repo-lines-v1:sha256:c5c103c003f0c209c5b153e1ff8c6b40d23b2cbb88475936d196ac7c6b9372d8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmYmYyYTVmMzYxMzQwY2UyMjZiYTU3OTRkMTY3YmMyNTg2MDQxYjhlNDhmODQyZDJjMmEwZTU0YzZhMTIyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0NjE4YTI0MTVhNjQ2ZjRiYjIxZThlMmFkMTBjYjJmMTM1ZTRkNmRlZjE4OTlkMzAwY2U4Y2Q5MzJlYTY4OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllM2QzMWZiNDJlNDJkMWFkZmEwYjVkMzJlZTc4NzIyYTIyYzVlMTkyY2RkMDk4NTQ5MzUxMjliNWFmMjZlYTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eaa25f96462d48eebc254aac21cd02e8",
+      "statement": "The WebSocket hook holds the auth token in a ref so that a reconnection uses the current token rather than one captured when the effect first ran.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L85-L92",
+          "version": "repo-lines-v1:sha256:386a363b21027eb2d7774537b31b2c1bf51e1e7d3f70839993b7c42b597fa348:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjk0M2M5YTk0NzBkNTI2NTEzNDg5NjM3MTljZjU4MDNjZDA2MTBhNThhMGRmZjc0NTEyNmJmZDU4MGVjZTEwZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWE3MGNlMDE5NGUxODk5NTUxMmJhYWUzMzg4MDYyMTk4ZmI4NzkzNmViNzllMWIyNWU1MDEyOTE1ZWJhOTJjZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDM2NDA4N2Y1ZGFjNmNmOTgzY2FkNGVjZWIxZGQyZjNkODQ3MjBjYTU2YTM4ZjViNjVkMTZjNmMzYmZkYjVkYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d9dce7029e634a73bd30ce97430fed8d",
+      "statement": "WebSocket reconnection is automatic with a bounded attempt count and a fixed delay, and is suppressed both for normal closures and for explicitly intentional disconnects.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L610-L640",
+          "version": "repo-lines-v1:sha256:e6dc688619853e8b4ee8cc8fe1bea7e5b706b6cc4045533d6126fad16fcec050:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0N2ViYzJhYjUyMjk1YmFjYmY1NWZjOTgzNjZlMjMzNzg0NjM0MzBjY2M0M2Q3OGVlOGY1YTc1NWQ0YjZlZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIzMzdlYzk1ZjI4ZWE0MGMzMTM3MDkxYmI5YTg4OGFhM2RmYmMzZDBjMDE4YzQ4MTFjZjg0OGM4OWViN2YxMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjODY4NjcwZjRjNzY5ZWY4NzdiYzYwOWViNjAxODk4MzhkYWIxNDRkMjdjZDFhZDBiY2UyOWE4NGY0YjIyMGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd31de41f68b4d1a82c30d7f0b90301a",
+      "statement": "The frontend consumes the agent's token stream directly from /ws/chat with no separate streaming endpoint, dispatching on event type and appending each delta to the in-flight assistant message.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L13-L18",
+          "version": "repo-lines-v1:sha256:651aebbc86b24ed15229b02c8050f543bd9e61094b2116216107ac8f233f735c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjExZmNhMDRhNDIzODE2NDg0YWYxNGE5NWYxNGNiNWFjM2RkYzcxNGFkOWQ3Njg4NWRmYWEzNmU3NzdmNmY5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTYwMmFkOTM5N2JiZjMyMWZmMzkxYmRiZGE3ZDEzNzY4YmRmODgyZDMwNzllYTNjZDViOThjMTAzYjhkNjQyYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTliNmQ2YTIzNTcwMzYyMDA0NjlhYTkzOGI5OTA1ZmQyMDI1NzY4ZWU1N2QyMDhkMjQyMjk0MjJhZDA2ZTIxMCJ9"
+        },
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L273-L300",
+          "version": "repo-lines-v1:sha256:b334f267e1c705508006ca063952cd5d3d0d992edea0caadc8cc986fee9a017d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4MjAwNGU1ZTEyZjkxMGI1Y2IzM2FmZTE2OGYyY2RjNjFiYzJjMjYyMjdmMjVjOWZhNWIyNTQ1ZjcxNDBhOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxM2NjMTNlOGIxMWM1NTI1ZGQwYmY3MTNiNmZlMGY4MDM3YTMzOWM1NThmNmZlMjdjYTFmMWVlNTcxMTY2ZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2NzM1OGZmZDZmZWJjM2UzZmNlYjFiZjkyN2E3ZDE3ZmQ0OTM1YjA3NjE3OGYwYjRiZjNhYmUwZWRmOWQ3NWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhZGYyZDE2ZDZlMjdhN2RhYTk3ZmVjODk4ZDAxMTczMzZkZWQ2Nzc0OTkyMmY3MDAwNjcyNmRhNWNhMmRkOWIifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L367-L400",
+          "version": "repo-lines-v1:sha256:627e7e91621e65bcfd28dd3c4d430b78656aa9dc2b65b66e3ea24fb67db169bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2N2FlYTRhNjEyNDg2MThjNjkxOWM1ZjAwN2NlNjg0NTJiMjExODVlNmM5NjE2Yzc3MWI0NGFjMTlkNzJmYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2MjRhOWU1Y2M4YTA5ZmZmY2FmZTJhNTcyNmU5MWNhZDM1MzZkOGUyNjIwMzkyMDExZmVkYzYxNzQyZDhlMWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmYTJkOTcxZDNkYmZlMDI3YWZlNmJjMDIzYjQ1ODBkN2MxNjJjZTdjZjA0Zjc2ZWJjNjE3ZGE1ODE5NTZjMzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_83b9131a55384f6daad70c7ec1ff76d9",
+      "statement": "The schedule transformer maps named shift lengths to day counts and validates that configured dates parse and that the end time follows the start time before any shift generation occurs.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/services/scheduleTransformer.js#L6-L48",
+          "version": "repo-lines-v1:sha256:28ba1d1f5ebe46570ff75453d5f5a9b94c36c0f8dc8509d26f27485bae2f7e17:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmZGU1MTM2MjhmYjg3OGU4MTZmZDJhN2I0YWE5NzJjM2MzMzUxZjc5NDczNWJjZDMzNGM3MmU3ZjVjM2JlNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlZWNhOWFmY2U1ZjIwMzVkOTdjYjgwNGEwNjI4MmE0YTEyMjM5ZWM1YTI0YWJiNmFlZmVlNzAzZTQ4YjhjODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9beb6eb14ef241869db9a6c2506e8e14",
+      "statement": "Rotation shift generation projects a year ahead by default and offers distinct entry points for single-shift, simple, rotating and yearly-rotation schedules.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/services/scheduleTransformer.js#L160-L172",
+          "version": "repo-lines-v1:sha256:12abdc7ddb865a7457ab1c26fe7e62772b05071ad6cc1645451a9e370253947d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyZGZhM2FlOTFhMGE1ZjFmOGM3NmYwYTM5Yjk3Y2EwOWM0ZjhkZTA2MTVjY2RhOGE1YWNmZDZiMmJkNTQxYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhMWQ2NmMxNjNhN2Q1Nzk5MWJkMTExODFlYjk1NjE3ZGYyNWU0NzU1MWFlMWM5ZGI1NmJiMjY5ODE0OTU3YzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlZWNhOWFmY2U1ZjIwMzVkOTdjYjgwNGEwNjI4MmE0YTEyMjM5ZWM1YTI0YWJiNmFlZmVlNzAzZTQ4YjhjODIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0Y2JhMzU5YWMyOTM0ZWM1MjA4ZWIzMzhkNWY3YzBiNjE1ZDZkOTA3NzE4OTU5OGFmOTdlNzEyZGY5NGY3ODAifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/services/scheduleTransformer.js#L265-L360",
+          "version": "repo-lines-v1:sha256:3a351b193fb3ab8987013c25858c549ba2e832bf6dec9a4dad9b511e6a5931b5:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhYTFmMmNmYTllNGVjNzU2NjIxOTE1YjE2YWNhMDIyNTZkNWZlNmVhMzBiNWUwMTY3ZGI4YjE1OTExMWM4MmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxYzgyZTI0MzlkNGZiNDM2ZmE1YzAyOGM0ZjYxZGIyMTA1NzRmOWE2ZDA1NGFiMzhmMjYwYTg4YzUyMzAzMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzMjdlYmNjNTJlNGJiMDAwNzhmMWZmYmQ5ZmNlODM4ZjJlNjA1YzYzNzcyNzY5NTAzNWE5N2EwY2I4YjY1ZDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzNGYwYTU3MjhiMDFmMjA5YmJhNTFjNDVmYWU1ZWRiOWNlN2Q2ZDZhNmE0OTQ3OTliYjMyOTM2NjAzYTNjMmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_98e09b13bedc499a884f03e5feafe57e",
+      "statement": "Rotation shift generation was changed to start each shift at the previous shift's end time rather than at a fixed offset from the rotation start, because the original fixed-offset logic left uncovered gaps whenever the handoff time differed from the start time.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/services/GAP_FIX_SUMMARY.md#L1-L35",
+          "version": "repo-lines-v1:sha256:df05152b3b03d42aa6ecd6988ff35dd023bf1b717bbe99086846a22bc9558600:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyOGVjMDFkNTZkMzkyOTNiNmQ0OTJmZGY0YjkwYTgyNjY2ZGE0NDRlNWYxZDA0Yjc4NmY4MTNjOTFhYTE0NzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZGMyNzIwYjRlMzY5MzM5OWQ0ODQ2ZTQ4NTBiNDkzZmViYTJlZmM5MTJhZmZiNTUwMDdlNzY4YjE5ZmQ5MzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5YmEzYmJlMjEyOWEzODAzZTcwNjQ5MmIxYmRmMDg2ODkwMWRkYmMyOTdmNDMyY2IwZTgxZGRjM2U1NWRlZjAifQ"
+        },
+        {
+          "resource": "repo://frontend/inres/src/services/scheduleTransformer.js#L166-L270",
+          "version": "repo-lines-v1:sha256:0e08858d7e5816017d40b1f9b26342a8de93a4d079c040c58315a2735f6a858b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5MGU3MzVkYmU3ZmJlMDQ3MWY4ZjBkZDEzY2FmNzU4OGM2NDZmMWU4NDBlYjY5MGZmYWVmMzU0OTFmYjIyNTZlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4MDAzNjYxOTEyYzY1ZmE1N2IxMGUwY2IzNzBjNGQwZjBmYTJjOGY2N2FhOWU2NTk5Y2U4YWEyZTI3ZGEwMjU1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhM2Q5OTc3NjA2MTIwMmQ4NTRmZWFiMDgzZGUzZjQ5YmU5NzFmMWYzMjJmMDIyMTYzNjBkNDcxZTU3ODg5MTRiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIwYzVlOWU3NTg1MTY5N2Y5MTdkZWQ5ZDA0ZThhN2UxZDhiZTUwNzMzMjkwNTU3MTJhNWZmOTlkMTFmZmM4MjllIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_a64aa1bdbc2b4ec4970b9efd3cd40733",
+      "statement": "The schedule transformation layer is the only frontend module with a dedicated unit test suite, reflecting that it carries the application's densest correctness-critical logic.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/services/__tests__/scheduleTransformer.test.js",
+          "version": "repo-file-v1:sha256:96490e776f0a2b5e17fe68d6955fd8528d9784e182152bc5b8cb73f468548dcc"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

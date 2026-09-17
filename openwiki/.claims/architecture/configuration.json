@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0bd69597d6bc1a0da6daf4bd368c9cae462b99e4120e6ca0569eb1e14f52a68f",
+  "claims": [
+    {
+      "id": "claim_2c32b9631c56421bb384ff8e57a0775e",
+      "statement": "The Go API and the Python agent are configured from a single shared YAML file, which Docker Compose mounts into both containers at /app/config.yaml and points each service at with the inres_CONFIG_PATH environment variable.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L108-L126",
+          "version": "repo-lines-v1:sha256:c5423afa73df09cea046643314c528b643314328a92172b04d80b4cb61311b49:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjMTZlZDIzOWEzNjUxYjUwNzljMGU0ZTdmMDc4NDRlYTMyOWM4NzYyOGJmOWZjYzQ2MzY3NzMzZjVlMWU5M2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5MDU3OTQ2MTNkOTE3ODIzNzJiZWU0Y2UwY2NiOTc3NDMyMTk1ZjI2NGYxNTJiZTcxZGIyNWUwZjA0YTY0OGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiNjRkZjhlOTEzZTFhODFmMzY2NjU2MTg0NGZjZTNmOTUwOGZjYTdlNWEyMDFmZjNmODZhMDAyMTI0OTk4MGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwMGIyMDkxM2RiYzQyMmFiNWJhZjA0NTJhMTJiOWQ2ZjczODQ1NjAwNTYxYzFhN2FkZmUzYTliODMwOTkxNTUifQ"
+        },
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L59-L70",
+          "version": "repo-lines-v1:sha256:3a90ac8543e9ad53cc280f2c71da0a388d9fe6adf0c07c381f2139c4119f6342:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyYzY3ZjQzYjcyNmZjNDBkYTkwMmM2MmI1ZGY1ZTgyNmQxYTUxYWZkNTBiOWM0NzAwMTU2MTk4NTA5NDhlYjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwMzA2ZWU1Y2I5ZDc0M2E5NzQ3YjkxZGJjODRkYmMwMTA4NzI3NzlhMjIyNzEzZDhmMjczYjViYmVjOTk4ODAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExNDczZWY1NDRkYjJlZjY0MzFhYzU3YmM1MWVkN2E4NGExZDE1NjBmYTI1YWZlZTM3NzUyNTYyNzk4Y2IzOWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2OTgxZTVjZDAyM2E2OTQzMzE2NWFkZjM4Y2I0M2I1NWZjOGIzYzA2NzNkNGVhZWMxM2RkZDliMTJmMGMyNWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_77b0ac3099ec43fabbc69da6ed9a1fc3",
+      "statement": "Both services resolve configuration with the precedence environment variables over YAML file over built-in defaults.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/settings.py#L239-L262",
+          "version": "repo-lines-v1:sha256:68da9921e97ec149e0d202d45d2e1518432c8fcab1333be812c954ecca08fe27:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViZGM4YjIwZDYyYzI2YjY1Y2VlZTg1MTU0MTE4ZDgxZGQyNTQ3MTQzMTBiZjRkNTQ5YWRhMDljNzFhMjI1NzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4YmJlZmJlMTA5YTExZWRkYTUzODBhZTI0MDBmMGIxMTExMTczYTBhZDIwOWQ0OThkN2VlM2Q1MTZjOTAxNzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjNDM0NzMwZjI2MzY5OTA0ZGYzMWE5NGJhYzI2OGExOTgzZGJhMWQwYjk4ZTFkMzIzNzAxZmYyNzY5ZDk5Y2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkODU0NjNkNDkzYTdiYmVmZDNiNDQ5ZDhkZjljYmUwNDkxMWZhNTBkYWIzZDY3N2YzNDZkZjgxZTcxZmQ0ZTAifQ"
+        },
+        {
+          "resource": "repo://server/agent/config/settings.py#L84-L90",
+          "version": "repo-lines-v1:sha256:ab9e5466d786055afe85ad3bc82f7fa93f4d1114107ff6766ef65ec805a66374:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTU1YTFlNGZmZjEzNmYxZWViNjA1YzVmZjc2NDU3OTg0MWFhMDY0NTZhYzZjMjE0MjVlNDcxOGFjMWE3ZDU4ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTM1M2FkMzMxYWU4ZjYzZjg0Mzc3OGJhMWM4NDliZDNiYjhiNjIyZDFmMzhlM2VlZDljYzZjN2U0ZTFiYWRkMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjE2NDI0NmMxYTkwOWY4MmE0OTZjYzg1MjE4OTQwMzM3NzQ3YjYzZjMzZDlhNDViMGY2ZmFmZDUyMTQ4MTAwMSJ9"
+        },
+        {
+          "resource": "repo://server/api/internal/config/config.go#L62-L127",
+          "version": "repo-lines-v1:sha256:05cffd418477970d1a7a69ecb0fc435935981dc789c42fa4bc5de0b0177d403d:eyJzZWxlY3RlZExpbmVDb3VudCI6NjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhMDdjZWUwNTNlZDY5ZWY0YTYwNzY1MmRmY2NkYzhlOGQ0ZThlNTQ3Y2ZmYTE2ODcwZjExNTUzM2ZiNjFkYjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YjVmNDgwMGI0YmExNjZiZGRkNWZkNGI2NDFiZDUyYTg3MTg3ZTFmODY0YjE0ZGY2MWNhZDQ5MDc4ODBlZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ3OGE4ZTFkZmUyYTllZTkzMGFkYTI1MjU3NzJjOGUxNTYyMDk3Zjg4MGE2MTRjMjhkOGU1YWIxMDM0NGI1OGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3ZTdhYWE1MDg1ZDNmMmQ1ODhlN2JhYmNkMTU3MDk3NTA0ZGY1MDQyMzNlYzRlZDI3N2QwN2JlODJhNzA4MTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_48698edd7774434b950067e7d0ef0b6d",
+      "statement": "The Go loader tolerates a missing config file by logging and continuing with defaults and environment variables, but returns any other config-read error as fatal, so a malformed file fails loudly rather than silently falling back.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/config/config.go#L128-L137",
+          "version": "repo-lines-v1:sha256:d49ad34bbbcdfb409914597252d62f6c9ca248f1ddd75fe5c0ba3dfda71fd9fc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4M2RmZGM2YTEzM2JiZWU5ZDQwMDE5NGZlNWVlZWFkMDQxOGE5Mjg1MzZjZDdlZjYwY2UyMzE3MTc0MTk1MDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1MjM2OWFmYTA4ZWFjYzBhYzAwODlhZmRhZmQ4NmZmNjUwYWVhYWMxOThjNDViYTFkZjhjZDUyMWU1NDNiOTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxMmJhYmJjYzE0YWMxNGE2NWE5NjY3NmQyNDFhNDU1MmVmOGQ1NTM2YWQxZWRhMTQwYTkxMTRhYmQ1YWU0OGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4NmM1OTlkYzI0MzFkY2UyNGY3MDZjYTVjYmExZjI4MWY1OTU5NTcxYWZhMDRjMjFiNmY1NWU5MmM1MjBkODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3f04b64332e04aa99043d0f828ad63cf",
+      "statement": "The Go loader reads a .env file if present purely as a local-development convenience so that 'go run' works without manually exporting variables, and ignores its absence because production and Docker deployments have none.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/config/config.go#L64-L72",
+          "version": "repo-lines-v1:sha256:c631a7590e860b4acd01ad29e77b045ecc5fbc94ca964540be88f4303c6c14f1:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQwOWVjMjY5ODFjM2Q0MjYyMGY4N2YxOGM5ODVhNWQzYWY5ZjMyMzBiYTAzYjI2OGIzZDk2M2Y1ZTY5ZWJjYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWIzMGRkNGE3OTJhN2MyODUwOTVkNWQ0MjQ4YTdkOWJhNjljMzE3OGE3NGQyZmE3MzAxMTU2ODZlZTlmNWMxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDAxMzVjYjE5OTFjMDA0NTZmZjExY2VjNGMxMzYyMjBkYTg3OWJmZTJjNWQ4OWIwOGVjZTM3OWY0MmU0MWEzMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2UxYTdiNmVlMDM5YTg4ZmFiNjQwNTZkMDhlOTgxNjkxOTAxMGZhNzUyMzMxYzU4ODllNWNiNmIwYTliNGI4YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6f231b472fec4bfd952cc3e4ceec262c",
+      "statement": "The Python agent searches for its config file in inres_CONFIG_PATH first and then a fixed list of fallback paths, and an inres_CONFIG_PATH that names a nonexistent file logs a warning and falls through to those fallbacks rather than failing.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/settings.py#L205-L235",
+          "version": "repo-lines-v1:sha256:27c742d209ce5b9c041de5f84a66c7ad3945ecb6b5d6e7020f315be061d7e18c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmMTc1MmE4OGMwYTg2MGRmNjlhMDY0ZjI1MjRkNjg5OWMxNGU1NDMzYTFiNWE5N2VhOGJhNjNiZTZlMmFiOGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlYmRmMjIwNTk5YTI0M2FiYjUxMTFkYjMzNThlYWM1MDhiMzQ4MGNiMjQ4MjBkNGIwZTcyNzg4NDZmMTg5ZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjNDM0NzMwZjI2MzY5OTA0ZGYzMWE5NGJhYzI2OGExOTgzZGJhMWQwYjk4ZTFkMzIzNzAxZmYyNzY5ZDk5Y2YifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_249fc5d4b0524897a6b02d63e7ab5724",
+      "statement": "Both services write their resolved configuration back into the process environment because a large amount of existing code reads environment variables directly rather than the configuration object.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/loader.py#L44-L74",
+          "version": "repo-lines-v1:sha256:d6b7c4e6e15e26bada0a08728f05520fcd2eef29651e24ee638bcba84e8f079a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxYjU2MzQ3NWUxY2VhOGJkZjk1YThhYTUxMmE2N2RmYjIzZjI5ZjhhOTcwYzEwNzFhM2U1OTZiMWUzNmM2MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwM2Q4ZmEzOGZkY2I0NzBkNGNkZDhmNjY4ZDRmNDliYzUxYzA4YmYwY2MwM2RhZjJkYjE4OGY3MTM3ZTEwNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5YjdiMTVhNzQxMjVjYzIzMjEwNzZmNmIyNjk0MmIzMTczZjVjZTc5ZGM3MjFlOWIxMzA2YWJkZmNiOGIwNmIifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/config/config.go#L138-L172",
+          "version": "repo-lines-v1:sha256:90abb5861517fe83cc54b26a9671baef67c52cdba86dc1e764a98b5ee829eb98:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NWJhODE4NWRjZWJmMzg1YjYzNzNkNzJhYTg1YWQwODgzNjc5ODhiZWZiMDU5ZTRjNGRkMzE3N2FmZTU1Y2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiNTdlMDcwZTIyMjg3OWQ3OWFiNWFkYjliNmNiNjI2MTU0YjEyMWFjY2Y0YTZmNjgyZDU2N2E4ZmI2MTA3ZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxZDAwYjQxMjc5YjNkMDJmMzRlYjUzZDNkZGJhN2ViOWVlMmNjNDZlM2E1Y2FlZWJjNjNhYjhkN2ZjM2JiMTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_935551d87e324f09bc70569da2b503ce",
+      "statement": "The Go backfill writes each environment variable only when it is currently empty, so an explicitly exported variable is never overwritten by a value from the YAML file and the environment-wins precedence holds even for code that never reads the Config struct.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/config/config.go#L170-L176",
+          "version": "repo-lines-v1:sha256:2401c178c0d4bc2a75dbed809735f64335d876c7969e29422a38a5bdc78d4774:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRhMWQ3OTE0ODA5ZTM0OTlkNDU3M2U4YmZlNTgyNmFlMDgyZWEyZTJhMTRkYjdjYzE0MTcyNTc3YzZhNzM1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2YwYjU2YTZkMmZmMzkwZWM0OGVlZjljNTQ1YTUzYjYxYjM4MzlkNDA0YTU3Y2M2NzZlY2Q1MDZiMTk5YWQ3OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae58e4cfc2b24cee94de489f4725ebd8",
+      "statement": "The Go loader binds conventional environment variable names such as DATABASE_URL, REDIS_URL, PORT, SUPABASE_URL and ANTHROPIC_API_KEY explicitly, so Docker and Kubernetes deployments need not use the legacy inres_ prefix, while the notification gateway keeps prefixed names inres_CLOUD_URL, inres_CLOUD_TOKEN and inres_INSTANCE_ID.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/config/config.go#L88-L120",
+          "version": "repo-lines-v1:sha256:703df788dce0127f837a7a03e18d43e4c47f5a75d05d18cd0080b0e5b4794e1e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzNTI3YjU5ZTZlNDgyMGQ2MzVjYmNlNzRjNWI5NTNhMThjZWZlYzEzYzdjYWJjNzFmZGVmM2ExNDVjZjBjMGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0MmJhMmZkNGI1NjdhNjQ5N2E2ZmY1OTIwNTVlNmI4MDU2MWExZGNiMjkxMGQxNDRkOWI5OTIwOWRmNTY2ZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2MGRjYTZkNDJiMTFiODg5MWZlM2QwZTUyYTU1NDRjMjEyZTEwZDlmZDJiNTk5ODkzNWJmYzliZjQ5NmVmMDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_81255e5a14c64cf18bcf52d294990402",
+      "statement": "The configuration test pins that standard environment variables populate the config struct and that inres_CLOUD_URL reaches the nested notification gateway configuration.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/config/config_test.go#L10-L33",
+          "version": "repo-lines-v1:sha256:253e45c6189fab26c322cf8b0b6e2c050a8362655849b98f5120d763d0b7b7c4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzYTIwOTg0YTY0MGVmY2NlZDkxOGFiM2ViZDNiZWZlYTE4MGU5OTJiZWU1MTBlNTEyZTgzN2FhYjQyYTFmNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5MmRhM2NhZTEyZjIwMzMyYTIzMzA3NTJhMjZkMjZiOTg0ZGM2MjM4Zjg4NjA1NGM3YmIzNTFkZmZjYTg0MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9ece3cb44816415dadf2676c39fb9a4a",
+      "statement": "A database URL is mandatory: the API server logs a fatal error and exits when database_url is unset, because the background workers cannot run without Postgres.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L36-L46",
+          "version": "repo-lines-v1:sha256:7d94694d3ce9d0b60d5aa4fcf22f36ab6d5b03254ba8e7a8409892f23a75d37f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxZjBjMTZiMzFiNjEyYjdhNTY0NDZjNDQzNjk2NjQ5YWFkNjJkYWEyZjM2NTU5MzEzY2JkYzA3NzBkMTU3NjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlNDc4OTEwODc1NjU2ODhkNTIxYzFjYjg1Mjk0ZDFmNTkwMTRkOTU2MzI1OThjZDRkMDM3Yjg2MjAyMDk0YjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmYWFkMTRhMDVhMDBkYWQxYjM1ZDI1N2I5NTQ4MmQ0YzE1NzQ2Y2I3ZjU5MzZhNTE3Y2NkOTk3ZjAyMGNhZDgifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L28-L35",
+          "version": "repo-lines-v1:sha256:bff65541c52ffc37e54b3c60ec6333d7f9c790fce99646e59561c4403af8e141:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWVhYjc2OWVjZWI0YWMwZTY4YjhlNGI0Nzc4ZjU0NmJmZDllNGRkZDE2M2E2MDdkMDljZGI4NDNkMWIyYjg1ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGRmYzBmNDA5M2NmMTc2Y2JmNzA0YmFiMzVmNDNlOTdhZTlmZTg4YTkyNDg2N2I3ZGZmOGE4NDhmOGJjYWMxOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2U4YzU4YTkzZDY4N2QyYTgwMjJmYzFjMWQ1YmNmOTc1NjdkYzRhOGViNzUyMzE3YzAyZTMzMTMxODhmMWM1MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d8b1c8e0b37b4f029d2ebd85282bacaa",
+      "statement": "supabase_jwt_secret is optional and needed only for legacy HS256 tokens, because current Supabase projects issue ES256/RS256 tokens verified against a JWKS public key.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/config/cfg.ex.yaml#L44-L47",
+          "version": "repo-lines-v1:sha256:f5373d78aaf188fb1816617b4677f07b87ee821912b6a497ef170771d6c1e3bb:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWFiNDBmZTk0ODdmNmM0OGRjY2NjNDRmMjZkZmE1Zjc4ZWUzZDcwMTRkYTBkMzY3YWRiNzA3YjQ2Y2U0NGZjMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjk3YWU0ODUzOTdlNDhmMjkzOTE5NGU5YzZlMDk2MGU3Y2M2NTc0MDc5MWJjYTNlZmU5YzkzMGEzOGMxN2YxZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzY0NmFjNmMzOTYyMTY3YjJiYmI1ZjYyMDllYTIzNzAxOGRjOGJkYWM2MDJlN2Y0YzhhNTI0MzBmY2I2NjgyYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2e91df3e71d4387b370630530d38988",
+      "statement": "Redis is optional for the API server: it tries the configured URL, falls back to probing localhost:6379, and on failure logs that it is running without Redis and continues with a nil client rather than exiting.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L62-L91",
+          "version": "repo-lines-v1:sha256:4c982be3920b9c9ebff83ded6ecbd986ed46386204e153a7660a8ddac4c2ba78:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjZjQ0NzhhZmU2MGRhYTBmZGViMjA4NWE4ZTlkYmEyMGVjMjNhMTk3MmY4NWRkMWY2NGI2MTM4MzNlNTMyZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExMGZhNjIzM2JmMzY0ZDM4YjYxYWJhOTEzNzAyNDg0M2IxNjUzZGZlNGYyMGEwMmUxMTA1NWY2NjUwZWU3NjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d24bcc5b0c8341f5a61b8a504d625202",
+      "statement": "The notification gateway is required only for mobile push notifications; cloud relay registration is gated on IsConfigured() and runs in a background goroutine whose failure is logged as a warning, so an unreachable relay cannot delay or block API startup.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/config/cfg.ex.yaml#L49-L56",
+          "version": "repo-lines-v1:sha256:4d229230492851dcd3655058b320947e41453b8e057254e62b4a5c9404d6cdaa:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjY5M2JmNzcwYzQwMWE1YzNiZTczNGUxZTE5ODgyODgyYjMyNGE2OWE0ZDEzN2YxOWNhOWMyOWI1NmI4NGQ3YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTUyYmI0MWFhODUzY2MwZDMwMzljMDIwYTA3NDAxN2EwN2I2NDVlNzI3OWQwMjczZGM3OGY5OGY0MDAyNGYyMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQxNzM5ZWExYjY0YmUyMWM3M2FkZGY1OTZjMmI1NTdlYzI3OGNlMWY5OThhYjFjMGM1YmY3ZjM4N2RiMWIwYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmIwMzIzZTdhZDFiZTM4MDg4ZDJkZmYyYmMyYmM2ODQzOGM3YTcxOGJjYzRhNjI2YjY5YmI5MmM4MGM1MjkwOSJ9"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L66-L74",
+          "version": "repo-lines-v1:sha256:45a6f3eac43121594a9e14c4a923bee6aed27693f1fbf4f07b476c65b381b661:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTYyNTdkYWExYTZlNTcwZDg5NDYxY2QwOWQ2M2MwNDc3ZjBlYzAwODIwMjBhNzc1ZDA2ZTYzMmRjNzE0MzU3OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmUxYjQ5ZGM3MmY2MzI2M2RjNGY4MWRkMjFkZjNlZGJmZTY1ZTk2NWU3YWYyOGM0Mzg4YWYyNzQ1OGVlNjBjZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODFiYzBiNzEwZjg3N2E3OWMyYjllMjU4MjNkOWE5ZDczOWQxODZjMTYzZTM5Zjc1NmVjMGIyOTY0MzFiNDhmNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGE3ODE5YTZiMjg2MGY2MzYwNWI4NmM1Mjg3YjRiYzQ3NjAxY2IyZmQ3MDY5ZWIwZDgwZTA5ZGVmN2MwZWEzNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d900a95d3836472e8d1aa4e7a4870d1f",
+      "statement": "Identity service initialization failure and analytics queue creation failure are both logged as warnings rather than aborting router construction, so the API starts with those capabilities degraded instead of not starting at all.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L72-L76",
+          "version": "repo-lines-v1:sha256:2570d2222c860e04d1ad20223cc5b35a3e0d60a1d462afdb4e0b169056f2adef:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTVkN2RmMTRmZmU4NmJkOGQ3YTBiZjU4ZTNmYTQwYjU3YmNlODFmNjkyMDljNjkxMmJkMjI5NDJjZjA1M2FhYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGFiN2ViMWI4MTNkMjBkN2JmMGE3ZjMxYjg3NzNmNTFlMzM1ZjBiNzZhZTM3MDViZWYzMGU2ODNkZDY2ZjEyYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDA2MDgxN2Y2MWZjZDdmOTU1YjA1NzNkOGU2MTcyYWEwYzE0ODU1NDIyNzAxZGJkY2Q0MDhjMGMxYTdjNjQwZiJ9"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L84-L88",
+          "version": "repo-lines-v1:sha256:89a0e59252fb706200abc35224ee6dbdd5199ab318c3abddf35ece4dc39a1689:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTY4MDZmMTU1YzVhYzFhZTI3MjJjYTA2ZjJhYzljYWRjYjg4MWI5MTIzY2I2MjRhM2MxMDQ3NWI0NDQ5ZGMyZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWNkOWRkMGFkMjBhYTlhM2QxMzlmNzc1NGNmNzRkMTBjMWM2ZTUzMGE0ZDhiZDZjNWFiYjFkOTY0YjRmOTkwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzQ1ZDEwN2RlZDUzOWNlMDAxODJlODI5MzJhN2MzMDBlYmM3ZmFjNDNhZWE3NGFjZWU3NTYyNmIxYTE1ZWE3YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTUwYzc3ZGE5YjY1MWQzNDk5MTliM2FmZWZmNDYxM2EwYTZlZDI0NzBiMDQxZjI2YWI2YmFiMDhhYmU3NWYwYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f55554b6d5dc4ac98d3ed948efaea54e",
+      "statement": "The YAML carries two distinct AI configuration blocks with separate environment prefixes: ai_incident_analytics drives the background PGMQ-driven incident analysis and ai_agent drives the interactive chat agent.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/config/cfg.ex.yaml#L66-L95",
+          "version": "repo-lines-v1:sha256:0284ce7c1f33071aa273d6c26dfe241c765a303da424f70421c9c5758e8f68f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0Y2IwN2YzYzg3ZWY4NzQ5YmQ1NWJjMmNhNjQ0MTZiYjQ2MmI2ZmNmODMzYzYwYjc2MmJhNDMxYWYyMTU2ZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlOGFmMWVmYThlNjE0MmNmNWZlNzE1MjZhZjIzMjhkODM5YjM4MmMyYjMwOTE3MzY3YjZlNDQ2YTg2NTJmOGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwMWEwNjJiYTYyMjJkZjNlYWVhM2YzZTRjZmZjOWFlZmJmNzcxMDdhMGQxMmU1ZjNlYTU0NTcyNDdkNDE5MDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjMjJhMWNlNzc1M2FkYmYxZmU5MzYwYWQ0YmU3YWQzM2MzYmNkNWE0ZGNlZWM3MjdlZjg4MjdhZWQ0NTU5N2YifQ"
+        },
+        {
+          "resource": "repo://server/agent/config/settings.py#L24-L62",
+          "version": "repo-lines-v1:sha256:91aed9cb1f964821bb9c8ad8df8ab0062afe0cd8da17a2793c5f1e803e8e43d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwOTNlZTQ0MmIxZDY4NzRmYzZmNTc0MDZiZTVjNTA4ZDEyNGNlYjVjOGRmZTQ5M2NjN2Q2ZDcwYmJhMzllYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhYTdjMTU2MmJiOTVkMWNlZWFmNjYzMWJjODhhY2E0ZDZmYzQ3NDIwNDE5NjU0ZDljMGNjOTdjNzYzYzM1YTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyMDA5N2U0YWE1MDA2OGJhMTU3ZjlhMjczOWZhZDg2OTk1ZTFlMGNkY2NkYWRjNTg5N2MyMDM0Yzc0ZDNlZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjMjU4NWUzMzRiZjNmNjQwYzIxN2M3YWNmNWFlM2NkNzdhNGIzZmNkMzljMWJlZWRhZGU2NjU5NzE3ODI5YzAifQ"
+        },
+        {
+          "resource": "repo://server/agent/config/settings.py#L84-L95",
+          "version": "repo-lines-v1:sha256:a6d6ee66137ab2d0e64d6d0e04f470940416bbe8313130fc04de6cd09c676d0a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhYjJiYmQxOWQ1OTUwZDA5MzVkMzdlZjEwY2M2N2I4MGM2Mjc5MTEwYjZiMGNmMWUwMzc4MDA3YzljYWY5NjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzNTNhZDMzMWFlOGY2M2Y4NDM3NzhiYTFjODQ5YmQzYmI4YjYyMmQxZjM4ZTNlZWQ5Y2M2YzdlNGUxYmFkZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5MjM0MzU5ODk0NWUxNmM3NTkyMzc0MWVkYmI0YjcxMTNmYTI3NTJkY2Y1ZDhjZTVkOTEyYTM4YjNlODQ5YjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_10a693d2aff140f3b963e10de58fe513",
+      "statement": "max_concurrent_cli caps live CLI subprocesses at one per active chat session, bounding agent memory under many open tabs, and the configuration documents raising it only alongside the container memory limit.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/config/cfg.ex.yaml#L112-L116",
+          "version": "repo-lines-v1:sha256:5dc6c5ca5000ac5df74f8f34738f44037da37d8c122ff1d6261cb419f232f43e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDI2YTQwODBmYzIxYTg2OWYzOTk1OGEwN2M2ZGQxZWVjMTg5NGRjNGY0M2Y3MTc3ZTkyMTcyNzllNjEwMGJlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjI0ZTU2MzU3NDEyYTJiYjZmNDdlM2E0ZTk2OTVjNmVkZTNlZGE5YzZiYzU5ZjdkOWJkMDgzODVhNDc2YzMyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGM1M2ExNWJkMmMyZDZmODdlMTg1MWU3ODVhZDY4MTJkOGViMWUwY2ZlMjEwM2Q4MDk1ZGQ5M2Q0MTYzYjk1MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjY4NWQ1MDE5YzJiMTQ1MWJjMDBjZjA3NDM2YjlhNTcwZTJlNWQ4MTdkMjMyZjUxNjc2NDkyZjlkMzM2NDhiNiJ9"
+        },
+        {
+          "resource": "repo://server/agent/config/settings.py#L113-L118",
+          "version": "repo-lines-v1:sha256:5f06920b40e99e4de390c5bbca6109e80ef2620480a03ab69bd535557504f7af:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWFmMTNhMjg0MzdjZjA2MWJmMmYwNzE2NDczNDc5NzMzMTA0MjRlNjZmYmNhNjM0ODE1MWVlOGZkMDEwZDE1ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjAxYmFkMGQ0MmZmYzM0YmE4NmQxYzRhMzYxODYyMGY2MWM0MGRjYmYwMzBjOTc3OWU3YjliZGZhMGU1MGI1NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzAzMWNhZDI1MmQyYzU3ZTQyOTNjZDNhOWY4ZWIzM2U0ZWZiYTBlZTM2NDM0ZGNiZDkwZjZhYzViMjMwNmU5MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3afbe91b31db4387b178bd01e2f28410",
+      "statement": "The agent's idle_timeout_s drops the CLI subprocess after a period without traffic while retaining the session id, so the next message resumes the conversation rather than starting over.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/config/cfg.ex.yaml#L106-L110",
+          "version": "repo-lines-v1:sha256:4a3ef79fab6a977f3a912d26de3e90cf8aa7dd3c2bcf4fb9a5d8e2de4b7b3ab3:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGI4M2QyN2NkYThmNDFlNGVmMmJkN2U4MzhkMTllYzI5ZjAyOTFlN2ExYmZiZjkyNzA3MDhmYTcxODYyZGM2ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDA4YzFlNjlmODJiMGJhMjkzOTk2Yjg2MzU3YzY3YzRjYTg5NzY1Yzg5NGM5NzBkMTBkMzk3YWM3ODc5YTM1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmYxYjg3ZGNjYzFhYjAzYThmZWMxZjJkNGZiZGUwMmNlN2Y5YTlmYjE0MWYwNWM2MjA1NTZlOTc1NzQzYmFkZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2U1ODZmZDJjNzMyOTlhMTE4NzJmMGJlODhmZjhiZGRiNmUwOWZiNDkyMjY4MGU1NTc2MjVlYjE0NjQxZGZiNCJ9"
+        },
+        {
+          "resource": "repo://server/agent/config/settings.py#L105-L109",
+          "version": "repo-lines-v1:sha256:d6ef3fa02e27bdcc307f04a1d0c5bc201d98ecc89424b8d51ac8518969e6c7bb:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDRkY2ZiMzRlMjY3YjljM2NhYWQyZDI2MzYzZGQyMjgzM2VlNjk3MzU4ZmYxZDI0MWFjN2QxOGUzN2Q0MDI0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjAxYmFkMGQ0MmZmYzM0YmE4NmQxYzRhMzYxODYyMGY2MWM0MGRjYmYwMzBjOTc3OWU3YjliZGZhMGU1MGI1NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cd567a0f34df440aae2c389c6cf9c7ac",
+      "statement": "Numeric agent settings are parsed defensively: a malformed environment value is caught, logged with the offending variable name, and replaced with the default rather than raising at import time.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/settings.py#L160-L175",
+          "version": "repo-lines-v1:sha256:edf2107aa9eef62adb2bade61b9a3d5ef278474bea267327490f1ec627d7d418:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlODUyOTg5Yjc5MDYxMjRlOTA3ODczOTE4NzA4OGRmZjg4OGY5YjA4NWM3M2EzNWIzMjgxYWRlYzFiNjM4MDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1NjljYjA5MjgwZWUwNzgxOTQ1ZTQ4ZDQwNDFiZDJkZmFhZTY5MWFkMmVhYmY1ZDNjYmEwODQ2YzcyMTZjYWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0NGQwY2NmYzBmYWRhYzc0ODJjNzQyYjMwZGIxZjJlYmFhZGJlNWY0NTRiZWQ5OTA0ZGFmMzNhOTVmYTU0ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwNzQ2ZjJiNTI5YzFlMjQwYzE4OWQzMWVhMjQ2OGUyMTBmZjBkNDIzNDE5ZjZmNzcwMmZlMWU2ZTExOTllNDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4e5f429f029a4317a8b34b28f616d1cb",
+      "statement": "available_models is an allowlist rather than a suggestion — a model arriving over the WebSocket is checked against it before reaching the CLI, so a crafted message cannot select an arbitrary model the credential could otherwise reach.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/settings.py#L120-L126",
+          "version": "repo-lines-v1:sha256:acc0f4d2e88d630e13f67efc51c8dc10c9d8ce0d2861e7e01e4999cc45c92e09:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTY1YWU4NjEyYjUyZmU1NjQ1MjQ1ODM4ZmZhYTFjYzNlNTlkOTBmMDY4MmY4OTEyNzEwYjZjZjRmMjY4M2U2ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWNlNTFjYjhiNDcwODg4MWUwMWM5NzQzYTg5YTQ5ZTJmY2FlZDc3NjA4NDBlNjQyZTkzMTlkZmYxNTE2NGUyMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzczNTU1MWFiMjgwNTUzZjdlMzQwZDAwYTI4MzlkNjJjZDljZDljZWFiNGZlZjYzMmQ2ZWIwYmVjYmIwMTliMSJ9"
+        },
+        {
+          "resource": "repo://server/agent/config/settings.py#L152-L154",
+          "version": "repo-lines-v1:sha256:5481f96e46a0d74cdd55c2b8eaa45e375387bf823358fa6825512b23b7450c54:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTI0Mzc2NmJlMTMzYjg5MzRlMjQ0MTc5YWY1YzA0OGExNzI5MWQ3ODkwNzU2MWIyZGU1MjkwNGZmOWQzYzk2ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWExNTNjZGMxZDg4NGQ1ZDIyOGYxOGVhYmEzMWFjMGEzNDZlYTM0ZmNhNGI1MGRkZDI5MzAyMmJjYzU3YzEyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjRhZDUwYjI1ZTFjOTM3MzExNzA4NGIyZmViMTViMTBhNjJjNzZkNDkxYjVmMGMyZDgzY2UyM2U3MGJhOTkwNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmRhNTllYzc2NDAyMGNjMDZkZmEwNjFkYWI1Y2M3YzMzZDgwN2QyNWVhZmRmZDdkYTllZmQxYTdkYWYwZWI0NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_24e9d07105af4232aa5f8077586e860e",
+      "statement": "The configured model is always inserted into available_models when absent, because otherwise the UI would show a current value that could not be selected again after switching away from it.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/settings.py#L128-L150",
+          "version": "repo-lines-v1:sha256:dcabb11a7599dcf9d29eed495797b92118207fc085edc421edf0e98d16f92d23:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmOGRkMjRmODI1MTI0NGIwMjMzODNkNzQ3N2RjOGVmMGU3NDU5Y2JkZDQ5OGM3MzUxZmI0ZmMwODJiMjQxMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiNDEwNDQ3OTBjYzkzYjFiMmYyMmRkMjg3YmNhMTVhN2MyYjZjZjg1MzI1YzYyNmFiNGFkMzJjZmNlNmQyYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1ZTU1YWJlZWY0NjE5MzQ1NTJlZmMxYzZhOTFkYWM5YTYxZDNjMjI5ZTQxOTdiZTgzMzQ5YjQ5YTYwMGU1MmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0140d9a108e84441b689efb44be12d98",
+      "statement": "Supabase is addressed through distinct URL settings for distinct consumers: supabase_url for internal API-to-Supabase calls, public_supabase_url for the browser (proxied through nginx under HTTPS), and mobile_supabase_url for mobile clients.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/config/cfg.ex.yaml#L28-L41",
+          "version": "repo-lines-v1:sha256:fcf956d2c7f366559dfcf13189664d530ce0efe8945518bbaccc2d997910db83:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2OTNiZjc3MGM0MDFhNWMzYmU3MzRlMWUxOTg4Mjg4MmIzMjRhNjlhNGQxMzdmMTljYTljMjliNTZiODRkN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhNTdhMDJkZGQ5ZTY0NGMzYzVmZDkwMjlhN2FhZDRmMzc1MmFiNGFmOGM3M2FiOTU2NTkwMzJlNGM4NzdmZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxMGQ0ZjE3MDMzYTVmMzJlYzFmMGU0NmJlMjI5OTgzZTZkNDg1ZTk4YjkxNzc5MjM5MTZjZmM0ZGQ4NzUzMWMifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/config/config.go#L24-L30",
+          "version": "repo-lines-v1:sha256:c74619a5d5ad6af106a5ab85d3bdcf92b4d0d3f1d7c8f04d9d18c7c52e8e2518:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2YzNGUxYTBlY2JlYTMxNTBjYmUzMDUwMTIwYTkyOWIwYzI2MzIzMjFlODc0NDYwZTEwZTc1ZDhlYWFlYTAxOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWY2Yzc4NzI4MTA3MzQwMWRhY2MzZGJmOGYyY2M0NTEyODlhYWMzNjJlYzAyMGQ5ZGQ0N2EyZmUxNzcwODkxMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjFmODBlNzYxZTI1NTIwMTZmNzIwYTI1OTJiMjU5MTZlZjY2ODY1YzUxMmIwMWNmYTFmNzJiNTZlOTVjZTgyZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjRlZWNlNGIyMDdkZjI3YzFkNzQyZWM0Y2JlMWYxNTczMmNjODI4OTNhMzdkNzZlZmY0N2Q3NWIyOWE4NTM2ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9d27632f6e54035b205b3ce8302db43",
+      "statement": "webhook_api_base_url supplies the base address used when generating integration webhook URLs, and is read directly from the global config by the integration and service layers.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/integration.go#L64-L68",
+          "version": "repo-lines-v1:sha256:61d923db5619309374e17bf5202209e977e5bf23d2aa482c2237a767cc30ff73:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGFlMGE1MWEwNGU1NzRlMWEwY2Y0NTZmMzU0MDA3YTdlNzVkMTRlNjY2NGI3MjcxMTcwMTAzOGQ4NmEwYjk0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWNlZDM5MWE0NTVmMWY0YzJmYTY4OWNlODVlZTI4YjIxOTNkYjg0OGU4ZTRmYjBmZDdlNjEwYmRmOTZiMDc5NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDMyNTAyMzBhOGMyZTIyN2IxNjJlZTNiZjU0NzI1NWY5MzM3MzRhOGNiMWYxMjYwM2Y0MzhjZWRjMTU0ZDhmYiJ9"
+        },
+        {
+          "resource": "repo://server/api/services/service.go#L554-L558",
+          "version": "repo-lines-v1:sha256:e25926ec8924c7fc3ac007cec6deaa1cd460eaf0e2bf946a9a04b6ba539fade3:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTU4ZjhjM2EwMjM4OWZmM2VjZWQ0YzU1MDQyMTJiNjZhZDY5NWUwOTY2MDYyMDYwNzhjZjYzMmQ2NDVkYzM5MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWI3MGJiNjcwYzU0Yzg4MDRhNzJmZmMwNGZjODRjM2MxY2VjNWQ1M2YxNTVkYjExNGVlMjE5NmU3ZmFjZGVmMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDkzM2U1MDQzZWZjZTU4YjJmMTQzMTUwNGIxYTBkMzZlNGUxNzY1ODg0OGRiNjZhZjMwNTIzNDE1MzVjY2I2NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTk2ZWRkOTIzNDZmNjk5NGMzNTExNmI5ZTMzODJhOWY4NThmY2NjNTk3OGIxOTBiOGMzM2Y2YWE1YmM5NzRjNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1a897c7ae6d4c1db212303a746ae389",
+      "statement": "The instance identity keypair is resolved database first, then from the data_dir file, then generated, with a file-loaded or newly generated key synced back to the instance_identity table — so a pod without a persistent volume still keeps a stable instance identity across restarts.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L73-L73",
+          "version": "repo-lines-v1:sha256:c408b9ea209b499df49b9cc0c895556fceadc66be371c5fbbd0faa4916527558:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQwOGI5ZWEyMDliNDk5ZGY0OWI5Y2MwYzg5NTU1NmZjZWFkYzY2YmUzNzFjNWZiYmQwZmFhNDkxNjUyNzU1OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQwOGI5ZWEyMDliNDk5ZGY0OWI5Y2MwYzg5NTU1NmZjZWFkYzY2YmUzNzFjNWZiYmQwZmFhNDkxNjUyNzU1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTdjMjhkMDM4YWM1MDlkODA0Njc1NDYyN2E4MzFlYjllMmU3ZDFkNGE4M2JjOGM5NTc5NDdjZTUxODA1OWQ5ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTA3NDk5ZGNmMzM5ZGM5YWNmNTUzNDI0NmU5Mjc1YTA2YmUwNGQ3MzAyMDgzOGFkYjJmZDE3ZWVkNjYzOTY1MSJ9"
+        },
+        {
+          "resource": "repo://server/api/services/identity.go#L60-L98",
+          "version": "repo-lines-v1:sha256:6edbbe7434aaa8c28489f01bf1f79feb476e3379aefff26138a29816d7e1231e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NjlmYjBkMTg3YjIwODIxZTU4MWU5MGY5MWRiNDZkNmQ3MDUyNDM1NWJjNDQzMTZiMGYwMjg1NmQ4M2UxYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwMjFmMmU0NTY1OGE5ODRkZWMwOTRkYTg4NDJlOWRhZmZmMGZiZDc1MjE2OWE0ZWVjYTZhMjFmYTQxOGEwMTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb4c5a474f784e2bae11086ce02194d9",
+      "statement": "The instance id used to select the identity row comes from inres_INSTANCE_ID and falls back to the literal value 'default' when unset.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/identity.go#L37-L46",
+          "version": "repo-lines-v1:sha256:0098501265bc11435f49d499cb444e152727247794a363fab2026b587ce674ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNTg2ZTdhZjE3MjY1MjNjZjczYzQxZmVlYjFmYmVkOWNlZGJkM2IwZGRlZDhiNDM1ZGM0ODgyZTBiYTNkNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwZmZmNzI0Yzc5N2VmMzAzOTFiM2M3ZThkMmM1ZTVkYmJkNGUxNmQ5ODBkNWFhMTk0NThhOTY1NzdlZjc3M2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI3NTQyMmI3ZDRkNTdjYmUwOTAxNDU0NTJlMDQxMzFiZWJjYWFjMWU4MjVjN2FiMTY5NGY3MzM1Yjc2YWIxMjEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

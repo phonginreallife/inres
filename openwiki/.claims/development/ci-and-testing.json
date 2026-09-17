@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1271161c5d95510122e3358779ff339a03ebc611550ba31f81e1ebf7705b4df7",
+  "claims": [
+    {
+      "id": "claim_d8215a10365d4cb28cf4d7c13ce58d3e",
+      "statement": "Five GitHub Actions workflows guard the repository — test, lint, build, release and CodeQL — and each declares a concurrency group keyed on the git ref.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L1-L26",
+          "version": "repo-lines-v1:sha256:82f50031f1f66127bee56e4dc8f4d4204cef1fa33c322646d774f6141b77890a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlZjY5YTU2YzRkMjRlOTM0NjU4ZTU4ZDIxMjU0NzM2MDk2YTFlNTM2NjkxZjlkNjdlZmQyMjMyNjYxN2IxOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzZDE2ZDliNDA0ZTU5MDRmYTllOWY2M2QyOWMyMjA4Zjc0YmJiOWJhNTg2ZjA4MDQxNDQ4MGMwNzkyMTFlNDIifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/codeql.yaml#L1-L15",
+          "version": "repo-lines-v1:sha256:98448746882d24c847b8944401ab2d7d7debeb580e2c2f8bfb139a964f35b394:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkOTcwMGI3YmIzMDY2YTU0ZTViZTA2NGZjYjc2N2M1MDIwMTZjMDg1MGZhNjdiODIxNjI1NzkwZDBmYzk4ZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzMjFiYjVlYzRhY2FiN2Y1Yjk0MjkwMzRkMGFhNTVhMjliZDE2NmIxZWUxNWIyZTRiN2M1ZGEwMWYzMjdmNzUifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/lint.yaml#L1-L12",
+          "version": "repo-lines-v1:sha256:d4838a6c8a587f07585a19693616891ddb98890c26a0ee262de3214676212e40:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1MzM0YWQwZWM3MGU5NWE5ZmUwMzE2NjlhNGIwNTAyMzJmOTcyZDc2YzQyY2JjM2JmM2UzNWEzNTE5ZTQxNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxOGQ0NjJhOWM2ZTRkYTdmMDkzZTAzZDUxZGIzNzY4NzQzNjMxZWU3NDFkNTQ5ZGQxZTkzOGRjNWMwNDQ0YmYifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/release.yaml#L1-L19",
+          "version": "repo-lines-v1:sha256:b71cffa95d09976a318cf698c4aa2e1ba6c619ec3dd8484e75abf4c8198b13e7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyZWVmOTAzMGQwYzcwMjkwMTBjNDYzNTY4OWY1ODMyOGQxMDllNmE4NWVkMWE5MjQ1YjIwZjM5NTViN2RiMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3NzYxNDBlMDVkNjRiNWE5YTJkYThmMGJjZGMzZjNiOWMyODMxYzBhMThmZTRlZjk3Mjc1OGUwNzU5ZmQxYWEifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/test.yaml#L1-L12",
+          "version": "repo-lines-v1:sha256:9226083a32f27546655341f20f08ab17a1bf32d763deea84a2c81009315179f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlZDA1MjM5YWFlMGUwNTcyMmY4NzYxYjYzYzI4YzdmN2Q0ZjQ5NjcxY2ZjYjMzYTY5ODNjZDQ4Y2I2N2JkNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0YmJlYjk2Y2I1ZWI1N2EyMTA2MmU5NGRjYmFmOTliOWEzMjk1ZDQwY2RmYmJmNzAwNDk5NTY4YjBmZWFjOGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9748bfa4f87e4dcf99c712f1ed05326a",
+      "statement": "The release workflow alone sets cancel-in-progress to false while every other workflow cancels superseded runs, so a release is never interrupted partway through.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L16-L19",
+          "version": "repo-lines-v1:sha256:e725f1565b76bac341adb91471ec1525e4dcea3d030447c76deb91e7993e991e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODRhZmUyNGRhZjM0ZDFiNWNmODNmY2FhM2Y1NmFhNGMxMDdjMDU4MDM5Yzg1N2JjYjZkNTE2ZDYyMTk0N2YwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDI4YWI3OTg2ZjA4ZDIxNjg0OTQxZWRiMzIyMjA2Mjc2MmJhZGQ3NjNiMGJhZjQ1YzMxZjhhOGUzYTA2MzY4OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTc3NjE0MGUwNWQ2NGI1YTlhMmRhOGYwYmNkYzNmM2I5YzI4MzFjMGExOGZlNGVmOTcyNzU4ZTA3NTlmZDFhYSJ9"
+        },
+        {
+          "resource": "repo://.github/workflows/test.yaml#L9-L12",
+          "version": "repo-lines-v1:sha256:f36c89dfdf411750459c70e17ef8ab46579496c425ed526087bcf32cb45a5fe9:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODRhZmUyNGRhZjM0ZDFiNWNmODNmY2FhM2Y1NmFhNGMxMDdjMDU4MDM5Yzg1N2JjYjZkNTE2ZDYyMTk0N2YwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWUyYzcyMWIzZGMyMGZmNzM0ZDk3Y2Y1Yjk5ZTU1ZThkNGM3MmY5OGJlZjNiOTlmOTAzY2MxZjJjNGNkYzZkZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTRiYmViOTZjYjVlYjU3YTIxMDYyZTk0ZGNiYWY5OWI5YTMyOTVkNDBjZGZiYmY3MDA0OTk1NjhiMGZlYWM4ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9c44991f2b64f238de2980f127479d7",
+      "statement": "The Go API test job is the only genuinely blocking test gate: it runs against a postgres:15 service container with a health check and executes go test with the race detector and coverage enabled.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/test.yaml#L14-L56",
+          "version": "repo-lines-v1:sha256:a60425bf23307c1c779103df040777e980e73fe4c9d9b95f9cf822f2a14c0e33:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3ZDExOTA4MzI4NjUwNGFiMzU3MzBkMDcyM2VlZjk5MzNhMWY0Y2QzMTYyZDY4MjQzYTE3NDc5YzkwMTU0NmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2ZWM3N2I1ODFjYmQ2ZjNkMWQ1MmNmZThjMTUxNjdiMDBhNWQyMTVkYzg1ODYyNzI1MmE4YTBiNDNiMDNjNzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ5YzFiNDdlNTc0MmE4Y2MwNjEwZmVlY2JlZjkwYzFmNjBiN2YzYmM4NzQ4YWZiMzNkNjI0ODlkNDEzYzI4ZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0NDk0Y2QyNWFlZWIyMTdhNDdkMWUxMjViN2YyYWQzM2Q1OWUwNGQxZWE5MThmM2U5NTYyMmQ1YWM2NjJlMzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea759e2c5fea41b8b2e86e50a5b83c04",
+      "statement": "The frontend test job marks both type checking and unit tests continue-on-error, so only the production build can actually fail it.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/test.yaml#L58-L88",
+          "version": "repo-lines-v1:sha256:3ced373ec71ebe23e21050947d5269c6a667b810128d3288ab5ac08ead6a9a06:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiZjAxOWI1ZTYzODU0YjhlNzUxZTFkOTYxNTJhNzhjZTcwZTc5MzQwYTNhOTU1ZWQ4NTQxN2U1NWEyNzNmZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiMDc4NDhhNDM2NjY1NmIyYmE2MTk3YmUwMmI5MjA4MTQ1NDZmOWQ5YWQwYjUzMzllNGMyNmEyYzk0NjUxMTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2MWRmMzkxN2Q3YzVlYmEzYmZjMTMyYzQ1MWM1ZTE2ODJhYmY5Y2MwNDAxMjU3NTVjNTNkMTg2NzVjYjllNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1YWI0Yzc4OWY3MjU2NDEzMDRlMWI1MzA1OWVkMTdmNDY3ZDliMjBkMDVhNzMyZTkxZmUwOGI0MTUzMzNhMjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_141bc608b490425ea23cb70376f599f9",
+      "statement": "The Python agent test job runs pytest with coverage but is marked continue-on-error, so the agent's test suite does not block CI despite being the most thorough in the repository.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/test.yaml#L90-L112",
+          "version": "repo-lines-v1:sha256:f053ac4efb953ff8f8f2cd983075a21fd6ff6154ba947399b466c9c55926b673:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmNTUwYzliMzNjZjM4YWYyYzNiYzFhOTRkNGZhYTYxNjdlMTE2OTk2MTY4YmEyYjM3MGEwZjY0MTdkYmIzZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3MWQzZWIyMmMzMWUzMTY5NjMwMDJjNmZiYWMyMzRmMzc3NWViOGEzNGMxMmZjNzVhNWVkNDczNTg0ODJmNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d22a7aa1316e4810ae6b102a4d1fc7e1",
+      "statement": "The lint workflow runs go vet and golangci-lint for the API, ESLint for the frontend, and flake8 restricted to the error classes E9, F63, F7 and F82 for the agent, with black formatting checked only in non-blocking mode.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/lint.yaml#L13-L85",
+          "version": "repo-lines-v1:sha256:34754da4a5345684e369471d2e627ab61f8bb9730333a5e64770533796b486b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5ZDgwMTU0ZWQ0MmZjNWM3NzliMTMzMTU3OGI1OGI4OWM4MDFlYWNlNzRmMjRjZDQ4ZWI0YTIzNTc5NDBhOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmNTUwYzliMzNjZjM4YWYyYzNiYzFhOTRkNGZhYTYxNjdlMTE2OTk2MTY4YmEyYjM3MGEwZjY0MTdkYmIzZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0MmI4M2NkNWIzYTYzODhhMGYwMDI2OTZjMjk2Zjk0MzY0YjVlY2U5MjZiOTBkOGQ5YjYxNzg2ZDIwOTA4YzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b71711ffb2941198eb011cbec7a3666",
+      "statement": "Each lint job declares a minimal contents: read permission rather than inheriting broader workflow permissions.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/lint.yaml#L14-L18",
+          "version": "repo-lines-v1:sha256:9a3b942d21298dbecd28bdd8ab1a017f3698a8e8cd44b03e0f0e88e527873e5c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzFkYTY2NzUxOTUyZmNmMDAwZGYwNjI1NzcwYzYzNzcyYzRjZTU5ZjQ3MmNiYTdhN2Y0MDViMzE0YjE0ZjAzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjIyZTViNzliMmE1ZTIxMDViYTc1ZDZkOWZjZWVjMGU0MDc5ZmE3ZTlmY2U5NzJhYjNjMzE0ZTFkNTUwY2I1YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDljMWI0N2U1NzQyYThjYzA2MTBmZWVjYmVmOTBjMWY2MGI3ZjNiYzg3NDhhZmIzM2Q2MjQ4OWQ0MTNjMjhlYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWY3N2U4ODYyZWMxZDQzNjk0MjZmY2FmYWQ5MTBhOGM5MDQ0MTAxMDQzZmE1MmZhNjQ2MWY3NWJmY2RmMDlkYSJ9"
+        },
+        {
+          "resource": "repo://.github/workflows/lint.yaml#L37-L41",
+          "version": "repo-lines-v1:sha256:167930c77837f5ad2196233476bcbfc93741decf721105ff132b5ab98284fed0:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjUxNzRmZDI1NWNlNTY3MGI0NzhhZjA0NmNkNDNjNjczNGYyMDY1OWNkMTEyMzg1Zjc1MzMwNzU4M2JmY2RlMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmEzMDE2MmJlYmExYWVmMzMwN2FjNTBmNDA0MTc0MGM5NmJlM2UxZTY1MDBkMmI3YmM5M2MyY2QzYTFjM2Y4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzQ0Zjc5NmQ5ODEzYjdiZGI2YjVmMDhjMWQ0YzUzZDljY2UwMDE1NjY2MWYwNDk5ZTRhM2ZhYzM2N2YxY2IyYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ca4dfd923bad40a2a3e6a7b17bfd326c",
+      "statement": "The build workflow builds four Docker images in a fail-fast-disabled matrix — api, agent, frontend and slack-worker — with the API build using the repository root as its context while the others use their own directories.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L74-L103",
+          "version": "repo-lines-v1:sha256:5a29d92647bc195a594b38787d5a0fcb2ef4871291e4e378d1a7d11abfd4b794:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyZDlkZTE1MTlmMTc3NDJjOWNiMzYxNDQ5NGZhZjJjZjZkODM1MjNiZDU5MDQ2NzFjYTUwZWUzYzA3NjM2ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxYmFmNTNkMDYzZjVhODc3YTg4NGRhMDQ4MTQ5ZDgzY2ZiZDEzNjg5YWJmZmEyZTcyOTg0NjQwNGZkOTIwNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1MDQxYWViYjI2N2FkZWNlMTJhYmJiMzgzMTMxOTg5OTQ5Y2FiOGYzN2Y0YWE5YzQyMjYzZDlhZGM0OThlNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0MGE4NWFiODk5MzEyMmI1YjNmZTM5NWY3ZmNjNGI1MGQ2NmYxYjEwZjI4YTA5N2QxNjE5ZmE1YWU1ODNkYjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c852eb8c720743fd92f30efae4569e83",
+      "statement": "The Cloudflare uptime worker is deliberately excluded from the Docker image matrix because it is deployed through wrangler rather than as a container.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L99-L101",
+          "version": "repo-lines-v1:sha256:4111ff7b00baed22aee9c8c134a43d8e0af6910a8b7bf0ca3d0b951a0b67dcdb:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGMxYmFmMDM4NzcyNTE2OWZlNTA4N2MzM2I1NDAwNjQzODYwOTUxMjE5MDI1MWQ3ZmUzMDI5MTNmZGE1ZmQyYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmVmYzc4MzE5YjBjOTQ4MThmZDE5ODQ4MjYzMTE2ZWFjMGI0YjFkN2U4ZjI4OWNlZjI3YmVjMTM5MTcxMjg0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjI5ZmEwNWFmMDQ3OTBjNWE0OTNhNDZmMTNlMWNkZDAwNTU5YWY0NmQxN2Q3NDU1NmI1M2MyOGE5MWFjYWRmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzNiOWQ3ZjljYzFmZmI1M2RmOWU2YmQ1NzYzNzFjYTdjM2I0NTJjNGY4ZjAzZWU4MDViODc1ZGI0ZDU5YWFiYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af769630cea3481ebeb811c23474f3fe",
+      "statement": "Image tags are derived from the git ref by docker/metadata-action, producing full semver, major.minor and major tags plus a latest tag on the default branch, with the bare major tag explicitly disabled for v0.x releases.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L114-L129",
+          "version": "repo-lines-v1:sha256:fc217cbe9d536506db2d8bda4bc7cb8244c07941cd8b5b53f9d1de76868cf8ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0MjdhZTdjYTIxNGViOTUxOWFhMWQ2MWRhYjRiMTg3ODVjMjVlMTA3MTQ3ZTY4MTQ2MzA0YWRjMDQ2YzdjZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0Y2VhZGVjZTgwYjA0Zjg5NDM0ZDRhZTQ1ZmQ4OTJmNjUzMjJlZGFhNzBlNmE1MGIwY2QwNmRmZTZhMzExZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4OTgzOGNhZGJjMTZhMDRiMDc3YmEzM2FkZjI2NTAxMjA3NzA4ZTU4YTIxOGI2NDM2MmJkNjVhZWQzMjQ5M2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNmMDBhZmI5ODE4MTQ1MmVmYjcwN2I2ZTk2NDgzYzkwMGQyYTM2Mzg0ZWY5MmNiZmNlOTJlYzYzMjI3Y2JiZDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_493055a457a543ccbaf1ef9b6fbf2a66",
+      "statement": "Pull requests build images but never push them, GHCR login is skipped for pull requests, and the build job is skipped entirely for pull requests originating from forks, which keeps fork contributions away from the packages: write permission.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L105-L118",
+          "version": "repo-lines-v1:sha256:0a68732ab996f134a5c2358f54d23b2b87d6779907e97370ec39c817107d6d8a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZmQ5MmM1ZmEyYTA4YThkYjk5NDAxN2Y2YjA4ODMyNzgwYjBkMmU2Mzg2NmFmZGI1ZGZlMmZhMDIwMmIyM2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczYjlkN2Y5Y2MxZmZiNTNkZjllNmJkNTc2MzcxY2E3YzNiNDUyYzRmOGYwM2VlODA1Yjg3NWRiNGQ1OWFhYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwNmIwNzk4MzFiYTkyNTYzOTYyNzcxNzlkMjk1YmRjMmE4ZWY3NWQ0ZjdlZDQyMmE0MzUwODlhMGVmYzZhOTcifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/build.yaml#L130-L140",
+          "version": "repo-lines-v1:sha256:7c7b446b5c73d5da1cb4813143547f9018a4962d6cab8d6a857b6e07ad68f755:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhNzlmMzc3YWMwM2IxMDI3ZDdkZWNjNjljYjU4ZTY4YmM5ZDBhYjlkZWE1ZjE3MDAyZWI1NWMxMWQ4MDFmNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiZDY4OTliMDMzZjBlNmJkMGY4Njc0MmM3N2U4NTM2ZGMwYzlhMWIwOTViMjMyYTg2MzRlNGIyMzcxMjljYjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyOGQxM2YzMTI4NDZhMjMzN2NkZmYxN2I0YjBkYTJhNGFlODM5ZmI3Y2Y5MDIyY2MyZDViMTJmNDE0ZmI4ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZhOTZkZTUzOTU1MjgxN2M4M2RjODU4ODZhMDhkOGUxYjc1NTRmNjM1MzFkNzE2MjI4MjZjMGJmNTJlYjI2ODcifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/build.yaml#L76-L78",
+          "version": "repo-lines-v1:sha256:312bb71e1e23d147b1586251abe18cc66a83080c4f5cd6b9d0269f68f2aaba58:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDkyMGVlZWZlYzE3MmM3ODFmNjQxYmY2OThjOTZlY2JjNGNjMDgzYzA2YzBiYTkwNDcwZGJhZWZjMDE1Njg0OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTYxYjVkZDYwNmM1MDBhNTU4NmQ1ZjE1MWMzNDM2MTI4MGVkMDI4Njg5YmQ0NjI5MjNlYjQ3MmM4YWNiZDMzNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI2NGNmN2VhMzlkMWE4NGQxYzg5NDFmZDNmYzViMDNhMDZjZTM1Yjk2NmJiMmY1YzIzMTE1ZTkwMTJlZDg3YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzI3OTRiNjFiNzFiNmQwZjAwYjUzYTYxZTc3ZTJmNzYyNGRkYmE0Yjk5ZTE1NTJhYzIzNjdlNGQ4ZmY0ZDE5NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee9f1a9ae193407ab167d55fb7e4e634",
+      "statement": "Every published image carries an SBOM and build provenance attestation, and the Actions build cache is scoped per matrix entry so the four images do not evict one another.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L130-L146",
+          "version": "repo-lines-v1:sha256:06a45d90859536c661cdaf3eb90fb8c54b5e636755808584abe98b5d0a10e064:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhNzlmMzc3YWMwM2IxMDI3ZDdkZWNjNjljYjU4ZTY4YmM5ZDBhYjlkZWE1ZjE3MDAyZWI1NWMxMWQ4MDFmNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNTY0YTk1MWI2ZjY2ZWFhN2JiNmM2MGIxZmY0NDgzMjliODZiNTVlMjY4MTU0YWExNDYzMWIwY2M1NWRhYTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyOGQxM2YzMTI4NDZhMjMzN2NkZmYxN2I0YjBkYTJhNGFlODM5ZmI3Y2Y5MDIyY2MyZDViMTJmNDE0ZmI4ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e6d8d5d1c2d94c7194a692fb42d00365",
+      "statement": "Versioning is automated with semantic-release configured for main plus beta/* prerelease branches, using the Angular preset extended so that refactor, perf and docs(README) commits each produce a patch release.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L43-L62",
+          "version": "repo-lines-v1:sha256:3f2696575f9633ee0123e5af2e047c4b7c815e15c672de113831f3c02929bafc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNjMxZGM1NDYyZWIyMTg5NzFhMWJjODU3NGM0YTViMTRlMWUwMGIxOTBjOTMxMTgxNWIwMTVhYjM4YWUxYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTU5NzljZTczMDIwMzNlNmIyZmQ3ZDg4ZjUzN2EzYjhlMDkxZWEzMDVjODExZmZhMTI3NGJmNTc2NGVhNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkNTJmZmNmNjYyM2YwZWY2YzcwZWVlOTgyOWNlMTgxOGQyOWYyY2E0YzhhNGJhN2ZhM2E1MmQ4ZWE1NDVjY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzYTczNThlMGQyMzdmNWE3NjRlZjU1ZWQ0M2U2N2YyZjBkY2FiZDEwNmMzNjgwOGZhZGYxY2M2Njc2NGI1YjUifQ"
+        },
+        {
+          "resource": "repo://.releaserc.json",
+          "version": "repo-file-v1:sha256:9f37ad55752a823bb214311b932f65e45262a06ce763d0a4ef86f165d8cc0ab4"
+        }
+      ]
+    },
+    {
+      "id": "claim_34c2ff18ab234e0480625575930ee33b",
+      "statement": "The release job checks out with full history because semantic-release needs it to compute the next version, and disables credential persistence.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L28-L31",
+          "version": "repo-lines-v1:sha256:f6ef1c7edaa375662b7fbeb6f34a207070ae1cdd7cad001f4d58faa1246d87f9:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzg5OTkxMTAzZjZiYTg4OGUzZGU3NjUxYzVhMzA1Yzc3ZTU1NDc2NzczYWJhODM5NTkxZWNjNWJkMGYyYWIxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTMwOTc1YzdlMjBlYmE4ODU3ZWZkMzFlNjJiNjY1Zjc4N2U1MTY0MTk1MWE2NjA3ODlmYmE5MzNhNjM0NzIxNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDNiOWQ3MzU5MmVlMzdjZTBmODBhOGJiOTBmNGUwMjdkZTg0ZTU2ZTAyZmY2N2I5N2M2NjI0NjRkYmUxZmIwOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjliOGE2NzFmNTdjYzg1MzQ0NjY1ZTZlNzI2MDc0MjE5YzIyMjY3NDdkYjk5NzIyNWYwOGM1MjYxODZiZjAzZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_360f3a4d56c04d849290dcf833a4e659",
+      "statement": "After publishing a release, a second job explicitly dispatches the build workflow at the new version tag, which is necessary because a tag created by a workflow using GITHUB_TOKEN does not itself trigger other workflows — without it a release would produce a version tag with no images behind it.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L64-L86",
+          "version": "repo-lines-v1:sha256:5b4b4a38d8b5dfa3721b70bf0b53b0f76b5570a2c0ac0d35a11dccaf4354a8a1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZDE3NTQ2OTFhNjU1ZGE3NzI3MjFlZTdmM2NkYTQ0ZTE1YjhmZDQ3MDg3MzE4NzJmMTM5OGY4MTE5MzJkY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZTdmMjY4Y2NkYjg1Yzk5YjJiNmNiMWJjMTBlNTliYWM5YzcwNmZiNDE5NWEyNzU3YzcwMzc2M2U1NzdhMDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzZTY1NmE2ODBjY2Y2MDcwMTdlMTk2YzUyMzI3YjZjMDE2MGYxMWNlNzRkNWE5YTQ4MDM3MTE2YTFjODc3YmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwMjFiNzczMWY0YjBkMzhlMjFmNjk3NjgxYmUyMGE3ZmFkZDI2MDA1OGVkN2NlMDM2MDFiZGRhMmUwOTFmYWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_632fe391e2c74ab7817954638fdb260c",
+      "statement": "CodeQL analyses Go with autobuild and JavaScript/TypeScript and Python with no build, running on push, pull request and a weekly Thursday cron, and holds security-events: write to upload its findings.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/codeql.yaml#L1-L50",
+          "version": "repo-lines-v1:sha256:e1e2978511403383bf8bf5696da3eb320b8041fb3d24e4883563c08abe804c5e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkOTcwMGI3YmIzMDY2YTU0ZTViZTA2NGZjYjc2N2M1MDIwMTZjMDg1MGZhNjdiODIxNjI1NzkwZDBmYzk4ZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxNWQ0OTQ5YWI3ZGM4NWE3NDljN2ZkNWQyNmE0MmRiNDVkNzY2ODRhZTNiMmVhNTY0YjAwOTgwY2YxNWJhNzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1b3db688271748efadaced5d94ecab1b",
+      "statement": "Webhook provider normalization is pinned by per-provider Go tests for Prometheus, Datadog, PagerDuty and Coralogix, with the Datadog suite additionally covering timestamp parsing, priority mapping and nested map extraction.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook_datadog_test.go#L219-L340",
+          "version": "repo-lines-v1:sha256:a06d3f4eb4d7c5a898c222fa9402e81db74a3af99641141c2c0e4471a230e211:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhNWE4ZjZjMTk3OTNhMmY1YjkxMGEzMzMwNzJhM2Q3N2EwMzQwODU5OGVlY2QwY2RmMGRiNzkxODk2MGExMWE5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJiNWIzN2VkNmUyOTRiNGUyMTFjYzllMjdkMWZkNTRmNWViNmE3ZTgwYjVhMDBiOGNkN2JiOWJhODVjZjI4MzAwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmMjk2NDA3OWMzYzVjODE1MjBlZjMzYTJiOWQyZTE1YTFiODRkNzI4MGRiODU5MGRjZDY1NzQ3ZTNlMDEyYTQwIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyNjRlZjU5ZTUwYzYyODAwZDIzNmMyZThlZmQxYjE1NGQ2YjQyYzM4MTJhMTJkM2ZlMDQzNzViZTUzMjRhMjUyIn0"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook_datadog_test.go#L9-L20",
+          "version": "repo-lines-v1:sha256:424f8e00bed775716436e6588c21a8efabca0f6db3a7bb1179decf5da9e94985:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljYTdiNGRmZmRjNGE2ODIwNzFlMTAxYzRmZjM1ZTIzOTM1NzVjMzEwNDczMGU3ZTE2NWVmMjczNWQ4ZTg4ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5M2VhMzU1OGRhMjI3NzZjZDgyZmJkYTlhNjk1YzUyNjE3YjY2ZmQ0OTc1OTQ3MmM1Y2JkNWM3MDBiNThkNjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5ZWRkNzJiYTZiNDAwODNjZTk1MjY5ZmE1NmZjZjNhYzFiZDk4MjIxYWE2NjIxYTY4M2Y3ZDU2MzJiYjIxZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyZmVjYzZjN2RkNTFiNzEyMDhjYjI0MGFjNTA5OTdkMzNiYmRhMmVjZGUxYTI0Y2RlMWJjNjY3ZTVjOWY0YTQifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook_prometheus_test.go#L1-L20",
+          "version": "repo-lines-v1:sha256:9d9c57ec79d1ebaecc569439d508ddb0d4ce3385b210879d261842bee1b34fa2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxMzA2MzUyOWEzMTEzNzA4ZTgzOWRlNmFhMGFkNmVhNzU1NzJjNDM5OWEzNDA3MTc1NzM2ZTQyYWU3NWYwNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0N2EyZTZlOWZlYWEzNWE4MTI5NjYyNjU5MDE0ZmI4NGYxYjZmMWEyOTRjZDk5YTlkYmViYWQ1YmRlMzJjMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzNGQyOTMyNDEyMjdkYTgwYmYwY2EzMmExYjNkOGI0NDU2OWZkNjBhMzJlZDFhMzdlODk2NDJjNmM2MmIzMDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc75d541a66e46dabe9c47d3bc123043",
+      "statement": "Authorization is tested at two levels: the permission matrices and role mapping as pure data with no database, and the SQL-backed authorizer against go-sqlmock, which is a direct module dependency.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz_test.go#L7-L102",
+          "version": "repo-lines-v1:sha256:f0cb09c5c3c40d9aa01cb6acb49b57578bdd879e709443de1aa4d4b87de346b0:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2MGFmOWU2ZTgyMWI2MTdmNzhmYzA3YjkyZjI0ZTZmODJmN2ZiNDMwNmY3Mjc2NTNjNWNjMTgwYWY5ODAzOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzZTljYzQ5MGMxMDE3OTYwOGZiMGI1MmViMjZkMDM2NGRiYjM3Zjg0YzMxYjQ1MDhmMzZlNjg3Zjk4YjhiZWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyYmExNTllMjA3MmQ0YzcyMzlkODUxNTYyMWM5NDc4ZTI5Y2YxMTY0MzNlYTRlNmRhZTIyMjdlYzY4NzlmNmMifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/simple_test.go#L1-L40",
+          "version": "repo-lines-v1:sha256:c8ae4dfe9d48b6f5f3fc578aac732f7df2112685d96c47395d340a1aad6ac14f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3Y2Y5YjdlZWFlMTkwODBjN2I1NmZkZDlkZGFhYTQzNWI1ODA1MGVkMWZmMDkzMmZmNTk1NWVhZTZkOTA4NTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkNjg2MjM3YjU2OGNhZDljMTdjZTdkYTNiODMwZTk0YWUzYWNmODdiOTExYzViYzhkYTE5MTMzZTIxNjFmYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwYTNmNTBiY2UyYmZiODI1ZWVlZTE0OGQ5MzFhMTFlNTQxNGUzMTc0NjM5ODZhNTZhM2U2OTU4MjNkMDFkN2YifQ"
+        },
+        {
+          "resource": "repo://server/api/go.mod#L5-L10",
+          "version": "repo-lines-v1:sha256:758821c18449dc3629cb8f7f197dfae37cd7329200f1d932a59edf9adac9e08e:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDM4NWNlZDlmNjhhZjE1OTJiZTZiMzFjNDgyZDY0NmMwYzBjN2ZkOTEzZTA1YjI3MzhiOTRkOWYzZTk1ZmQ1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTAwMjZkNjc5NmRhOTA3YjMzNjNiM2FiODg1YTY0OWZkMmMwMDMzNzFiMDQ2MzFmOGRjYjRmZjdkOWEwMjRkYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWY5NjcwYmY4ZWY4MDQwZTVhNmVlMmMyZTBjYmQ1YjE4ZmM5MjAxY2RhZjk2NWJhMmQ5ZTNiZjVjYTMwOWM5YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGQ5NGVhOGY2NWZkZDEwM2Y3NDhhYTliNzMzNDM3M2ViZjVkZjJkMzcwZmFiMDEwODA5OWZkZjhiN2MwODFmMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c544d3b69f814fb48e232e1eccfe66be",
+      "statement": "ReBAC enforcement is additionally tested at the HTTP handler boundary rather than only in the authorization package.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/incident_test.go#L77-L90",
+          "version": "repo-lines-v1:sha256:106129b2104c9bd198a7308b7c3761bd5f3b99dea98cfe4cb1cd8359286fe405:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyNjM0N2UxNTMwZjBiZWUxMGViNmI1NjA0ZjU1ZWEzNDcyNTZhMzUyYzM1Mzk0ZWRkZjJiOGNmMmJiMDUxODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyNDA0MGRkMmU5OWNlMDU5YmRjNmVlMjJlNzNhZDc2YTIzZGI2ZTExNjhmNWMzNmM0ZmE1ZWU3ZGUxMjc3YjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxYTFlNDNkOWM1NWU4YTM3MmZiOThjYTYwN2U2NjRhMzMzZTMwNGE1MWMwODI5YTViODA2OWE1MWZkYmJiYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzOTQ2OGU0MmJhNmFmNzBiMzAyZWQ2NWJiYjcwYmU2YTBiYWFhMjM5ZjEzZTUwYmI2ZDRhMzBmOGEwNmEzMjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fe03ebdaf64b4e009245a676d91c1577",
+      "statement": "The agent's pytest configuration sets asyncio_mode to auto, so asynchronous tests need no per-test decorator.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/pytest.ini",
+          "version": "repo-file-v1:sha256:27c898d50a2642c11db50998be0602964e537740c4ae86bb9f16a71186f6d357"
+        }
+      ]
+    },
+    {
+      "id": "claim_f3e108666a7242e48c9ff7fa0ff06a70",
+      "statement": "The agent test suite covers the three riskiest areas of the chat subsystem: stream translation against synthetic SDK message sequences, the tool-approval broker's invariants, and the full session lifecycle driven through an injected fake client.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/tests/test_permissions.py#L43-L120",
+          "version": "repo-lines-v1:sha256:b619f80175c822ab5be7f21240c67ef28548433127e66fbc9d859cefb57301b5:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwYzZmNDcxM2M2OTI5ZmViMzM5N2RjNTc3OTM0NzIzNDc3ZmNlODE0MjQ4ZDZlMjdhOThjNTczZTVhYWRlNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczMmU4ZDQ3YzJjZmI1YTkzYTEyYjUwMDIyNDI0ZjBiM2E4NWFhYzcyM2E1MzkyZWViZWIxMDJmZTlmNDhkODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MjY3NmM4ODhjMWE0ZDlmYTc3MmZjZGMzMDJmNzczYmM3MjkwZWViZmY5ZGEzNmEzOWY0NGMzMjExOTgzODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ4YjFiMTk0ZWE4YzZjZjUxNmZjODgxMzRjOTc1ZTQ1OTIzMWNkNDkxMWZkMDlkM2EzYjM0MmY1ZWRiOTRhZjkifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_session.py#L132-L175",
+          "version": "repo-lines-v1:sha256:f9c4da7c31961ed884283fcace70c7fe46e08d79dd3b6ce169946f968c04b4a3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiOTA3ZmFiNmI0YzliYmY2MWVkZjRkYjViZTg1ZGY1OWJhMmUyZGU4N2M4YjdlNjRmYzk2N2IzNzZiY2FiMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2ZDQyMGNkMTM1MDI4M2JmM2E4YmQ5NjJmYzY1MWJkNTM2YTQ0MDE5N2VlYjczNTg4ZTVlMmNiNmRhZTZiNDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MjY3NmM4ODhjMWE0ZDlmYTc3MmZjZGMzMDJmNzczYmM3MjkwZWViZmY5ZGEzNmEzOWY0NGMzMjExOTgzODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhNzAxMWI3ZjkzOTM5ZTViMTQ0MDg0YzQ3YjdiYzg2ZTY2NzgxNDg3N2M1YWFjNjI3OGNhODE1Njk3MTc3YWEifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L73-L120",
+          "version": "repo-lines-v1:sha256:cc180b57063ffe36adb679904385f4fb4648ed115ceb96390b88a40b359d6ba9:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3M2I1OWVjMDMxNjBkMDYwMzE2NDY2MTFiZDhhZjJkNTQ2M2MwNjAwNmU2YWNmZTU0ZDkxNDA5MzFiNDcyYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MjY3NmM4ODhjMWE0ZDlmYTc3MmZjZGMzMDJmNzczYmM3MjkwZWViZmY5ZGEzNmEzOWY0NGMzMjExOTgzODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2YmE1MTA3M2YyZjA5ZTBlMGM5MTVjMTFhMTlmMmQ0YzBhZDE5NmJmNmNhNThhNGY5OTEyNDMyMTM1YWZhYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_02c9e18963cc42d88094fe8341244a0e",
+      "statement": "The agent ships a Makefile wrapping the common development loop, including a reloading uvicorn dev server, tests, Docker-based development, logs and cleanup.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/Makefile#L1-L30",
+          "version": "repo-lines-v1:sha256:fa703559e3edff8dddeb52086238b2c254195efbe927fa59339f7a1c95545afb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2OTNiZjc3MGM0MDFhNWMzYmU3MzRlMWUxOTg4Mjg4MmIzMjRhNjlhNGQxMzdmMTljYTljMjliNTZiODRkN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwMTc2ZDlhNDE1ZDdjYWY2YzcwMjA0YTkxODJkNDE5YWMzY2FjMWI3YWU3YzVjYWFlYTA2YTU4MTJjOWVhZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjMjQ0N2U2YjNhODZkZWE4ZmEzN2M2ZTU2NTFjMmU5N2FkY2E2M2E4YjEwNjhlMjYwMDlmNjVjNzM5MDIwZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f90ae78fab7044ddb357321da9399ae2",
+      "statement": "The release job derives its new_release_published and new_release_version outputs by comparing the newest v* tag before and after running semantic-release, because npx semantic-release writes nothing to $GITHUB_OUTPUT and the previously assumed outputs came from an action this workflow does not use — leaving the build-trigger job evaluating an empty string and skipping on every release.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L37-L62",
+          "version": "repo-lines-v1:sha256:471360fef2091f1297067e95df4b3bd8dac46943330092f72ec5816f35027cb4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmZmY2ZWE0ZWZiNjlhNThhMWZmMTcxMWYxZjdiMWE4ZjU3OWUxYzNlODVkYzIxNTk1M2YwN2E5MjNjMGZjYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNTU5NzljZTczMDIwMzNlNmIyZmQ3ZDg4ZjUzN2EzYjhlMDkxZWEzMDVjODExZmZhMTI3NGJmNTc2NGVhNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0YmRhNTE4YzFkODZmZDU0YzU3NDUyYTM0NzI3MGU0NjJiZTIxMWZhMzVlYjgwMjMzZmZhOTcwMjRkNGZkOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzYTczNThlMGQyMzdmNWE3NjRlZjU1ZWQ0M2U2N2YyZjBkY2FiZDEwNmMzNjgwOGZhZGYxY2M2Njc2NGI1YjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5edf3421b054337b97f87deeb3bc4fe",
+      "statement": "The build dispatch prefers a RELEASE_PAT secret over GITHUB_TOKEN because GITHUB_TOKEN is restricted from starting workflow runs in some repository configurations, and a silently dropped dispatch is what left release v1.10.0 without any images.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L70-L78",
+          "version": "repo-lines-v1:sha256:6dce658c42cf11890c9cbacdfbc4ed07e7fbd8bbfdfb72d490d52e854d6b87dc:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzg5OTkxMTAzZjZiYTg4OGUzZGU3NjUxYzVhMzA1Yzc3ZTU1NDc2NzczYWJhODM5NTkxZWNjNWJkMGYyYWIxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGMzYzdhOWNjODY2MTcxNmM3NTIwZDhmZTUzNGQxNmNmMmI4MDc0NWU0MDE2NjRjMzM5ZGIwODlkNWU1YzU0OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjQwNThhMDg3Nzk4ZjYyMzFkYWMxOTY1ODViN2VjNTJkYzBkNmNjMmM0NDE3MWZhMGY5ZjcxZjM5ZWVjMzA5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRkNTFkODNlZWI5NmFjZjdmOWJlMTAxOTVjYjM2YWE4OTk1MDAyMzhkOTQwOWNmNDVkMGI0ZmY4NGFiZmRhYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_114ba1959f874017a5a46c6246ddde5a",
+      "statement": "After dispatching the build workflow the job waits and then lists recent workflow_dispatch runs, failing explicitly when no run appeared for the released tag, because otherwise the job reports success even when the dispatch produced nothing.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/release.yaml#L88-L110",
+          "version": "repo-lines-v1:sha256:4ad385aecf98154b35a906c3be53ca1431c7ca0110397c1344a93223819d65e7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkOTQ3ZTQ5Mjk0MTQ2NDM5ZjdmMDg0YWUxOTNjZWFjY2IzODIwMDA5ZTZhNzM3ZDU3OTNiNGRjN2VkNTNkZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyN2I5ZmMyYmFmZmE1MjE0MjQzYTg0YTcwMTUwYjMxMjQ2ODE0ZjJmMjg1NWU5MDE2ZTQ1Y2UyMzA4NmI2NWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T11:09:25.960Z"
+  }
+}

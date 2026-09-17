@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:41944b6efe71a95ad9df41c97f7912c80348d7bc499c282393c94e7dda506c8c",
+  "claims": [
+    {
+      "id": "claim_ac65abb1b0a14ef4bdfe15dd214f237e",
+      "statement": "Kong fronts the stack with a declarative database-less configuration, routing /api and /ai to the API and agent services, dedicated WebSocket routes to the agent, /webhook to the API, and everything else to the web frontend.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/api/kong.yaml#L1-L87",
+          "version": "repo-lines-v1:sha256:bc57b716398dc42e73cfb712cf3adf0b26cfbd2b1fab80e116cf42996563b7be:eyJzZWxlY3RlZExpbmVDb3VudCI6ODcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMWMwMDIyM2Y4MmY3Njk5Y2VmMTg3NGU4N2QxODU5MDAwZTkxZjA2NTkyN2UwY2I5MGQ0NDM2YzE3OTg2MGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiODgxMjEzOGE5MDZjZDlmMGQ1N2I2YmUyYjVhMmE4N2IzZGI2YTdmOGRhNTRiZmU5OGY0NDk2N2FiYzMzOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d7d01b5cc7c47ff817870f48789d729",
+      "statement": "The /api route strips its path prefix so that a request to /api/incidents reaches the Go service as /incidents, which is why the router registers its routes without an /api prefix.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/api/kong.yaml#L14-L25",
+          "version": "repo-lines-v1:sha256:6faeba3549e6509c8c2668e60b49748aeabb92dedb06b425e22ceba962c3914d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOTcyZmQxYTlhNjAzODdjY2I5ZmY3N2VlOWNkYjZhNTdmNjBkY2I1ZTI5Yzk2ZDhkYjU0OWQwNGU4NGE2YTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkOTY0OTU5NjljNDJhNmRkNTUzNDM1NDRkZWQ3MjA2NGJjMTU5ZDJiYzQyOGY2ZTJiMTFkZGYyNWY4MjY0YjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxNzI2MzMwZTkzZjMyZDEyOTU0MTIzODNlZGYwZDlmZDY5NzlhZmEyZjBhMWZhOWQyNWQ3YWEwN2ZmMmQ5MzMifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L259-L266",
+          "version": "repo-lines-v1:sha256:b225974cd7893bf4b3d4a020c264233088cb48070e51fa23c3db684cf1249d2e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I3MjFmZWJiNmQ4MTA5YzNlZmQ3OGU3NDhhMzhhN2Q5NmZlN2M0MjEyM2U2NWVjNzRmMmJkNzIyNGYwYzIxNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjM2MDJiM2Q1ODFlNDFlZDdiZjczMzIzNDVlMDI1ZGY1YzcxZDdkMWE4YTBhMGMwMzFmMjA4ZDBjMWMyNjVkNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2MyNjFiM2MyY2YxY2I2NjE0YTJkOGMyOTM5NzhiNjQwZDdjMTdhYWQ2MzFiMTM3NGFlODNjOTU0M2E3MzAzZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7524a0d4110d4bd99761a576685c4b26",
+      "statement": "The /webhook route deliberately does not strip its path, because the Go router registers the webhook endpoint at the literal path /webhook/:type/:integration_id and an external sender's URL must arrive intact.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/api/kong.yaml#L65-L76",
+          "version": "repo-lines-v1:sha256:62445f35adcb5c1ad2a0ef2cc4740505e2a0f629ab4f9b60f5f82d8b2b103ff8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwOGMzNDUxZDBiMzAxMTUyNTAzMmMxYTNjNTY3MzY1NDEyOWE4MzVkNWNkOWUxZDc3OGI3MDBlM2I5MTNmZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiYjI0NDM4Y2I1OThkOTY3NTBkOGYzMjNkOGVhMTM5YmE0OGExZmM1MDcwMWYyNzViOTg4NzI2YWYwMDJiMTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjNGJiNzQ0YzAwOTNkNWE5NjljODI0ZTM2ODM2YzgyZTI2MzU5NDI4NGRkYzY0YzNlZDljNTdhNjY5YzhiOTMifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L156-L161",
+          "version": "repo-lines-v1:sha256:6fb25fe8d17f053daf579a5a518b7c65138ef0ff83c7954629feb88e665e5391:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjAxY2NhYTI5NGE1ZWIxMTY5ZjllMTgyMGUxOGYyMTVjZjRlYjliOTA2ZGFiODY4YzA1NTZlYTViY2U3MDVkMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDc2ZmJiN2E2MThkMmM1YTE0MTllMjc3NjdiMWFiMWFmMTJhNjBiOTM4ZDRkYzJmNTU4YzU1ZWQyMGJkMjgwNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWI1OGQzNDdlZDE4YjMyOWQwMzEyOWUzY2MwOTY3ZDZlN2VhYmFmNjRjOWYyNjNmZDA5OTM2MmQyNDZkYjc4NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6b79e958323b431da472759e1a4c4692",
+      "statement": "Kong is configured with enlarged proxy buffers of 160k and 64 160k, which matter for streamed agent responses passing through the gateway.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L141-L165",
+          "version": "repo-lines-v1:sha256:bb565fb676c65bcb0d6befa55c642b51367cccdf2d7630cb0390ce7984e6bf77:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmMjQzNDM3MjNlMDQ3YWFjMmIxZTA4NzRhYTY0Y2NhZWFhOTM0OWE1NThlYTFhNjZiNTUxMjFlYTI3YjMzZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0YjRiYjYwZGVlNDg1YzM1NTk4MGE0NTMzM2YzYWU1NmM0NGZhZDZlMjYzZDExMTRiYzliNzUwMWVjOGEyN2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUxYjJkOGEwMmY0MGM0NDBmOWZlYTM4MzJlNjgyMzUyZDk4MDY0NGI2MzI5MjlkNDE2ZTU5YjM0YTBlM2M2NTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVhYWRiMjgxNzlkY2UzOWNiYmUwZTIyYzUyODM1MTYxNDhmOTc1OTk2ZjY2ZDE2OGFhMTdlYjMxOWZmNzQ3NDYifQ"
+        },
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L366-L380",
+          "version": "repo-lines-v1:sha256:5cd9b290688d425dd4bcc4d60a6958818c139c8b47530d406e4a8cb05ee71ddd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZGJkM2ZiZjcyZjU5NDc5NDNkMTEzNzMwMTYzMWQwY2Y2MWM1YWIxM2I2YzE5NWIwYzNmNGJiYTMyMDRiNTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMjFhNGRkMWFiNzkxYzE4M2NlZmU3ZTU5YzNhMzRkM2Q2MzgzOWQ1ZTM2YWU3YWZlNzVlZGRlZjJkNjAwYWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1ZDM3Y2MxNjMxMzBjMGI4YjRmZTcyYmE2ZjUwYTFjZTE1ZDliOTU0NTllNDM2ODNkMDk1NjU3YmEyMzEyMGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllODk2NTk5NTdkMjJkZTY3ZmRjNzQ5OTllNzU2OGZmZDRjNTgwMmNiYWI2ODFiYTUyYzE4MjA2MDE4OTdiM2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_179a8ec5f7e6431ba5b7454bbf1a0da6",
+      "statement": "In the Compose stack only Kong, the API and the web frontend publish host ports while redis, the agent and the slack worker are reachable only on the internal network.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L31-L145",
+          "version": "repo-lines-v1:sha256:222b03bcb2e8860f092f6a1937f2b1105dbd54fa0ca963816951f5eb12a5851f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5M2NiYTZmZjZiZWM3NWIzODAzOGNiN2U2YmUyMWJhYjE4ZmJjMmEyZTFiNTZiNDgzZDA4NjI2ZDFhYjY4YjIyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJiYzE2ZWQyMzlhMzY1MWI1MDc5YzBlNGU3ZjA3ODQ0ZWEzMjljODc2MjhiZjlmY2M0NjM2NzczM2Y1ZTFlOTNlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YjBjNGRhMmMwZmUyM2QxODZlNmRkMGQ4N2Y5ZmVjNDM3NDQ4YThmNmFlZTMyMmI1NGE0ODY0ZWY1NThjZWRkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0YTRkY2RhZTI1ZTJjYTBlMzlmMWU1YzY3OWMyOTFkM2ExYTY5ODcxY2FjNTc4OWNlZjdlYWE1YTA5YzU4OTI0In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_43f92f714df34bee8d50c31411712e4a",
+      "statement": "Compose reads its .env from the directory containing the compose file rather than the invoking shell's working directory, which the file documents explicitly.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L6-L11",
+          "version": "repo-lines-v1:sha256:89915161b12e3ef873fc72b47be5986d0fb11340c70524cc139acc61d54b0157:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTdhYTk3YjkyNzg4MTM3M2U3YTBlMjkyMGFiMThhMWYzZDA1YTQ4ODQ5MzI0ZmFhODA2ODRhMmQwZDFjMjBmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzJjNDg1OGUyMmNjMmM5NjdiNDIxNTBmYTU1MDU2MmEyYzgzOWMyY2ViY2FhYjkxY2FiZGY2ZjRkYTAyMDAyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTg4MTNhNTE5NmVjNzZkYmZhYThiMmZjOGY4NWI0M2I2ODc5MjA5Zjc1NTVkODNjNjhmODg2NjRhYTcyZTQxZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTljZDFjODFkZjBhZTM0NzllZjM0YTgyYmJkYjg2N2I1NzRjNDRmMjk2MTUwODFjYzU1ZTc1ZDEyMGI5ZmQ3ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ece3fe95019408e803cbdd1d64d129c",
+      "statement": "Exactly one Anthropic credential may be configured, and because an API key takes precedence wherever it is found, using the OAuth token requires also blanking anthropic_api_key in the config YAML since the agent copies that value into the environment at startup.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L22-L28",
+          "version": "repo-lines-v1:sha256:6c2155a20c9545d20a40f0ca120130a7471a879f21d3fbc9aa5783071639a95b:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzJjNDg1OGUyMmNjMmM5NjdiNDIxNTBmYTU1MDU2MmEyYzgzOWMyY2ViY2FhYjkxY2FiZGY2ZjRkYTAyMDAyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTljNzg3MzU4NDc1N2VjMWNmMWMxMGU5NzY1MzgyZWRlNmY5ZWE3ODQxY2M5ZGMwYWYxNDkzNjJiNmY1OWFkMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWUxMDI5NWUxZjE0NzViYWQ4M2IzNzk5OTA1MGQyN2RjM2E4NzBlZDBiNWJkZDE5ODYyZWNjYjc1ODVkOTQ3NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmQ0YWI1ZjE5ZDJiNDU0Y2UyZWYyM2ZmY2E5YTJlYTIwZjgwMGViY2QwMTU2NTg1Nzc1MzY2ZTQ3YzBjZmU2NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fca98a1b8fb44341bcf75ac0f46385de",
+      "statement": "The Helm chart templates every workload by ranging over a single components map, so adding or configuring a component is a values change rather than a new template.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/deployment.yaml#L1-L28",
+          "version": "repo-lines-v1:sha256:49ada6fc392f9067e46e4c6b8e41e2ed4dfbc7ab6118d42f6af3d229a630518b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4Mjg5YThmOGQ0MGVlNjY5MzdkNTRjZmU1YzY4ZTEzOWM2MzAyMWVjYTUyYmE5NWFmZDQ5YWFjNmJkM2NhZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZGZkMDVlNWZhY2Y4MmFmN2NkMzVkMjBiNDcxOWZiNmM3NzA0ZjZiMWUwMjI3NzllNGMwMmQ4NThjZjA3YTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2Y2Q4N2U2NDRhMWYxYTdiMzJlZWI0OTNhM2E4OWRkMjcxZThlMTIyZjY5MjVkYzcwYmUxMTBjYTA0MmY3ZTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a90a58ada27466086d707a06966c8ab",
+      "statement": "Replica count is resolved per component before falling back to the global value, using an explicit kindIs check rather than Helm's default function, because values.yaml wrote 'replicas' while the template read 'replicaCount' so per-component counts were silently ignored, and because default treats 0 as empty which would have silently started a component meant to be disabled.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/deployment.yaml#L10-L26",
+          "version": "repo-lines-v1:sha256:7d03ad0583cb25d75d28aa2ce68057861af598fe272a9af43967c3466ed05e60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlOTFlNTFjZTUzOGVmMTIwZWUyMGNiZGY5NDE1OGJhY2UxY2MxMTc5MDZmODY0ZmVkMmQ5NGUzNzExMGNiMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2NGZmNTdkZGI4NDM4M2Q5MjEwN2ZjMzcwNjgxMjA4NTY1NWEyMWVjNDE1ODk2NTRkNGY5M2E1MjZkZTI0ZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0YTk0ODJmYTBiZTBlMDUzMzAwZjNkMjFmYjJmMGEyNzk1Y2QxMTIyYjIwOWJlZWE4OWU0ZTI1OTQ2ZmZkZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhMWMzNTIzMzc1Y2M0OTMzYWJjMjE2OWMzNDVhYmZkODQ5MWQ4M2U0NTUzYmM5OTcwZDBhMWY1ZDk1NDY0NzQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_77a8cebc883646b5965bf9d75a63a59a",
+      "statement": "The standalone worker component defaults to zero replicas because the API server already runs the incident and notification workers in-process, and the Deployment exists to move that work off API pods when they become CPU-bound.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L250-L280",
+          "version": "repo-lines-v1:sha256:b6a864d0e0baf0a48cb76a712426bb3adf59d95673a6cc14c4fbeaa2e5790ba3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MjQ3YjYxMThmZGNhNTU3YjNhYjNiZjRjZTlmYTliOWQxYTdlNWI3NjA5OWE2N2FlMjJmNDk2Zjc1OGNlYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMTJhMDVlZDIyODY4ODE1NTNhYjUxODg1MWY2ODU3YTUyY2UwMGM3ZGI1OTY5ZWEyZDE5NjhiNjY5OWZlZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3MDNlZTYyYTE1YzczNzQ4ZWMwOWRjODA1N2MxOGQ1YmQzNjg3NDNkOTM2NzUxNTZjMjgxZjgyODJmZWU0MzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTVlZTNmZDAxNDEyYzgyMmU1YmU5N2U2ZDczNzdjYzU5NWI0MzZkZmU0YWE5MjFkZmVmYTE2NGE3NTdiNjgifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L98-L130",
+          "version": "repo-lines-v1:sha256:17399903823feafb5a1ca1f47c7d9f8810ce297d82824a344ad2c1aa32089913:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5YzY1YzE4MzM5MjY3M2E4ZTBjOWRjMjBiZWE0YzUyYzdkNGZiNzc3M2RmMjZiNTg3NjNhMGM3NTE4ZjM0YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNjBjNGJhNTA3NjI0MDhjMzM3OTAwYWQxNzU5ZmEyYjA5ZDRhNTZkYjY0MmUwMTk0MTU1ZmQ0YTIxYzYyOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwYzIxMzBmY2UxMTY4ODBmYzVhMWNjZTdkNWQ2YzUxMTlhY2IwNjIwZmE0NjlmMTkwYTE0YTJiYmQwNThlNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1YjJmNWZlYjlkNWE0MzI1ZWZiNDQzYTlkNWFjNmM2NzUwNGQ4YTcyNmE4NmRhZjllNmZkZTdjOGE3OWU1NWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_079401c039ef4a4592d2334c76868794",
+      "statement": "Running the in-process workers and the standalone worker simultaneously is safe rather than double-escalating because the workers claim rows with FOR UPDATE SKIP LOCKED.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L255-L268",
+          "version": "repo-lines-v1:sha256:fe11fae42ab09f72866e8e7af7b46598bec1540908ac44797babf41382e5c4ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlNTU1NDMwNmFmZTk2Nzg5YmIyMGZhYzc4N2M1Yjk1NjU1NTNjYWQ5YjA1NTcyZmI5Y2UzMWExYzVkMTJhNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhYzRmMzk4ZjUzNjZlZGRkOTFlMzE5M2U4OTMwZDA4N2E0YmRmMjkxMjBmYTFiNTRiY2FiMjFhMTU3M2Y0N2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlNDFmZDA3ODYxYjQzZTQwZmU1NDYyZTkwOTczYjk3OTkyYzkwOTU2OTMxZDU4OGJmNmM1ODMwNmNjZTFhMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0MzA3YTRmZWJlOTJjNDZjZDg0YmQ1N2FjZTM2MTRkOWY2NTVjN2MzZDNiNjA1YjE1OWY2MjY4NDRjN2Q0Y2IifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L160-L175",
+          "version": "repo-lines-v1:sha256:ee6137e928ead649b23838569be30f6d54a666cea4b943bff7392a49466d1547:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzYWQ2MDJiOWJlZTA3ZDRkMTRlM2JhMGU5MDZhZmQ3ODE2YTcxNmVkZTY3NTkwZjFkN2U2YTJlYjdhYzkwOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiYTkxYmM5ZTU0NDQzMjk3MzEzOTI2MWJmYmIyN2NkYThhY2Y3Nzk1YmUyOWI0Yzc2MGIyYTJiZGQ0YTUyZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0ZTA1N2M4NTgwMWU5NWUxNDI0ZDE4MjE0OTU0ZjQ2MGMxMjJmNzViYmZlYjdhMjRhZDhjNDI0NjU4Y2U0ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c3e4aa731bb498ea17d9f0f65cd50e0",
+      "statement": "The worker runs from the same image as the API, which builds both binaries, with only the container command differing.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L262-L278",
+          "version": "repo-lines-v1:sha256:d3093d265c923fe59d5a45b857e9bd5ac86c1d5942a1e620a1d3bb94de9496f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxOTc0NzhmZTljZWZkMmE4YmIxNjMzNDlmYmRlMGM1NjliZTM5NjFkNzNkN2Q5YzIwYTU4ZjEwZGQ1N2FjMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZGIxZTYzYjU1ZDY3ODY0ODk5NDFlZWM2ZWE4MzI0YTU2NjhlZGE2NjUxYzUwNGNlZjJkN2NkNGFmYjQ2OTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1MDc2MTk1MWQ5NTM0NTU2ZWQ0NTVhODMwNTE2YWFkYjg0NzNiYWVmOGMzY2MyZjQ5ZmEwODE5NzAxMjNiZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllZjIwNTdhY2NmZTUzYzkwMGI5MzVjYWE5ODExMzgwMTllN2QyZWZjN2UxZWFlM2MyMjA2YWEzMjdjODgwNDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_07c5ab96f45f4bbc9230d7f7ac3914c2",
+      "statement": "The agent component declares two persistent volume claims — 10Gi for user workspaces and 5Gi for Claude CLI state — both defaulting to ReadWriteOnce.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L170-L200",
+          "version": "repo-lines-v1:sha256:7c1a1a0598ac94ff4ba0b0bebcf18afa952cb82d9ba304c68454db2b6dfe4780:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxOTc0NzhmZTljZWZkMmE4YmIxNjMzNDlmYmRlMGM1NjliZTM5NjFkNzNkN2Q5YzIwYTU4ZjEwZGQ1N2FjMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllZmUyMTY4ZDNiOGU0ZDFmODFhZDVmODcwMGI3Y2JjZTgxZWZlMjI5NThiM2EzYzM3MWQ0ZjIwZDg1MWFjZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0M2U1NWVlMTlhYWY0MTRjOGY5NjQzNzc2NGZkMDBlY2FkNDdkMTYxZGM3OWNiYzdjMzlkMjNiMjFhYjAwZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRiMjhhOTUyYWQ4MzcxZTkxY2Q2Zjk1NjdjMGRhMmRlNjU2YmI1MWEzM2Y1OTJhMmNlYWVmNmYwOGY5MDFhZDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f571fdaddfe43b1828000f49b021f89",
+      "statement": "The chart hard-fails rather than warns when autoscaling is enabled for the agent component, because its ReadWriteOnce volumes cannot be mounted by a second pod and because conversation resume reads the CLI transcript on the pod that created the session, so a request landing elsewhere silently starts the conversation cold.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/hpa.yaml#L19-L35",
+          "version": "repo-lines-v1:sha256:6c936118ba97ea824138d303c7e1a5e9d00183c2418b8092615fa19a8b373e1a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NGZhZGYxNjhkMDlhNjAxYjFiYzY1YzA0Zjg2NTZlZmQ1OWVjZjEwZTgyMzUyMjQ2OTlmZTQ1ZGQ0MjUzZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjM2VkZjJlYzRlOGRiYWVjYTg5OTJmYmMwMWE3NzdiNmQ5NTFlMTYzZDEzMWU5NmRmMTUzY2NkNThkZmRiYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiMjM1MmY5MjhiMWE4NDc4MDgxM2EzODNlYzVkNzVmZjllNTc1MzY5Yzg5MWE3ODUxY2JhZWE3ODhiMmI1YmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkMmNhYjYzYjNiNTViMGMxOTc0MDNmMjYwMmQ3NjJhNzAwNjFhODA3N2E2Zjc4YzQzZWQ2ZWExMGE3ZDUxNGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_12e0a44e928146848e91dabbefb31641",
+      "statement": "Per-component autoscaling replaced a single release-named HPA left over from helm create which targeted a Deployment that never existed, since every workload is named inres-<component>.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/hpa.yaml#L1-L18",
+          "version": "repo-lines-v1:sha256:154a02c7b86bfef3daaf1eeaf7b1174bee700946192520dd9279a42e6d6d9c0e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NDk5ODgzNjk0YWEzZjRkNDIwMTU3NTFmMzIyMGY0ODgzMjE1OGQxNWM4MDUxODNmN2ZlZjEzYzY1MjliM2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2ZmUzNzFlZmFjYjVjZDg0ZTYwMzhhZGM0YjMxN2U3N2RmNTI1OWIzNDM2MGFmNTkxNGIwYWFiMzkyYzVlY2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7100bd391fe142dd86806720d15d7ec9",
+      "statement": "Every component mounts the shared config.yaml read-only from the inres-secrets Secret rather than a ConfigMap and points its config path environment variable at that mount.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L142-L215",
+          "version": "repo-lines-v1:sha256:7f1879ee1dba457379f83988b712d95a7682388fe5d388604cab7e95e69a6a97:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkOTBlOGU1MTU5ODRjYzA3NmVjMTFmNDJlZjM0YmFkYTZmNDY5M2ZjMTNmYWI5NDQyZmM3ODkyNDQ0NDY3ZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2YTczOWIxNWIyYzRiZTdhY2ViNzM3NjI5OWRlM2ZmNTdiNGFmMzQ0ZjMwMWU1NzVjNmJlYzA1NTVkODkwMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwNmJhODY5ZGJkNWE2MGQ1OWM3YmNhMWQ3OTQ3MDIyNmQxYzQ1ZjYzOWI2MmZmNzc1YWM0MjFjMjU2MTVkMmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmYzM0YmVjM2MxODkxOGEwNGYyMzJlZGZiZjVhOTA3OTY2MTc3OWIxOGY3ZDExNmQ3ZWVhMjRmNzg4NWQxNjkifQ"
+        },
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L220-L250",
+          "version": "repo-lines-v1:sha256:e423185a1f52bcc01241e72b2530f5380dfc727dbc9dc60c5f06c3bfc4a25526:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MjQ3YjYxMThmZGNhNTU3YjNhYjNiZjRjZTlmYTliOWQxYTdlNWI3NjA5OWE2N2FlMjJmNDk2Zjc1OGNlYmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0ZTdkMTFjN2EwYzJlZTYzNGM3NGIwODgxNWE5ZGI1NDE1OThhODZkMWVkYjdhZDFkYTA2ZTgxYjU0N2MwMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjYzQxYWMwODJmODAwZTFjYjYxZDA0YzgxOGQ2NzViNWM0ZGY0NjY4MmI4ZmY4ZDk5YTc5ZTVmMWE2YTdhMGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a46baa351a7a44f1944c3241a7ec9b04",
+      "statement": "The migration Job runs as a pre-install and pre-upgrade Helm hook weighted to run before other hooks, is disabled by default for deployments using Supabase-managed migrations, and reads its database and Supabase credentials from the same secret.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/migration-job.yaml#L1-L52",
+          "version": "repo-lines-v1:sha256:7162cd5db318c7a02ca0b0d20c789e891a8e80d573645e82f8fa9845868b8ead:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlNjNlNjcwNjBjZGQ0NjcxODZhYjY1YWViNDlmOTM2NGM4ZjE5ZTY1YWE2ZDQ0NzM0N2UyNGM0NmUyMjJjODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4ODM5NzQ4ZDc5NmExYTIxOGUwNjk3OTUxZWZhZDUzOWFiYjI3MmNlNTBjNDI2NTE4NjU4Njc5ZTY5ZTMyNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyNmMyOTE3NzBjYjRmY2VhNjhmNmI4MThkYjAxMmFiNzU0ZTk5Y2UwYzAzZTFmMjY0NDcxOGE3MGNlOGRhZTAifQ"
+        },
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L125-L145",
+          "version": "repo-lines-v1:sha256:08808648d92c0e74f3c4ee42c960a33f38844216b4c94a4c7e7e8f627c284037:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzZjNiZjc3YTg4NDA0ZjA5MDBjZjMyYmE0YzE0NmRkOGM4MmY2MWU4YmU4MmE5Y2MyYjk2NGYyYzM3MTQxNjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhY2M5Zjk1YjJmMTE5YjRjOTVmZmExNjVhYWYwMGUzYTQzZThiODFhMTY2MjlmZTRjMTJhNTg5OGRmZjg4NWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwNWQ2NWU3NGM0ZTFiYjM2ZDk0MmVjNjc0OTUxMjMyY2IwMGQzNTA0NjIwMTUxYTEzMzc4N2EzN2M1ZDExMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_57667e21292146eba1a762d13c914167",
+      "statement": "The chart can grant the agent pod a ClusterRole with read access to core Kubernetes resources including pods and pod logs, which is what lets the agent inspect the cluster during an incident.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/ai-clusterrole.yaml#L1-L20",
+          "version": "repo-lines-v1:sha256:1350e50813f75b14c7db04f489d838026e3b3ce765c1386271f3793157f9e2b6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxYWM1ZmI2MzQxOTI0NjcwZTcyZTk3N2M4YjgzYmYyN2MyYzc4ZDI5MDJhYWM3NzY4YzVmYTQ5YTBiYTgxNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMWViYjZhN2QwMjVkNTQwYjRmOTNlODE0Nzc3MDg4NDFhY2I3ODU1M2E1MzQ5YmU3YTI0MDMyNDkxMjIxNzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxZWVkZTIyNjhiZmNhNjQwOTlkZWJlMzQ0NzMyM2ZmOTk0NjBkMjFkZThlN2E2ZjRhYmRmMWNhM2ZhZjVhNTgifQ"
+        },
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L210-L222",
+          "version": "repo-lines-v1:sha256:73101265d3690487fb0660831083b93c4d217e6bed2d3e2a302a816356944f64:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3ZGYyODExYjEwYTg3N2E4MmYxYjQ0ZDQ1MWQyNTU3NWE0MTc5MzI1YzNkZTRjYmY3NTUyNmU1MGQzMDFhNzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkYThkYzVlNWUxOGIyOTNkZmZlZWJlMDVhZWFjNjlmMGNhNzU3ODQwODE2MjJjZjc5YjMyZGEwOWFhZTFkY2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZhMWRkNDkwNWE1Nzc3MTUwZTllNDU4N2ExMDAzYzMxZTgxYzczMjdjZWZiODVhM2QwYjk5MDNiYmMyZGNkNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2ZGZjYzVjMzU3ZTAyMDBkODBmZTA2OTkyYjRjOWFiOGI2YzNkZmFjZjEyNDJmNGI1ZDExMDI5Mjg2NTdkNzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_16c372340485486daef45aa0b6f6ce8b",
+      "statement": "The chart's image tag defaults to empty and the deployment template falls back through component tag, global tag, then .Chart.AppVersion, so the chart version and the images it deploys move together and cannot drift apart, with the values file warning that 'latest' must never be used because a rollback would have nothing to roll back to and two nodes pulling at different times could run different code.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/Chart.yaml#L14-L21",
+          "version": "repo-lines-v1:sha256:2d5a3f2988045948aa18ff7b4029fd81ba2efb74c4aacdc88c2632f4d2fe740e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjc1Zjc5NmQ2MjljMjA3MTllNDk4NTU5YmRlM2RiNjI5NTM3ODJjN2ExYzFlNDk1Mzg4N2QwOTllMTcwMDE5YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWVjYjA2NDk0NTQ2ZWRjNTZkN2RjZWQyODNiNWE4YzMzNjkwZjY1ODE0NTIxNDQ1ZDRkM2VhOTc4ZDM2NWYxZiJ9"
+        },
+        {
+          "resource": "repo://deploy/helm/inres/templates/deployment.yaml#L55-L60",
+          "version": "repo-lines-v1:sha256:d8a3802f88ed63dddfd523a95f47cd31d975bac7b93bee61457defe0e44b6788:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmYyNjA5YjQzOTJiNTkyNzM0MzUyNTNmY2ViNjA4ZjI2ZDc1ZGNjYTg1MWI5Mzg3Mjk3MTE1ZTlhZGM4YjYxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGQyOWY2OGFmMGFmNzIxZmFiYzA0OWM1YmU1YWM2ZGFhOTkyZTk5MWJkOTRiZTZjZWRhNWZlY2FiNTk5NDUxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2RjM2VmYTUxN2FjYTMxMGUzNzhkM2JhNDEwMWFmMzg1YjdhODJjNDc4ZTY5YzZkNGJjMmNjZjJiMmQzZmI2MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDc4ZmE1MjJkMmIzZDY3ZDY1YWIwYzEwZjMzYzc1ZmNlMGI5OWVmZWJhNDlkNmExMTQxYWVlZTgyMjYxMmI2MyJ9"
+        },
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L8-L17",
+          "version": "repo-lines-v1:sha256:90ff1a664da69281d5be8028b1fc9156d44347a31f6d713d1709ff8c076ae02f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyNjI4OTcwYmY0OTdjMTAyODA3OTdjYTYwMGExZWNiZWYwNWQ3OWQ3MGJlZTc2ZjIyYTQwMDE4MzI2Nzg5OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDkyN2ZjNzM1MjhhMDBiMGVhODAwOTNiOTU4ZDFjYTJjOWVjMmE1MzU4M2E4OGUxMjAyOTRlNzJjYTk0NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlY2M1ZTkzNjM5OGJhN2Q4YjU0ZmVhZDdiNzhmM2E1NTEwODJjN2IxYjI3N2ViYjlkNTZkMzQ1MTJmZmM3YTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5YWVlNTY2MjRjMjRmNTFkZDgyMGY4MTZjNDM2ZjJkY2E3OGQyYjM4ZjcwODg0ZWFjYzcxM2IxMjNkODIwNGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_968913c4a69d40aa88d5fbcf61c3e2d0",
+      "statement": "The deployment CLI is a Cobra application whose push command builds and pushes images for web, api, ai and slack-worker with configurable registry, tag, platforms and cache behaviour, mapping the service name 'ai' to the published image name inres-agent.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/inres-cli/cmd/push.go#L14-L45",
+          "version": "repo-lines-v1:sha256:12f444f0b612e5b5673a32c6bb6953765ed4e2cc3b08c4f5c7fd6c812ac0edbb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxNDU2ZDM5ZjZmYWExMjhmZGQ5NzU3NWY0ZDEwMjk2MWExZDYyNTY2NjczZGE0ZTNiZTk4MGMwM2E3ZTlkMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwNzZmNjkyNzAwNWM4Mjg0YmZhNmFhY2IzODQwY2Q1OTJmNGY0MzljMTRlOTg2MmVkN2ZlZDBhY2JmMzY2NTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0NDg0ZGIwNzE2OTc4OGNlM2UwNzVjMGVhOGM5ZDVmMDI0OTdlMzQxN2Y0OWFmMWI0NmU1MjNkYWE3MzA1MDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0ZTA1ZGIwOWQwZWU3ODMwODc1NmQzMzBjMDRhOTkxYzQzMzA3MzBkMWNiZDQ3MTE1NjlkNDA5OGJkNDFkZmYifQ"
+        },
+        {
+          "resource": "repo://deploy/inres-cli/cmd/root.go#L9-L20",
+          "version": "repo-lines-v1:sha256:f42561e34627c3d6270a8fe17f367c392268f8820aa522ce36836f84417a5ee8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MWY0N2EyNGUxYWQwN2M5NDNkOWEwYWQ1MjBmZTI4OGE1YzAxMTZkODM2YWE0MDJhYzI1NDY4NzMyMzY4ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0NDg0ZGIwNzE2OTc4OGNlM2UwNzVjMGVhOGM5ZDVmMDI0OTdlMzQxN2Y0OWFmMWI0NmU1MjNkYWE3MzA1MDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyMWVmNGJjOTM5NDAxNjEyYWMwYWRjYzgyMTZiNDg1MWQxNWRmNjZjZjg3NzgwNGI2YWU3ZjVmZDNmYWU2NmYifQ"
+        },
+        {
+          "resource": "repo://deploy/inres-cli/main.go",
+          "version": "repo-file-v1:sha256:35342e8134699e3b7783209e6d96238ba174315325d1d7600a72decadcb05c08"
+        }
+      ]
+    },
+    {
+      "id": "claim_fbce23ebc7cc485d88d8a002f6fa41b1",
+      "statement": "The agent's two WebSocket routes are declared with strip_path false so the agent receives the full path it registered, unlike the /api and /ai routes which strip their prefix.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/volumes/api/kong.yaml#L38-L63",
+          "version": "repo-lines-v1:sha256:d749148cd034b8ee723f9f5a8514667fe8a18553d6db2ea8f8eee8934d0fed12:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1MWNlZGY1Zjc5NGRjZTIxOWJkYmY3ZDhlNmY3YWEzNzljMmNkM2E5OTAxMjY0MjJmZDZiOWM3NzQwNDdkMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzY2U0ZGE1NDE3MTlhOTBlOGZiOTQ2MDAyNDU1ZWI1YjMwMjBmMmE5YTQ1M2NiNThmYWY5NTlkMjA3OTBhMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg3MzUxNjA4ZDY4MTYwMTY0ZTE3ZWNjYjRmMjczNjc0ZGYyZGIwMjhlNTFlMTExNmI1MGMwMDNlZWU1ZTcxY2QifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T11:09:25.960Z"
+  }
+}

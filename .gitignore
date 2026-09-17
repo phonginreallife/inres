@@ -189,3 +189,14 @@ docker-compose.override.yml
 
 # Archify visual-check evidence sidecars
 docs/*.visual-check.*
+
+# ==========================================
+# Documentation site
+# ==========================================
+# docs/wiki/ is derived from openwiki/ by scripts/build-docs.sh at build time.
+docs/wiki/
+docs/_site/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/Gemfile.lock
+docs/vendor/

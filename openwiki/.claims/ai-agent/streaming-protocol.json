@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6caf80e47532c36fa998c4da58dcd63011acb69707d698a9d9e0c16c12646901",
+  "claims": [
+    {
+      "id": "claim_5a90eafd445544efbc77cc650edacc29",
+      "statement": "translate() is a pure function over the SDK message stream and a mutable TurnState with no I/O, no SDK client and no asyncio, so every stream-handling decision can be tested exhaustively against synthetic message sequences.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L1-L10",
+          "version": "repo-lines-v1:sha256:c320b49cd18e5b3af55d1577c1a8ec5eb197f6b1ee75d24f9e65aca13ba87128:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlMDMzMDlhMmRhMDU5YmRhODdhZDM3OTMyMDBkODBlYzNmYmZmYjYxZDg3NTM3NjdkOWM2YTcwNzBmMDI3MmYifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L102-L125",
+          "version": "repo-lines-v1:sha256:98a360f06973c744bbacd94c6300417897895188e130270ed44018529ff9a2a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhMTcyOTk4OGIyOTdmNDFlOGU1ZWQwMDhkYzg2MTJkZmRhMmI2NWExNDM2NGEzZGI5MTg5YmNlYzNmOTVhZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwOTRmMDZkMzZmMDQ3N2RkMDk5OWRjYjNkZTllNzU5ZTc5ZjEzZmFjNzEyOGRiMzJlNDA1NGU0MDY3ZmU3YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5OGUyOGFlMTFiYzA3NGVkOTYyOTZjYzQ4YTFkZjZlZGE3ZTNmZTQ0OTQwYmE5NTIzMjk4ZTNiZmExNzI2OTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdhMDdiNjdjZmI3YjEzMWE1ZmNjYzgwNTY3Mzc3YTY5MzJmNzM5MTM3MjgwZDgyODU2ZDgxZGQ3OGMxYzdlZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_34b25d123e6f405eaed88f6788e33c31",
+      "statement": "An unrecognised SDK message type is logged and ignored rather than failing the turn, and a translation exception is caught and yields no events, because the CLI may introduce new message types in a version bump.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L102-L128",
+          "version": "repo-lines-v1:sha256:5f4c4b70cc1aa58499932eb3f13790766c9b383fd0ecbcd30c90a9db618fd3dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhMTcyOTk4OGIyOTdmNDFlOGU1ZWQwMDhkYzg2MTJkZmRhMmI2NWExNDM2NGEzZGI5MTg5YmNlYzNmOTVhZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5OGUyOGFlMTFiYzA3NGVkOTYyOTZjYzQ4YTFkZjZlZGE3ZTNmZTQ0OTQwYmE5NTIzMjk4ZTNiZmExNzI2OTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0ZWZiNGQzMGI5ZDFlODI2MDBmNDJiNGNmMWU4Njg3MTE3ZDE0MGE5NjRmMzQ0YzAyOTE1ZWVhZjM4ZDhmOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_540b81382a0f446f947d16e07d3b47f6",
+      "statement": "StreamEvent deltas and the AssistantMessage that follows carry the same text, so the translator streams the deltas, treats the AssistantMessage as authoritative, and emits only the difference between them.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L19-L26",
+          "version": "repo-lines-v1:sha256:2cbe0cd8b8ca5fcaad9b9d421e1659910c27c5f35afdb909e7064470f49cf041:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzMwZGM0NDI1ODYzYmYyZmQ4MzhiNzBiYjdhNzA5NjdjZjFhM2ViNzRmZjU5OGZmNTlhZGNhZDZkZjUzODY3ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGU4YzQxZDRjYjQ1YzM0MThkOWVlNjlhOGJiYzQ0MWU1YmFhNGE1MmNmNjFiMjAwYmEzYjJkMDIyMDNlZTM5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2FlMGYyODhiMWYwZDI0MDQxYzczNGQ0ZTcwZDJmMTBmMzhlMTA0ZGJiOGU3OGM2MjQxZjlmZTkzYmFhYTJhNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmYxYmYyYjg1MDEyMDM1NTk1OTAwYjBlZWFlYjg3Y2Y4NmM3NzZiOGNlOWY2MTgyY2EyMjM0ZDFjOWUxM2ZhOCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L207-L236",
+          "version": "repo-lines-v1:sha256:dda757d068e3323e2e6776c6aa08c3c36412596ee8a757df50b22fd4e70a7fbc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTcxNTI1NzJlZTg0ZjEwOTA2Yzc0YjlmMmE5MjQzNGRkYWIwZTNjNDI4MTNiMDRlNTk3ZWZjZWM5NTFiMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlNjU4MmQwZTY0MDQ1ODIyNzNmMTY2ZmU1MDg1NDNmZTFmYjJlYjMxMDdlYmE3MzU2NTI1MjBlN2E2ZTZlODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwMmJhOWZkMWQ0NGEwZTQyN2JhMmI2NmY3ZWQwY2Y5YTZiNTM1YjFlMmM4YzIzMTU1YzZmYTY3MjFhNzMyOGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f50dbd174b834a7b871e2f21b60987af",
+      "statement": "When streamed text diverges from the final assistant message rather than being a prefix of it, the translator emits nothing and logs a warning, because duplicating text is worse than dropping a correction and divergence means an assumption about the CLI no longer holds.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L207-L236",
+          "version": "repo-lines-v1:sha256:dda757d068e3323e2e6776c6aa08c3c36412596ee8a757df50b22fd4e70a7fbc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTcxNTI1NzJlZTg0ZjEwOTA2Yzc0YjlmMmE5MjQzNGRkYWIwZTNjNDI4MTNiMDRlNTk3ZWZjZWM5NTFiMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlNjU4MmQwZTY0MDQ1ODIyNzNmMTY2ZmU1MDg1NDNmZTFmYjJlYjMxMDdlYmE3MzU2NTI1MjBlN2E2ZTZlODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwMmJhOWZkMWQ0NGEwZTQyN2JhMmI2NmY3ZWQwY2Y5YTZiNTM1YjFlMmM4YzIzMTU1YzZmYTY3MjFhNzMyOGYifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L104-L115",
+          "version": "repo-lines-v1:sha256:5f7a98e5cc4a5df55c163dafa2c2210fda742eb4f9e5bf80beaba48a9db39aab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmOGQ3NTMwMzdjODM3OGQ5MWQ2MTBjZjk5NjY1OTRhMzdmODE3Y2I5MjNmYmEwOTgwNmIyMzYzNmY2YTJlYWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA1ODIyMmY3NGI0YTgxZTE0NDgxMGRhZjIxMDQwOGVmY2Y2MzE5ZWYwMDE2ZjBmOTk4ZDNlZGEwN2M0OWExNTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFlYTIzN2NmZjdhZDJiNjJkOGM3NjNlZTU3NjcwNGM4NTc2OGMyYTIzODkyM2NkOWZkYmJjZTRhNTdmNGNjNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c74a635c9a374f21b77a7ef024856a19",
+      "statement": "When no partial messages arrived, the whole assistant message is emitted in a single frame, so disabling partials degrades streaming granularity without breaking the reply.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L213-L226",
+          "version": "repo-lines-v1:sha256:1f28302927e5ade9706ad804de5116548d0b8f35386dabb1f86b4023a1bb5ba8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyYzVjZThlYjFlNmM3NzE1OTI2NmY1ZWM2MDY3OGJlZWEzOWNkMTAzYmNkMmMxOWE5OGQzOGIwYjVhMWNkYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4MjY1ZWY0ODg2MzhhNjQyNzgxNzhiNzg3N2JkMzU0MzQ3ZDZjN2UyZDY5YmViMGEyZDQzNjE5ZjdhOWJmMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAyODMyYTJmOTRhZjdkYjQ3ZjRlODcyYmVjZDdlMDlhNmQwN2E5YTI0MTcxYTc5MGY4OTkyZTJjODU4MDQ0MGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhZjZjMjM4MjE3ZmVkNDc5M2QwNjE0YTA5MGU4MTMzZDk1MDBkMTUyNGFjMjE1NDQyMzc1MzI1ZjU5YWVmZmIifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L86-L93",
+          "version": "repo-lines-v1:sha256:66c5d0fd2aee316d884989a47981559568b669f19874aaa8fd6b36b014e5e1dd:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQzOTFiMjA2YzNjM2VkYWMyNTdhOThhMGZlNTg2MmMwMmRiYjI0OGNiNTU4ZjM5ZGRhMThiYzMyNzNhNWQ1MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWJmM2NjMTFiMDA3MmRjNzcxN2E2MjI5NmM2OTkxYzQ0ODA2M2IxZmVmNmRhNWMzNjdkYWM2Y2E3MWVkYzFkNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjhmYTVhMzM2YTdiN2YxYjk2NTY1MDQyZjE1MjA1NzI4OTZkZjY3OWFiZjY2MTRkYThhZjk3ZmNhNGFlYzU2YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc71727fdc1348438d8abd7ae443c1c4",
+      "statement": "TurnState keeps completed assistant text separate from the in-flight stream buffer so that an interrupt landing between the two still yields the partial answer the user read, via the concatenation exposed as text_for_persistence.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L54-L100",
+          "version": "repo-lines-v1:sha256:3b9221f1dc27fc46cd5fdeaa06c8adbcdd09bdf84ab20377d83c711516c1cf79:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2ZmJhZTBiOTFkNDRmYzBkNDlmNWRlNjkxZGE2ZmM0MzFmMjYwMTM0YmY3MzFlMGUyMWY3NjQ4MDk0MzM0Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyMDA5N2U0YWE1MDA2OGJhMTU3ZjlhMjczOWZhZDg2OTk1ZTFlMGNkY2NkYWRjNTg5N2MyMDM0Yzc0ZDNlZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5NDBjM2UwYzdlZDFkZWY0Nzc1NzgzMjE5YWZlMDY4NTZmMzJhMDJiMDBjZDJlMWMzOWU5NWEwMGJiOWZiMGIifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L357-L373",
+          "version": "repo-lines-v1:sha256:d9d6294ab3818403a5fd19e28a2479a32e91b1a45e34eac894fd70dcf044bd71:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5ODVjNzAzMjM0NWZjNWVmMzA4NTdiN2MzMGIzNzEwNzkwMDMwNzQyMDQ0MGE1ZWQxYWVmZTQ2YjI5YWRlMzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjZTI1YzQwNzQzMTU5MGRlZmQ2N2VjNzE1MzFmYTdiODZjZGMyNDgxMjMwNDlhZTRhZjQxZDM1NTNiMGMyMDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5MDhlNTBjM2E1MTJjY2M5OGJjZDUzMDM4ZTM3OWQxODAwOWZmZWJlOTlmNGJjOWU5NWVhYTY0MDE3YjA3ZTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9cb43d1359e41629f991017a7888dd4",
+      "statement": "A message_start stream event clears only the in-flight buffer, because its previous contents were already folded into the accumulated assistant text by the completed AssistantMessage.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L137-L145",
+          "version": "repo-lines-v1:sha256:fd8983ad55d243af30913e3dc438f39d31d85c63a89974aeff42e1ababf153c9:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTg1NmRhZDBlZWFlMzA1MDQ3YTdmZmM5MDQwNDBhYjhjNjQ4ZjVlM2U3NTMzOTI3NmFkZmZiMzg3NzVkYjI1MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzYwZDY0YTI1NGM5OTFjYTgxNDM1MmNmNWI4OWUxYjdmOGRjM2FkMWM5MjViM2EzMDc3Y2FlMjRjMmQyNWQxNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzRmMDUyMjRmMTMxY2NhMGNiYzQyODY3OTliYTZhZjk4MjliZjQ1NDQ2NzZkNTIxOTQyYWY1MzNmY2RiNWU1YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODJkYTM0YWI5ZmYwOGJmNTg5NmIyM2M0NGZjOThlYjgxNzQ1ZDM5ZjMxZWIxNTQ3YWZlNDdkYTUyMzNiMGUwNSJ9"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L139-L157",
+          "version": "repo-lines-v1:sha256:84247d03a3775fa35a08c93003eb209e7cf8ad7daac98b304023ae30eaf4f97e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4Yzg4OWIwYWNkZmQ0YzU5N2I1YTA4Njc0ZTM3ZTI3ZjJiYTM5OGM2NGNhYmJjNTJkN2IyNTEyNzM1NWEzYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3NjliZWE2MzgzYzU5ODI5ODcwNmYwMDYzZmVmNzVjOTExNmU2MjJkNGE2MzAyZTIyNzg3ODc4MDRmNTMwNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlOWE4ZDE2YjE0ODE2ZDUxZWRlN2JhMmViYzkxZTgxNDVhZDI0YWMzNGQ5YmRmNzNmNjBjNDNlZjE1NzMyZWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_310259538e4a47778ef6a960e53037bd",
+      "statement": "Output carrying parent_tool_use_id is subagent inner monologue and is dropped from stream events, assistant messages and tool results alike, because merging it would interleave work-in-progress into the answer.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L128-L133",
+          "version": "repo-lines-v1:sha256:3ad6af4405f628695de8e8f436fcd83d72ecc4d1303b841b2da29d3e3ddc5f4a:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGMzMTk3NzRlYWUwNDVmNzM3NjYyMDIzMzU5ODFlZmFjY2M3OTI0YzQ4ZDc0OWQ2NGU3YjUwNzhiMGZmZWJkMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjFjNWYyNTNkOWFhYWJlZjk2NmJhYTUwNTczNjYzODM5ZjM5MWZjN2I3MGE2Y2M3ZTk4NDc4YjkzZjUyM2JiMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzRmMDUyMjRmMTMxY2NhMGNiYzQyODY3OTliYTZhZjk4MjliZjQ1NDQ2NzZkNTIxOTQyYWY1MzNmY2RiNWU1YSJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L168-L175",
+          "version": "repo-lines-v1:sha256:ff8e8d967efe8f0d886eee648ed45349d9295569d934cd2207161570263f2784:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTU1YTg4MjNmNmQ0ZjU5ZTcwMDE2MGQzYWJkZmFmNmY3NDgyYTc2YzhkOWY0OGYxYTkxYjcwNWNjZGI3MDg0MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjAzMzhmZWQ2YzEyN2Y4NzQ5NWQ4OTViZjRmNzZlN2E3MmI0N2U0NGNjMjcxZjAxMmJiODNlYzkwNTRhNDUwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2EwN2I2N2NmYjdiMTMxYTVmY2NjODA1NjczNzdhNjkzMmY3MzkxMzcyODBkODI4NTZkODFkZDc4YzFjN2VlOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGE4YWU5NGYxZGVmNTg1ZDhkYzU5ZDIzMDdiNzY2YWQ0MjkyNDVlNTQwNjNmOTViZmZmOTUzZTU2ZDE4YjdkOSJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L238-L245",
+          "version": "repo-lines-v1:sha256:2849525c6187972145cbb6ff6faceaa8fcc0261d661ec452b5715c67d76a9948:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDIyYzhmM2M1ZDE5NTRjNzVmNmZhZmYwMTA0YzI0YTY2MzRkOWIzY2U4ZjhkYjQ0M2I0M2Q4MGJkNzk3NjllZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGI0NjhhZDBhYmQ1ZGY4NjIwYmI5NGJkZmZlODVmNDIxMTBlY2RhOGFmNzY0YTRkNWMzYmEwNmJhYTVmNzczZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODNhNDBiYzg0NmNkM2JiMDc2ODBiMmJiNzM3MWJiMjU2NDI4MzAyM2U2ZWZiZThjNmUwMjY1N2ZlNzY2OTUwZCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L26-L28",
+          "version": "repo-lines-v1:sha256:250054d530d7feb3b2d79ee302e5ed3bebd326d8c3934a910e8cd2a3f1665146:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGU4YzQxZDRjYjQ1YzM0MThkOWVlNjlhOGJiYzQ0MWU1YmFhNGE1MmNmNjFiMjAwYmEzYjJkMDIyMDNlZTM5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjgwMTA2ZDA4ZTM5MmIwYWYzNTFhZDZjNTA3ODMyMTBkMWVmZjFhNGE1Y2RhNTE5ZTAyN2RjMDI1NWVjZDI0YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYThmNWRkOTQ0NjIzMDMxZDk5M2Y3MGU4Y2UzZGVjYjIzNjc2NTM1MDFhNjUxMDlkMzI2YTQwNmExZjhlNDY4YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_75ce36f165d740259ef5bfb43adb1dd2",
+      "statement": "Thinking events carry the running accumulated total rather than an increment, because the frontend replaces its thinking buffer on each event instead of appending to it.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L94-L102",
+          "version": "repo-lines-v1:sha256:82084ee6faa4c85babbce6bfb87cc2e173b3fe60cc0bb97834a50114d63ed12a:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZhNzE1MjU3MmVlODRmMTA5MDZjNzRiOWYyYTkyNDM0ZGRhYjBlM2M0MjgxM2IwNGU1OTdlZmNlYzk1MWIyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQ1MjVhZWRjYWRkYzk5MGFmZTVlOGI2YWM3YTM0MWY3Y2NiMDM4MDgzODhmOTg1ZGE3MjBhYzgxMTI2ZTE5MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTVhZTRjNmM1MGY2MjQ4MWRkNGJjZjlmY2EzYTFkMzgyYTlmMWE4NGIzZDk5YmYyZDRiNGZkMWFmZjNkODA2ZiJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L158-L166",
+          "version": "repo-lines-v1:sha256:e9456dab1b73965fb08c58b78aee13cd422ed5d3e4ef51847ba296330be3de38:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjhlMjk5YTM5ZjZiMTUxMDM3Zjc2OWRhOTZiMWMyMjUwOGEwYTZiM2U0YWEwZWJiNWViZDkzNDgyMjI3YWY4NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTU1NTM0ZjE0Yzg4YjFjZDM1MDNiZTNiODMwYzcwYWRkZjc2ZWU2NDI3OTk4Yjc3M2ZiNWNiOWUyYjdlMzNhNiJ9"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L187-L193",
+          "version": "repo-lines-v1:sha256:3332976b34e1f9f7f5780be8a00e61dd01dddd7c75f1cc5f14cde088e6553b51:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQ2ZmIxYzA5MTExYTg1ZTJjZWEwNzhiMTk1OTA4YjcwZjgyZjE2YThhODVkNDE5MmY1ZjZmOTVjOWEyMWQ2MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDgyNjc2Yzg4OGMxYTRkOWZhNzcyZmNkYzMwMmY3NzNiYzcyOTBlZWJmZjlkYTM2YTM5ZjQ0YzMyMTE5ODM4NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWQwMjUzNjNkNTM5ZWM4Zjk5NGE2Nzg4MjJmNmI4MWUwNzliMDk0ZDk5N2M3MWNmMDMzZmM2NDRmMmNlYWRhNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_586e679edafd43fba7bb483cab42c5bc",
+      "statement": "A ThinkingBlock on a completed assistant message is emitted only when nothing was streamed, because re-emitting after thinking deltas would rewind the UI to a stale snapshot.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L196-L205",
+          "version": "repo-lines-v1:sha256:553b1cc68e255f7f6be9de4b39320efdeecfadc09fa2385d5722e5e06cf24406:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjMmI1OTBiOWZhMjM3NTI2NWY0Y2VmZGI1NjYyODM3MWY0ZmM1OTNhMGU4ZTRkMGU1ZTQzYjVlYWI1ZTIyOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiZTBjYWIwNjEwN2RhNjA3MTUzMWY2YmUyMTU0MDZjMjI1NWFhNmNiOWNiNjQ2Yjg4MzU0NjAzZGMxOTAxOWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkYmQ2M2EyM2UxMDI2MGIxMmQ1OWU2NTYxYmY5NzBiNjljNDQwMzdkNzc5OWI4MjBmYTg5Mjc0OWRlMDc4NGIifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L194-L204",
+          "version": "repo-lines-v1:sha256:2dc9b0061440d2e9e558bc1e0e81fd0096422f71b729d6e066d2a3b1bc4f2fd9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlMTYxZjVkYWNmYzc4NmNhYmIwNzFlYmJkOTQ4Yzc1NjM4ZDYyYjQ1ZTA0ODViMTVlOTdmZWY2MGViZWM4MTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4MDhjZmRmNjdkZTgzMDgzNDk5ZTIxMzcwMmIyM2Y0NTE2MmZkODg2OWQ1OTcwZDUyOTJmZmI5NTZlYjY5NWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwNWMxODc3MTEwNzc2YzUyMDdjYzBhYTBhNDNhZDNhZTQ5OWM0OTg4MDkwNTRmNDhlYzJjYzkwN2Q5ZjJmYTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c54380bb3fb741858dd718060577b88b",
+      "statement": "signature_delta and input_json_delta are ignored because a thinking signature and partial unparseable tool arguments are not displayable, as are content_block_start, content_block_stop, message_delta and message_stop.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L143-L167",
+          "version": "repo-lines-v1:sha256:5873104c853086ebfb2a20471081588290ee2b44a6482d8b2d440ef2c121dd0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiMWJmOTJmNWMwNDFkN2FkNzcxNGUwMDM5ZGI5NzBjMmU4ZDViY2ZmZjFmN2RiMTIwY2YzNDkzODJmNWNlY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhOWExYzg4NzBmNjY0OTI2ZTg2ZmFmZmI2NGI5YTIxZjY5MWY5Y2ZkZTdmMzIwYjJiNzRkZTBjN2Q0NDMwYTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1ZDRmZWY2ZTZmODRkYzBiNjI3NDQ5ZTNmZGM2Y2Y1N2E0MDg1ZGRmNWU2OTRhYWU5ZGYyN2FiNWRkMGMxZTcifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L205-L225",
+          "version": "repo-lines-v1:sha256:9e5751c10e70c02c97bdfd2377b35e85dbf85133fdf1d24b874c6699483416c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ODI5MTBiZTU3ODA4MDA5MjFmNDU2ZmE3OGEyMGZiYWVmNmEzY2I1YTgxMjQzZDZhNWEwMGM4MmI0OTk5ZTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0ZDIyMWJiZmQzZTI2NzI4NjVkZWRmNDVjYmM2Y2VhZGI3ZTEyYzZiMjQ4ZTRkZDJiMzRlYTI4YjNlMDFkYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxMmU1MmI3ZTkwOTJmYTdjMjBkZDJjMTE2ZGNlMTg2ODcyYTM1Yzc0OTFhMGFmZDBhODEyNDMyNTcwODgxODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e99a7e7f2424cb29f0cd2fd654cef76",
+      "statement": "The tool_use event carries its payload twice — as flat id/name/input keys and nested under content — because the frontend hook reads and JSON-parses data.content while the flat keys match the SDK shape, and permission_request duplicates input under input_data and tool_input for the same reason.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L105-L124",
+          "version": "repo-lines-v1:sha256:fc1056cb43d4b8e96d131c44b7072d4e748fbb28001ca0abc9987e083bd3749d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzY2YyM2JkNTIxMjgxNDZjOTEyYTUxZTlmMjMzYjRiYWJmOWY0MWUxYWNlMjAwNWQ0ZGU2YmQzYzIyNjQ0MTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiMTU2NmUyZTc1ZDAxYTJhMzg1ZDQ2OTY4Mzg2ZjU3YzgzZTkzODY2N2Q3N2E3OTNkNWNkNjZkMzc0MjA4ZWEifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/events.py#L228-L252",
+          "version": "repo-lines-v1:sha256:1fa6ad8e2f78b0b243251e1767cf08dc94857415c8521c2f7327faa02b7865f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxMzY4MWZhNmRmMDUyNzIwN2NkNTBmM2NkYTdkMTRiNTJjOWIwMDZmMTYxZDIxZmRjYmE2ZmZiZDFhYmIxMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwOTVhNTc1Yjk4ZjVhN2I4OGYxMjA4M2Q5MzFkODlmNWFiNTI4N2YwMDVkMmY0ZDk3MmZhOWQxOTU0YjY1OTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRmYmQwMDkzMTRiYzI3MDg0MTY3MzRhMDJhZTVmZjM5YTFlNDhhMDUwYmU5MWY0M2IyZmFhOTIwMDJjNjJiZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI3YWJmZmE5YjJjMGE5ODgzZjE5ODk4OTI0NjFiNDFhNjA3N2E2NGQ2YWNhMjllMzcwMDQ0MGY5MDI5OTZjOTYifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L226-L241",
+          "version": "repo-lines-v1:sha256:bd0c579a6ca9d7b493c6934435b2b5f9bf6074867a81ecf35f8f3118aa381c32:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzMWY2N2M5ODI4ZTU4NjEyMDU4MjE0YTBlYmViYWFmZjgyZWNmODZlNGJjZjk2Y2VmMDM3MjY0NDM3NTdlNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MjY3NmM4ODhjMWE0ZDlmYTc3MmZjZGMzMDJmNzczYmM3MjkwZWViZmY5ZGEzNmEzOWY0NGMzMjExOTgzODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5MWJiYTJmN2ZiMDQxYmIxMThlZWQ4YjhiZmQ3OGUxMTMwMDcyNzZlNDcwMzk5NjBmM2U3NTE5MTVjZTFmYWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bf21dcfdf6f243d2bb08978211a7aacd",
+      "statement": "A TodoWrite tool call additionally emits a todo_update event so the UI can render the task list as a checklist.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L192-L196",
+          "version": "repo-lines-v1:sha256:b25ff755162cdfed9418576c4bc69a5abd054c8b5643d3ed56223b97f8696e86:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQ1MWQ1Y2I3YzU2NWNlMjM1ZGIzM2M5YjQ2NTJhYjMyM2Q0MTc3YzYzOTVmYjFjMDllMzQ0YmM1MmQzOTQ2NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2MyYjU5MGI5ZmEyMzc1MjY1ZjRjZWZkYjU2NjI4MzcxZjRmYzU5M2EwZThlNGQwZTVlNDNiNWVhYjVlMjI5ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmMwNTE1NjMwYzAxZWYzODZkZDhlZTNmZjdjYzdkNWNhYmI0NWIyMWI0ZTMxY2VhNmJkZTZlNWFlNDE3MWUzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjQ3NWVkYzE3MzE2NWQ1ZjlhMzI4OTE5MDc1YTJjNTJkZWExYWM5ZDI5YjQ2YzkxNGQwMjI0NGQ0NjgwODI3MiJ9"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L242-L251",
+          "version": "repo-lines-v1:sha256:1ebdad40b3d4e157f7b03fd01aec6ee18b64a317a96d968724799a92ec92d845:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMTRmMjEyZmIzOWM5MTRlNGMzYzViYTBmODI3YjIxZjZkZDQ2NDY1NmU3YmE4YWQ1OGFkNDVlMzliODExNmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkODZmYTgyYjJkYzlhN2QxZmUzNTZjMDZkMDdiNjk5YmJkOTUwN2EwMzZmYTIzMzZlZmM1MzhkMWQ1NmE5NjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNTVlOGY5MWQxMDU4ODNhNjQ5N2M2YWNmZjYwZDU2ZGRiMmNhNDhkN2UxZTdiMDdiYmU2MjMxODExMTcxMDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3db498af920b44928d4038b8f1850916",
+      "statement": "Tool results arrive on UserMessage objects despite the 'user' role, and a plain-string UserMessage is the CLI echoing our own prompt back and is ignored, so only list content is scanned for tool result blocks.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L238-L266",
+          "version": "repo-lines-v1:sha256:2f030e6c690b6af6b8284bbd1324fbc08ebe2f3bfd3c1118d4088e62b99c69ed:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyMmM4ZjNjNWQxOTU0Yzc1ZjZmYWZmMDEwNGMyNGE2NjM0ZDliM2NlOGY4ZGI0NDNiNDNkODBiZDc5NzY5ZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiNDY4YWQwYWJkNWRmODYyMGJiOTRiZGZmZTg1ZjQyMTEwZWNkYThhZjc2NGE0ZDVjM2JhMDZiYWE1Zjc3M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2MjVmYmUyZjBhMmM2NDM2OTk2MDUxYWZjZmZlM2M4MDUzMjAzY2M0MTZmN2E5NWFmOGU4ZDY2ZDVjYWE2N2QifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L252-L298",
+          "version": "repo-lines-v1:sha256:7027966d5bd6696ccacb7724de629a121edf3e7f18d6ce76ea7960a9608969af:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzY2JkMjE3OWI4NDY5MWMxZjkwYmU4ZmIyNzQ1OTEwMTAxYjdhY2M0ZDFmZTM4NmRmZDg2YWQ1ZjQwYTA2ZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkY2RkMzdiMjMwMDI2OTdiM2I0MTNmMjJlMjdlZGY2ZTNjYzcyODVkNDZkNDQwM2NjZmYwODkyNWI2ZmFlY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiMDllNjQxNDY5OTgzMDk0MGRjZDcwMDA1MzY1NjE0NTA1OWM3NjIyMDBjYTQ4MDMxN2NjZTA4YTQwYWM0NWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6621771b444847e28eb1d08dfe4fa293",
+      "statement": "Tool results longer than MAX_TOOL_RESULT_CHARS (8000) are truncated for transport with a character-count marker and a truncated flag, while the untruncated text is retained for persistence, because tool output from Bash, Grep or log queries can run to megabytes.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L126-L148",
+          "version": "repo-lines-v1:sha256:473dc2e81f56150c53965fb9aaeccaa4628cfa77160563f283932e2380bb1908:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiNTJlOTE4YWVmMjYxYzc0MjQxNzJiMmYzZmY3YzY0OTIyOWM4YzE0ZWEzNjljMmRlYWUxMzc1YjQ3Zjg1Y2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1ZGRjMzZjOGE0MzRiZTRjYjA5MmI0OTljMTIwYmE3NWY5OGFjMjhjNzY2NWU2NGFmOTYxMzc2N2ZkMDcwODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlMmVjZDMzZGE5Y2VjNmU1ZGIzMDZmNTY2MzJlYTBiMTZmYjQyYmJhMGVlNzgzNzE5NGEwMzc0ZjBmN2EwYTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4ZDI4ZmY1OTU3OTEwMTdmNWNhNmE0MjJiZDEyNWM5M2FjZDY2NjQ2OWIxMzg5MTI2YzFmZTZlOTA2YzJlODEifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/events.py#L26-L30",
+          "version": "repo-lines-v1:sha256:ab2e68f003309b28fcee51c5396996ba5f5fca604349bac22b3a2769a037a5d2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGI0M2ZkOTMzNGNkZDhhOTA0YjMwMDkzNDg0MDE5NWFmZjRiNTFiYTE5ZjljMmU1NDE0MjQ5OTQ5OGIyZjRhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzMyZGYyNGViZjY1ZTFmYTUyNTk2MWFmZTdkYTg1NGM0NTU5OTdkMjdkMzY4M2Y2NmRkNDQ0YWE1ODdlMDE0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWZjODcxN2ZkNjU0YjExMzgwMTVjMmViMGNmYjYyODUyNmNmMDFkNzY2NzhhYWNjNTRkOWJlOTk5NmM0NTg2YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2Y0NTkzZjg4MjllMTUxZjk0NjhjODBlZjk4ZTE4NjI5NWM5NzdhMzkxYzdhZTQ5NDgwOWI1OTA2MTQ2MGZiYiJ9"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L267-L287",
+          "version": "repo-lines-v1:sha256:7ddc077fc2d41404ad83713af651318112366588ad402af1909b7cf5d97074be:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxNDBjZjhlMWM3ZGU4MDg5ODM3MjI5M2UwYWMyNjMyZTU3NDM2YjRkMGFjMjY5MDVmMDk0NzFhMDZkZGI4NWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyZTJkYWUwMjBkNjkxZWQ0NzhhZTYxNmU1NGIxZTEwYmMxOGZjZWViNjFmZTQ2Mjc0OTQ1MWMwM2JhZTdhZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1MzY1MmM3ODg0NzdhNzI4YTE0ZjE5NTg1YjMwYjJkN2UzYzkyNTY3MmIyYTU3MzA3MGQ1YWUzNGNjMjBhMzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8bf1e7948fb146a383a3bcb91c5ec9c3",
+      "statement": "Every value originating outside the agent's own code — tool inputs, tool results, permission suggestions — is coerced through jsonable() before transmission, because websocket.send_json raises on unserialisable values and the sender treats a raise as fatal to the socket.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L1-L24",
+          "version": "repo-lines-v1:sha256:1774d1958ef6d39d1ff31f60789a4c50856b2bb6daf0dd1d4ca00a1e1d658a0c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkYzM1ZGEyMjgwMDFmZDA4NGU2MmY1M2RmMzBhMDdmYTczODE4ODE0OWM4NjdmNGU1M2JkMDgwNmY1NjkzY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1YzFjNDYyZTJhMzlkNzQ3NTlmNWUxYjEyNmY3NjgzYTJiNzMwMTE4ZTE4ZjUxMjJiMDhjZWRlZWI2NTBlMjMifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/events.py#L32-L67",
+          "version": "repo-lines-v1:sha256:0a88b9ec9692574a4efa48215329aac85c3bc73163f0ad26ca920ed6586413b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmODg0OTYwZjQzZjEwNDk3NDQ0MzMwNGExMmYyYzg3NTRiMGQ4OWE2NjBmODJjZDZiNzdlYmVhYzM4OWQyZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4NWU0NzdmMzgyMGU4ZDUwZmQ1YjE5ZDAzMzk4YmFhNWUzZThhOGIwOTFiNWRmZWM5NGFmNzAyOGU2MTBmNTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cdc0c0ec41be4872ad45ba73d474a5b5",
+      "statement": "jsonable() handles dataclasses, dicts, sequences and pydantic models, degrades unknown objects to repr, and guards against cycles with a depth limit of 8, on the principle that a slightly ugly frame beats a dead socket.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L32-L67",
+          "version": "repo-lines-v1:sha256:0a88b9ec9692574a4efa48215329aac85c3bc73163f0ad26ca920ed6586413b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmODg0OTYwZjQzZjEwNDk3NDQ0MzMwNGExMmYyYzg3NTRiMGQ4OWE2NjBmODJjZDZiNzdlYmVhYzM4OWQyZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4NWU0NzdmMzgyMGU4ZDUwZmQ1YjE5ZDAzMzk4YmFhNWUzZThhOGIwOTFiNWRmZWM5NGFmNzAyOGU2MTBmNTkifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L409-L432",
+          "version": "repo-lines-v1:sha256:564ca621beae7d737875518c42f0c8a16ef37dcc51d69f3deee00f16f12fdad8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NWVmOGZjM2M2ZjZjMDk5ZjA2M2ZkYWMwODBhODQ3ZTA5MWVhOTE5ZDE2MWI4ODllMmY0MWZlNDM4NGYzOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwMmU4NzA3YTc3ZTlhYzdhNGM2MGU5NDk1OGM2MWVmMzkwZThkNTg3ZTRhM2IzNGFiM2VlNmQxMGRhMmQ0MjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MjY3NmM4ODhjMWE0ZDlmYTc3MmZjZGMzMDJmNzczYmM3MjkwZWViZmY5ZGEzNmEzOWY0NGMzMjExOTgzODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fb097bdfddb14ebe81e5ed5433eeff5c",
+      "statement": "The ResultMessage handler captures cost, usage, turn count, session id and any error into TurnState but emits no events, because the single terminal event per turn is emitted by ChatSession rather than by the translator.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L150-L182",
+          "version": "repo-lines-v1:sha256:f694d007de1b9ebe08975a4887b0d8a795c183ad90c14be2276d9c1ac673cf09:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5Y2I2ZGMwZDcyY2Y2ZWIwYzAzODM5MTBiYTA2ZjMwYTQyYjdhNmRjMTQ2ZjYxZGJlZTExMzEyZTMwYzYyZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4NTlhODA4OGVkMDRmMmYwMGQ1MDNlOGJhM2I4MmJhZGUwNDUzNDc3MWY1OWY1OGFkNWJjNTM3OGViNzBlNmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzNjIyMmMyMWNiNGFiZmJlZjQyZjVhMmYwNGY3OTZlZjRlMDFjZmExNjIwYzhkYWZkNDk1MWVhYzliZTlmNjQifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L278-L295",
+          "version": "repo-lines-v1:sha256:3018ed745b465bdc5299dab435b633e0837ce1534e83b5a5a56bb5b5d63e0be6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhMDE3NGQ4NDM1ZmMwNTFjYzFiYmIzZTk5ZGM3MzQwNzE4NmQ2MDg5NTg2YmY2MmNjOTczZDQ2NWRlZjI3YmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNmZmZTQ0ZTFhMzVkZTE1MWQxMDY1YzE5MmJhMmNmNmI0MTA4NDYzOGJjODRiOTFmMzFiZjQ1ZTgxYzQ0N2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L311-L341",
+          "version": "repo-lines-v1:sha256:4e4671a66acacf80b280a16a46dad2c5cf89979ae265abf2cf0865428f483e6b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmNjRkZmJjNzUxNjYyMjgwYzRmZTIwZjllMjMxMmU1MzE4Yjg2ZTViODlhOGZhNTRjNzhkNGE5NjhmYzFiYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiMmQ5YmRiNjI1MmQ3OTBmOTA5Y2QwZjRhNjJhMjIzZDRiNTY3NzMzYmExNTM4Zjc0ZjIyMTAzODk5MzlmOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0MGMxMTllMjM4OGIyN2NiYjYxOWY0YWI2ZjVjYjJmNWUwMDg1MzBlNGE3NWQ4ZjNjODgxZjQ1YTA0NDE4YTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_31cbe9e1dbaf4044b1231199219bd7d0",
+      "statement": "If a turn streamed no assistant text but the result message carries a result string, that string becomes the turn's assistant text so the turn is not recorded as empty, and it never overwrites text that did stream.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L286-L293",
+          "version": "repo-lines-v1:sha256:1edc2b70a808b03be8d7f2bcf1cd9baa60abf26781960739d6b509b04dd1776d:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTU3MjFmNGZiMjJhNzkxZGRiZmE1ZTQ1YjlkM2EwMjk4ZmJmMzMwYWI5ZGZmMDg4YzA3NGI2OWRhOGU3NGQwMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDI3NTBhMzg0YjlkNjIyYzczZGJkYWI1Mjc1NzY1NDIyOWQyOTllNTU0OWYyMWM5ODY0MmQxYWM1ZTE3ZDUzMCJ9"
+        },
+        {
+          "resource": "repo://server/agent/tests/test_translate.py#L342-L356",
+          "version": "repo-lines-v1:sha256:7835911d925ddf2684b6f02d53dc6e4957448061dd9cb32ebd1af2bcdc4caecc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3ODNlNGY3NzY5N2U2YmU5ZWNkNTc5YWE5MDE0MjdlMTMxMjY1NGI2YzNjNTgxNjMwYjhhZWUzZmEzNjNhYzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4ZWU3YjBjNjc1NDZmMTVjMjcyZGViMWVlNGVkMWZkZjQ5NTVhMTEwMTljYzBkYjUwOGVkNzYyZDFjOTRjOGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhZTBhODBkYjMwY2JkYzI2OGUxMzkwYTgzNWIyZTAzYjVkMjQxYWE0NWNiNWJjZDJmMjBkMDc5Y2UxMDMzYzMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c78e5c01f4d44b85b44074c939810d12",
+      "statement": "The model_changed event carries a pending flag so the UI can state that a queued model switch takes effect on the next turn rather than implying the in-flight answer came from the new model.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/events.py#L194-L216",
+          "version": "repo-lines-v1:sha256:a5e85a7e9e87c5fa7e6806b1a63201966beaa881b07a90e0c24caa5c62c98031:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZjAxZTI5YjIzZjAwNmVlODEyNzgzODBlMTNjODI0NjBiMTg0MmJiYzdmMzMzMTFkMjQzYjRiZmU0YjViNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczNWU1MDU4MDY5NGJjOTY3MzQ0ZDI5ZmM3MzRiNjhmOTlkZTViNTU5YmU5ZWVlZTk2Y2NlNzAzNzY1MTRmNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhZTI5NDIyMWEzMmQzZjAzNjhjNmFkMzdmNzQ0MjAyNmEwNTcyYTI0ODBhYjIzMjU2MDUyY2QzMzQ2NmZmZTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a945163e4e95436c8123c7b03bd188ef",
+      "statement": "Where the frontend consumer and the SDK disagree on an event shape, the wire contract follows the frontend, because useClaudeWebSocket.js is the live consumer of these frames.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/hooks/useClaudeWebSocket.js#L273-L300",
+          "version": "repo-lines-v1:sha256:b334f267e1c705508006ca063952cd5d3d0d992edea0caadc8cc986fee9a017d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4MjAwNGU1ZTEyZjkxMGI1Y2IzM2FmZTE2OGYyY2RjNjFiYzJjMjYyMjdmMjVjOWZhNWIyNTQ1ZjcxNDBhOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxM2NjMTNlOGIxMWM1NTI1ZGQwYmY3MTNiNmZlMGY4MDM3YTMzOWM1NThmNmZlMjdjYTFmMWVlNTcxMTY2ZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2NzM1OGZmZDZmZWJjM2UzZmNlYjFiZjkyN2E3ZDE3ZmQ0OTM1YjA3NjE3OGYwYjRiZjNhYmUwZWRmOWQ3NWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhZGYyZDE2ZDZlMjdhN2RhYTk3ZmVjODk4ZDAxMTczMzZkZWQ2Nzc0OTkyMmY3MDAwNjcyNmRhNWNhMmRkOWIifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/events.py#L16-L20",
+          "version": "repo-lines-v1:sha256:9b5720af7fd68a364dd14b29921d4500d058bf7ea69cb9ea8f2ed7d91fc29df2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjM1NmNmNjg0Y2UzZjRjNGQyYWQyNmQyM2IwN2ZiY2I1ZTg2Yjk4YjFmM2VhZGJkMGUxM2ZkN2JiYjE0ZWNkNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjFmZDY3MDNmNWYxMTExMjNmMGE5ZTQ3M2U2M2Q2NzhkZmE5MTY2MGFhMzdmYWFkOWFkOTkxMjU4YmI2YjU5YiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e8fc5cc83654d248a4a39870f544b2d",
+      "statement": "A turn accumulates tool activity into a tool_events list in the order it occurred, so a reloaded transcript can be replayed with its tool cards intact instead of showing only the prose and silently dropping every tool the agent ran.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L183-L192",
+          "version": "repo-lines-v1:sha256:8bf42ac1de06382d7a3d8a77ea69551ea0096abf5e7e244e69de256ec8d87f7e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5Mzc4ZDhmODZiNjUwOWFhZmVjMGJkYmVkMzUwN2ViNTdjMTIyMDAxNDVlZDE0MGU5NDM2ZGQ4MjQ1OTg0ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0NTFkNWNiN2M1NjVjZTIzNWRiMzNjOWI0NjUyYWIzMjNkNDE3N2M2Mzk1ZmIxYzA5ZTM0NGJjNTJkMzk0NjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4NzY0ZWQ2Yzk3MGU3M2ZkMTIzNDcyZmY2NzIxZTE3NzgzYTQyOWQwNjJhN2EzOWIyNDU3ZjIwN2UxN2Y4NjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiZTBjYWIwNjEwN2RhNjA3MTUzMWY2YmUyMTU0MDZjMjI1NWFhNmNiOWNiNjQ2Yjg4MzU0NjAzZGMxOTAxOWIifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/translate.py#L84-L90",
+          "version": "repo-lines-v1:sha256:9387f9eec5024405872c1e55ec44b679e34974656fc211b129a8dfa92478db99:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWM5OWIxZDQ3ZjkwNjRiZjZhMmI5ODdhNjc4NGY2NGEwMzg4NTBkYTgxN2NjMGQ0ZWYxNzFhZjY4OWEwOGEyYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDVkZDRmZTIwZDg0ZjlhODZkMzNhYzQzZGNjN2NlOTRiNjQ1MzZlNGJkMDc3MDAzNzdhYzI3NzUxNzllYzE5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjA5NzQ3YjJiMjU3YTY4NzQ2YzdkZWZmNTJiNzZjZGVhNDNkYzJlOGNlYjRlMzIxOGMwMzg0MTA2ZjRkOTg2NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dad655b8950c471ca1bf59d2a3885f3a",
+      "statement": "A recorded tool result stores the transport-truncated text rather than the raw payload, so a replayed transcript matches what was displayed and a multi-megabyte tool result never reaches the message table.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/translate.py#L248-L266",
+          "version": "repo-lines-v1:sha256:7537791fbd67687c1ed96b9d6e44b07d3bc6ebe2c51ec19da54f032887a6cd4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYzFiMTM1ZGExN2Q2ODg2Njg4Zjg1OGNhZWJlNzlhNmIyNTA4NTg0MzYyNWJjNjNmMzFmOGM2ODk4NGFkYjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiMzI3M2NiYzYyOTZjNDQ5NzM2MTQ5ZGUxNWMzYzA4ZDk0ZjQxYzY5ZTRmM2M4NjA5YjdiYWM5N2E1NDcwZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2MjVmYmUyZjBhMmM2NDM2OTk2MDUxYWZjZmZlM2M4MDUzMjAzY2M0MTZmN2E5NWFmOGU4ZDY2ZDVjYWE2N2QifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T11:09:25.960Z"
+  }
+}

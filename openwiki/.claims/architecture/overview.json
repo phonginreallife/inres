@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b186b4a57eb9a31e4b66776676c60f504afa5198a82638ee9bc83a8d14a37f6d",
+  "claims": [
+    {
+      "id": "claim_19eb1abef96d4ae2845056cb1b288ce7",
+      "statement": "InRes services integrate through shared Postgres tables and PGMQ queues rather than direct RPC between processes, so a producer enqueues durable work and an independent consumer polls and acts on it.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L60-L106",
+          "version": "repo-lines-v1:sha256:a30e2e895203e952ac9fb8744ec9b17e22e179728c6ae57d9bd48c9cd50ad3f7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ZDE2NGE2ZjVkOTc2YmYxOWVmM2ZjZDJiNjU5ZGFmOWNmNDdlYjI0ZjY0MTVkMGQzYjUwNmNlNTg4Zjk0ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L50-L84",
+          "version": "repo-lines-v1:sha256:43496a0e422cd80c7e59c6921004b523c9b02d0de9245a6b5f5eb7245e0ff162:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiN2Y4NjVlZWRlODkzYWNhNzMxNzcxYzU4MWFiNWUyMjJmYjBkODgzOTNjODIwNWJjNjEyZmExYzlhYmJlY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3NDFmMGNjMmY1MzU5ZWVjNTQ3NTdmNjg3MTlmMDFkOWE1NzUzYzczOGE4OWQ5MDA4N2U0MWMyZGZlZGM3MjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmY2YwZTcwMTQyZjEwMzQyY2EyOGQ0YTYwMzk4MDk5MTk2ZTY1YTllNGFjNzA4MjFlZjNhNTM2NzAyZWFkMGQifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L1-L10",
+          "version": "repo-lines-v1:sha256:92ec8e342b2276fc62b1bc31fa070d50301259f49407376482dad6681ddc53a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2ODJjYmRiNGM4YjA3NTE4YmY0ODZjNTg5OTBmYzM5MTc4M2FhMjBhOTE2YmZiMjdhZDIxMWViMWQ1YzM2NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiMmRkYjhhMmU2NGM2MTY2ZmVlZGFmMzBlZTUwYWM2MjE2NWZlMTQ5ZmRkOGIwZDdiNzc3ZWJlZTIxY2EzNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjljMTU3ZjBiNTY3MDhhYzljYWFkMDYzODEzZjAyOWM2OTE3YThhZmVhODE4ZWQ1ZGFmODI1ZGU1Y2ZmZjUyMTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a26cc6c9b2449da9ce5b823e33fbd04",
+      "statement": "The Go API server starts the notification worker and the incident escalation worker as in-process goroutines while a separate worker binary starts the same two workers standalone, so a single-container deployment gets escalation with no extra orchestration and a larger deployment can scale the workers independently.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L98-L130",
+          "version": "repo-lines-v1:sha256:17399903823feafb5a1ca1f47c7d9f8810ce297d82824a344ad2c1aa32089913:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5YzY1YzE4MzM5MjY3M2E4ZTBjOWRjMjBiZWE0YzUyYzdkNGZiNzc3M2RmMjZiNTg3NjNhMGM3NTE4ZjM0YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNjBjNGJhNTA3NjI0MDhjMzM3OTAwYWQxNzU5ZmEyYjA5ZDRhNTZkYjY0MmUwMTk0MTU1ZmQ0YTIxYzYyOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwYzIxMzBmY2UxMTY4ODBmYzVhMWNjZTdkNWQ2YzUxMTlhY2IwNjIwZmE0NjlmMTkwYTE0YTJiYmQwNThlNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1YjJmNWZlYjlkNWE0MzI1ZWZiNDQzYTlkNWFjNmM2NzUwNGQ4YTcyNmE4NmRhZjllNmZkZTdjOGE3OWU1NWQifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L52-L84",
+          "version": "repo-lines-v1:sha256:3237cb4da8647280976f2a65ebb857a7e3c8de71f60bf43aca49903e3dd1f372:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmOTg4MzE3NDZkODEzNzkxYTU5OTc3OWNlYWVmZWUzZGE0YWI3YmJiNzgwMGQ3YWZmM2Y1MGE3MGI2ZDk0YjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlNmJlMTFkMGU3YTI1MmZkN2RkNGQyZDVmODI3YzM5N2M3MDkwYjVlNGRiMWEzN2U0MDUyYjkxOTBkZjZjYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3NWE4ZDc2YTYyMGJjYjIxMDhmMTk0NDhjOThkYTk3M2MxMTExZGJjYzMxNTQ0NzNmYmYzNDliOGZmOWVkMDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_70bf10d14e204282b90a072bceca7616",
+      "statement": "The API process installs a LightweightNotificationSender that only enqueues notifications to PGMQ without processing them, so the HTTP request path never blocks on Slack or push delivery.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L42-L45",
+          "version": "repo-lines-v1:sha256:56141123e3f98f6e1727b5b89101f7ad2630c66862549229c75b5296ef91ad56:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjkzOGFkOGNiZTU4N2IxNzZjZTBlZDgzNGNjZjk3ZTRkMTQwMDQ2ZDI2ZjU2NDEwNjM1NzJlOTQ5MzcxYjk0ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzJiMDY5NDAyOTVjNTZkMDM5ZTZlYmY3NmMxZmUzMWY0YmExMjYzM2I5ZDE3OTQxYjE4MzMwODA3NGZlYmRhMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWI5YjEzMWNiMGRmZmUyZGRmN2E3NzJjMjAzYzFlZDAyMDIxODM1ODMwY2IyYTJkY2FiM2Q1ZmQzMWVhM2U0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGEyOGZhY2RjYmEwOGVmMGNlOTFkMDMzMDljYWY1ZTRkNGNhMjgyNTU0MjNjZWFkZTEzYjdlZDBiOTA2OGQyOSJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L50-L84",
+          "version": "repo-lines-v1:sha256:43496a0e422cd80c7e59c6921004b523c9b02d0de9245a6b5f5eb7245e0ff162:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiN2Y4NjVlZWRlODkzYWNhNzMxNzcxYzU4MWFiNWUyMjJmYjBkODgzOTNjODIwNWJjNjEyZmExYzlhYmJlY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3NDFmMGNjMmY1MzU5ZWVjNTQ3NTdmNjg3MTlmMDFkOWE1NzUzYzczOGE4OWQ5MDA4N2U0MWMyZGZlZGM3MjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmY2YwZTcwMTQyZjEwMzQyY2EyOGQ0YTYwMzk4MDk5MTk2ZTY1YTllNGFjNzA4MjFlZjNhNTM2NzAyZWFkMGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7011381ab0eb41e0ad1e65a84dc0646d",
+      "statement": "IncidentService depends on a NotificationSender interface rather than a concrete worker, which is what lets the same incident code run unchanged in the API process and in the worker process with different sending behaviour injected.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L95-L101",
+          "version": "repo-lines-v1:sha256:a87c23f89451f8ba882e243309ff0263242f97e69a8a0b75b09a8309fca499f9:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJlZjAxNGVkMDYzMTFhNmVkNDYyNGUxZWMwMjk0MzY5NDcyNmVjODlmNmRlNGMxNDkxY2Y4MDExMDI3MmYyYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTEwZmE2MjMzYmYzNjRkMzhiNjFhYmE5MTM3MDI0ODQzYjE2NTNkZmU0ZjIwYTAyZTExMDU1ZjY2NTBlZTc2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDA1ZWM5YzAwM2EzMzYwYzI2NzM5MTZkOGNkMGVjNDhkMTE0YjBlYTdmMGZiZThjZTM1OTdhNDYwZDYzMDRiOCJ9"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L42-L45",
+          "version": "repo-lines-v1:sha256:56141123e3f98f6e1727b5b89101f7ad2630c66862549229c75b5296ef91ad56:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjkzOGFkOGNiZTU4N2IxNzZjZTBlZDgzNGNjZjk3ZTRkMTQwMDQ2ZDI2ZjU2NDEwNjM1NzJlOTQ5MzcxYjk0ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzJiMDY5NDAyOTVjNTZkMDM5ZTZlYmY3NmMxZmUzMWY0YmExMjYzM2I5ZDE3OTQxYjE4MzMwODA3NGZlYmRhMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWI5YjEzMWNiMGRmZmUyZGRmN2E3NzJjMjAzYzFlZDAyMDIxODM1ODMwY2IyYTJkY2FiM2Q1ZmQzMWVhM2U0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGEyOGZhY2RjYmEwOGVmMGNlOTFkMDMzMDljYWY1ZTRkNGNhMjgyNTU0MjNjZWFkZTEzYjdlZDBiOTA2OGQyOSJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L24-L44",
+          "version": "repo-lines-v1:sha256:19d07e1d372b1a35e794902e2cee3dc6098c4a53b05180efad260acc315451c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiYzIwMTlkNzU3ZjkzY2Q0NGE3ZjY2MmJmODk5ODlmZDA0M2FiNGFiNWRmZGFkMTFlNGRlNjJiOWZhMzYyYjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhMjJmNmJkNmVkY2QwMDNiZjA4YzI5ODFmMDhjZTViNWZhNmQxNjUzY2Q2ZDdkMThhZWZiODFhYzJkM2RiZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQzNjBhMjQ0Y2E3YWEzOTRiMjc5ZDE4Y2U2YTBiYzFlMmY3ZTJkNDU4NDBkMjE5NzE2M2U3MjkzZjNhYmYyOTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6665140b3d804c4cb0bc65855cbaf36f",
+      "statement": "Both Go entrypoints set the database session timezone to UTC immediately after connecting, so time handling is consistent regardless of the database server's locale.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L53-L60",
+          "version": "repo-lines-v1:sha256:847f227da91766ae0d9a5aed1186de2f2795c699c08b77798c5a240d112f7c34:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDBhZDVhZDYzOThmNjgyYWEwYzY2M2E4NjI1MmRjOTE3MjJjMjRlMmViMGJiMDA0ZTJhMDU1YTRjOWUyMjZmYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2ZjNzJjNjc2YTU3OTNkMjI0ODhlOTc2ZmRiNjVkODdkNDczMDJiYjk2NGMyYjM1MTY1NDg1ZmNlMjI1YjhjZiJ9"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L42-L49",
+          "version": "repo-lines-v1:sha256:cc69ab914f2f135843e41424c747403ff2fb21acc44e072629b47de453ee7414:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmI4ZWNkOTdlOWQwZmRjMzRkNjhhZTQ2MWFkNjUwOTMyNTg2ZGFhOGVhMzVmYTBlZDFmNDIyMmViMTFiY2JkNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzYwYzQyMzE2MjFiYWUyOWY1NmJlMGY5MjhiYTgwZTc1MDgyODc4MzBiZWI1Y2NhZjYxYjU0MWViOWJiMDJjMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb15685fa1be44f78e99c2d62b70ae93",
+      "statement": "A missing database URL is fatal to both the API server and the worker binary, which log and exit rather than starting in a degraded state.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L36-L46",
+          "version": "repo-lines-v1:sha256:7d94694d3ce9d0b60d5aa4fcf22f36ab6d5b03254ba8e7a8409892f23a75d37f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxZjBjMTZiMzFiNjEyYjdhNTY0NDZjNDQzNjk2NjQ5YWFkNjJkYWEyZjM2NTU5MzEzY2JkYzA3NzBkMTU3NjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlNDc4OTEwODc1NjU2ODhkNTIxYzFjYjg1Mjk0ZDFmNTkwMTRkOTU2MzI1OThjZDRkMDM3Yjg2MjAyMDk0YjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmYWFkMTRhMDVhMDBkYWQxYjM1ZDI1N2I5NTQ4MmQ0YzE1NzQ2Y2I3ZjU5MzZhNTE3Y2NkOTk3ZjAyMGNhZDgifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L27-L40",
+          "version": "repo-lines-v1:sha256:fc18c8efc21ea91e7cb737e267b4ccb968652d29794c4ae52e455507c5c720e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4MTFiMzExZDgxOWQyYWNiZjAzYTIzZGViZjIyYjZiZmM0YTY2ZjE0MjM2ODFiNmI2OTQ4MDZlYTgxYjcyYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzZDI4ODAzMDNmYjg0NWIwYTNkNmVhZTAxNDU1NDQ2Yzc3YjZkNmNhMGY4OWI5ZGUzYzVmZGFlZWRlMzgwN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIxYTZjMzVmZjk3OWJkMDU5ZWM5MDAxN2U4OGZiMGMzYjE5MWZkZjQyN2Q4Mzg0YTY4YTI4NTAwNTAzYjZkZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyOTQxZDUwYWIyYTViZWI3NWQ4N2VlNGIxOWVkNjBjNTJlNGY3YTI1NDg2NmZmZmZiMTViMzQ4NWQ4M2NhYjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_71cf2f01c1f248308560874445507c05",
+      "statement": "The API server runs Gin in a goroutine and selects on either a server error or SIGINT/SIGTERM, while the worker binary waits on the same signals and its shutdown path notes that workers stop when the main goroutine exits and that real graceful shutdown remains to be implemented.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L133-L167",
+          "version": "repo-lines-v1:sha256:f2f2aca79694230adf0dff79a1ed0b7ceced4fe84334fff89ee23f0aa1ee25c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkZmMzM2U5ODAzNjM3MTQxODY0YTg1NDQ3MDI2OWU2NjZkYWZjN2QwMjFhZDlkNjFhYmFmMjc1MjE2YTU2ZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2MmEzNDg3NzljYWMyOGM3OGE1NDZhYjcwODdhMzA1M2NjYjlkYWRjNzYxYzQ3MDVjYjQzZTg0NWY1ZTA2YmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L92-L103",
+          "version": "repo-lines-v1:sha256:053f2df8f36fd4c807f66a5dead49784aebdc93ecc6353f1cfa00b7088df02e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlN2RjODIyMzM2MTQ5MzdhNjc1ZGZkODU2ZjQwMGQ5OWE0NTg2OTQzMTJkMGE4ZjUzOTczNmVjY2Y2MzE5YWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_24f0f83d77924573b2db3354c911a770",
+      "statement": "The Python agent service exposes two WebSocket chat endpoints — /ws/chat authenticated by JWT and /ws/secure/chat using per-message zero-trust signed envelopes — alongside REST routers for conversations, audit, MCP, plugins and memory.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/claude_agent_api_v1.py#L1-L20",
+          "version": "repo-lines-v1:sha256:6de0fe4eddcac529f0926846a19ecbc952f938cf03a313b87a0a5d648bf175cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjOTRkNjViOTAwMjJjMmNlMDk5ODEzYjI3ZDE1MDhiZDExOTZlZTMyZTQ3MzVkZmUyMDRkZmJkNzAzNGIwOTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlNjMzNzlmODVhODIyZGIyMWRkM2UyOGMyNTNmNTliMjU0NDg5YjBkYTIwMTg4ZTlkNGQzNmFjNTE4YmY5MjUifQ"
+        },
+        {
+          "resource": "repo://server/agent/main.py#L1-L15",
+          "version": "repo-lines-v1:sha256:06100e706aceb14d7304f05e7acb91e9a966b70013cc06bad05f5c26734437f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5NDE3ZWMyNzMyNzQ2MThkMWM5YTlhODQ1NWU3Mzc3M2UwOTRkZDYwNDg4ZTg4NTBlYzcyYjFjMzRhMDI4NmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkNWM0ZGNkMDlmMzQ4NDE1MDU2ZmVkMjg1MjQzNjY1MzlmY2ZkZGQwMzdkZjE1Y2ZiYjNjNGUzMDQ4YmYyNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_399e75d6cb304141afd28640ad657396",
+      "statement": "The agent's FastAPI entrypoint main.py contains no application logic of its own and simply re-exports the app defined in claude_agent_api_v1.py.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/main.py#L33-L38",
+          "version": "repo-lines-v1:sha256:a4785ad56db8647d33dc11fa1452a459cf10592ae0ac20ee4ce74c594641f6e6:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzA1OWY5NDNmMTYzMjE3YTU3OWNlZmI4NzI2YzU5OWI3OWMxMjZjOTZhYzU0ZjZiNzI2N2RlN2UzYWUyOTgzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmU5OTI3MzllZTgxNDg2MTkwMGIyYjU1ZTg0NGY4Y2EzZDA2NjYyOTIyN2U1MjIwNGE4YTUxNzc5NjM2ODFkYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI1NDgyMmQ5ZDQwNTM1ZDRhOTlmZGVkMmFhODU5ZTBhZjk2ZjYxNjAxZDk2NGE2MmFiNzQ3Y2I2ZDE0YTAwNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_df97c8c0914c47fbbcb6f7906f09c6f1",
+      "statement": "The agent uses Redis for horizontal scaling by backing its rate limiter and session store, so multiple agent replicas can share that state.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/claude_agent_api_v1.py#L83-L101",
+          "version": "repo-lines-v1:sha256:281a41901e6b12d6c42c298ddf552de64082e8f2233ce8e8f4aad32bbce38efd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2NTk1YmMzOTBlYjFmYjkwY2I3M2U5ZDQ3MGRjMjY4MDliMjNiOTI5YWFmODE5NmY0MzFhYzM5ZjJkNDQzODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5YTZhYzk5ZmU1ZGExM2NjMzVjZGJiNTk4MTEwNTEwZWQ2NWE0NThiNWQ4ZDM5MWQ4OWExZmFhNjNkZTc2MTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkZWI0NTMwZGVkYjgxYTViMGE0NTA1OWNjMWYyNzI3YzRhOWZmMGExMjAyMDk3ZDg3MmI4MjcwOGE3MDM0NDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1YzNkNTM1ZmNjMzE5MDhhZGFlNTI1NDI1YWI1OTg3MWJjZjEzYTExNzlkYWNkZDY3YTM2Y2MwZjI4ZDY3MTEifQ"
+        },
+        {
+          "resource": "repo://server/agent/utils/redis_client.py#L1-L30",
+          "version": "repo-lines-v1:sha256:85e128d2c31e9ebf2fb8fadfb71fdff49ddbfe413020477465bb2a319596c0d1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5ZDI5NDBlZTkwOTFkMzMyZjY1OTc2NGNmMGI5ZjI4NjBkMDg4MDQwNmNkNWQ0MmU1MmIwMWNmNzViNDY1NDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de0617fb47b74528af16f69c125c62e0",
+      "statement": "The uptime prober runs as a Cloudflare Worker on a one-minute cron trigger with a D1 database binding, reading active monitors from D1, probing them concurrently and batch-inserting the results back into D1.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L1-L48",
+          "version": "repo-lines-v1:sha256:d929479d185c3dd82f8acad89ba7fb725c36ac033c902e97a859e673d5ce4739:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxNjY3Y2MyNWY2MWVmMGE4YTY1MDZhMjZhODcxZjRlNDJhYzY4ZDA3OTJkZTI2ZmQ4ZmViZDE5YTVjYTVmNzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5MGFkMWQzNTYyODNlNzI5Y2ZiOTk5ZmFkMzk4ZDRhMWRmZWVjM2YwMWQwOTUwMjE3Njk0NmJlYWIyNzk4NTIifQ"
+        },
+        {
+          "resource": "repo://worker/wrangler.toml#L1-L14",
+          "version": "repo-lines-v1:sha256:fa4578d1a81bf5403062c8a92f63a9368c323303ef05dcda7af23cc4885f2b7d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0MWFkNjhmMjZiODRlM2Y5ZTYzOGQxNDVkZTVkNDkwOGZkNTY5MDE2MmQ2NzBmYThlNGRjNmM5NDlmYThhNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzODdiYzI1NGNiMDIxODkyODE1YTJhZWMxZTNiMDZlZDM4ZjBmMDZiMmY3ZmM4Zjc2ZTY4YzkzZDJmOGQzZjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f9fc6ce68df14ce993fbecd986d4160d",
+      "statement": "Docker Compose places InRes services on their own bridge network and joins an externally managed Supabase network whose name is overridable through SUPABASE_NETWORK, because the Supabase CLI names that network after the project_id in supabase/config.toml.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L163-L180",
+          "version": "repo-lines-v1:sha256:9e1ec21ccc4ad0075368edcb236c7b3dddb3a08333fcd60d004fd25990c7973d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmZGQ1NWVmMmFlM2NhNjc0YTRjM2E1NmRhYjM0Zjg5MDhkNzQwNDMyM2RiNTRlYWRkYzRlNGNmMTg5ZThmY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzMTg2ZjEyMDA1ZjA1YjQ2YzE5OTQyMDJhOTg3YjJkZjE5MTlhOTM5NGRhZmFjYTQzNWUyOWE3NzBlZGRlY2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzNGMwMDhiNmZhNjI1ZmRiNTk2MjZmNzQ4MmQ0OTZiY2IyZWI2NjFiMzkxY2FkMTlmNjJhMmNkYzk3ODM2NmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e2a2c8782e7346faaa43b527dade880a",
+      "statement": "The agent container mounts a persistent volume at /app/workspaces because without it a rebuild wipes synced memory, activated skills and cloned marketplaces while their rows remain in Postgres, leaving the UI showing plugins as installed with their files gone.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L48-L60",
+          "version": "repo-lines-v1:sha256:2ac67ccb2cd2110c7cedbe70b6985e80a3b3796b069ecc6abe2f11b8c22baedb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1YTIzNGQxMjNmMTBkMjYxNDRiOTUyMzVjZDYzZDY1ZGI1NDMwN2M2NTJiNmY0NzY3YjAwODNjN2QzMzEzZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3ZGFlODBmNjA4YmE0MDkyZDFlYjdjMTAwZTk0YWQ2MWQ3NTE0NzVjYmVmNmY3ODg0YTE0MzM2MzY2OTMzMDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhNWNkZmUxZWFmMzE1ZjU1NWE0MWFkY2NhZjg1ZTI5MGExNTcwNTNiNjY5MzBjODk2Y2I2YmZiZGY0ZjY2ZTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk3NThlODZmNjFjY2VlMTM4ZjdhMzdkOGJmZWI5ZGMxZDU4ZGZhNWI4M2ZlNWEzM2IyODkwMTNmZWNiZTg1YjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_75dc583d6c254b7e8fce6339bf9ec021",
+      "statement": "Kong fronts the stack on port 8000 as the single external entry point and depends on the api, web and agent services, running from a declarative configuration with no database.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L136-L162",
+          "version": "repo-lines-v1:sha256:460834672ff6aaada86479d53a9b6cf5738ff709810284eb80fa7851ac508bcb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MzJhYjdkZjE1MDZlYzM0ZjU0MjYzYWJjYmEwNmIyY2M0NzkzZWIxNjdmNmIyMjZhMmNkZjhkYWNhNzNjZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViNmIzMDU1YTBlNTI0ZTJhYThhYzUwMzE2ODY2ZTdjODNiYmZmMTVjYWM4NzY2ZDIyMzYwMTM3ZDdmZjQ4NDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ2M2ZhMmJiMTVlOTA5ZDc1ZWNmOTgwZDlkY2JhYjliZGMzYTBkZjNkMWQzOGVjZDBkM2ZjY2FmNDYyMjJlOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4ZTU0MjRlZmQxMDAyNWRiMjdjYjhjODFjYjhlZTEwMjZmMGM5MGY4MzZiZjU0OThhYmRjZDJkMGI2MDYzYzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d10622538174f3ba38b263cacb24140",
+      "statement": "The agent container declares an explicit 2 GB memory limit with a 512 MB reservation, which is the deployment-side counterpart to the configured ceiling on concurrent CLI subprocesses.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L92-L100",
+          "version": "repo-lines-v1:sha256:99b788536e487878abb278d50a086b888de62b9404daa2846a7882aafb94d736:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTVhMGZjY2FmZGU1N2IyZjZhYjU0ZDYzY2EzOGI1N2YzMDQ5NjRkMjY1MDAxNDVmODljZWZmYWU5MzA0YmFjMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2I5ODY1MDYwMTgwNWZmZGRmMTkyOWNlZjgwOGM0ZTc0NjI1NjJlYmY3YzE5ZGFkZDM0YmQ0MDY4YzZkYTg3YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmUxOTNlYTJkOGEzZmQwNzBiMzZmNGRmNWViMGVkOGM5YTk5M2Q3NWRiODVhODY5ODMyYWE1Mjc0NzdhZjcwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmY2MzAyNzc1N2MxNWU3YmM3NmVlZTc3MzNlODA2OTdlMDIzZTU5NmNlMGZhMzQ2YmEyNjI2YjgyOTdkYTU2MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2a382b135b047c389005813edd454d9",
+      "statement": "The repository's top-level CLAUDE.md documents an older api/, api/ai/ and web/inres/ layout that no longer matches the tree, whose real service directories are server/api, server/agent, server/slack-worker, frontend/inres and worker.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md",
+          "version": "repo-file-v1:sha256:e48a69852acd22481520c0ba0f1408718cdc609ccec5b2c8ad37405ec409134d"
+        },
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L29-L135",
+          "version": "repo-lines-v1:sha256:01051439b40bf7043f1ea8b7a29039d7d2a947c93e5958a80b6e2b9ac5723c58:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJiYzE2ZWQyMzlhMzY1MWI1MDc5YzBlNGU3ZjA3ODQ0ZWEzMjljODc2MjhiZjlmY2M0NjM2NzczM2Y1ZTFlOTNlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2ZDNiMGU5NTAyZmIwOTAzYTNhMWY0Y2FmYWU0MzUxOTZjYTNiZTIxODc2Y2UxZWNhN2JkZmYyYzk0YWU3N2Y5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxNTVjMmI3NWNkZmRlNTZlNmU0N2JmOWVmYjdhNWRmNjZlYTIzMTUyZjI3N2JiMDZiNzJhMmMzNmQ4OTA5YjM0In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

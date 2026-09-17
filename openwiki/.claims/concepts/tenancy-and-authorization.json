@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f1f2671eaeb49115847d169095f5a534ab1d1108a11360182554ad4669334dac",
+  "claims": [
+    {
+      "id": "claim_656eb302602e40ef9a301c6f8cfbabd3",
+      "statement": "The authz package separates authorization into three concerns — an Authorizer that only answers whether an action is allowed, a MembershipManager that owns user-to-resource relationships, and repositories that own org and project CRUD.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L1-L10",
+          "version": "repo-lines-v1:sha256:763da870dc3251be34e1af7b78c1a4f14b8227ba62d835e81a41c21b84b409d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2ZjMzNGNkZjBlNzA4ZjU5NGM0ZmExODY4ZWU4YTAxYmIyNzU1NTZkMDZjMTQ2N2I3MmUwZGIxZmYyNzRiZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ2OTY4YWI0ZjBlMTRhYWQzMjI5ZTIzZGIyMTBmOGY5YTljYjcwNzAyMTRiNmVmODYwMTdhOWQyODUyNzQxZTYifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/authz.go#L41-L61",
+          "version": "repo-lines-v1:sha256:365cb7f64e7d73f1431b1ecc75ba7bdc3b7495ea35b0d2f5f56da873de1b66c8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MWYzNjI0OTAxZGMzMWEzNmZlMDNlYWViN2E3ZWE3NTlkZDJkOGFiNGY0OGY5Y2VjZDVlYzE1NDE5N2U4MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyODkyNWQ0YmY2NDk2NGE4OTE3NzVjMTg4ZGMyMjAyYjc3YThkZWM2YWQ2NGE1MTZlMjIyMDZkZDk2OWM4NWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0ZGQ4NWNhMmYwODc1MWU4NmQxYTI0NzY4NmU4M2QzMGQ0NDc0Y2NmNTg0YjJhNzI0ZGZhYTFjYWE0ZTdhNTkifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/membership.go#L27-L42",
+          "version": "repo-lines-v1:sha256:8bea4e84fafc1baac72249613e253bbe802827680f12274e178c77135fbcba16:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYzA5M2ZkYWM3NThkNTY3YWVlM2FkZmNjODI5NDliM2NkNzNlZDY4MWE1OWNlNjdlZjNiZmVhOTgyN2MwN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5MDhiMWRkYjhmMjdlYmVmMmM4ODI5ODViMWE0MmZiODI2MWU3NTE5MTNmNzBjMTc1YjVlM2FkNjcwNjRkM2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4MWZiYWMxNzI3YzgwNzNkYzFhYzE0Y2UzZTViZTE1ZTk5MDhlMDA5OTMzNWZiYTM4NzhhMDNjZTEwYjhiZmEifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/repository.go#L35-L50",
+          "version": "repo-lines-v1:sha256:4e868060fa7643a888ea03e67f72ca45e4e50bb94c6ddd5b74023f5b1d77505d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiNWI2OTliOTVkNDNjNTU4Zjc5MjFiM2YyMGI0ZmQyOTNhNDAxZDMwOWNmMWVhM2Y5MGRiYzY2MzU5ZjcyODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjNGJmY2I1NzBjNmFjMmFlNzgwMGJmYmIxNWJlYWE5YWI2ZGQwYzE0NDAyZDJkZTJlZTU4Yjc4ODFhMWRmODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlZDNkZmE4M2E4NWE5OWQ4YzNhZTQ2ZDQ5M2FhOGMxZmFmYjFjNTQwNGY4ZWU0YzRkMGI1NTgxZWI2OTAxMDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwYjY4MDBlZDgwOTQ3YjU0YmYyNzA3MWJmYWYwNTQ4ZTNiZTFmY2RmZDRkZTBjYmY0ZWMyZTQyYWI2YTBlMjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_56ab523cad7e4244a628a65741b0ac4d",
+      "statement": "The Authorizer interface is deliberately shaped for substitution by OpenFGA or SpiceDB, with a generic Check(userID, action, resourceType, resourceID) signature and convenience methods that are wrappers around it rather than independent logic.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L41-L61",
+          "version": "repo-lines-v1:sha256:365cb7f64e7d73f1431b1ecc75ba7bdc3b7495ea35b0d2f5f56da873de1b66c8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MWYzNjI0OTAxZGMzMWEzNmZlMDNlYWViN2E3ZWE3NTlkZDJkOGFiNGY0OGY5Y2VjZDVlYzE1NDE5N2U4MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyODkyNWQ0YmY2NDk2NGE4OTE3NzVjMTg4ZGMyMjAyYjc3YThkZWM2YWQ2NGE1MTZlMjIyMDZkZDk2OWM4NWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0ZGQ4NWNhMmYwODc1MWU4NmQxYTI0NzY4NmU4M2QzMGQ0NDc0Y2NmNTg0YjJhNzI0ZGZhYTFjYWE0ZTdhNTkifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/simple.go#L24-L38",
+          "version": "repo-lines-v1:sha256:ec6b2f5ce32d9a1f2205fba63e3da0542f0357b889b06521b4d683f571c53b63:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNjFiMDZlN2U3YjJiYzMwZDdjYTgyYTMxNzk1Y2I5NTkxMzYxMjQzZjQ1ZjJlNDg3M2I5ZTg4ZjMzYWQ5ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3OTM5MjFhZmQyMGI2MTllNWE5MDNiMWQxMDExYWJiNDhlYWRkNDIyMmU2NGY2YmNmYmE1ZWM2Y2E5NjU0NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAyMGVlNGRiYTdmYzE4MDk4YTc4NjQ1N2ZhNDAxYTUxMGZhMWUzNjBmOTlhYzkxZWM4MWQzYWZmMmQyMGY0NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_44341285fd814b9784abb28eaf2cc6c6",
+      "statement": "NewSimpleBackend constructs the authorizer, membership manager and both repositories in a single call, which the router uses to wire the org service, project service and authorization middlewares.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple_repository.go#L436-L441",
+          "version": "repo-lines-v1:sha256:3518e3a58006cdb8a279bd597fdf06a6746ab1196902582eff587a3f4ea05dbc:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWFmMWExN2FhZjZhNDIwZTlmYThiZWFjN2I5Y2FkM2Y4YWJkYzY1NjQ2YWQwM2QwZjNlMTllNzBlYmQzZGE5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTc1ZjczOGNjOWQwODAzMmFkZDBhYjI5OTg4YTc4YjRhMTgzMGU2ZjdkMDM2NGZjZTIwMDVkMDYxOTQ5MDFjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDRhN2JkYTgzMzc1MzlmZWVhNTVlMWFhOTg1NmJkZmJhYTZmNjlhMjMyODUyMTNjNWI3ZTM1YjIwMDgzN2UzYyJ9"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L77-L82",
+          "version": "repo-lines-v1:sha256:cc98baf020057b2288ec0d2542bc260cc6423495e6548dd0819193bfac2e926a:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmZlNGY3ZDY4NGIzYzJkMmIzZGJhNGU5YTU1ZWY3YmIxNWEyNDM1ZmU1MTdmOWFhZjQyNzcwZDJkOGJhMTk5YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTA3NDk5ZGNmMzM5ZGM5YWNmNTUzNDI0NmU5Mjc1YTA2YmUwNGQ3MzAyMDgzOGFkYjJmZDE3ZWVkNjYzOTY1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTMwNDY5YWQxOGUwYjY4ZWMzZjU3YTg5ZGM0NDNjOTAxNmRiODRjNjgwOWRjMjJiNjc3NDEyNGQ2NzNlYTE4YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_caefc3a417394068bcc7b07d726e0ff2",
+      "statement": "Authorization is expressed over four roles — owner, admin, member and viewer — and five actions — view, create, update, delete and manage.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L12-L31",
+          "version": "repo-lines-v1:sha256:c1ec9e5cee4a847e57196a300385a042c069b343d9cef9cfeda0f71e3308230d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkOTE1NGIxNTI4MGM5ZTIxMTg2NDQxNzlmMDI3YTU4YTkzYjM5ODIxZjhlNWY1MzgxNzc3NmI3ZDNmM2IyMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0NTNkNTU1YzRmMTFlZTk1N2QyNGYxNTQ1ZjY2YmMwOTc0YjI4YmM2YjRjZDhhM2VkNDRhMDE0MTE4YTQ4ZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2Y2FjMWM2NmI2OTVhYmIwZjg0NzNhNjI4NTcwMGI1Njc5Y2U4YzQxZjM2M2E2Y2JhMjBlYTM0MWQyYjkwMmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_037b37ff2520440cbcca78d5d370f86d",
+      "statement": "At organization level an admin may create, update and manage but may not delete the organization, which remains exclusive to the owner.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L63-L94",
+          "version": "repo-lines-v1:sha256:75e4a896826be4e1cf98631ceef328d3a82a1c8a0c87c2adfae6513c7d2cc6f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmNWY1YTNkNWMxYjRmOTExYWYzMmQ0NzlkMjE0ZWNkOGVhY2I5OTBmMDU2NTUxMjRhNmZlYjFjODVmNTEwYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzZmJhZGUxYTljNmVhZmFlY2NkNDRjOGFlMDE5ZDQ2ZGVkY2YzYmE0ZjljZDExZTI2MjA3YmYwN2E3NzI1ODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc8ccb48ef6e484995f54561f64dda70",
+      "statement": "At project level owner and admin have identical permissions and a member may update resources, which is broader than the organization matrix where a member cannot update.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L79-L86",
+          "version": "repo-lines-v1:sha256:7ef9f7982423651612e786d314c8c278d8e30ff6e7ff7381f1fd7195c6be4ee0:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmU1MDMyNDk2MjU2NTY4NWE1OWMzOTc1ZTFhNTQyNGE4MTc1YmE0MGY3ZGZhM2EwOTY1NzkxOWIyMWNkOTI2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmU1MDMyNDk2MjU2NTY4NWE1OWMzOTc1ZTFhNTQyNGE4MTc1YmE0MGY3ZGZhM2EwOTY1NzkxOWIyMWNkOTI2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjRkODVhZjI5Y2E2MGEzN2VlM2M5MDIyNDY4ZTY4NzU1MDQzY2M1NmQ1ZjU5MDdjMzNmMmM1ZThlOGQyNDI3NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzg2ODdlNjI5NjgwMDQ4MmVjZjVmMjJiN2I0NzYzYjY4ZDNkMGExMGY4YTVmMWQ4OWRlOTQxNGJhMGJlZjBkYSJ9"
+        },
+        {
+          "resource": "repo://server/api/authz/authz.go#L96-L125",
+          "version": "repo-lines-v1:sha256:7ad273dc79f51ecd573e4ea2f2e3dedbd01612bb80c172c73c61d13cd4e4210d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MDBmODFhODZmNGY4MTE2NTQzNmY0MmE2ODM1NjljMDQwZGM0MGZkYzZmNjViNGIyNmFlOTFiYTI4MmRjZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlNTAzMjQ5NjI1NjU2ODVhNTljMzk3NWUxYTU0MjRhODE3NWJhNDBmN2RmYTNhMDk2NTc5MTliMjFjZDkyNmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE0ZTA1ZGIwOWQwZWU3ODMwODc1NmQzMzBjMDRhOTkxYzQzMzA3MzBkMWNiZDQ3MTE1NjlkNDA5OGJkNDFkZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2NWIyN2E0ZTNlMDY0MDBlOWRkOWMyZDU0ZWJhMWYzMzJjNmQ5NjRhMjczMzQ4NDc2MjMzMDVkNmRiYTRmNWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a97c15b23e1f4c60a5276579011d3778",
+      "statement": "HasPermission returns false for an unknown role or unknown action rather than panicking, so the permission matrices fail closed.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L127-L136",
+          "version": "repo-lines-v1:sha256:e7c30734316dec3b85e2974e733e78f41741871eabc00cedc2a37c8be789078c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0MTBiN2IwYzRlOGFjNjlhMzllNTdhOGJjMjUzN2U0MzMwYTQ1ZTU1Zjk4OTQzOGRlMzFmNzc0YzEzOTcyNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiZjI1OGVkOWQ3NzgxMDA5MDY0MWI3NmIyMzUwMmZhNjkyZmRjZDlkMmMwOWI0ZDAwYjBmNjc0NmZiZjZiYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a3c26c90fd346ea92f6b01056101da9",
+      "statement": "A user's effective project role is resolved in a single SQL query combining explicit project membership at higher priority with organization membership inheritance at lower priority, replacing the 4–5 queries the previous implementation required.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple.go#L84-L128",
+          "version": "repo-lines-v1:sha256:d2538b36e8681a282b54e7efbeedd3b463936691469a9ab7718ba26b707b9427:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5YzczY2ZhNmM1NWExNDEzODBiZTA1NTI5MjNjN2YyMTVjOTA2ODA0NTFjMjcxNDc2ZTFlMmZjZDBiY2QxYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhOWM5Nzk5NTYzMDk1YmI5YjJlMTc2NDQwZWZkNGYzZjBkOTZmZDYyZTNiZjM5OTAzNjAyMWJlMjVmYTYzN2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1cd91c9ced7442998ee1ab964c0cd23",
+      "statement": "Organization role inheritance into a project applies only while the project has no explicit members at all, so adding the first explicit member converts the project from org-wide access to a restricted member list and removes access from everyone who previously held it by inheritance.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple.go#L94-L126",
+          "version": "repo-lines-v1:sha256:61bd283655103b85629fa659c4ce37ca39bfd36e61cce2689302a9670e84de62:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkMTM5MzE1NTViODc2YjgxYzE4NTA3NTBlOWIyNDk4NzA2OTNiOWUzNTlkYjZiMzFlMWE3YTA2YTkzZmIyYzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyNDdjZDUyN2FlZDFjNzZjZTM1MTQ0ZTUzY2Y0MmE4YzczOWY0YThiMWM3ZjM5ZjAyNTBhMjdhZWM3ZDAzNjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3OWYwZjc2Yzc2ZDc0NTdhMmQ1NmM2YzkzZGUzNDAwYjAwNzUyYzFiNWVkYTY5YmM5MjYyNWVhZTYxZGQ3YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2NTZkMGJiNTRmZjA3NGNmNjQ4ZThhOGRlZTM1MzU2MjQ4MTY3ODA1NjlmZjBmZGZhZDkwMTFmMTI0MjdhMTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c988a28640ca4f6f92a43ca1ad50dd7b",
+      "statement": "An inherited organization role is translated before use, with org owner and org admin both mapping to project admin, member to member, viewer to viewer, and any unrecognised role mapping to the empty role meaning no access.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz.go#L138-L149",
+          "version": "repo-lines-v1:sha256:e38f978b1700548a0e2d68927890f15c9aeb029ee420056dcfa39fef857230f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyNzU2MDBjOGNmYjJjZDM3M2M4ODM1Yzc1ZTc5Y2JmMzc4ZGExOWE3YmE0YWFiYjZiZTMxNmExZTRhZGNkMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNjU5NzA4NjNkNTgxM2JmOTcwYjAyZTM0YjU1YTIxMDIyZmY5MWZiYjM3NjAwYmM5ZjZhNzY2NzkwZWVkMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/simple.go#L136-L145",
+          "version": "repo-lines-v1:sha256:dd9ca6e784da1856709876665789d8a1e7dfd4d00bc00884068af18f6dbba99c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlYjA3NjAwMjE3MjAyNjlmY2I2MDA3ODE2ZmYyNGQ3YzI1OWI3MTU2NWNkYmNlYmZkNjJhNjYxMGY3Yjg3NzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmOThjNDA5NmY1Y2M5N2NkZTg2ZDcyYjljOGY4MmU5NDYxZWY3NDAwZTE3YjA3OTdiN2UyMDVjZTUyZjA1NDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxNTFiM2IxMTUyMTk5MDA1NWU4NTQ5MzRiYjNmMjdkZGE4MWVmNTRkOThmYWE2MmJkYzBjNWJlZjA1YzU4OTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2ZmJlZDA3NmYyN2JhNWZkYzg2ZTliYzUwMGFkMmFhNjdkZGU0ZjFlMWY5YjAxY2RkZmNiNzVjYjYwNzNlYzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c6a5bd026b6c4966b681e898e017ba0f",
+      "statement": "A database error while resolving a role is logged and yields the empty role, so a failure denies access rather than granting it.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple.go#L128-L140",
+          "version": "repo-lines-v1:sha256:9e4056630189417e59b9909b80a433bb0cca1cdbf4706dfa5b272817348625c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmZDA5NzMxY2E4ZGVkYmM5Nzk4NDVjNWRhMDAxYWRiZTg5ODcyNzBlYTQ1NDZmNWVkZGRmNDg5NjUxNDI1NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkMWQyOWUzNTM3ZmQzODRmNGUwOTU1YmMzY2RkNzBmNTI2ZWYzZTdlZTllOWQ4ZWI3ZDRiOTZlMzYwZjVkZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmOGIxNzVmNTIxNTU5NjM1MDA0YjIyY2Y1YmJkNWY1YWRmNmU1ZTFmMjVhMTVmYjljZTlkOGFkMGMwYTdjOTUifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/simple.go#L51-L64",
+          "version": "repo-lines-v1:sha256:a5c5b870e153e725dbbcc3ad462f94b2d9a1480c5bf6c4fe1d682268197e91a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyODkwNTExNmE1YTVjZGM5NGJiYTg1M2E0YzkxMGQzMTM2YzE0N2YwMGVlMzg1NDQ0ZDFkYTZhNWRmNjFlYjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwOWNiZDMxMDQ1YThhOWUzMDJhYTBlYmVkOTViZDYzM2MyZTljYmY5MTUwMGMxMjBiZjIxNjRmODZiMWQ3NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlOTIyODNhYmY1ZGVkYjA3M2NhNWU4ZjA4NzE2MWVlYjgwYWUyMDhlZWM0Y2U2OGQxZjIyNjM0NzIwMjU3NTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFkMDkzOTBlMGRmZmM3ZjdkY2YyZjc1YTBkYmU5MzczMjdmYjQ0OWNjMTUxZTg4Y2Q5YTdhYmYzOTVlMDQwODEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e8e1a86e45c74031b9485ae99b6b25b2",
+      "statement": "The authorization middlewares share a common shape: they require user_id in request context, resolve the resource id, perform the check, and then store the resource id and the caller's resolved role in context for handlers to use.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L32-L72",
+          "version": "repo-lines-v1:sha256:ee509bd2a6a01c967c7863b442e39424eeb3d41b5dcd4f3b5ef93c0fc114dd9a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3NWRlZWY1NmU5OTU4ZGQwZGEwMzQ3YjRiZDhjZDU4Zjk5ZTgzZDI5ZGM5ODg3OTE3NGVkYWFiYmMyYzI3NzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4OTkwYjk3MDgwMWUwM2UzNjJjZjI2OGYxOGZlZDBkZTc0M2Q5YmExOTJkMDA3ZDBmYjIwMWNkMDY0MTQxODAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjYmMzNjAwOGQzZDA2YjE1ZGYyZTZiODEzNTFiYzlhZDYxOGE3ZmVlMTgwZTk1NzBiMWYwZDBjMTZmOWU1YzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/middleware.go#L74-L116",
+          "version": "repo-lines-v1:sha256:fde5bded648553a843499389ef73c2f0bb9092b7db25e2362fa816212690dd0e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4OTkwYjk3MDgwMWUwM2UzNjJjZjI2OGYxOGZlZDBkZTc0M2Q5YmExOTJkMDA3ZDBmYjIwMWNkMDY0MTQxODAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhMWUwMjBiYmIwZGNjOWEyYjY4ZmRlOTQ2MTgwZjU2Y2M4ODNhOTkzNTA1ZDQyODU4MmJmY2I3ZGZlYjVmYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9800bb54a84f48ada7ed057fbf42b401",
+      "statement": "MethodToAction derives the authorization action from the HTTP method, mapping GET, HEAD and OPTIONS to view, POST to create, PUT and PATCH to update, DELETE to delete, and defaulting to view.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L320-L334",
+          "version": "repo-lines-v1:sha256:6a77916b311071c28a34a39a0cd9c94120fbbc154116e46c8fe9958c29157b9e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2OTlmZmVmODcxYjRhYTc5NTkzYWMyNjMzMmE1YTUwOWU5ODIxZDQxZmFkMTI4ODRkM2ZkYWRhYjQyMzNiYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIyMjIxN2JkOTFkNGE3NTM4NDRjMTkxMGYzZDRiM2VhNWZiNDI4NWRlOTVmZjBhMDY5ODIzYzdlMDA2ZTQwYTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkMTA1OWY0ZGMxYmNlYWRkYzg4YTViOGUxNWIyMjZiNWU3MTYyMDNhYTg0OGVjMzY0YWVhOTYwZTU0NDJiNDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3dc389c0e9b34bacb40311710425842d",
+      "statement": "RequirePermission resolves the resource id from a {resourceType}_id URL parameter and falls back to :id, and when no id is present it skips the check entirely and delegates to the handler, which is what allows it to be applied to creation routes where the resource does not yet exist.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L451-L495",
+          "version": "repo-lines-v1:sha256:f1e79efeaf543fea13826cb779047d25359a288ea129dfa9da56db5346d390f5:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNTM1ODUzMGY4MDgyNDk3ZGViZWFlNDlhOTM5MjM4YWMxYTMyMWUzMWZhOTRkZTFkN2Y1OTI4NzU1ZWMyYzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwMWVhZDkzNmEyMjgxZDUzZGNjMDY0YjdlMmEyYWIwZDUzYjkyZWYzZWY3YjM0YjY2ODY3MzAwNzg5NWM4NjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwMWIyOGYwNTRiMmUwZTE0YjA4Y2E5YzExNjE5NzFiMGViMzZiYWQ3OTE2ZjgxZmFmNjgyZWNiZWU5YjU2OTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NzY4ZjdkYzRjNTczZDNmMzFlN2U5YzY1OTc5ZTVhM2E5ZDI2M2ZmY2IzZTM0NzFmZTNlY2ExYzNiMWVmYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9149f61d042a4535afcaa8b5ed203fb9",
+      "statement": "AutoDetectAction evaluates project scope before organization scope and returns immediately once the project check passes.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L270-L318",
+          "version": "repo-lines-v1:sha256:f9904b8387931154022aef9fa85855b64ec364471d7a94c6d42d7dd7fae54cb7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxMmI3MzYxNjFmYmVjMGNjNzUyOTQ2NjRjN2FkNDg3ZDNiN2IxZjdiODhlZjA1ZjQ1MGY5ZDJjZGI3OWI2ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NWVhYTZjNzQwMTBkOTY5MmQ5ZDg1OGM3YjFiZWUwM2E3MzIyZjljZTM2NjZiMGQwZTgxZTQ5MGUxM2YyODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0NDBkZWY0MzkyYmIxNjFhZDA0ZjhhOGI2N2NhZTkzMGVmYjhhMzYwZjUxMDI2MTM1M2YwM2Q5NzQ2M2Q5ODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViNzA1NGNkMGFjNjExODk1ZWUzMmRiYWM1YmU4N2ZhYmI5ZTM3MjgxOWEwZDBjN2U4NGIxZjI1ZTA4YWY0NGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac4465a6114344c889fcf6a50c6185a7",
+      "statement": "An API key bearing a stored organization id is rejected with 403 when the request's X-Org-ID header names a different organization, while a key with no organization restriction accepts the header value as legacy behaviour and logs a warning.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L404-L448",
+          "version": "repo-lines-v1:sha256:be5b32f8f8dbc3a6649168cfde6e0f439f00e8ad0a946d257cce5af5dbb4da3c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMDk5Zjg5OTExNTBiOWQwMGFmOTA5ODBiYWM2MDRlNjdmMTliMmY3NDYzZTE3OGQ5NmM2OWY5NjQ2OGFjOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxMzE0NTFkYjBiMWY4ZWUyNDgzNzRjZmI2NTg3Y2Q3ODQ4Mjk2MTA5OTExNzhkY2QwNDBkMzgwZGQ0ZTFlM2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkMWIyZDM3NjkyNzkxMWMxYjJhOThmNTU5YjczNjQ1NWViZmNlM2JlNjczZTA0NzdjMzZlOWQ0YjBmOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkNDkzYTdjNWNkYTZiNDYzOGU0YjI4MTZkYjViNjMzZTc2YWRiYmI0OWQ3OGVmNmFjMDRlMjYxNGUwZGE2NzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_519f98a26c65447aba28699d0b1db5ce",
+      "statement": "When no project id is supplied, the project-scoping middleware deliberately precomputes no list of accessible projects, because the service layer performs relationship traversal with SQL EXISTS instead.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L466-L492",
+          "version": "repo-lines-v1:sha256:5610dbbef09ae61abfb0ec100451e48e30a76cf43a26435be6cf86364d9cc758:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjMTBmZjMyNGZhNzU0ODQ0NzhmMWEwOGVmNzBjYzYzMzZjZDc2YjBlNDMzOWI2NmE5MmVkZWQ4MjEyNGM2YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5OWE0ZGVlMTQwZjBlZmQzMGQzZmU4ZDNmZmM5NmEzNDVmYjI0ODEzNzE3MjhlYTg4NjZlMmE2YWJjZGQzZjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlODZiZDE5NzBiYTgyNDY3YmJlMDFjNTY3NzE1YTE5MzdmMDc1YjBmN2Y1MTAzZmY2YjdhOGI3ZjU1ODNhMTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkMGZiMzZmYWJlMzM0YzVjZTM5OTA3MWEzY2IyNzY3NTkyYjg2ZDMyZGUzNGYwNmJhNTcyYTVhNjRmYzI3YmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_75de886d111244979bf4f3fd291a64a9",
+      "statement": "GetReBACFilters builds a uniform filter map for the service layer containing the caller's user id, a mandatory organization id for tenant isolation, and an optional project id, each resolved from request context then query parameter then header.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L336-L390",
+          "version": "repo-lines-v1:sha256:18a52d63a00273f031e604d80752c6c2e289d3ab66d67952864ba71be86f9fee:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjYjUyOWM1OTE4MzZjOTdiNTY2MWNjZjRiNGE0YzA5ODZiMDlhOTZiNGI2OTcxNGRhMGVjOTIwODgxNGNiY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjY2U4NzdiZjQ1NTQzZTk1ZTI5OWI5NDIyYmVkODEyMGI2NTRhZmYyNGJkOTczMzQzOGNkZjFlYThlNzEzZjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_66201a3a14de482892825342d9d62c9b",
+      "statement": "Organization and project detail routes are gated by RequirePermission for view with mutating routes carrying stricter update, delete or manage checks, while project-scoped resources such as incidents use InjectProjectContext instead.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L179-L215",
+          "version": "repo-lines-v1:sha256:9ba684157f03b927ded6f7accf77dd068ca022d519149d33fb7134d5559f4d1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhMzEyMTJlYWFkOTc0MzRiMDZjZDUwOTVlOGZjNWJiMTViYWE0MjMxYzc1N2VkYjE3ODAxYjRkNDViZTJhODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkNmExNzNlOWRiZTNmYjk1OGE0N2E1MGViYTc0NjJiM2YzYjM4N2NlMzlhYjk2MmRmZjMwODVkOGUwMWRjNmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMmY1YjNkNjg0MTI1NDFhYzQzMTEwZjE1MmY5ZTVmMGRiNzNiMDM4MzFhMmM3OTdlMWJiNTQ0MjYwNTZhNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxMGY0YzNkZmI5ZTM1MzJiZjk3NjMwZDIxNWZkMjYwZDJjZjFkZjI0Mjg5ODE0ZTE4NWY1MGVlZjQ0MjhhMmIifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L226-L262",
+          "version": "repo-lines-v1:sha256:fd6f9b8ac767ee6ee7d4b5808499af6dd300f4630aca83393060c57d8824dce5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwMTQzN2M4NDliZDlhY2MwYzUxNDIwMWE0YjEzNjgxYTdhYjNkZDY4MmI0NmMzYTE4ZjYwODk5NGQyNmFmNGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmOTg2NWUxNDY5OTFiMDJjNWMwZWJjNzYyMjc0YTIyZjYyNmExZGVlMzI5YTQ1N2Y2ZmNjNGUwNzgxYTcxNmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmY2M2MzdkYzYwOTNiMTA1MmFlYjg3NDg5NDk4YjRiYjI4NmE2NDdhYzg1NjJmODA1ODVkNGY5MTBjZGYxMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkMWE0NDJmZDI0MTRmZGQxZmYzYWRiZDhmZDI3NDc2YjIyNTc2MGEyMzQxODdjZWY0OGZhZTQ4YzU4NDcyZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5af4e31dfc2f41188ed21b66a4887ced",
+      "statement": "Organization creation is open to any authenticated user with membership checked inside the handler, and the organization listing endpoint returns only the organizations the caller belongs to.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L179-L184",
+          "version": "repo-lines-v1:sha256:9fcf014c4474079d9b194e211862d474a357d68c662a605a34d07e5b230fa9eb:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWEzMTIxMmVhYWQ5NzQzNGIwNmNkNTA5NWU4ZmM1YmIxNWJhYTQyMzFjNzU3ZWRiMTc4MDFiNGQ0NWJlMmE4OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDhlNTAyOWQ1ZGEyYWQyZmRmOTBiODNmNzk4YWRjYzYyOThmMTg1MzZlMzc1OGVhYjBmNGRiZjU5ZWUyNzJiOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAyZjViM2Q2ODQxMjU0MWFjNDMxMTBmMTUyZjllNWYwZGI3M2IwMzgzMWEyYzc5N2UxYmI1NDQyNjA1NmE2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjVjZTk1Nzk5OTI5MzljMDlkMjU4MTM5Y2E1YjdkOGU5YjIwYTY3NzI1MTU0MmIwNTllZTFkNmFlNGI5ZDRkOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_542bc51a88fa4f508473108c9602c6a2",
+      "statement": "The permission matrices and role mapping are plain data tested without a database, while the SQL-backed authorizer is tested against a mocked database including project role inheritance and the generic Check dispatch.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/authz_test.go#L7-L102",
+          "version": "repo-lines-v1:sha256:f0cb09c5c3c40d9aa01cb6acb49b57578bdd879e709443de1aa4d4b87de346b0:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2MGFmOWU2ZTgyMWI2MTdmNzhmYzA3YjkyZjI0ZTZmODJmN2ZiNDMwNmY3Mjc2NTNjNWNjMTgwYWY5ODAzOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzZTljYzQ5MGMxMDE3OTYwOGZiMGI1MmViMjZkMDM2NGRiYjM3Zjg0YzMxYjQ1MDhmMzZlNjg3Zjk4YjhiZWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyYmExNTllMjA3MmQ0YzcyMzlkODUxNTYyMWM5NDc4ZTI5Y2YxMTY0MzNlYTRlNmRhZTIyMjdlYzY4NzlmNmMifQ"
+        },
+        {
+          "resource": "repo://server/api/authz/simple_test.go#L237-L340",
+          "version": "repo-lines-v1:sha256:15ce3b21f75aa06eb2da5675d082f4c49cf8c0f3c0eb06c226ca99af19f8f29f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmOTkxMTNlNGJiY2FiZmE1OTdmNWY1NjYyNGZkMzZkMmIyNTRjZjFmMWIyNWVkOGNhZmRkZGJhZTYyNTYyNDRlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI3NTliZmNiNzA1MzM0NTdlNGMxNmI2NzczMTg0Yzk5ZTdkMDFkNjJiMDkzM2Y3Y2M1YzNmZjQ2YzdmNTQzNmI3IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmMjk2NDA3OWMzYzVjODE1MjBlZjMzYTJiOWQyZTE1YTFiODRkNzI4MGRiODU5MGRjZDY1NzQ3ZTNlMDEyYTQwIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkNjE4NjM4ZDE0NjgzOTVmOTNiY2FlMTg0NWQ3NzlhMmVlZmJlMzIwMTc4ODczMDg1MGIyNjg4N2VkNzNlZGRjIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

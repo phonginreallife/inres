@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5eac45e9b987c6936156ba7a3ed2a6b202f7336da96b11215267a400c4b8c38b",
+  "claims": [
+    {
+      "id": "claim_ecd26ce4d9cb47d1a61112933196134a",
+      "statement": "InRes is an AGPLv3-licensed on-call and incident management platform whose distinguishing feature is an integrated AI agent that investigates and helps remediate issues under human approval for sensitive actions.",
+      "evidence": [
+        {
+          "resource": "repo://LICENSE#L650-L661",
+          "version": "repo-lines-v1:sha256:118b8275c007dbd6b34ebd83e0e17221c812e9cd0cc88a326f843ef755750b32:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3Mzk4NDEyNjU5YWVkOGJjNjc0ZmYyNTA5ZTIwMDcyNmUwNzhiMTNjMjFhNGEzNmE5MjQwMTRjMWZlOTBlMmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwN2ExMWViNTFlMWQzOTg2ODkxYzEyYTI4NzgxYjMzZDkyMmQxOWE5YjFmNDY2NGU5MTgxMmRlNGYwZDMwNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4MDEzMDdiYmY3YzIzNDIzNGRlN2IyZTZhZGYyMmVlMzBiNmEyYWI2MDIxMGQ5ZTFhYTcxMmM1OGM2NWRkZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://README.md#L1-L12",
+          "version": "repo-lines-v1:sha256:157fcd22ddfdc90a37475924f359ab8d4ecb52f197bfa057e6bb611a00944a70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2Y2YyYjEzMTA5M2Y5MGI3NWZlYjdkNTE1NGJlYmFkNzBiMWRhM2VkM2YzMzgzYTA5ZGU5YWZiNTZmZjcwMDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwNTkxNDAwMGMxODFjNjZiYjZlNzAwMDQyM2UwNzNlZjQyNzY4MmYxNTM1NTFjZWExNDk0ZmY4NGYwYmY5NDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZmY2YWFmNDJlYjA2NmIwZjllNDc4NWRmZWRhMWYxMzlhZDNlZjZmMmExZDRiOTRlYmMxYmU3NDdmZGVhYzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c21afa3a9c3c4c2caed31b01be9740df",
+      "statement": "The actual service directories are server/api, server/agent, server/slack-worker, frontend/inres and worker, which does not match the api/, api/ai/ and web/inres/ layout described in the repository's root CLAUDE.md.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/build.yaml#L79-L101",
+          "version": "repo-lines-v1:sha256:12ede6c0870dd0ffa4f933f4a16e3b9c5bb7c227cfab8882182e944cad219bbf:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlZTNjNjBkYjI1M2NiY2VhNzI0YWFkZDkxOGViOTQ2NjRmN2M2N2U3ODRmNzk2Zjc4NGNmMTAyMjA3ZDI2YmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlZmM3ODMxOWIwYzk0ODE4ZmQxOTg0ODI2MzExNmVhYzBiNGIxZDdlOGYyODljZWYyN2JlYzEzOTE3MTI4NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxMmJiNzFlMWUyM2QxNDdiMTU4NjI1MWFiZTE4Y2M2NmE4MzA4MGM0ZjVjZDZiOWQwMjY5ZjY4ZjJhYWJhNTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjczYjlkN2Y5Y2MxZmZiNTNkZjllNmJkNTc2MzcxY2E3YzNiNDUyYzRmOGYwM2VlODA1Yjg3NWRiNGQ1OWFhYmIifQ"
+        },
+        {
+          "resource": "repo://CLAUDE.md",
+          "version": "repo-file-v1:sha256:e48a69852acd22481520c0ba0f1408718cdc609ccec5b2c8ad37405ec409134d"
+        },
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L31-L145",
+          "version": "repo-lines-v1:sha256:222b03bcb2e8860f092f6a1937f2b1105dbd54fa0ca963816951f5eb12a5851f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5M2NiYTZmZjZiZWM3NWIzODAzOGNiN2U2YmUyMWJhYjE4ZmJjMmEyZTFiNTZiNDgzZDA4NjI2ZDFhYjY4YjIyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJiYzE2ZWQyMzlhMzY1MWI1MDc5YzBlNGU3ZjA3ODQ0ZWEzMjljODc2MjhiZjlmY2M0NjM2NzczM2Y1ZTFlOTNlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YjBjNGRhMmMwZmUyM2QxODZlNmRkMGQ4N2Y5ZmVjNDM3NDQ4YThmNmFlZTMyMmI1NGE0ODY0ZWY1NThjZWRkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0YTRkY2RhZTI1ZTJjYTBlMzlmMWU1YzY3OWMyOTFkM2ExYTY5ODcxY2FjNTc4OWNlZjdlYWE1YTA5YzU4OTI0In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_7113b0df422f405f932cca456e4af5a2",
+      "statement": "The components listen on distinct ports — the Go API on 8080, the Python agent on 8002, the frontend on 3000 and the Kong gateway on 8000 — with Kong as the single external entry point.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L31-L170",
+          "version": "repo-lines-v1:sha256:2379b58c035b29691e273d086c9ce54a034c2eedc28338cd2f13ea8b1d1a1c20:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5M2NiYTZmZjZiZWM3NWIzODAzOGNiN2U2YmUyMWJhYjE4ZmJjMmEyZTFiNTZiNDgzZDA4NjI2ZDFhYjY4YjIyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyYmUyY2I5ZmVlNTljYzc0MzQ1OTMwYzRlOTkxNTY2NjdlYjQ4MjIwYzNlZDcwMDVmY2NjZWFiZTEzNDE5ZWM1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YjBjNGRhMmMwZmUyM2QxODZlNmRkMGQ4N2Y5ZmVjNDM3NDQ4YThmNmFlZTMyMmI1NGE0ODY0ZWY1NThjZWRkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJiOTQ1ODE5ODFmMWJkZDE1OTA2MmIyYzVhMDg3MjBjZjlkYjhhNGM4ODJhMTkzZTk4NTEzZWZjNzM1NjRmNDU5In0"
+        },
+        {
+          "resource": "repo://deploy/docker/volumes/api/kong.yaml#L1-L87",
+          "version": "repo-lines-v1:sha256:bc57b716398dc42e73cfb712cf3adf0b26cfbd2b1fab80e116cf42996563b7be:eyJzZWxlY3RlZExpbmVDb3VudCI6ODcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMWMwMDIyM2Y4MmY3Njk5Y2VmMTg3NGU4N2QxODU5MDAwZTkxZjA2NTkyN2UwY2I5MGQ0NDM2YzE3OTg2MGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiODgxMjEzOGE5MDZjZDlmMGQ1N2I2YmUyYjVhMmE4N2IzZGI2YTdmOGRhNTRiZmU5OGY0NDk2N2FiYzMzOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_778e84decf7b4ebcae272975c904555e",
+      "statement": "Services coordinate through shared Postgres tables and PGMQ queues rather than calling one another, so a producer enqueues durable work that an independent consumer drains.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L50-L84",
+          "version": "repo-lines-v1:sha256:43496a0e422cd80c7e59c6921004b523c9b02d0de9245a6b5f5eb7245e0ff162:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiN2Y4NjVlZWRlODkzYWNhNzMxNzcxYzU4MWFiNWUyMjJmYjBkODgzOTNjODIwNWJjNjEyZmExYzlhYmJlY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3NDFmMGNjMmY1MzU5ZWVjNTQ3NTdmNjg3MTlmMDFkOWE1NzUzYzczOGE4OWQ5MDA4N2U0MWMyZGZlZGM3MjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmY2YwZTcwMTQyZjEwMzQyY2EyOGQ0YTYwMzk4MDk5MTk2ZTY1YTllNGFjNzA4MjFlZjNhNTM2NzAyZWFkMGQifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L217-L228",
+          "version": "repo-lines-v1:sha256:e981b1765d82d465d32eb0e27f02ba7ce73d36c6408ba467537087e8d6957f06:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMTA1N2RmNjE2MTFjN2I2ZDE0YjEyZTI2NGFkZDM3MTI5MDJkYjJjZTYyNTA0ODE3MDUxMjU4YWFlNWJlZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2M2UzNTk2YzY3YmRhNDQ0ZDRhZDY0YjE0NTE4YjFjY2JjYTk4YjI3OGI5NWZkOGJmNjVkMGVmZDBjMjM2MDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2MjVkNzg4MjU0YWFkNjQ0ZjY1ZTJmMWY5NjBmYTU1NWQwMGQwZTNmMDJlNzUwNjQ4ODdmZGVhMDljY2VhNDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3Yjc2YWZhYTBlZTczZjQzYmU1NzRlMTBhYTYyMzE3Mjc4ZTI3MGZmYmVhZjA4NDYzYjNjZGRlZTQxNzgzM2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_22b215a6e9d249b8aa49a8d422309a5e",
+      "statement": "The Docker Compose file requires its .env to sit in the directory containing the compose file rather than the invoking shell's working directory.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L6-L11",
+          "version": "repo-lines-v1:sha256:89915161b12e3ef873fc72b47be5986d0fb11340c70524cc139acc61d54b0157:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTdhYTk3YjkyNzg4MTM3M2U3YTBlMjkyMGFiMThhMWYzZDA1YTQ4ODQ5MzI0ZmFhODA2ODRhMmQwZDFjMjBmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzJjNDg1OGUyMmNjMmM5NjdiNDIxNTBmYTU1MDU2MmEyYzgzOWMyY2ViY2FhYjkxY2FiZGY2ZjRkYTAyMDAyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTg4MTNhNTE5NmVjNzZkYmZhYThiMmZjOGY4NWI0M2I2ODc5MjA5Zjc1NTVkODNjNjhmODg2NjRhYTcyZTQxZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTljZDFjODFkZjBhZTM0NzllZjM0YTgyYmJkYjg2N2I1NzRjNDRmMjk2MTUwODFjYzU1ZTc1ZDEyMGI5ZmQ3ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8bc0a9a4c14e49f1881145cfa05c7ef3",
+      "statement": "Exactly one Anthropic credential must be supplied, and because an API key takes precedence wherever found, using the OAuth token also requires blanking anthropic_api_key in the mounted config YAML.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L22-L28",
+          "version": "repo-lines-v1:sha256:6c2155a20c9545d20a40f0ca120130a7471a879f21d3fbc9aa5783071639a95b:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzJjNDg1OGUyMmNjMmM5NjdiNDIxNTBmYTU1MDU2MmEyYzgzOWMyY2ViY2FhYjkxY2FiZGY2ZjRkYTAyMDAyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTljNzg3MzU4NDc1N2VjMWNmMWMxMGU5NzY1MzgyZWRlNmY5ZWE3ODQxY2M5ZGMwYWYxNDkzNjJiNmY1OWFkMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWUxMDI5NWUxZjE0NzViYWQ4M2IzNzk5OTA1MGQyN2RjM2E4NzBlZDBiNWJkZDE5ODYyZWNjYjc1ODVkOTQ3NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmQ0YWI1ZjE5ZDJiNDU0Y2UyZWYyM2ZmY2E5YTJlYTIwZjgwMGViY2QwMTU2NTg1Nzc1MzY2ZTQ3YzBjZmU2NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d1b43b8e78344c59015847bd90a156c",
+      "statement": "The Go API and the Python agent are configured from the same YAML file, mounted into both containers and located through the same environment variable.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L102-L120",
+          "version": "repo-lines-v1:sha256:adb348e0a0a6fccaac78e362a959165fb48ca3f3ffa42cf91ae81ebc93fdaa93:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MWY0ZTI1ZGNhNDg2ZTlkMzFjY2Y1Yjc2M2M2Yzg1MzMyOTc5ODk3OWI1NzVjNGYxOThkMTQ5ZTI0MzUzZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4ZWEyMmUxZGMzNmRmNWQxMjg5Zjg5MTUwZjU0MWY2OTE1ZTUyNDVjYzBkYzM0OGM1NjEyZTJhMzRmN2ZlODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0Y2EzY2I0YjE2ZDJhYThiYTg3NWY1MmFhNWQwMWJlYWU0Y2NlNDFkMTc3M2FkMzFjYjdiNDE5MmYzNmI0ZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlNmEzN2M4MGZiYzlhYTg3ZjQ3MzdlMGEwY2FmOTZjMTBkNzJmMDgxMDc3N2FiN2NlNzIyZWQwNGMwZWMwZDUifQ"
+        },
+        {
+          "resource": "repo://deploy/docker/docker-compose.yaml#L56-L72",
+          "version": "repo-lines-v1:sha256:65c7805d7a35a07bd220d06287d1cde0f695d5913bf81585043478cdfee962c8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0ODM1NGM5OGIwNDhhNWMzNTdlYzk4MTA4ZmI4YjJjOTM2ZGVjNjNkZGIwMjdjMWI5NmNlMTg1MWU2NTNlNjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhOTUwNDU3OThhMTdiOWZiOGMxOTNiMGE5ZDk3MGZkM2ZkNGIxYTZhZjJhY2QxZDk1NWZkMjE5NDRmZGIwMTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjYjgzNzUyMDJmYjYxNzAyMWIxMzQyMTFhYzBmM2Q2MzA1NjJjMWUyNGU5MjJhYWVjMTkzNjc3M2E2MGMzYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZDM1NjYwNGZhYmJhNDJhMWE2ZTdmZThlOWZiOTQ4MzgxYTFkNGQxMzJiMzk5NjM1NDdjNzgzMWY2NDgzNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_60b2100a164147d4976328e311042111",
+      "statement": "The webhook ingestion endpoint is public and uses the integration id embedded in the URL path as its only credential.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L155-L161",
+          "version": "repo-lines-v1:sha256:28fee115be26462bef078ab21632cba571b93ae81c01844b63d4fd476bc89cfe:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmJhODJkNGNjNTE3ZGI1ZmUxMmRhYjE1ZjY5MDIwMThiMmNjYzQzMTMyMDljYjVlNmY0MmIzYWE4YjdjMGY1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTU5ZmIzZGQ3NTlkMzUwODJkMzM4YWUzZmQxY2M0MmEzZjVhZjEzN2I4N2MxNjA3YjY1NTc5OWViNTQxZGJiNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWE5ZGFiMWMzMThiOWVjMDZhODQ1NTMwNTMwZjcxYmUzZTlhNWM2NzM3NmU2YWRkNDFjOTg3MzZhOGE3MmMzYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ffe185c7dc04d1997fa12873f91ff36",
+      "statement": "Escalation runs even with zero standalone worker replicas because the API server starts the incident and notification workers in-process, with the separate worker Deployment existing only to move that load off the API pods.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L250-L280",
+          "version": "repo-lines-v1:sha256:b6a864d0e0baf0a48cb76a712426bb3adf59d95673a6cc14c4fbeaa2e5790ba3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MjQ3YjYxMThmZGNhNTU3YjNhYjNiZjRjZTlmYTliOWQxYTdlNWI3NjA5OWE2N2FlMjJmNDk2Zjc1OGNlYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMTJhMDVlZDIyODY4ODE1NTNhYjUxODg1MWY2ODU3YTUyY2UwMGM3ZGI1OTY5ZWEyZDE5NjhiNjY5OWZlZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3MDNlZTYyYTE1YzczNzQ4ZWMwOWRjODA1N2MxOGQ1YmQzNjg3NDNkOTM2NzUxNTZjMjgxZjgyODJmZWU0MzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTVlZTNmZDAxNDEyYzgyMmU1YmU5N2U2ZDczNzdjYzU5NWI0MzZkZmU0YWE5MjFkZmVmYTE2NGE3NTdiNjgifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L98-L130",
+          "version": "repo-lines-v1:sha256:17399903823feafb5a1ca1f47c7d9f8810ce297d82824a344ad2c1aa32089913:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5YzY1YzE4MzM5MjY3M2E4ZTBjOWRjMjBiZWE0YzUyYzdkNGZiNzc3M2RmMjZiNTg3NjNhMGM3NTE4ZjM0YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNjBjNGJhNTA3NjI0MDhjMzM3OTAwYWQxNzU5ZmEyYjA5ZDRhNTZkYjY0MmUwMTk0MTU1ZmQ0YTIxYzYyOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwYzIxMzBmY2UxMTY4ODBmYzVhMWNjZTdkNWQ2YzUxMTlhY2IwNjIwZmE0NjlmMTkwYTE0YTJiYmQwNThlNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1YjJmNWZlYjlkNWE0MzI1ZWZiNDQzYTlkNWFjNmM2NzUwNGQ4YTcyNmE4NmRhZjllNmZkZTdjOGE3OWU1NWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf8b1c7a51224571945d07aefc83a225",
+      "statement": "The Helm chart refuses to render when autoscaling is enabled for the agent component, because its ReadWriteOnce volumes and pod-local conversation transcripts require a single replica.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/hpa.yaml#L19-L35",
+          "version": "repo-lines-v1:sha256:6c936118ba97ea824138d303c7e1a5e9d00183c2418b8092615fa19a8b373e1a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NGZhZGYxNjhkMDlhNjAxYjFiYzY1YzA0Zjg2NTZlZmQ1OWVjZjEwZTgyMzUyMjQ2OTlmZTQ1ZGQ0MjUzZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjM2VkZjJlYzRlOGRiYWVjYTg5OTJmYmMwMWE3NzdiNmQ5NTFlMTYzZDEzMWU5NmRmMTUzY2NkNThkZmRiYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiMjM1MmY5MjhiMWE4NDc4MDgxM2EzODNlYzVkNzVmZjllNTc1MzY5Yzg5MWE3ODUxY2JhZWE3ODhiMmI1YmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkMmNhYjYzYjNiNTViMGMxOTc0MDNmMjYwMmQ3NjJhNzAwNjFhODA3N2E2Zjc4YzQzZWQ2ZWExMGE3ZDUxNGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f6707e694a946c3af942ee4a25145c3",
+      "statement": "A project inherits access from its organization only while it has no explicit members, so adding the first explicit member converts it to a restricted member list and withdraws access from everyone who held it by inheritance.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple.go#L94-L126",
+          "version": "repo-lines-v1:sha256:61bd283655103b85629fa659c4ce37ca39bfd36e61cce2689302a9670e84de62:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkMTM5MzE1NTViODc2YjgxYzE4NTA3NTBlOWIyNDk4NzA2OTNiOWUzNTlkYjZiMzFlMWE3YTA2YTkzZmIyYzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyNDdjZDUyN2FlZDFjNzZjZTM1MTQ0ZTUzY2Y0MmE4YzczOWY0YThiMWM3ZjM5ZjAyNTBhMjdhZWM3ZDAzNjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3OWYwZjc2Yzc2ZDc0NTdhMmQ1NmM2YzkzZGUzNDAwYjAwNzUyYzFiNWVkYTY5YmM5MjYyNWVhZTYxZGQ3YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2NTZkMGJiNTRmZjA3NGNmNjQ4ZThhOGRlZTM1MzU2MjQ4MTY3ODA1NjlmZjBmZGZhZDkwMTFmMTI0MjdhMTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6b5cdcfcd6cd401ca6d5a2383f493f80",
+      "statement": "On-call override resolution is implemented in the effective_shifts database view, and code paths that query the shifts table directly — including the on-call service's current-user lookup — bypass overrides entirely.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/oncall.go#L66-L95",
+          "version": "repo-lines-v1:sha256:a714bcd4b6cb9b862d03f62733ceac53cfe5c488662d31b9bc642769802f058d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjNDBlMmNhM2E3ZTVkMWJlM2M5ZTIzZDI3NGM0NTQ2ZDU0MjQ0ZjVmMTdhODgyMTE0MmUyZWEzOTk5OTcyZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExMTczODQzNGQ0ZmY2MmU1MWEwYTEzN2E4NTI3NDkyZGM0ZmY4NTg2OTY2OWE2MTE5YTMzZWZiYjU5OTE4ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0MThhMDk1ZjNmYzgwY2Q5NTM1NTk5ODYxZGM1MDUxY2YwNzQ1NzcxM2Q3ZTM0MTgwMGEzNzdjNzI0OWJmM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjljYTIxZTJiZjA2NTUwMzc1YmZjMjc1MWFkMmRlZjdlYzZkYjc3NTZlYmY0ZmY1MGRiNzRhOWQ5MDcwMzY3YzgifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L9-L22",
+          "version": "repo-lines-v1:sha256:69c0b12341a75771b5834fcc08b89fc005efe773f87f08bbf6a08cdf304e8549:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyNGE3ZmI4ZGZlMjkyNTEyMjIxZGI3NDFkMmRlYjc3MDQ1MzkxMjMwYzQ0ZmM4Njc4YWE1MTFiNDA3ZTQ4NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMGNiMGJhM2M2MWM1Yzg1ZDI1ZmM0ODMxNDkzZDczNWY1MDY4M2ZmY2JkNGJiNzU4MWE5NzA5ZjRjNThhMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyOGJiM2MwNDBjNjcxMmVkMjEyMjU3ZThhMTNmMjNmYWM5OTIyZWFkNmI0NWM4NWM5MDYxZDE3YzJjYzQzYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiODVjOWZiZWFjM2EwZjNlZmE5MjQ0ZDVlNTAzZTM2ZDE5M2M5YmE3YThhMTE4NzM4Y2YwZTM5MDRiYjM3YmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_40c8b15042434b169737386e0b2010e8",
+      "statement": "Both the Go and the Python services write their resolved configuration back into the process environment so that existing code reading environment variables directly continues to work.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/config/loader.py#L44-L74",
+          "version": "repo-lines-v1:sha256:d6b7c4e6e15e26bada0a08728f05520fcd2eef29651e24ee638bcba84e8f079a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxYjU2MzQ3NWUxY2VhOGJkZjk1YThhYTUxMmE2N2RmYjIzZjI5ZjhhOTcwYzEwNzFhM2U1OTZiMWUzNmM2MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwM2Q4ZmEzOGZkY2I0NzBkNGNkZDhmNjY4ZDRmNDliYzUxYzA4YmYwY2MwM2RhZjJkYjE4OGY3MTM3ZTEwNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5YjdiMTVhNzQxMjVjYzIzMjEwNzZmNmIyNjk0MmIzMTczZjVjZTc5ZGM3MjFlOWIxMzA2YWJkZmNiOGIwNmIifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/config/config.go#L138-L176",
+          "version": "repo-lines-v1:sha256:3a2c792bffcb2f68ab22b52f31c822afde8f3d97a05e9e7110a07317bc665128:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NWJhODE4NWRjZWJmMzg1YjYzNzNkNzJhYTg1YWQwODgzNjc5ODhiZWZiMDU5ZTRjNGRkMzE3N2FmZTU1Y2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiNTdlMDcwZTIyMjg3OWQ3OWFiNWFkYjliNmNiNjI2MTU0YjEyMWFjY2Y0YTZmNjgyZDU2N2E4ZmI2MTA3ZTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f4e943f8746b40a1a10d014f09b4ca79",
+      "statement": "Only the Go test job blocks CI; the frontend and agent test jobs are marked continue-on-error, so those suites must be run locally to know they pass.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/test.yaml#L58-L112",
+          "version": "repo-lines-v1:sha256:f63a64b854f0dbf9a6b4b42c35488d0bddd3d81095eeb760cab64de87eb55605:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiZjAxOWI1ZTYzODU0YjhlNzUxZTFkOTYxNTJhNzhjZTcwZTc5MzQwYTNhOTU1ZWQ4NTQxN2U1NWEyNzNmZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmNTUwYzliMzNjZjM4YWYyYzNiYzFhOTRkNGZhYTYxNjdlMTE2OTk2MTY4YmEyYjM3MGEwZjY0MTdkYmIzZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2MWRmMzkxN2Q3YzVlYmEzYmZjMTMyYzQ1MWM1ZTE2ODJhYmY5Y2MwNDAxMjU3NTVjNTNkMTg2NzVjYjllNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6c6bb01ec6f2438abb8a7605fe9b451a",
+      "statement": "The Go API supports hot-reload development through an air configuration checked into server/api.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/.air.toml",
+          "version": "repo-file-v1:sha256:a45cad1adff3f1569ef7fbd60534441db67637d2426e091a5b2c0de40050e808"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T11:09:25.960Z"
+  }
+}

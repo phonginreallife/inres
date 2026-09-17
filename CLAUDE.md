@@ -289,3 +289,11 @@ Critical environment variables (see `.env.example`):
 - Check `tmp/` directory permissions
 
 Database migrations are in the supabase/migrations/ directory
+
+<!-- OPENWIKI:START -->
+
+## OpenWiki
+
+See [AGENTS.md](AGENTS.md) for OpenWiki agent instructions.
+
+<!-- OPENWIKI:END -->
