@@ -44,17 +44,35 @@ jobs:
           bundler-cache: true
           working-directory: docs
 
+      # Only the deploying branch talks to the Pages API. A pull request just
+      # needs to prove the site still compiles, and making it call
+      # configure-pages meant every PR failed until Pages was enabled.
       - name: Configure Pages
         id: pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
+        with:
+          # Create the Pages site if it does not exist yet. Without this the
+          # action fails with "Get Pages site failed / Not Found" until someone
+          # enables Pages by hand in repository settings, which makes a fresh
+          # clone or a fork unable to build its own docs.
+          enablement: true
 
       - name: Build with Jekyll
         working-directory: docs
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        # On a pull request there is no base_path to read, so fall back to the
+        # baseurl in _config.yml.
+        run: |
+          if [ -n "${{ steps.pages.outputs.base_path }}" ]; then
+            bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+          else
+            bundle exec jekyll build
+          fi
         env:
           JEKYLL_ENV: production
 
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/_site
