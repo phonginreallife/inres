@@ -26,6 +26,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Tags are needed to resolve the application version below.
+          fetch-depth: 0
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -55,10 +58,26 @@ jobs:
           chart_version=$(grep '^version:' "${CHART_PATH}/Chart.yaml" | awk '{print $2}')
           echo "chart_version=${chart_version}" >> $GITHUB_OUTPUT
 
+      # appVersion is what every component's image tag falls back to, so a stale
+      # value ships a chart that pulls images which may not exist - 0.2.0 was
+      # published pointing at 1.10.0, for which no image was ever built. Take it
+      # from the newest release tag instead of trusting the checked-in value.
+      - name: Resolve App Version
+        id: get_app_version
+        run: |
+          set -euo pipefail
+          app_version="$(git tag --list 'v*' --sort=-v:refname | head -n1 | sed 's/^v//')"
+          if [ -z "$app_version" ]; then
+            app_version="$(grep '^appVersion:' "${CHART_PATH}/Chart.yaml" | awk '{print $2}' | tr -d '\"')"
+            echo "No release tag found; falling back to Chart.yaml appVersion ${app_version}"
+          fi
+          echo "Packaging with appVersion ${app_version}"
+          echo "app_version=${app_version}" >> "$GITHUB_OUTPUT"
+
       - name: Lint Helm Chart
         run: helm lint "${CHART_PATH}"
 
       - name: Package and Push Helm Chart
         run: |
-          helm package "${CHART_PATH}" --version ${{ steps.get_chart_version.outputs.chart_version }}
+          helm package "${CHART_PATH}" --version ${{ steps.get_chart_version.outputs.chart_version }} --app-version ${{ steps.get_app_version.outputs.app_version }}
           helm push ${{ steps.get_chart_name.outputs.chart_name }}-${{ steps.get_chart_version.outputs.chart_version }}.tgz "${{ steps.resolve_repo.outputs.helm_repo }}"
