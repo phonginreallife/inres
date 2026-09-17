@@ -8,8 +8,21 @@ metadata:
   labels:
     {{- include "inres.componentLabels" (dict "root" $root "name" $name) | nindent 4 }}
 spec:
-  {{- if not $root.Values.autoscaling.enabled }}
-  replicas: {{ default $root.Values.replicaCount $comp.replicaCount }}
+  {{- /*
+    Resolve replicas as: components.<name>.replicas, then .replicaCount, then
+    the global replicaCount. Two reasons this is not a one-line `default`:
+
+    - values.yaml has always written `replicas` while this read `replicaCount`,
+      so per-component counts were silently ignored and every workload used the
+      global value.
+    - `default` treats 0 as empty, so `replicas: 0` would have become 1 and a
+      component meant to be disabled would have kept running.
+  */ -}}
+  {{- $replicas := $root.Values.replicaCount | default 1 -}}
+  {{- if not (kindIs "invalid" $comp.replicaCount) }}{{ $replicas = $comp.replicaCount }}{{ end -}}
+  {{- if not (kindIs "invalid" $comp.replicas) }}{{ $replicas = $comp.replicas }}{{ end }}
+  {{- if not (and $comp.autoscaling $comp.autoscaling.enabled) }}
+  replicas: {{ $replicas }}
   {{- end }}
   selector:
     matchLabels:
