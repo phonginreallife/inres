@@ -13,10 +13,11 @@ description: InRes - Intelligent Incident Response System Helm Chart
 type: application
 
 # Chart version - increment when making changes to the chart
-version: 0.1.0
+version: 0.2.0
 
 # Application version - the version of InRes being deployed
-appVersion: "1.0.0"
+# Default image tag for every component (values.image.tag overrides).
+appVersion: "1.10.0"
 
 # Maintainers
 maintainers:

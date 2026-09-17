@@ -9,10 +9,12 @@ replicaCount: 1
 image:
   repository: ghcr.io/phonginreallife/
   pullPolicy: IfPresent
-  # Pin to a released version. "latest" is not reproducible - a rollback has
-  # nothing to roll back to, and two nodes pulling at different times can end
-  # up running different code. Override per deploy: --set image.tag=1.10.0
-  tag: "1.10.0"
+  # Empty means "use Chart.AppVersion", so the chart version and the images it
+  # deploys move together and cannot drift apart. Override per deploy with
+  # --set image.tag=X. Never set this to "latest": a rollback then has nothing
+  # to roll back to, and two nodes pulling at different times can run
+  # different code.
+  tag: ""
 
 # Image pull secrets for private registries
 imagePullSecrets: []
