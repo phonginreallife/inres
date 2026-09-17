@@ -53,6 +53,11 @@ services:
       - "8002"
     volumes:
       - claude_data:/root/.claude
+      # Without this, every rebuild wipes synced memory, activated skills and
+      # cloned marketplaces, while their rows stay in Postgres - the UI then
+      # shows plugins as installed with their files gone. The Helm chart has
+      # always had a PVC here; compose did not.
+      - agent_workspaces:/app/workspaces
       - ./volumes/config/dev.config.yaml:/app/config.yaml
     environment:
       # Config
@@ -175,4 +180,5 @@ networks:
 
 volumes:
   claude_data:
+  agent_workspaces:
   redis_data:
