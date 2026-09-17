@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9ce95bcf77cbb68169302ee175a58d5ee79433deb67e6c6a5ac059076b9d80f7",
+  "claims": [
+    {
+      "id": "claim_b1f07316b5d04ea88a57e0690735b343",
+      "statement": "The API router separates a public route group requiring no authentication, an API-key-authenticated /webhooks group, a JWT-or-API-key protected group, and a set of public mobile endpoints whose tokens are verified inside the handler rather than by middleware.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L126-L175",
+          "version": "repo-lines-v1:sha256:7bad33074eceb9db8cf8d009f107b580fbff654c2a077d5d4c2842ff7084f8c7:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMjYxNjQ2NWVjNDliYjJmYTVhNzU4YjRkMWU1ZWFhYmYyNzExOTIwNjk5Y2UxODkxNjU1NmNjYTQ2MWVhNDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3YjNhNzA0MWYxN2EzNTA3NjkyZWRmYzRiYzg2YzhlNmZiMGEzN2E0MzY3MjVhNTYzMjQ3MzViNjA4YTNmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjZTY5MGMxZjEwODliY2E2MzVhM2VlZDJmNGFlNjE4NWFiOWYwZjgwZmRhMTA5MzZmNWNkZmYzNzE5ZTMxMzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwMmY1YjNkNjg0MTI1NDFhYzQzMTEwZjE1MmY5ZTVmMGRiNzNiMDM4MzFhMmM3OTdlMWJiNTQ0MjYwNTZhNjUifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L615-L629",
+          "version": "repo-lines-v1:sha256:b92c707e5f757afb67891fde78b19d44fee2f8c45c95b9a0a6c37ff3112ed287:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0OGE3NWVhMTZiNzhmYmYzOGQwNWZhYmRlNzFkOWY4MGU2Y2UyY2UxYzcxZjhhNjkwN2RkZWNiMjU4OTI4YzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiYmJhNzUwMTliMmQ0YjAzMWY3MDUzOGExYjE2ZjZiODE0ZmZjNmJkN2NlNTYyNjE5ZGFlNTQyMjlkODQ2ZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzOGFlYjg3N2ZhNWQxMTE4MzdlMjY1Mjg4MzljODcwMzQ4YmU1ZTk1ZGI2YzZjOWEwZmJlMDdhYzczNDdkYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4M2JhZjNjZmM5NmVlMjc2ZDQ5M2ZkZTMzNjY1YTBjMDYxMTJlYjExMTBjYmY0YzUxZTU2OTQwY2U0N2Q2ZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_757c1e0585f1420486479f96be5bb6d7",
+      "statement": "The instance public key endpoint is deliberately public because a verifier must obtain the instance public key before it can authenticate anything signed by that instance.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/identity.go#L25-L35",
+          "version": "repo-lines-v1:sha256:75ef2e2a21d221a9d4cd32186a443deb9fdf41c215f49f66b94bb68e897e257d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0OWY4YWEyYjhmMDg1NGZmMzdiNTRmM2IxNWI2OGFiNTU4YTU4MTEwMWUzOTFkNDJlNjFlY2E0ZGJiMTMzNzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhMTQ0MzVlZGZkMDkyZTBiNGFmNjZjMjYyYTllZGJlYTFhN2YwNzkzZTQ4ZGViY2FiZGNmNDFiYTUwMDE2OWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjMjRmMmJhZGQyMmMwNjUyNjJlNDIyMmJlN2EwNGRjZTVmN2IxYzdlYmFmZGMwMDc5NWI0OTVkZTI0ZGEwM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1ZDUxYjhiN2Y0ZjVhYmY4NzgyM2E4OTBmMTc5ZTk4NDY1MzU5MDE0NjNlMTcwMWE1NDZhMjNkMmZjMjBkNzkifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L150-L154",
+          "version": "repo-lines-v1:sha256:fe197d4f1793dddba49ec3ef6ba3ab6f62f27eb0fa3bed5332e3b494d8d47aa9:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGY5OTE3ZjA4Y2Y1NjhkZWU5ZmUwNzcyYjE2YTY0YTU2NmNlZmZiZmJlNjA4ZGY1MjNiYWFkMjAxMDU0MGE2MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E2ZjY5MTk2MjExMjNhZWI0Yjk5YTI1MDc3YjZjMzAwZDlkMTZkMWYxMWQ4MGYzMjBmMWI0MmYwNDY5Y2UyMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTA4NjFlNTIyZmQ5N2I4NWE5NjY1NzEyMTAzMDExOTgzYWFiYTM4MDc1NmYwOTUyMjliYjlmOGQ0MjE5Y2NjNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzhhNTdjZjA3ZjkyZjhmMGZjMzNhNzk2N2RlN2Y1NmFmMTNkNTZiMzJhZGI4N2U4OTRiM2UxOWM3YzExMTIyOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3b52821a8ca84c4883c0b5adc3c5275d",
+      "statement": "Supabase token validation dispatches on the JWT header algorithm: HS256 uses the configured shared secret as a legacy path, while ES256 and RS256 are verified against public keys fetched from Supabase's JWKS endpoint.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/supabase_auth.go#L129-L184",
+          "version": "repo-lines-v1:sha256:107ddea498fd9c205b0bd85a5f907d14b9eb46b07debc3a76fbb769b40421dd8:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyY2NjY2JhYjAwZTE3ZjIzYjA5MGM2ZGU0OWJiNDUyNjNjYjdiNzFhODkzNzE4OTEwNWEwYmZhM2MwYzJkYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2NGRiZGVlOTgzYzA1ODNjOTIyNjk1ZTM4NjU5NjdjNTQ4YzI4MWM0Nzc1YTYwYzRjZjMxNzZjNGZjMzZhZGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiYzNmZWI0ZGUzNjEyZDlkNjk4MWRkNzJkZWMyYWY3ZjNiMDhjODIwNDlkYjcyMjkwNDYzOGQ5MmE0MTVjNzEifQ"
+        },
+        {
+          "resource": "repo://server/api/services/supabase_auth.go#L70-L104",
+          "version": "repo-lines-v1:sha256:b3e2b54b1ecd48005de730955fccfb3695bf75babe1ff040a3201430ae0139b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmM2M5NjQ0MWVhMmMwZWUxYzg0MDY3ODgwN2M4Mzk0ODYyNTcyZmI3YmY2ZjFmMzVkMzY4MWM3N2QyMDY2NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjZmIzNTM1MDc5N2FhZWM0MTU5ZTQ1ZWVmZTY2ZmFiYzE3YzI1ZDZmNzgxOTkwMjdjZTZmYjRjN2RmMmZkMTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2ZTcwMmNjZjVlZmY4ZTNiMjdiM2Q0YmQ1MWJkZmNmMDJhNzNkYzg4MDQ0YzRhZjNjZWJiMDRhY2MxZjdiZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d33c470a787c459083ff87bc5a9c3c82",
+      "statement": "JWKS keys are fetched from {SUPABASE_URL}/auth/v1/.well-known/jwks.json, selected by the token's key id, and cached for 10 minutes to match Supabase's documented edge cache TTL, so token verification does not make a network call per request.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/supabase_auth.go#L185-L251",
+          "version": "repo-lines-v1:sha256:458e62e37d2903cda8407fa29a34e3183bfc443523e064d241853ec5174797fa:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZWUzYWRiMDg1NzE4ZTc2NjZkNWE1ZWIwMWE0YjAwNjlmODNlN2RmN2Q2MzJlNGU3Yjk5M2FjNTk2MDM4MjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2NGRiZGVlOTgzYzA1ODNjOTIyNjk1ZTM4NjU5NjdjNTQ4YzI4MWM0Nzc1YTYwYzRjZjMxNzZjNGZjMzZhZGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1M2Q4M2U2ZWY4OGI5MjYxNGNhMDhjMjc5ZWJkNWY3MzYzYWFjOWFkMzRlNzZjZGVlMTQ4YjMzZWYyYTcxYzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_52625f5fac70423fb4e8b837039e416e",
+      "statement": "SUPABASE_URL is mandatory for the auth middleware, which calls log.Fatal when it is unset, whereas the JWT secret is optional because asymmetric tokens are verified through JWKS.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L23-L39",
+          "version": "repo-lines-v1:sha256:ea80b6a2f34f8f4cf39d79ce5a9254b3a1b7de96c36832ac372a2214c929c0ea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2NjBjMmNhYWUzZTUyYTdmYmU5MmUzNDBhMGIxOTYzOTVlN2QzZGE3ZWZkYjU4MThmMWMxMzVjZmQzM2YwMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlYzU4NzIzMDgzYjM5NzU4MjBkZDYwZTdiY2FjNmExZmVkMTQ3N2Q3Yzk3ZTg0ZDk3MTZmNTM1YTUwZTRhNTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkZTAxZjc2OGYzOTUwOTRlNWQwMzA2NWRkYmYxYjdmMTZmMzA5ZWI3NWY2ZmY5ZmRiMjBhNWZhZjQ1OWE5NmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e4eab8a874f4ba89b02c9c46482a37d",
+      "statement": "After a Supabase JWT validates, the middleware lazily projects the user into the local users table with provider 'supabase' and a default role of 'engineer' if no record exists, because Supabase owns authentication while the local table is a derived copy.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L157-L182",
+          "version": "repo-lines-v1:sha256:3dced2292a02bcff48e1ab6807b606e382a3788daa356731e77e867960e2240f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2YzUwMGZiYzM0MjMxMmUxZDUyZTZmZjhkYzVkODgwMGI5ZDRkNmZlNmE4ZTg2M2I0NGNkMWI0NWM2NTBjZTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3YmFmNmE1MDcwMzU4NWNlNjg3NjBkYmY5MWI3ZWZlMWJhNDIxOTdiZDljZDM2MzUzYmQ3MzJjZDA3MzY5NjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwYzA1YzA4NmQ1MmM5ZTZiMDRhZDE4OTVhM2RiOGYxMmUxZmRjNzkxM2VlNDE3YmI4YzJjODdhMzY4ZjlhOWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4b1c7ff6310b43a883cc4147bec1de21",
+      "statement": "A failure to synchronise the authenticated user into the local database is logged but does not fail the request, so a bookkeeping write error cannot lock out an otherwise valid user.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L96-L102",
+          "version": "repo-lines-v1:sha256:2c0d17764b36155e21e80db45698780c5ecf70f8fbceea7c7d620b3bf60d328d:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjRlZmM0OTQxOGQyNmRjZjEyOWIyMmE2YWEyMTEwOGNlZWMzNzY3N2EzMmQwOGU5ZDVmZWUzNWRkYTY2YmI5ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDJmNmE4MmVmMzhlZWY3Yjk2YTYxNzBiZjUyYjk1MGJlNDhhYjU4OGY0ZDI5MzhlM2I5OTMyZDI5MGE0ZGRiYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGE2ODhhZjQ3ZjU3MDM3ZGViZmVmYTg1Mjk3NjZlOTU1MjU3NzEwMWZiNzhjMjVlNjNhZTQ0YmY4N2IwNmIyZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf196ddfb66a4468be2697b8e7a14a0e",
+      "statement": "OptionalSupabaseAuth performs the same validation for endpoints that work with or without a user, sets an authenticated flag in context on success, and continues the request chain regardless of the outcome.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L114-L148",
+          "version": "repo-lines-v1:sha256:31d666d76f76b3796dfd0fd8dcf185828b175a5800bc5bbfef3f947f78810c6d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyZjMxNmQ2MWQzZTM2MjY2YWQ3NzdiZDAwYWIzNThmYWFhNTc0MTdkODViY2YxZmIyNGQ2OGM1NjhmYjI0MDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU0ZTVhMzUxMWRmODYyMWQyNzU5ZmYzZDI3NTY4MTVhNmE5MzZlOGQ4NWYyMzFjMTJhOTE0OTYzNTJiNTYzMjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_495feb63cf4a4b23bf32cd6509f8c3cd",
+      "statement": "API keys are generated as an environment prefix plus 24 hexadecimal characters from crypto/rand, so the target environment is visible in the key itself.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/apikey.go#L28-L41",
+          "version": "repo-lines-v1:sha256:9339762b0413fe300be852fc8a684800a9c991df257b9253db58767024cb04e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4ZDE2MDgxMzczYzBjNmM2MTg2Y2MxMDEzNTg3ZDdjOWI0MWE4MjdlMjhhMDU1MmM1NzM1MDFmMzcyNzE0MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiYTZlYzU2NmM3ZmMzZmJhNDA4NGU4NjZmODFlOGFlZDNkMTc3MDMzODZkYThkYWJmNzVlZGVjMzIyNzI2YTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2YWEyMTVhMWY2MDU4NzM5OGQ1YzcyZGE3MGE2ZGJlMzFhY2U2M2M0YzQ1NjNiNDRkNDZmN2Q1ZTY3NmI3MTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b61c1808a4004f36b30d75a7503e317c",
+      "statement": "API keys are stored bcrypt-hashed and verified with bcrypt.CompareHashAndPassword, so a database disclosure does not yield usable credentials.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/apikey.go#L160-L167",
+          "version": "repo-lines-v1:sha256:1c65f8157ab07ea10867978ff1ce80d6924788dde33ef966eb614d8430556617:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2VlZjg1YTk0YmExZDJlYTEzNWI5MjA1M2Y2ZjM3NWZlZjkwMGNjYmU0MTUxOWNkOGUzMTM5MjU3Yzc2OThjOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWE2ZmJkZTg0ODAxNTAwZTFiYTIxNGE1MzA0NjgzNjQ4YTM1NzdkMjUxZjYwN2E5ZWZiNmZhNjYxMGI2NDc4OCJ9"
+        },
+        {
+          "resource": "repo://server/api/services/apikey.go#L43-L50",
+          "version": "repo-lines-v1:sha256:d709bb95c76e77600ea2f3398818cf7c24c4faf3ecb628f2169f71822a3f9b65:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGNmNzZhODgwYmE0ZjhmODlhNGI0YjQwZmUwNWExYzFiOTQ4ZjcxMmRlNDhhZTU2ZGVkZTE5NGJlYjJmMDY4ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWIxZGVmOWM1NGIzMDUxNjdiNzk1OGJiMzJkNzIxZTlmNWExYzdjN2RlZDc5ZmJmODY0YjZmMWMwNTQ5YmM5OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGQ3NWMxMTgyNjM0Yjc5ZWMzNjQ0ZTVjOTUyYjUwZmRlOWUxNTBmMjIwY2VjMTk5Y2E5M2VkZmZlNDhlMDQxMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_213b899c11e042a4835f9695079231a9",
+      "statement": "API key validation additionally rejects keys that are inactive or past their expiry, beyond verifying the hash.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/apikey.go#L169-L187",
+          "version": "repo-lines-v1:sha256:694f041cbb31540cad82df95c5304c74d058f786750bafc5ad50830d57d96f98:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNTY2ZjQ4NmQ0YjY3ZWM1MmRhNTg0ZDYzMDczYmNlZTFkYjQ0ZjIxYTQwNzEwNWQ5NjU4MWYwNzMzOGNiYTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyNDkxYjBiMDcwMjcxZTI1YjNkM2U1ZGJiNzQyYmNlYTA4ZmQwNjczMzA1ZDY3Mjc4NzQ0MDgxMGNmOTYyYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiMGFlZDBiYzI2MTUyNzNjZDczNzU2M2I3NWZkOTIwZTJjY2I2NjU5NjY5MTE1MDQzMDY5MDA2Y2JlNTY5NDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6343299f5dcb4ef1879362b5ab806329",
+      "statement": "The Supabase auth middleware attempts API key validation on the Authorization header before falling through to JWT validation, and a successful API key sets a synthetic identity plus the key's id, permissions and organization id in request context.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L58-L82",
+          "version": "repo-lines-v1:sha256:d5fab23f2cd221ce4c2a5727c732072b3680e536bdeabe4cd5b19f0ba6345b2b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ZWZjNDk0MThkMjZkY2YxMjliMjJhNmFhMjExMDhjZWVjMzc2NzdhMzJkMDhlOWQ1ZmVlMzVkZGE2NmJiOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4MjdkYjRmNTBlMTA5ZDViM2M5NjVkMzRlY2I0Mzc4ODQ1NjI1NTI1M2VmZWY2YjNhOGMwYmMxNTY4MzdiNjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwZmFmNTJhODliZjI4ZDE0NTNjZDQ0Y2RkOWIxMjQ0ODI4MWUyYThiZjY5Zjc5MjgxZjdiYTA2MDNjZjJlYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRkYmYxMTZhNGY5MTIzMzQwZjRmODE1ZDM1NjhhMWVkMzE1YWUyNjgxN2VjZmFmMGJiZDMyZjE2ZmI3ZTNhYmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c042fe5482a42ad81e93b8a8ad7dbec",
+      "statement": "An API key's last-used timestamp is updated in a background goroutine so the bookkeeping write does not delay the authenticated request.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L75-L78",
+          "version": "repo-lines-v1:sha256:7b5f97ee7861a5d12f405cebea7e479b41a0012bc301e0e556e97ce0ccf265be:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGRjNzYwMjBiYWU3MDU3N2U2NGIzMzBkY2E4M2ZkZjI0ZjNkNzU5M2EwMTU0ZDhhYmVjNmRjNjNmNTg5N2ZkOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjA4NWI4YmFkMDg0MjBhYTkyN2QzYjBkNjAzMGE0YzFiOWQzMzBhYmVhZWM1MDE3ZDMyZTMxYjkyYTcxMGFhNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjc3ZDVkZWY1ZTExODYwZWU2Y2RhNzI3ODExNTYxMjk0ODliNTE4YzRlOTYyY2Q3MmNiMDRlMTQ4Y2QzYWVhNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzUzNjBlZmQ4ODRlNzEwZTNjM2FlNzExN2IxNDJlNGI3OWNmNmY1MjY5NGU4ZTI1M2UzZTU4YmJlNDA4NzMxZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d12d27f4777d49df846cfdd3a02180ec",
+      "statement": "The dedicated webhook API key middleware reads the key from the api_key query parameter rather than a header and enforces per-endpoint permissions, returning 403 when the key lacks them and logging failed authentication attempts.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/apikey.go#L290-L331",
+          "version": "repo-lines-v1:sha256:c884c0cf68e2dd59fb4c0e59ffb9c9eeceb1b5f481fd2d3806ffc8c64742a153:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxZTBiMWZhZjI4MjUxMDQxMGJiZDM4ODI4NzAxOTJmZjA4ZDY3NDI1NzI5MDQwNzZkOTVjZjg2MzM2NjRmNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0OWNkZTNiZGNiNjk0ZmUyMWIzZjcyNWRlMGRjZTRhZDk1YmY1Y2VmNjFmMjk5MGEwZjg0MDllNTA4ODVlMzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2YTQ4NTllYjg5Y2ZlNTUzNzg0ZjQ0ZTc0M2U4YTRjOTIxMjVlNmNiNTg0MTc0NWI3N2VlNTE5YzJjMmQ5YjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fbf0a44415f94ece819937b4ff3fc00d",
+      "statement": "API key rate limiting enforces separate hourly and daily ceilings from the key's own configured limits, but a failure of the rate-limit check itself is logged and the request is allowed to proceed rather than being rejected.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/apikey.go#L199-L226",
+          "version": "repo-lines-v1:sha256:1d19ee718d02ebdb94c7aadc32691dc5707e301fa829b3349955e30a8c63aef5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiZjJlNmY0YTZjNjcyYjJlYjhmZGUyYmEyNTEzNWQ3ZmJhN2I1N2NlODgyYWM1MmZlMTNlODE5ZDUwNjg5ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMzM3MGE4MDJhNzRjNWQwZDM0NzA5NmQ0NmMxNzM1YmIyNTM0MDA1YjZkN2EwZmVjNGQ1ODFhODZkYzZjMjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNjU5NzA4NjNkNTgxM2JmOTcwYjAyZTM0YjU1YTIxMDIyZmY5MWZiYjM3NjAwYmM5ZjZhNzY2NzkwZWVkMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxOTEyZWMxZjcyZDNjNGUyNzhlOGJmYjhkNDk1MzE5ZmNiZWJlMDMyZWQwNjRmNjJjNTkxNGMxYjNhMDJkOTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_630dff9d3d2443b08b726c70d524568f",
+      "statement": "The instance identity is a single ECDSA P-256 keypair resolved database first, then from the data directory file, then generated, with any file-loaded or newly generated key synced back to the instance_identity table so a pod without persistent storage keeps a stable identity across restarts.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/identity.go#L145-L215",
+          "version": "repo-lines-v1:sha256:d1fdc39f9275683881f348c21d50c52ec491a0de21f3e4f1bbebca6d2b919ba6:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEyZDk3NjY2OGQ1ZTE4OWJkYWI2NGExNmRkNjAwYzRkNDJlNGMwMWI0NjcxNTkxODU4MjBhYjE0NDNiYTlkOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwZDZlYTAwZWY0ZjUxOGUyNWNmOThmNDViMGY4YmRiMzk2MzdlMWRmMDE3NTg5OWFkMjc2MGI1NDE1NjZiN2YifQ"
+        },
+        {
+          "resource": "repo://server/api/services/identity.go#L60-L98",
+          "version": "repo-lines-v1:sha256:6edbbe7434aaa8c28489f01bf1f79feb476e3379aefff26138a29816d7e1231e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NjlmYjBkMTg3YjIwODIxZTU4MWU5MGY5MWRiNDZkNmQ3MDUyNDM1NWJjNDQzMTZiMGYwMjg1NmQ4M2UxYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwMjFmMmU0NTY1OGE5ODRkZWMwOTRkYTg4NDJlOWRhZmZmMGZiZDc1MjE2OWE0ZWVjYTZhMjFmYTQxOGEwMTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d453c57454e4d7ebd0bb100458a217c",
+      "statement": "Instance signatures are SHA-256 hashed and serialised as raw R||S with both halves zero-padded to the curve order size rather than ASN.1 DER, because the raw form is easier for the Web Crypto API to verify.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/identity.go#L257-L285",
+          "version": "repo-lines-v1:sha256:e839a5aad6616a52d2050ae0086339347e0a12727abf790cf59f3bd2a6e6f11b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2OWQzZDk3YTgzZjQ1ZTU0NDU1ZjdmY2UxODQ1Mzc4YjgxYzAzZjZhODU1MjhiNzFhZmI0NWE5Y2FiNWE2YWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkOTVkMjExN2Y1MmRmZTdmZTY2YTRkNjA0MDJiNTg4NjdiOTk2YjY3ZDNmOTFjYmUwMDgwYjBmNTY2NTYwMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1MjQ2Mzg5ZWRkYzFkZjMwNTFiMDBjYzg1OTg1YTc3YzAxNjU2Y2NmOGY2NjNkYjgzMjA1ZWM4MjFkNTg3Y2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f8d656eb12af44a88bc46980310e8cb4",
+      "statement": "Signed payloads are canonicalised to JSON with sorted keys before signing, so signer and verifier agree on the exact byte sequence being signed.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/identity.go#L287-L297",
+          "version": "repo-lines-v1:sha256:002b4160880919aa1217c0e00d65d9bdb357cf0a20056f6309741049e0c042f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMWJiZTRiMWE1ZDY1YWUwN2U4MzVjODM2NGIwMTAwYTc4ZTc5NjFkNGFjNzQ4ZTVjNGY3YThjZDJkZjQ5ODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmMTg1YzllYTg0YzQ5NzlmY2U1NmQ4YTI3YzhhN2FlZDU3YzA5ZGE4NzdiOThlYjAyODAyZTQ0ODg1NTNjYjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYxNDY1N2ZhZmI5NzMxM2UzZWM1NzhkZTBhZDJjODJiZmIyMDhkNDA4ZTQ1YzkxNTNmMTIwZmE3MzdhNGU4ODMifQ"
+        },
+        {
+          "resource": "repo://server/api/services/identity.go#L310-L374",
+          "version": "repo-lines-v1:sha256:328b1c85d9ed39277366f439189d931bf091664bc9df07890540e9bdbffa7905:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4NTYzYzEzMDBkNmIzNzlmZDQ0ZDQ4ZjQ0Yzk1ZGY0YzdjN2VjYmY3YzA4ZDEwN2JiMTgwYWY1YTFjZTMzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiZWUwNWVkMTQ3MTVhNTI1YjYwYzFlOGEzMDMzZjBjODhmOTg0ZWFjYzQ5MzYxY2I0ZDA2YzYyYmNlZDhlZTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_00c2240eef4545f9b725dd5471e54b13",
+      "statement": "Device certificate issuance requires an authenticated user, validates the submitted Ed25519 public key length, and signs a payload binding the certificate id, device public key, user id, instance id, permissions and validity window with the instance private key.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/agent.go#L51-L103",
+          "version": "repo-lines-v1:sha256:753e37d24f4fcfd948770485048536e2f6ea5582dbb2dc1e1c92e9b725b0e2d7:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4YmE1NTNmNzJjMDNmMDQ0MzhlMDNiYjU3ZjUyNjMxOThlYWU3OTM1MTJhYTgwOTA3MmUxODQxZGMzMzA5NDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRjYWUwMzhkOTYxYTM1MGNjZjk4NzI0ZWM0ZGZiMzdmZTJkNWE1YzNjZGRiZTQ3NjYzOWQwZDNhYmVhM2UzOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlOGU2NTkxNGUwYTViOGI3MTEzZTkwNzFhNmViZjlhYmIzNGQ1NTQxZTBjNWQ2ZmE4ODhjMTk4OGU2YTY2NjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c07d44479f264e10a4471310f2f1f519",
+      "statement": "Device certificates are issued with a 7-day validity, raised from an earlier 24-hour window for usability.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/agent.go#L80-L84",
+          "version": "repo-lines-v1:sha256:b53fece93aa503ed3b3f81d02b629137bf344296872710e4fb3bd0a30297f98f:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjQwZTQwYjBlOGM1MDZhNWQ5YTU1ODNlZTlhZDU3Yzc2MjMzY2Q3MDAzYzFjYmU0NTdkMzA2Yzg0ZTcxYWUxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDJmZTFhNjg3OTYyZWZhNThkOTc5MDkxNTM0M2RiMGI1N2JlMDAwZGJhMjJkNGM3YmQ0MWE1N2I5ZTkyMzNkYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGJjNGNiNzVhNmQyZjA5OTMzZTIxMmU1OWNjMzQ3OTNjNDEzZDZhNmUzYWM5NzZmYzJiOTBhZjI1OTZkYWExZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af8796b43ebc480e8eb65b951138922f",
+      "statement": "The device certificate tracking row is upserted on the (device_id, user_id) pair, so re-enrolling a device replaces its certificate instead of accumulating rows.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/agent.go#L105-L128",
+          "version": "repo-lines-v1:sha256:cb9ed857b0f100a0e822b1207975854ba63e15d7067c2285ebb92c806a5b2126:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyOTg1ODcwZDI4MGE4NDI0NTQxYjViY2QwZDVhYTIzMzBjOWM4NDgzNjZmYzI1YjQ4Y2ZkNjJmMWZmMTUyYzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiMTBkZjNkMDdjM2IxMTc3NzQwYWZkMDk5NjY4ZmYyZGZiZjA1YTQzNWY2ZTQwZjQ2MjgxMWE3ZDY0OWFjYzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3OGJlYTllZGZmZDU3NWUzNmI4Y2ZlZWIxMmRjN2M0ZmEwNGViNWU0YWJkZjVmMjIyYjg5MGNlOWQ0MDJmYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkyOTJkMmVhOTllMDlkM2NhNzE1MmRiMGZiYWZjZTU4YTU1MWY5M2ZiOWNiMzkwYjkzNGMxZDViZTgwNjAzZGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6131bcb5d09944f5aa34a92007b033d3",
+      "statement": "Failure to persist the device certificate tracking row is logged as a warning and the signed certificate is still returned, because the certificate authenticates itself by its instance signature rather than by the database row.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/agent.go#L126-L131",
+          "version": "repo-lines-v1:sha256:ffad12eb39ac7cc9e47dfd170560929a3a58e5e62d71c5d50b86a3059a3bbf81:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmUxYjQ5ZGM3MmY2MzI2M2RjNGY4MWRkMjFkZjNlZGJmZTY1ZTk2NWU3YWYyOGM0Mzg4YWYyNzQ1OGVlNjBjZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGZmOTFkNDY4NjZkYjE0MzYzNWZiOGQ2NjI4ZDgyMjM2M2JkNDgxNzEwODY4MjRhMjAwZTBjY2RiNTM0MWE3NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmE3ZThlODdkOWZkZTc4NzU2NDA2ZGJlMTEzYzU4NzY1Y2E3ZWZkMzU2ZmMzODViZDRhZjIwMTUxY2FiZjQ0ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjA1NDdmMzZiMzQ5ZjQ2ODZkMDY5MGE4ODRhMTAzODBjODQ2NjZlNWIwYTE3YmJkMjA3ZWFmNmNjZDA3NDQ0ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2f7c58d8c4164d41b179d0899e5200c1",
+      "statement": "The trust chain uses two distinct keypairs with distinct scopes: the instance's ECDSA key signs device certificates and never leaves the server, while the device's Ed25519 key signs individual messages and never leaves the device.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L50-L96",
+          "version": "repo-lines-v1:sha256:fb83add70a5234c7968e2ad9e41bac61a504621f5e54b4d5236928d8c2821668:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkODFkZGM5MWIwNTkxMWM1NGYzODM5MmE1MTVjZDI0YjVkNTI2YTRiNTBkZDFlYTI3MGZmNmYwZjA3ZjRkNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhOTAyNmJjY2Q5MDU5YjZmMjM1NmQwM2M1M2Y1Zjc5NDAzMmU1ODY0YjQ0MDI0MmU5NDk4NWEzMDFhM2IyZDUifQ"
+        },
+        {
+          "resource": "repo://server/agent/security/verifier.py#L536-L556",
+          "version": "repo-lines-v1:sha256:a16ec2b8bee210d7b9f7e01bad3e42bbf6ef3663111fae1086f25129208e9fa7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYmJlODMxNzNhYzYwNzliYmIzNjdlN2QzNTQ0OTZiZDc0NzgxMmVhZGFkYWVkNDA4NjE4MDI3NzU2ZjQ5NjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YTEwMDAzZWE2M2Y2Yjk4ZjliOGMzYmUyYzFiNjJjMDMxMjc0ZDg2NzU5ZTU4ZjdlMGVmMDE4MTYwODdlOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyMDZiOTE2MTJhNzRiYmU2MjVmYThkMjkyY2IxNjYyMWYwN2RhZmVmZDBiMDg2MzdhNjkzYjNkOTYxNDE3ZmMifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/agent.go#L64-L102",
+          "version": "repo-lines-v1:sha256:433b6f07540f9ff53f8c2ff2b87327f064ab342fe143d5b9d353a70073b69220:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZTBjZTk1NWYwMjQzODExOTIxNzZkYWMzZTRkOWI2NDAzOWNmMzE1NTU3ZTMzMTNhODA2ZmE0YzQ3ZDRjNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2NmEzNDI0MWRmZDdkZTIyMzg2NTY3ZDE1ZWUxN2RlZWIyZmY5NGY0YjExMzQwMWVhNzY1MzJkMmEwZDk1N2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3OGJlYTllZGZmZDU3NWUzNmI4Y2ZlZWIxMmRjN2M0ZmEwNGViNWU0YWJkZjVmMjIyYjg5MGNlOWQ0MDJmYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhMDg0ZmYzYWRlODMyODYwZTJiNmQ2MjUzYzdlZGRkYTllYTE0YmNmZTE5ZGJhOGEwMjRjYWIzYTJkODhjYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d535ed7740d148f3b6d26fd1a13fa372",
+      "statement": "Certificate revocation is scoped to both the certificate id and the requesting user's id so one user cannot revoke another's certificate, and returns 404 when no row matches; listing returns only unrevoked, unexpired certificates.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/agent.go#L151-L200",
+          "version": "repo-lines-v1:sha256:e983b2baff5ee37c393ca9014d2513002d118885e7a0b6a9bd635982984ec4e3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1ZDlkMWJiM2IyZmZmZGU0ZGNmZGE2OGJiZDBjNjk0YzExMTA0NmY1Y2FlNzkxMjE1YzBiMzU5MWI0Mzc1MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NDZiMDc5ZWNmYjY1NDcwMTMyNWVlZjJlYzM3NWNjOWE5NmU1MWZjOWIxOGZmMTAyN2QyNTI2MDYyNGNjZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMwMzk4OWFiZTA5NDgwYmM4MjRkNTRjMGE5ZWE1MTBhZTNhMjhmZjdiNTUyMjYxZGQ0ZTliMDk5ZmI3MDdhZDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyYjNjMzFhZTAyZTRiZTE3NWMwZWJlMDhhOTkxYWZhYWQ4YTgyMzU0ZjRkMDY5YWY4YzU4NTUyMzVjNzk1MWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_30e3c3a7128044d29525aa100ada725d",
+      "statement": "All authentication paths converge on the same request-context keys — user_id, user_email and user_role, plus API-key-specific fields — which is what allows the downstream authorization middleware to behave identically regardless of how the caller authenticated.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L104-L112",
+          "version": "repo-lines-v1:sha256:37af5d944f45ca185703128d60ce6602d1af283c6bdb20e5c97dcf904319ab86:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjAzMzVmYmIyYTQ0NTg5MWQ0YzljYzkwNjBiYzBhZWVkMDhmOGYxZmQxOWUyNzU5MWZkNmE5NmM2NzYyZGMwZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTM4NGYzZDM1MzBmZWU0YWQ2NWM1YWI0MzA4M2Q0MTc4NWM3NTM2NGRlOGI4NGMxODYwMDUxMjhlMzI3NzNhYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWNjNTRjN2JmZjk5NDFlYzAyMzA4ZDdjNzM4ZTQwYzFjMGFjMzA2ZjZjMDgzNDZlNjU1Yjk0YmFjMGExZTYzNCJ9"
+        },
+        {
+          "resource": "repo://server/api/handlers/supabase_middleware.go#L62-L74",
+          "version": "repo-lines-v1:sha256:a5fe6687ffcecdad6385a4f16fbdfece0af0364466ccded93b981e28abc6df86:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyMjE1NzEyYTJlZDNlMDgyYWU5YjU2Yzg1OGZhOWY2NjQ5OTQ2YjY3NjUyODg4M2JiZmFiYmEyM2NiMTJiOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmYjFhNmIyYjNmOGQ1MWVhZTNmMWNjNGMzNjEyOWQ4Y2ZiNzhmNTNhNGNmNDJkOGMzNTE5YzgxZDMyYTM3YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxYzcxYWY4NWUyMjdkZDFhYjZlMTdlMDA4NTRlNjA4ZDk4NGQ0NWNjMDc5YWMyYzgyNjNjNDBlYjlkZTI1ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwOWM2Y2FlZDUyNTIxMzVlNjM3YWQ4Y2I4YmFlMzBkYmI4M2I5NTAwNmE5MDUxNTliODI5MTdmOGExZWNmM2EifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c1acfb0c33a52d8d65fbd2fca8542bc2f76d09fc45d8ad554c4c1cc1c5855344",
+  "claims": [
+    {
+      "id": "claim_631b75c67d6640769bdf85210f88f5c8",
+      "statement": "The agent's incident tools run in-process as an SDK MCP server created by create_sdk_mcp_server() rather than as an MCP subprocess, and are seeded unconditionally into every session's mcp_servers map before user-configured servers are merged on top.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/config.py#L144-L148",
+          "version": "repo-lines-v1:sha256:1f34d3972c388e318a3560470f4ac055e85fe28cd40a39f79b9ea5b3e2a9f83a:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGE1NmE2MzM0NGEwMjQxMzU2NTA1Y2UzMDRkNWMzNDRjYTBmODBiZDVjNzU2OGUyYTliNTAwYTI3MDkxNmEyZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmZhZDYwZmMxNDBkMTlmZGI0ZDU5NzI5Yjk0ZmFjMDgxMDg3MjNlYTAwMGFlZjc5YzY5ZmRlNTUzNTkxNWYwZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGM5MDBkMzNmZTJjZTUyYmQ2N2ViYmI3MDI0OGYxMzg2MTRjZGQ2YWVhZTM3Y2I2ODMwNjU1OTZlYzY3OWRlNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzhkYWY2NTY5NjJkOTMzMWExYWI2ODdhZWNmZTcwYTYyODUwMjg4NGNjYjVkZTQ1M2NiYjhjZGQ1NzBiNWI4OSJ9"
+        },
+        {
+          "resource": "repo://server/agent/tools/incidents.py#L759-L791",
+          "version": "repo-lines-v1:sha256:1ec22a023c18e170a6b29c793d92c6efc287c8e6e7cdd00a31a26c09216a0704:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwNjhkZGIzNzQ3YWVmN2M0MzljY2RlY2IyODViZWZhODdiNDQwNjc3Njk3ZmZlN2NlY2M2NWU1MmE3OTI0M2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwMjc4MTQ5ODU1NTI1ZjA0OWRhYjJiM2MyZjQ5OTNkMWMzMTA0NGEwZWJjZTkxNmVkYTlmZTAyOWMzN2QzMjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c5123f1fea54827a8d954078fe8e2d9",
+      "statement": "Because the incident tools run in-process without an MCP handshake to carry identity, the module holds the caller's auth token, org id and project id in module-level state populated through explicit setters per connection.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/tools/incidents.py#L27-L94",
+          "version": "repo-lines-v1:sha256:e16872d4aec46bcc0d52b7a698c3e86f5c76da271358862532596a10c7b4ccd8:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2MDBlNGI0ZjU5MjM5OWM2ODI4NGM1Nzg4NjRhNWYzMTFmMmU5YTAxNmY3NDZhYWYwZWUyNjEzMjJiYTBiOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzOGI1ODlmNDViNWIzZjA3Y2Q0ZmNhZjc0MTFlZDU4MjU1MjA4OGZiMmQxNTA3MTAzOGIyODZkYmQwZDU2ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3MGUzM2ExYzA1ZDgyZGU4NGIxZTVmMzM1ZjYwYzkxNWI5MjE3ZTAyY2VjNDU2YjUzNDkxNTZkZjU2YTA4N2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_91aa0e83d3ca499a8f5e127a605de4d5",
+      "statement": "Per-user MCP server definitions are read from the PostgreSQL user_mcp_servers table filtered to status = 'active', not from object storage, and each row is shaped by its server_type into either a stdio {command,args,env} config or a URL-based {type,url,headers} config, with unknown types skipped.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L397-L494",
+          "version": "repo-lines-v1:sha256:59f95268256df56300fa9fb050562986bbd2029e0ee188297dd2dd95049f1c4a:eyJzZWxlY3RlZExpbmVDb3VudCI6OTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmYzhhYWRhMmFlNDNmYzBiY2VhNjg2MzE5OGMxOTgxMzcwZWM3MTY3NGQyZGM5ODczMjM4Nzk2OGRjMzg2ZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhN2ZmYmFiZTY4M2U0MjVmZDVmMWIwM2M2ZWEzOWE3YTgyNGVmNTU1ZjM1N2VkMzg0YzFmMGY3YzcxNmU5MTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwODlmN2MxNjBmZGM0ZjZkMDAzM2YxZjZkZDk1M2EyZDYzOTlhMjdhNDYyZTQ1MTBmZWIyZGMwYjcwNDVhZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzNDY2NzgxZjY0YmU5ZjIwZGY3YWY3NWJkMDAzOGM3Zjg0ZDc5YmZjNzdhMzMzZWQ4MTdhODI4MDYzZDM4ODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f64fde7495a74ab48d2df78b5e239ac9",
+      "statement": "get_user_mcp_servers accepts either an auth_token or a direct user_id with user_id taking priority, so the JWT WebSocket and the zero-trust WebSocket can both resolve a user's MCP servers despite the zero-trust path having no JWT.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L397-L455",
+          "version": "repo-lines-v1:sha256:0226f898d00461cb784694a3f34d65607b2dfbfd457aab4c9f8ad4c4c0e66264:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmYzhhYWRhMmFlNDNmYzBiY2VhNjg2MzE5OGMxOTgxMzcwZWM3MTY3NGQyZGM5ODczMjM4Nzk2OGRjMzg2ZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4Njg5MmRmNjRmZGI0MjRiMTMwNjkxMDFiMjJkYTRjNjNmZGMyYWJhZGExODU1N2FiYjQ0ZDI2ZDk1MGM5YWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwODlmN2MxNjBmZGM0ZjZkMDAzM2YxZjZkZDk1M2EyZDYzOTlhMjdhNDYyZTQ1MTBmZWIyZGMwYjcwNDVhZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiNzEwNGQ2YjIzNTRiYzY5MzRlZTkzODZhZTlhMDhiZWIwYWNkZjg0MjJkY2M5Y2YzODRiZjk4Nzg2ZGMxYjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd26d8b8b6434c86a10c8dd6114214e3",
+      "statement": "A failure to load a user's MCP servers is caught and returns an empty dict, so a broken MCP configuration degrades the agent to its built-in tools instead of failing the WebSocket connection.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L487-L494",
+          "version": "repo-lines-v1:sha256:9265086daaa32e8f08e7b30da9e21806baeb91f2730321e9ad4fe7c7fbf63783:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWQ4YTllOWMzMjUyODIwYzY1YTgxNjUyMGI4ZGI0OTMyMjgwODQ5ZWM4YzdkMmViNjI3MmFmZGZlYmUwNTljMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmE3ZmZiYWJlNjgzZTQyNWZkNWYxYjAzYzZlYTM5YTdhODI0ZWY1NTVmMzU3ZWQzODRjMWYwZjdjNzE2ZTkxMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjA0ODE4MGQ3ZGM0OTk4OTg2YWEwN2UzMTMxZjBlYjEyNjMzNTcwYWRkOWRkYWJhYTJkODg5YTdhMGY1OGY5YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDM0NjY3ODFmNjRiZTlmMjBkZjdhZjc1YmQwMDM4YzdmODRkNzliZmM3N2EzMzNlZDgxN2E4MjgwNjNkMzg4NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_786137793f7c46f68916a006d0395f9f",
+      "statement": "normalize_mcp_servers strips non-schema keys such as the 'tools' annotation added by MCPToolManager.get_server_configs(), tags stdio servers explicitly, defaults URL-based servers to http, and skips entries having neither a command nor a url, because the CLI rejects or ignores configs carrying extra keys.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/config.py#L82-L115",
+          "version": "repo-lines-v1:sha256:d1e65c88b625bfa0e96d822ce3e16c18cff2bcc496ec1bfa822aaf4e2c6fdbb3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3NDkyZjY5OTc0MTVjYzgzNGRhNTI1NTI3YjZiNDdhMTBjNjE2NDRiN2JjZGE4NDkwMDY5ZDY5NDFhMGFkOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyMTI3MTViZWM1OWE0NDFmMTY4MmZmYjUyZTg5YmZhZDk5NzdmNTBmZmY3YWQzZjhhMWQxOTFkZGMzMDhkNDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzNDcxMGZjNDQ4NDBiOGIzZDAyNDkwMzY0NTliMTlhZjUwNWU0ZDJkYTQ5MTUyNmVmMDQ3MmIyNDVjMTU3YjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllZGY5MTRmOWVmN2IzNjUxNmRhMzUyZmZhMDkxMGVkODNmNmUyM2I4ZGE0MDIxNzk0MmRiODViMjJmZTYzOGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_be0feebbe3bc445e823f88795a40ecf1",
+      "statement": "MCPServerPool is an async singleton whose creation is guarded by a class-level asyncio lock, and it tracks live clients, per-server referencing user ids, per-server last-access times, and a reverse user-to-server index.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L412-L452",
+          "version": "repo-lines-v1:sha256:816138bb8fac8c878ea89ff345d108443e1e77b523efc764870f15cc9bd1ed2c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3MTU3MzFmNjMyMzNjYzdjYmExYWNhNmNhMGZhYjY4MmZhMTE2NjNjNzc2ZjMzMTRhYmEwYmZjNjM2YTBlOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyYTcyNWU4MGRmNTE2NGNkMjkxMzIzOGI4MzYzZTllODYzNDNhODI3MmRlOTkyN2E0NmQwNjJkOWI1ODY1NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkNjQ1MjhiMzc1MmI0OWRkYmM3Njk1MGJmZThkYzg5YzAxMzVkNjM4ZGZiZDAwZGQzNjdlNWFkZDA2M2I1MGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4ODUwZDdkYTJkYjEwNjBlYjI0M2VkMDZhYWIxMzI0MzFhOTgwZGQwZmRjYzM5OTU2ZmFlMDc0ZjUxMDQyMzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c99bbee2671449598dca660d115d7f8d",
+      "statement": "Pooled MCP servers are keyed by the server configuration itself — command plus sorted args plus sorted env — so identical configurations share one subprocess while any difference such as a distinct credential in env produces a separate process and prevents cross-tenant reuse.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L487-L495",
+          "version": "repo-lines-v1:sha256:255212edd8df509db58558688488c0d56eb8d870ae2ce61ced8835cde96049e9:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjkyOGU4OGIzMjhiMGNlMjc0Yjc3N2VhZDI0MWNmZGJmNzg2NDJhYTRlNmE3MjYyODg0ZWY1N2Q1MTBmYzUxNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTllMDU3M2JjN2RjNjAyNzZjNmU2NmNjZjdjYjJjNGYyNTZlZDMyMDYxNmU3Y2YxNjUxZGFkMGEzZjhiZjBlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjEzMmFhMTUzOTk5N2I2MWUwNmUyY2RjMWI5MDY2YzQxMTkzOTc1MzJjOWE3NzYyMjZkZGE4Y2E5M2E2YWNkZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTIzZDFlOGI5YTE1YjNmNzNmZTYyNGM0MmY4ZTc5ZGU5NDkxMjZlNTI4ODUxMTNiNGM5OTFkMTBiNzA0M2NjYyJ9"
+        },
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L525-L560",
+          "version": "repo-lines-v1:sha256:95a2d75a0c2d714ed69b70184e2441038b96fe890b2e0d74a46bb3532271562e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxYmQ1OWJhZjEwOThhZTk2ZmQ3ODY0ZjM2ZTg4MjJjNTExMWFlMGZkNzBmNmFiODI2MzZmZWUyZTg1ZjRhYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyNzYwOWVmYzgzMDg1M2UzMTIzOWU2OTY0YTQzMzYxZTFlOWM1YTU4NTFjODM4ODJmOWEzYTlmOGEyNzg3NWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVkZGNhZTlmOTc2MGMxZjgwODM1ZmNhOGI5NzAyYzQ2OWQxNzA5NTBlMjI2NTkzN2UzNzczZWEwZDNjN2E2ZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM3MjhmODg3NTEyYWI0MDIyMGFmODU5NDNlMzNiM2VkMWRlOWE1MmYyZTkyNmZmMGZlZWVkNTA1NGY1Y2E2Y2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d107f0dd1394984b0c98cd87db5204e",
+      "statement": "Releasing a user's pooled MCP servers only discards the reference and stamps the last-access time; it never stops the subprocess, leaving the server warm for the next session requesting the same configuration.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L570-L582",
+          "version": "repo-lines-v1:sha256:09d0b6bbc4e24e9d1793c33d7927e2d435a56a4dbbff23b45495342ee2e0ef1a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZjZmODlhZGVkOTA5MjM4YzE2OTA2M2M4YTUxYzRlM2IwOTlkOTFmYWY2MmU3MWU2ZjIxOWRjMzkzZjZiOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiN2ZkYjMzNTJmZDE4OTBiMjhmMTgxZjFiZTliYjFkNWQ3N2JjNzY0ZWRhMzg5ZWMzZWU0YzM1MWU4N2Q0MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwMjc2NjRhM2NlMzU0ZTBhMmQ0Njk2ZjFkZWUzYTI5MTMxOWI5YjY4MjdhOTZjN2MzYmE4MWNhM2U5MGFkNDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkNzgwZmE5MGIwNDE4OWEyZDFiZTJiNzg5ZTc2YWU3YmEyZjdmZWYyMWYyMzZiMGFiNjNjYzk4OGE5ZGZjOWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0e9301e26ad344c99d51e3d3eb10a641",
+      "statement": "A background cleanup loop runs every 60 seconds and stops a pooled MCP server only when both its idle time exceeds MCP_SERVER_IDLE_TIMEOUT (300 seconds by default) and its reference set is empty, so an actively referenced server is never reaped.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L31-L33",
+          "version": "repo-lines-v1:sha256:3527b300deef95e958ff39f6683a378041648e12638c73e776b5fbdf8238a174:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjY5NzY5MWE2MmUxZjU1YTAyZDliNDZiMzM3NzY4YmE0NDA3ZmU5YjMzNDk4ZmRjNjQ1MjM3NTk5ZmRjZTA0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDE1Y2IyOTgyOGM4NDE1MTA2Nzc2NmFlY2MxNjI0YjI4ZTMzNzhlYWM0ZWUzZjA0NDU5MTUyODIwMmU1NGMzOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmNjNmMxZGU2NDEzMmZmYjJiMWE4MjMyNjMzMjA2NGM3NTNlNTg4ODAxZjgxMGI5OGVkMWI2NmY3NTI3OGJmMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2QzYzNiMWQ2NDdkYWVhMGU0YjU5OWJhMTNiOTgyYmQ2ZDQ3YTg2MjhhY2MwMmVhYTdlODY1OWZjODQ1MmViNiJ9"
+        },
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L454-L486",
+          "version": "repo-lines-v1:sha256:94576e5330571d86b70d1f10484d2f2b395f415a3629314035bc4f8ca2ae7314:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjZDJmZGI5MWQxNWU2NzQyNGMxNTg5NTMwOWY4YWY1NTBiOTE5NGUwOTA0ZjQwMGE0NWVmMzVjZjU0YmFmOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzYWQ4ZTg1MzQ5ZmUxMTgxOTg4NTk3NmVmOTZjYmUzZjZmNjVjMjg4YjI5MDcxM2FjYWRiZGY5YTkyODAzODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyMWI4Y2IyMDJlZmY0MTY2YmVjM2JjYjVhZDM3YzcxOGFlYmQ0MGNjMTVjMGFjZmQ0Y2ZmZGIwODk3YTM3YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5ZDRkYmViYjgyODMwZTU3NzZjZjhjNzg0MmMxNjQ4ZDE1OWZkZGNlYTJjNjg0OTNkNWRhZTFiNWMwYTc4NTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e3acaf4318ff4905a3a13d18ff2b7622",
+      "statement": "MCP server startup is bounded by MAX_MCP_SERVERS_PER_USER (default 5) and MAX_GLOBAL_MCP_SERVERS (default 50); hitting either limit logs a warning and stops starting further servers while still returning the manager, so the session proceeds with partial tooling rather than failing.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L31-L33",
+          "version": "repo-lines-v1:sha256:3527b300deef95e958ff39f6683a378041648e12638c73e776b5fbdf8238a174:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjY5NzY5MWE2MmUxZjU1YTAyZDliNDZiMzM3NzY4YmE0NDA3ZmU5YjMzNDk4ZmRjNjQ1MjM3NTk5ZmRjZTA0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDE1Y2IyOTgyOGM4NDE1MTA2Nzc2NmFlY2MxNjI0YjI4ZTMzNzhlYWM0ZWUzZjA0NDU5MTUyODIwMmU1NGMzOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmNjNmMxZGU2NDEzMmZmYjJiMWE4MjMyNjMzMjA2NGM3NTNlNTg4ODAxZjgxMGI5OGVkMWI2NmY3NTI3OGJmMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2QzYzNiMWQ2NDdkYWVhMGU0YjU5OWJhMTNiOTgyYmQ2ZDQ3YTg2MjhhY2MwMmVhYTdlODY1OWZjODQ1MmViNiJ9"
+        },
+        {
+          "resource": "repo://server/agent/streaming/mcp_client.py#L519-L568",
+          "version": "repo-lines-v1:sha256:26477ce1932c8b10fc03719d21e4ce708241e83666cf18f8238658a3b3886b6b:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiMzNhM2JiNzk2YTI4ZGQwODY1NTBjOGMyYjMyZTBlNTZhNWY3NTU4NzEwNGE4YTFmMWFjZjcwNzM3ZTUyNDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0Y2M5ZTM3MmQ0MzM4NGRmZThiZGE3OGQyZmEwZTYzYTFlYzJmZGI2N2U1ZGVkYzUwOTBiMmQ0YmM2ZDhjMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczMTRlMTBlOTdhZDRhMTQ3ODM4ZjU5OGJjN2YzNTNiZmJkMjM0NzcyZGRhM2I5ZjQ2Y2RjYjM3Mzc4MTk3YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY0N2Y3ZGQxMjI1NzgzZjRhN2RjYTZkY2E0MTlkYjMxNGM4NTgzZmM4YTIzNDI1ZDk1ZTYyNjZlYzFmODc0YWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed765dec2e654bee86d1c26e33f01c57",
+      "statement": "MCPConfigManager maintains a TTL cache of per-user MCP configuration, writes it as .mcp.json into the user's workspace, and re-syncs explicitly registered users on a background loop governed by MCP_SYNC_INTERVAL (60 seconds by default).",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/streaming/mcp_config.py#L255-L336",
+          "version": "repo-lines-v1:sha256:a4774f8a70238f1a1f8382fc2c6fe300389ef86f4366a799bbbaaefa7c81bfd0:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjYzM1Yzk3MDM5MTUyY2FlYTJhOGY2MzgzZDkyNWQzOGJiNGQxZmQyMjhmYTUyNTUzN2ZlNDE3ZDZkYjA1YmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhNDJkZDM1YjBiMGE2N2Q3YmU2OGMxYzhjMDA2ZDdlNzU5YTQyZDlhZGMzNDBlMzExOWI1ODBkNzBkMjNiMmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg4N2ZkNGI0MTkxYWIzODhmNzUzM2NlMDAxZDFhZTExODI4YjE0MDVjM2QwNzFhMTIwMjE0YTVhMjcwMTNkNjEifQ"
+        },
+        {
+          "resource": "repo://server/agent/streaming/mcp_config.py#L26-L110",
+          "version": "repo-lines-v1:sha256:213b3e5dfe9a46db3df1d9cd900c683696d0624b40d4424319a482c3666d1888:eyJzZWxlY3RlZExpbmVDb3VudCI6ODUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjY2Y2YzE0YTkzMGE4OTc4MWViYzRhNWRhOTg5YjUxNmNjMDkyYjg5YmI4YWQ2NzdkYzllMjMwN2JhYjliNGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4NjQxZWU4YzYzMDhmYTBhMWE1OWZjZTU0N2I3M2U4MmRkMGE2ZWVjYjkyZTc3YWZhZDkxYzU4OWY2NTUxZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxNTIxNzNhMWVmZTM0MWQxOGY4OTI3NDlmODlkMDlmZDljY2IzNjk2YjI5MmZjYWFlYWRlNTU5ZDI3MThjYjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3987e22197fa4d28b0a12483a3e7465d",
+      "statement": "Marketplaces are distributed by git clone and incremental git fetch rather than by ZIP archives in object storage, which was adopted because incremental updates are faster, no archives need to be stored in S3, and versioning uses native git tooling.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/routes/marketplace.py#L526-L546",
+          "version": "repo-lines-v1:sha256:45bc39d7d15fe446dd864f6fd8a80496e1a6da44e406f07f2cfa86cb2a7eec39:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3Nzk4Yzc1Y2JmZGRkZWYyN2FlY2YxOTc1ZjRhMTUxOGYyYzZlYTk0OTJlN2ExODMzY2I0MzE5ZTMwNjQ3NjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmODQ2MzEwYTA4NzRmNGQyNjIxZGZlODIzYmE3YjQ2NDIyZjFjMGI3N2ZkZWY2MjhlNGM3YmRjNWU2YmM5Y2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOGNmNmU2MjBjMDg2ZDAzMTIyYzIxNThkMTY2ODZkMmIzYzBkZGE3YjY1ZDdkMjc4YjVkNWFlOGE2MDMxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ1OTUyMjY5YWZlNDhhZjk4YmMzMzVhMDNjYThmZDJjZWJmYzQ3MTk5Y2YyMjViN2E2MzJkNWU0OTI5M2JjMzIifQ"
+        },
+        {
+          "resource": "repo://server/agent/routes/marketplace.py#L691-L706",
+          "version": "repo-lines-v1:sha256:7a2da92f5a9e2dde1cc0a88fabfb8255eda2c38aa975333654cafe4c6756c36b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViMDVkYzg3YWQxMmZiOGVlZTI2NDI5MjY2N2FiYWQ3YWFhZjY5ZWE2Y2VmMzNiMGEyZWQzZjM4NWY3NTJkM2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyZGQyODJjMzViMWFhZGI5YTc2ZjhjMGIzODM0YWI2ZWExOTdlM2Q1NTExNDc2NjEyYThhZDg5ZjdkZTE3MWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOGNmNmU2MjBjMDg2ZDAzMTIyYzIxNThkMTY2ODZkMmIzYzBkZGE3YjY1ZDdkMjc4YjVkNWFlOGE2MDMxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2NGRmNDM1YzE5ZjAyOTI4YTMzN2Q5MmYzZTc3YjEyOGZjOTEyNzUzNjU1YjFiNDg1YzA3MzU4MGFiYzYxOWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_245bd72ec7ee45c1a03372067d6e5239",
+      "statement": "The marketplace update route verifies the target directory is a git repository before fetching and refuses with an instruction to re-clone when it is not, which is how directories left over from the ZIP-era distribution are detected.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/routes/marketplace.py#L748-L760",
+          "version": "repo-lines-v1:sha256:9ad34f721eadcd468dfa5a1e41e14fafbdb34483d5e8a11e6fc8fd2773ae290b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNDM4M2VmYjI0MWZmZGRlYzYzODdkYWI5NTU2NjI3MDM2NDlhN2JhMmZmODhiMDk2ZDRmMjUzZDZiMDcyMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxOWRmN2E4YjBiN2Q4Zjg1N2Q4NzE4YzMwNzdjOTRkZWUxZWM2ZWZjNzViMjVlYjM3NzI4OWNiYzliOGVjNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxZDlhNjk2YTFhMWE0MjRhOGE0NDk4OTBhYTJkODk1YjM0Y2M4ZDRiMTg5NWMwNzE1ZmQ2MWY2ODA5Y2E1ZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e0dd282223e64b18a0acc27b63137f94",
+      "statement": "Marketplace names are validated against ^[A-Za-z0-9_.-]+$ before being used to build filesystem paths, preventing user-supplied names from traversing outside the user's workspace directory.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/routes/marketplace.py#L562-L586",
+          "version": "repo-lines-v1:sha256:ac838400963376291a7ff5573dc4896bb9f2e4c4a763b6419f329df3e4fd7b66:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNjc1MmM4ZGE2MGFmZDhhZTU4NTViNWFmZGE1NTRlYTQ2NDM2YTI5YjRlNDI0Zjk0OTMzMDQyMjQ2MWZkNjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzZGYyZWM2ZTlmNzFiYzUxNWRhZDA2NzZlMzFjZWQ5MDhiZjYzNjdjYmUwODFkNWQ0M2Y1YTkzNDJlZjgxMmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2N2NiZmRkNDhkMDQ4NmE3ZGUyYTE4MjdlYTM5MGZlZTQwNWFhY2I1MTIyZGFlMzQzZGM5ZjA3N2FmZmZkNGQifQ"
+        },
+        {
+          "resource": "repo://server/agent/routes/marketplace.py#L59-L72",
+          "version": "repo-lines-v1:sha256:802532f946dc3bf966badd90e58f13f8b958aa6d63ef650c66d3d151014582e4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkODVhZjI2ZGNlNzA0ZTBkNzM3YzdmNjBmZWZkMzQyYWMzYjU2ZmNhYjhhNDIzNTUyODZiZGY2YjAxNTMwMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczMmIwN2UyNTY2ZDQzMWEwYzJkOTE1NGVkZGNiMDkwOTZlODE0Yzc1ZWYyNGI3Y2ZiZmNhMjU2Yzc5YTU3ZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzMzhlZGE4MGFjMTVmMmMzZTNjNDI5MWU1ZjkxN2MxOTgzY2RkMjM2MTg5Mzk3NDQ4N2E4MmRiZDZhYjg1NmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1928e0c966d04053bb500b0de9e40fad",
+      "statement": "Skills are synced from a per-user Supabase Storage bucket into the workspace using the same .claude/skills/ relative path at both ends, so the agent discovers them without further configuration.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L30-L34",
+          "version": "repo-lines-v1:sha256:3c37ddb85b6cd805f567f8c988eb850792c5242735b1dd9bc6764f8296839baa:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGNjZjZjMTRhOTMwYTg5NzgxZWJjNGE1ZGE5ODliNTE2Y2MwOTJiODliYjhhZDY3N2RjOWUyMzA3YmFiOWI0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk2YmZlY2UwN2RmNDM5MWJlYWFjMDZjZDY0ODJjMDhhNzBkM2I3NmUzZjZlMjUzZWZmYWFlNzJlYzY0OTIyZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTVjMWM0NjJlMmEzOWQ3NDc1OWY1ZTFiMTI2Zjc2ODNhMmI3MzAxMThlMThmNTEyMmIwOGNlZGVlYjY1MGUyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODZjMDEwNTc1ODMzYTE0MGRiNmE1NTQwMjQxMThiZDhiZjRiMTI1MTYzYzljMTEwMzdkMDdiODVmN2YxNDhkMiJ9"
+        },
+        {
+          "resource": "repo://server/agent/services/storage.py#L933-L965",
+          "version": "repo-lines-v1:sha256:3aac765ca77e14c8f90e3c83248cef2c13a4d38137d565799e9862b7270f10bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxNjE1MTk2YjViYjczNWFjNDM4MTgzYTMxNWRkMGM5ODAwZjQ0OTU4YzI4MjVlZGU4NmY0OTI0ZTkyZjE1NTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNDc5MzljMjJmYzcwNmJkNzEyMmEyYzVlNGQ1YjA3NDczNDE0NjU4ZWNkYjhhZDVkOWRhNDk4OWVmYmJlM2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5OWVmZWRmZDJkOTcwNmQ4OTFjN2JhOTgzZTdmODRlMDVhZDBlMDE5MWMxMzI3OThiZTVlM2MxY2M1MzA0MjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5ZTE4MzAyZDdkYzM3MTllMzgwZDhkYzE0MzkwN2RlMjc1Y2E0N2Q3MWQ0NTE2ZjQ0ZGQ0YTFkZDFiYTk2NDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_03fe927a2fdf436fbb739f6e2dfb6a8b",
+      "statement": "Agent memory is stored as a row in the claude_memory table and materialized to disk per scope: 'local' writes .claude/CLAUDE.md inside the user's workspace while 'user' writes ~/.claude/CLAUDE.md, and a missing row writes an empty file so the file always reflects current database state.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L1218-L1280",
+          "version": "repo-lines-v1:sha256:a446d3ec403f0bbded9a2c7adaf35d63da1267f521bb63b558cd4614edd624b5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjMDE1NzRmMDkxMjM2MDBhYzFiMzMwOWY1MWFlYzlhNDllOTI2N2YzNjgwZWQ2ZTRhMTM3NDA1NGNlZjIyYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOGNmNmU2MjBjMDg2ZDAzMTIyYzIxNThkMTY2ODZkMmIzYzBkZGE3YjY1ZDdkMjc4YjVkNWFlOGE2MDMxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjYWQyYWQ1YzM0NTVkMDcwNGI0MzNhMjNmZDljNGQ5N2I3NGI0ZTEyMmNhYzAzMjc1MzhlMzA5YzJkZGRiYzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_650b388412fc446886b7a7272ee25544",
+      "statement": "Tools a user has pre-approved are stored in the database, loaded into SessionConfig.allowed_tools when a connection is built, and passed to the SDK so they execute without a permission round trip.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L1291-L1300",
+          "version": "repo-lines-v1:sha256:5f3d45f48f4b4137350b531e8ffceeb3c1937ece4ec0e1b01a5e2df53afaec11:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExNGQzMmU5NWM3MTc0MTgwZjc3ZDg3ZWFhZDM5NGYxNjNhMDc4NGM4NjZmNTAzOTJlYzdmNmMzN2Y3NzJhZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTcxNTI1NzJlZTg0ZjEwOTA2Yzc0YjlmMmE5MjQzNGRkYWIwZTNjNDI4MTNiMDRlNTk3ZWZjZWM5NTFiMjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOGNmNmU2MjBjMDg2ZDAzMTIyYzIxNThkMTY2ODZkMmIzYzBkZGE3YjY1ZDdkMjc4YjVkNWFlOGE2MDMxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyNmExZWI0NDE1MGFmZWEzZmQ2ZGFhYzRlMWM4MWIxMWZhZWFlMmYwM2NkODMwMWI1OWFjM2QyNjNhYzBiNTEifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/config.py#L180-L181",
+          "version": "repo-lines-v1:sha256:7b9ff8625918fc052780dcb49bbb742678e05a8558336149cedb02df96c953d1:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTI4NTgyY2IxNzJjZjE3ZjdjNDkxZTU2OThiYTNiYjA5MzE0YTBkNmYyY2E4MjljYWM5NzY3OGVkNzdhZDc5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzRiMmE2M2FlMGNjYmMyMmI5NDkyMDg1Y2IwMzQwYmIzNjBjOTA3NzNiMmZiOTY2NjNhYzFkZmQ3YzVmZGM3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDMwYjk5Y2EyZDdjYjhiYWZiYzEyYzAyYzMxNjhjN2QwMjc2MGUwOTA1MDhhNzE3YWJiZjllZTJiOTFiYjQwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTExMzQ2ZGJkOGU2ZjJiNmYzM2ZjNTBiMzRmZmU3OTMwMWRmN2Q2YzU5NTBlMTFjMzIzZTBkNzY0M2I5NDlmZCJ9"
+        },
+        {
+          "resource": "repo://server/agent/ws_chat.py#L54-L60",
+          "version": "repo-lines-v1:sha256:bf826930fa6fb5c7b47c2a2fc8f952bb13b2cb71c36c164843c625c3c844de69:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmNjZGVmNWRlYjY2ZGQ4YTZhOTE4MWQ1Y2Y0NmFkM2U5MmUzNWE4ZDVlMWI3NThiNGI0Y2EwMDhkZTUxYzI2NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzVmYWJjMjIzYmYxYWY3Y2IwY2ZkNmZjMDY1NjQ3OTIwMThmYjc4NGM1NTI1OWE0NmNkMzQ2NWQ4NGJjNzZjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzg5ZWZhOGFjNzZhYmZjNWVmZjgzYmE5MjQ0NDA1NGEwNjBiYmQ5NTgwNzcyZTE1ZDc5YjFiZTFiNjFiN2E4YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c641f0b733b44b658b17d5895ec0bd84",
+      "statement": "Each user's extension state is confined to a workspace directory at ${USER_WORKSPACES_DIR}/{user_id} which is passed to the SDK as cwd, making the agent's working directory the filesystem tenant boundary.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/storage.py#L106-L135",
+          "version": "repo-lines-v1:sha256:9a2b287de54461076107f07766da2463b3eb37d7394a7348de80e72f982db6c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1YWI0NTZmYTNjY2M5MGNjZjFiYjdmNzEwNDg3ODJlZWE4NGZiZjJiNDA5MWFmMzk1MTY0NTQ0YzRiZjVmOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5OWVmZWRmZDJkOTcwNmQ4OTFjN2JhOTgzZTdmODRlMDVhZDBlMDE5MWMxMzI3OThiZTVlM2MxY2M1MzA0MjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiNTFmYjcwZjNjODQzMTdkY2FjMGE5YzE3NjZmNGE4N2U5ZjdmZDIyNTRjODY5MzZmMTFkM2E0MzZlNDA0NzYifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/config.py#L174-L176",
+          "version": "repo-lines-v1:sha256:ef72cd71c0a990d4c6fbc8bd1cc52fa46d95a9aff87e5d81a05025e90d576384:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMzNzkwNjE1OWMyYWZlNjg5MDNiZWVmZTNkNjJmN2Y3ZDAxNDQ2NTZjYzU0ZWViY2IyNzhiNGY5YWRhYTQyOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmMwNjQxMTM3ZjdlZGQ1NjIwZDBkMjY1YTNkMTJkZmNkNzdiNWMxNjIyMGE1Zjg1ZDJlNzYwNjhhZTViZjJjMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjYxZTljN2JhMmVhMDdjMGVjMDhkOTBmN2YxMDZiMDBiYmFhNmQwMzVjNTczNWY5NmFkYmNiODE1Y2JhNzRjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDMwYjk5Y2EyZDdjYjhiYWZiYzEyYzAyYzMxNjhjN2QwMjc2MGUwOTA1MDhhNzE3YWJiZjllZTJiOTFiYjQwZSJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/config.py#L217-L231",
+          "version": "repo-lines-v1:sha256:1c7a6c06a5b6316e69af408317e484f0efe7f8c1519971d766ae5e75c7d57483:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwOWMwMzQ3YThjODY3NTI4ODk2ZDZmYTIzMDdhYTc5YjZiYjU3MjEzNTNjYTQ5YjUwMDg2NjNlYzliYTBlOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjNzZlMjA0N2Y0YTUzMTljYWQxZDBiYWZmMGIzODU4MWU3YjVhODAwNmE1OGIxNGVkYmM2ZjM4YWQ0M2E0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlYzIzZTJjMTE3YTU5Y2M2NzEwNzBiZDcwY2E0NzY1OWJkNzE4YTA1NTJkNDJlNWQ1ODlmOWQwNTBiMmE5ZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlN2M5NTdiY2I0NGZiNjczYzk4YjAwNTBhNzVkMzgwODJkYjgxZDkxOGRlMzEzYTNmMDdjMTIzNTMwNmQ3ZWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_92352f211f9a4578ae884ff4500ac667",
+      "statement": "setting_sources is restricted to [\"project\"] because including \"user\" would make the SDK read $HOME/.claude, which inside the container is /root and shared by every tenant.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/config.py#L133-L136",
+          "version": "repo-lines-v1:sha256:498685895b40c7e4a5f91d86946f5d244b2629fb168431719c5a2d6855ea2cc7:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2NhNjc5ODRlODIwYmNlNDhjZWQ0MTEyZjdmZjg3ZmEzY2ViYWM4NTQzN2NlNmM0YTJiYjdkMTVkMDI4ZGQyNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDI1N2Y5N2E4NzAwYTliYTQ0ZGUyODczNWFkY2Q2MjVmM2EyMGMwOTgyMjkzN2I4NDM5OTU5NzUyNDI5MWQ2YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWViMWQ1OTAyMGFkM2Q2YmI1ZWNmYjZiMzcyNTU3MDE1NzIzOTY2NWM2NDM0MzU4NzdjMjQxM2YyNmJmYWUyZiJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/config.py#L169-L169",
+          "version": "repo-lines-v1:sha256:29b6dea8ac5e6b6fa252d31e3d5b5854dfe73bc6cf89e2e35a59decff333d496:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjliNmRlYThhYzVlNmI2ZmEyNTJkMzFlM2Q1YjU4NTRkZmU3M2JjNmNmODllMmUzNWE1OWRlY2ZmMzMzZDQ5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjliNmRlYThhYzVlNmI2ZmEyNTJkMzFlM2Q1YjU4NTRkZmU3M2JjNmNmODllMmUzNWE1OWRlY2ZmMzMzZDQ5NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJiYjhmYWFiZDEzYjM0ODg1NjE4NjZhYTQyNjNhNzRmODNhZGVjOTBmZmYzYWIwNTg0M2IzYTViMTY4M2E4NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTdlMjNmMWE1MmZjZTQyODZjODA5N2YyNDdiMGMwYTZlMGVjMGI0MmM1NzBmMTY3NmVjMTQ3MWQxMGJmNzlhMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cfcda09d07734930aa98316afc143d8f",
+      "statement": "The system prompt is passed as a preset with an append rather than a bare string, because a bare string replaces the Claude Code preset and silently removes the built-in Read, Write, Bash and Grep tools, leaving only MCP tools.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/config.py#L126-L132",
+          "version": "repo-lines-v1:sha256:5ef9a78ee3a69788620547a00f7fbe3c72e87b9186dc2a547149686bebc4c595:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODM4OTE0Yzg1ZTc4ODhmNGNiZmU4NGFmYWQzYTZmOTQ1OTVlMWY2Mzc1MmExMWRkN2IyYjVkOTNjYjhkMDk3ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODQ1ZTE3OThlZjBhMDA1NGQyODI5ZjhmMDg5YzcxNTg2ZGE0ZjJiMDBjNjAwOWI3YjRhZjU0YzFmNmIxYzk0NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTk1M2RhOTVlMDdmNDg5YzI0YzE0NDA4YzE5OWU5ZWU4Mjg2ZGY5YTE1Mjc2YzQ1NTFhMTAzNjUyMDRiYzMzYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c51cdb9ee45c4f448c3351a1d3ea3dcd",
+      "statement": "Workspace preparation failures are logged and swallowed rather than raised, so a session still runs without a cwd — the agent simply cannot see the user's synced skills and memory.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/config.py#L217-L231",
+          "version": "repo-lines-v1:sha256:1c7a6c06a5b6316e69af408317e484f0efe7f8c1519971d766ae5e75c7d57483:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwOWMwMzQ3YThjODY3NTI4ODk2ZDZmYTIzMDdhYTc5YjZiYjU3MjEzNTNjYTQ5YjUwMDg2NjNlYzliYTBlOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjNzZlMjA0N2Y0YTUzMTljYWQxZDBiYWZmMGIzODU4MWU3YjVhODAwNmE1OGIxNGVkYmM2ZjM4YWQ0M2E0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlYzIzZTJjMTE3YTU5Y2M2NzEwNzBiZDcwY2E0NzY1OWJkNzE4YTA1NTJkNDJlNWQ1ODlmOWQwNTBiMmE5ZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlN2M5NTdiY2I0NGZiNjczYzk4YjAwNTBhNzVkMzgwODJkYjgxZDkxOGRlMzEzYTNmMDdjMTIzNTMwNmQ3ZWMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

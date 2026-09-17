@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2f237954174825af1ce548a2a04b71bc8db68454d780ac45104ee28afe13ede7",
+  "claims": [
+    {
+      "id": "claim_c8661a7dec224668a9eedd05418d3656",
+      "statement": "EscalationService owns escalation policy and level CRUD, but its alert-driven notification chain is largely unimplemented — notifyCurrentSchedule, notifyUser, notifyGroup, notifyExternal and scheduleNextEscalationStep are TODO stubs that log and return nil, with only notifyScheduler implemented.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/escalation.go#L1117-L1200",
+          "version": "repo-lines-v1:sha256:93e9dba3e50266383e38385c4de3f3ce70e8605f3914d3e7eae013e30a4c464c:eyJzZWxlY3RlZExpbmVDb3VudCI6ODQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkNmQ1NTI1YjBmYmMxYmEyYmViNTY5MmEzOWI3ZWI3ZThhNDI2YWRkODhmYzliZTAzYWVjNTg2ODdmYTlkNWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmYTYwZTcwZTkzNDVjNGJhYjg4MGUwN2I4YTllYjQzMWZhNzA5NDA3NDc0OTkyYzQxOWNjOTA2MzI2ZjY4NzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAxMTRkNzljOWVkODljNzcxOWU3NGEwYzIwM2I1MzY2MzJjZDlhN2M0YWNlOTMyNGJhNTc1Y2Q0NmNlYTc2YWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d8a609943e8c4ae987523b0f777a4dc5",
+      "statement": "The escalation that actually assigns and notifies is the IncidentWorker in internal/background/incident.go, started as a goroutine by both the API server and the standalone worker binary.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L118-L130",
+          "version": "repo-lines-v1:sha256:79f62f271aeec8226a61980bc420c7df8b065d3d4689d5ee66c4964438cdd901:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NmE3MzkwMjdjYTU0YTYzZGIzYzc2YzU3MDdmNWYwODIzOTZjZTE0YTMxYzJiMjJkZWQ0NjdmZTVlOWQ2NzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNjBjNGJhNTA3NjI0MDhjMzM3OTAwYWQxNzU5ZmEyYjA5ZDRhNTZkYjY0MmUwMTk0MTU1ZmQ0YTIxYzYyOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0M2FhYjEwYmRmMThmNTAyNTY1Y2VlNmI3Yzg4MGIzZDU4NGVhNjFlZWMxOTMyN2I5MWFhMjI2NzM5NDc0YzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1YjJmNWZlYjlkNWE0MzI1ZWZiNDQzYTlkNWFjNmM2NzUwNGQ4YTcyNmE4NmRhZjllNmZkZTdjOGE3OWU1NWQifQ"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L76-L84",
+          "version": "repo-lines-v1:sha256:e9cc43fdb7ff7306f9de1c8567d5b088d84cc6cffe2edcb0794ac1bc69197e11:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjBhNzM2MmU5ZmUyY2JkNWZhMTdiYzRiYTYwZTg0ZjA3YTAwNmVmMzNmNzVkNjdiOTFlNDMyYjk4MjAyMTZjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTc1YThkNzZhNjIwYmNiMjEwOGYxOTQ0OGM5OGRhOTczYzExMTFkYmNjMzE1NDQ3M2ZiZjM0OWI4ZmY5ZWQwMCJ9"
+        },
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L31-L41",
+          "version": "repo-lines-v1:sha256:27665d49289758b471024663e36ebf39c4f3cefc566bf61fc7190a0da6cdd15d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlODg1YjFhY2YzNTI4YjE5MmQ2ZGI4Njg5OTQzNDM2ZGU3MTY0OTVmNWRiZmNhYmIyMDI5YTk3ZTkzODNiMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlYTgzMmRlMTkxMmIyOWM2NzAwYzlhODBkNmNmNzM1NGE3M2ZlZmQ1NGQxZjI2ODBjZGE4Njc0MTM3NWNlZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzNTRmZjQ5YTY0MmI5YzJlZmFmNGY3OGFhMTdjOWY2ZjdiMjAwZjc5NmM2MTczODcxMDQ0NzY5ZmRmZTc0NWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_75af117f00b64e25abf7263d5ca019cc",
+      "statement": "The incident worker polls for escalations on a 5-second ticker, though the adjacent comment still claims 30 seconds.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L31-L40",
+          "version": "repo-lines-v1:sha256:98a4065cac479a69d94d94d6f70037cf51e4d5a9c65eb8150660df0f1c11fd12:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlODg1YjFhY2YzNTI4YjE5MmQ2ZGI4Njg5OTQzNDM2ZGU3MTY0OTVmNWRiZmNhYmIyMDI5YTk3ZTkzODNiMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlYTgzMmRlMTkxMmIyOWM2NzAwYzlhODBkNmNmNzM1NGE3M2ZlZmQ1NGQxZjI2ODBjZGE4Njc0MTM3NWNlZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmMjgwOTk2NDE1NTg4NTMxZTViMTMxZTc0MDZmYzE1YTIxMjFiN2RkYjE0NTg4OWMxYTQwNzFkYWViODQ3OGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c17c92b5cf947bab3b79af9375f1c7e",
+      "statement": "Escalation timeout evaluation happens entirely in SQL: an incident is due when it is triggered, has a policy, has escalation_status of none or pending, and either has never escalated and exceeds level one's timeout or has exceeded its current level's timeout while a next level exists.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L132-L170",
+          "version": "repo-lines-v1:sha256:7118c85bc18e20978ea3758c1c89e729ccf5fc0fc262d6ee1b870dd5d657560d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1ZDM5MDQxOWYyODQwYzRlMTgxYjlhNjY0ZGNkMGM1YWIzYzRiNTcyNWFiMjA0OWJlNzRkMWQ0YzEyOTA4Y2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjMGVhNjI2Y2NhNzExZmFlYzlkMzU1MDIzYWQzNjU1M2I2OTYwNjJlZmJhZmM4N2ZlNjNlZDJhNjRmYzFmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlZWQ1YzEyMTM0M2QyNzBhOTNiNWYyNTJjYWY1NzA1YzE3OTVmMWM3ZmEwYWZmY2E1YzBmN2Y4N2EzNTM4YWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3MjQxZmIzMjQ0MGQ1ZmJjNTRlMTE0MTZjMzBjNWNmZTY5YjhiNDBiZmJhNDZhNjM3MWZkMGY1ZTBkMmExODEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7fa32b0ce4274bb5b5a11c39ccbefdbe",
+      "statement": "Because timeouts are compared against the database clock with NOW(), worker and database clock skew cannot cause escalations to fire early or late.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L143-L166",
+          "version": "repo-lines-v1:sha256:a3372e36fe9111868f5807a30e807f0dab8e3faa21a8bc1f4c32c103c20478de:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ODg2ZGM1YTlkNzg4YmFhYzZjNzFkYTliMjI3NWQ3ODFjNjZlOTAxOWZhNGViZGJjNjM3OTkzZGRiZDQzY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOGUyNjhhMTA2YTNhMzZlMWZhNDQ0ZGIzMGQwMGQ4MTFlYzZmNjVmZDRjNzViYmJkZTRiYzE1Y2FkNjc5M2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlYjc2OTEzZTVlNTEyMmZlMDYzYmUzM2I1ODJiZjc0Zjc1OGIwYTAxMzAzNzQ3OGE0MTI1MmRlMmFiMjY3MGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MjFkNGMwOTgwMTJjMDJiZGI4YWU1NzQzNGI2ZmEzMjc1ODRhNWNjOTdlYzIxY2NiYWU3YzU5YmQyMWFkYzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f304d64dc7740ba808008a52cdab86e",
+      "statement": "The escalation selection query requires a next level to exist, so an incident already at its policy's final level is never selected for further escalation.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L155-L166",
+          "version": "repo-lines-v1:sha256:759183314dee59715cb2c5a3de0837df7ce89ed747e0a82b07fb0e0c414c1f2c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhY2M4NDRjYjZmMDRkY2IzZjcyN2MwNTkwNWU2MThhMzkwNzQ3YzVjNzE4NWM3ZDk4MDNmZjczNGE5MDFjNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOGUyNjhhMTA2YTNhMzZlMWZhNDQ0ZGIzMGQwMGQ4MTFlYzZmNjVmZDRjNzViYmJkZTRiYzE1Y2FkNjc5M2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3ZTBiOTQzNjFiYzJmYzMzMjNjZDg4NDBiODQ5MzZhMmY1ZDdhZjg2Y2RiMGYwYWIxMWU4MjFmZDcwZmU1ZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MjFkNGMwOTgwMTJjMDJiZGI4YWU1NzQzNGI2ZmEzMjc1ODRhNWNjOTdlYzIxY2NiYWU3YzU5YmQyMWFkYzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a762b287e1b24ec68cff5118992f08f0",
+      "statement": "Incidents due for escalation are claimed with ORDER BY created_at ASC LIMIT 50 FOR UPDATE SKIP LOCKED, which bounds each pass, prioritises the oldest, and lets multiple worker processes run concurrently without double-escalating because each row is claimed by exactly one worker.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/values.yaml#L259-L266",
+          "version": "repo-lines-v1:sha256:387794ab43b8d92227c45201ec2284e859e3e01d62762d015f6b4d677e654269:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzhiNzI4MDUzYTEzMDJmNzE3Y2Q4ZmJlMzNkMmI5NWRkZDQ0NmQ4NTljZWFmMjNjNmFmMTVmZTYzOThhNGJjNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGFjNGYzOThmNTM2NmVkZGQ5MWUzMTkzZTg5MzBkMDg3YTRiZGYyOTEyMGZhMWI1NGJjYWIyMWExNTczZjQ3ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWQyY2M0ODMzYzIwZmRmYmI0NDJjODVjNTJlZjkwMzdjYWE0YTlmNTA5MGFkMWJlMzExOWE4NGRiODA3ZWJkMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTQzMDdhNGZlYmU5MmM0NmNkODRiZDU3YWNlMzYxNGQ5ZjY1NWM3YzNkM2I2MDViMTU5ZjYyNjg0NGM3ZDRjYiJ9"
+        },
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L165-L172",
+          "version": "repo-lines-v1:sha256:91b8c0a8deef3134b5ae54d501d7baa4578f4e314b792e3797103b9ff1341801:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDZmYjg3ZTlkZTM3OTA3MDU2NDE2MTVhNWFlYTMwNzY1MzMxYTcxMzNhMGM3YTQ4NWQwYTdiMGZlZjg5NDA4OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzg4ZWNmYmRlNDE5YzZmNDVlNTA3NTcyYTI3M2MzMWU2YTFjYzM0MzI1YmUzMDgzMmE0M2Q3ZDA0NjJkNTMxOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOThhMzUyZTcwYjlhMzE4NDAxYTU5NDk0ODBjNTM0OWM1ODFkYmEzMzhjMzVmNmY3Njg0ZDA1NjExN2FjMjc0NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzc1MGUwYjA1OTZiMmJhNjJmMTIxMzM0MWU1M2VjYWQ2MjNkOTE0ZDNhODYyZTEyOTljMDcxZGJjMjhlNDI2MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_91eabaa98d564cd38302e29aa7a434f8",
+      "statement": "Each due incident is escalated in its own goroutine rather than sequentially.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L62-L67",
+          "version": "repo-lines-v1:sha256:2d73377c921273afdcf56be3913a88684858e7f11c9869b0ca110805ea48dbc6:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTVlMGNkYzRhMWNmMzE4NWI0MTBhZTg2MTJiNmQ3ODNiN2NkYjIxMjNiZmRhN2RmMzVjYmJiZTU0MDA4Y2NjMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWI4MWRjZmUwMTY5NmY5NTNlMTdiODZhNGZjM2RkN2FlZGFiYWFiYzc1NjU1MWI0MmJjYTQzZWZmMzlhZjcyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjNhNjc1OWNjZmRkMTRjZGY2OTUzYmNkOGE5YjlhOWQyMjNhNmQ2ZDZhYmIwZjI1ZTY3MDc4MjE2NjI4NDBmZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWFlYzU1ZmU3NmM2ZmE1ZmFhNWEzZWM1ZWVmZDAzMzNlMjMzODMwMmMyYjg2NDBjMjhhNmRkNDU0MmZmNzRiMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dee2d8c057d140bb90ccf32da9744641",
+      "statement": "Escalation level zero means not yet escalated, and the chain is marked completed when the policy has no levels, when the next level exceeds the number of defined levels, or when the computed level number is not found among them.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L224-L290",
+          "version": "repo-lines-v1:sha256:c32b3e4c05051f184a8c665ec9b06d956bb7478f25e898d302158077c26b0e33:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhYjNlNzljMTA1NTU3NjRiNjhjMTEyNDQ2OWNkOTY2OTRiODljOGYzNzc4OTk4MDZmZjgyMDJjOTZlZGZkNzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhYWQ1Njk2MWU0Y2NmYmU4ZDg0ZTg0YWMwM2RiYjZlNjc3N2FiOWQ3NjE5YTAwZDc5ZDBjODgzNmQwZWU4MDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxYzRhNWVmY2U0NzljMTExNzBkYWFlNzIyMjRiY2MxMTdiOTc3ZWYwODliY2IwNDJiMjY5ZjVmNjA5NDA0MjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a253c007f86416381c6efb4d0f7b57e",
+      "statement": "Escalation dispatches on five target types — user, scheduler, current_schedule, group and external — with an unknown type logged and treated as failure.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L379-L396",
+          "version": "repo-lines-v1:sha256:0f5f87aef53c89d9f8f78e4dafa81a4ae39a217aa76e57f6e4922e1da175a829:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMzYxNzI5MjEzYTM4MDNhZDRjZTc3ZThhMzMxNGU5MDcwNTc5YWNkYmE2OWFhNzNiZDZjMDIxODAyMTFhZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjYTc4OTY1YjU0MDZmZmQ2OTE2NWRkNGI1MzA1YzhkODI3ZTJlNmNmNjNmOGYxODRhYzJhNmQzYWIwMzg1MmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjMmUwOTNhZjYzZTQwNjJlY2U0ODUxMGJlNTRhOGFjYzJlZWVhZDM1Yjc3NWM1NDM4MTNlMmM1MmRkNTVlNTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f46f4449a1154fe5ba83836b0dd88294",
+      "statement": "The current_schedule target type ignores the level's configured target id and escalates using the incident's own group id instead.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L383-L387",
+          "version": "repo-lines-v1:sha256:470613eccc9cd1499e7709ea03969b5dda94ccefffd3081b3f5533be233a2856:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQwMDBjZjAxZThhNmQxN2U3OGZmOGFkYjRlZGI1YzdhNDQyYWQ4NTkwYjkzZDQ5ZWZkZWY4NGZjNzE1Nzc3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ZmODVjYzJhNWE0YWY5ZDJlMDg4ZmJmODkwYWRmMTYyYjlhN2NkNjRlZGE5OTM2ZjFhNjMzZjhkYjhkYTdkZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmU5ZDNmMGI3NDU2MGIwZjFlNDBlYzBlNTcyMDI4ZjgzMmJkN2Y0NjMwYjg0NzY1NzQ5YzAyNmRiZDg1ZGM3MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjk1ZDExMWQ1OTNiNDMyZDllMmJiOTdhMjQ3MjAwYTg3NWI3YzRmNTE0ZWNlNjUxNDc3YmIzNzNjMjI3ZTVmNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cbd6769812cd42628d7bbfae4219b888",
+      "statement": "Escalating to a scheduler resolves the on-call user through the effective_shifts view rather than the raw shifts table, so schedule overrides are honoured without the worker having any override-specific logic.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L456-L475",
+          "version": "repo-lines-v1:sha256:1a72392b05cae3609332a33dab26b023cfe3d5dd283d87771ceeeb6cab3342ca:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzYTliY2Q4MTNmNTI0NzI1NzVhMzhkMGVkMGM2ZmI5M2VhMzdmYTg1MjAzZTdmNzAwZmYxZjk5ZGI1ZDRmNzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxZjE0Yzk3ZTUwNjE1MmZkOTk5NjNmODlmNmFhZGNhNTA5YjY1ZDk3YTNkNTY4ZDgzNmY5NzBiMmViMTYyMGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljNWZmMTI0OGM0OTY4Mzc3NjgwODhmODgxOTAyYTc1NDRjMGIzYTliZWNjOTE0MzU1YThlY2QwZWU0YzExYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhMWM4ZDUzNDk1NzcwMjA2ZTgyMjdjM2M1MzE3ODk2MjNhMmIyNjg1Y2M1ZTIwMmY4MjMwOTk3ZjBhOWQ1NWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6f78bc692568414fa64336ba87ae7a05",
+      "statement": "Escalating to a user assigns the incident with assignment notification suppressed and then sends an escalation notification instead, so the recipient is told the incident was escalated to them rather than merely assigned.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L398-L414",
+          "version": "repo-lines-v1:sha256:1bb52f47032cfb51ed38ea7984e4696cc05daf27f9aac570150b974528535881:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0ZWYyZmE0NzY3ZGNhZjQ4MzAwMDIxYTEwYWMzMjRlZTUwMDQ3ODc5YjcxMWUxNzFhNzc0ZTIzZTNmMDQ5MzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3OWRlM2I1ZWUxOWM1NTE3NjA2OTY5M2NiOTM3YzMxMjRlZWFkMDFhMmE1NGJiMTliYjNlMWVmNWNlODMxZWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjNzkwMWM5MDM3OWIwMzM1ZTQ0YTdlNTJjMGQzOGE3NzE2YjJmYmIwNmViNjYzZTM3YzZlM2Q5MDFkYTNiMjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_59fee3447b0c435da8a14d929720b1f2",
+      "statement": "A notification failure during escalation is logged but does not fail the assignment, so the incident remains assigned and discoverable in the UI even when delivery fails.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L415-L455",
+          "version": "repo-lines-v1:sha256:3a75b1d0f563748a4d583e4a8831ae13ab4b0a43974da043cddfa99e211f693b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjMjFjY2M3ODhjYzJkMmJiYzFmZGQxMjQ0NTc0YTE5NDkzM2I0YWI3YzY3ODlkOGM2ODRjZGYwZTE4NTYyYTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1NzRiMGNkZGQ4OGZkYjNiZDI1ODk0OGJlYWUwNWQ4NWJmMGYwM2I5NzFhNTk4ODI2ZGQ5MzM1MzYzMDQ0MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiMjNiMDFmYzY1NzJiMzM5OGFmZjg4OGFkODBhMWIxZjYzOTM4OWRhY2Q2MzZmN2I1ZjJiNTAwMjI5ZGU0MTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_67ff622b1f894ba294b3e28384ec84de",
+      "statement": "A failed escalation leaves escalation_status as pending for retry on the next tick, relying on FOR UPDATE SKIP LOCKED for concurrency rather than an explicit status update.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L338-L346",
+          "version": "repo-lines-v1:sha256:2b6b65b2549321f8c1480a8a7ea09f556fde514431f09da4e5f49cd208a68c42:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzA0NTQwMWYyNmU4MGE2MTdkYjA4MmQ4YzBmMGEzYmY1MTIyNGFmNjRmMzMyODVjNWNkMGM5MDA4OTEwNGIwOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGNiOWZmYzk4OTAxMjk2NjM0OTAxNjZkN2U1MGIzZmNkMGMwNmNmYjU2NTQzN2U1YTJlZWRhMWM5NzhkZmFjNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWQ4NzI0ZTkxMGQ4MTM3NGFiMTBmOTlkOTY3NmM4NWM4NmQ5YzBmMDlhMjI1ZTczOWJhNjFkODUwODM3MWNlNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWViYTk1ZWY0OGVjYzFmYTgwYjY3ODk5YjQ4ZDM4OWUxOGQ5YzNiZDM5NTEzYjRhYjA1MDYxZWIwNWY5Mjk4OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8fe6d34dac3d494f8949834ceea4585b",
+      "statement": "Slack delivery was moved out of the Go notification worker into a dedicated Python SlackWorker, which the Go worker entrypoint records explicitly.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L55-L60",
+          "version": "repo-lines-v1:sha256:595183f5ab948d03d842ffa8220f980ff98812dcef55fad8fd952a5a15752f77:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQyYWU1OGIxMzU0ZTc0N2FmMmE1OWMyMzU1ZDBmYTdjN2VjZjM3ZWFlOWE5ZDc4MDJjOTllMjJlZWVmMmNhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTU4YmQ0NDE2ZDJhOTYxZDA0NjIyOWIzMzRhYjJjZDYzNDBlN2UyOGQ4MDUwMjNiMGYwN2M5Njg2MGJkNTc2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDg4Mjg5ODc2NmZmZTVlODc0MmEyYjRmMGFmMDJmMmZhYjM3MDhhNGQwNmFkNWY0Y2Q0MmFhY2UxNmJkNzQxMyJ9"
+        },
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L60-L70",
+          "version": "repo-lines-v1:sha256:e2b3e636e673da9254f01acac0fea4890c0abc3803e6ef2398186121921b49c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ZDE2NGE2ZjVkOTc2YmYxOWVmM2ZjZDJiNjU5ZGFmOWNmNDdlYjI0ZjY0MTVkMGQzYjUwNmNlNTg4Zjk0ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiYWExZmNjYTc5Yzc2NDAxYzc3MTcwNzEyNTZmODg0OTBjZDY1ZjA5ZGQwMjc3N2U4MzE3Y2M3ODg1YmQ2ODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_620d6544e5374395a491e2eb4d773ec6",
+      "statement": "Three PGMQ queues connect the two sides: the Go services produce onto incident_notifications and slack_feedback, the Python worker drains both, and the Python worker produces onto incident_actions which the Go worker drains.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L395-L408",
+          "version": "repo-lines-v1:sha256:4e82faa0be1d4b29af452511c1baad4451e644a539afcab1ea84c5e6b69cbb72:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmMTg4ZDAxNjFjMTBlYzUzNGVlZTYyMWU1YWNlZDI1M2U5ZDdhN2M2YWUzMTZkMjY4YzY3NTMwZmRkYjZjNGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3MTdiNDRiYzc3MmU3ZmIzZDBiMjVkNDEwZWY3YzQ3MjMwOWM4ODQ2MTc1ZGQ3NjFmZWFhNTIyMDQyZGYxZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L62-L84",
+          "version": "repo-lines-v1:sha256:018f4808ae78b41aa6ce51aaa2910f5f06ce447c3673c7a418f53afec081f66a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjMzZlZDY3NjFmYTM4ODIxMTc4OTA3NTNhMTcxOWM1ZjI3Yzc4NzJiMzZiOGE2YzU4ZGI3YzNjY2I4YWQyNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5ZWMzMGUxYjM2NGU2NGY4MzhkZWJmYjY1ZjdkYTI0MGYzNzFhM2Y3NDhhZTQyYjhhN2ZmNDc1ZDEwYmUxNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmY2YwZTcwMTQyZjEwMzQyY2EyOGQ0YTYwMzk4MDk5MTk2ZTY1YTllNGFjNzA4MjFlZjNhNTM2NzAyZWFkMGQifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_repository.py#L268-L278",
+          "version": "repo-lines-v1:sha256:755148eabfd35c22788fea94f11b234a5482cc3e8db91ae422ff7b8804417864:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3NjJmNTYzMDliNTY4M2U1NWI2NzZhMTlhMzQzNjkwY2NhNGM4YjkxMzE5NzI3MTUyMzI0ODhhNDYxZTViM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3NjJmNTYzMDliNTY4M2U1NWI2NzZhMTlhMzQzNjkwY2NhNGM4YjkxMzE5NzI3MTUyMzI0ODhhNDYxZTViM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2ZDlmY2VkZDMyMjk3MzlkMTM2MTI4MjhjNGE4ZjM5OTg2NzM0MjgzNzAzZjYyNzhkM2Y0ZjVjNGJiZjNiMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1YzVkYTViYWNmZWM2ODhjNjdlZDBmMTA1N2JiOTY5ZmRlNjUwODUzNjViYWY1ODA1ZGQ0MzgzNmYyYjNiZTIifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L217-L228",
+          "version": "repo-lines-v1:sha256:e981b1765d82d465d32eb0e27f02ba7ce73d36c6408ba467537087e8d6957f06:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMTA1N2RmNjE2MTFjN2I2ZDE0YjEyZTI2NGFkZDM3MTI5MDJkYjJjZTYyNTA0ODE3MDUxMjU4YWFlNWJlZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2M2UzNTk2YzY3YmRhNDQ0ZDRhZDY0YjE0NTE4YjFjY2JjYTk4YjI3OGI5NWZkOGJmNjVkMGVmZDBjMjM2MDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2MjVkNzg4MjU0YWFkNjQ0ZjY1ZTJmMWY5NjBmYTU1NWQwMGQwZTNmMDJlNzUwNjQ4ODdmZGVhMDljY2VhNDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3Yjc2YWZhYTBlZTczZjQzYmU1NzRlMTBhYTYyMzE3Mjc4ZTI3MGZmYmVhZjA4NDYzYjNjZGRlZTQxNzgzM2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5d7f3aa8b8c456b925f38d8b340d84c",
+      "statement": "A queue message whose payload cannot be parsed as JSON or is not a dictionary is deleted immediately rather than retried, because a malformed message can never succeed and retrying would block the queue.",
+      "evidence": [
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L248-L262",
+          "version": "repo-lines-v1:sha256:c53922dba6269d797c2fdbeb4e726a441d6fe460043b3a9431ddf502101868db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwOTVhODg4ODA0ZDQ2MGM5YzI5MDE2YWZlZDVjN2VjODE2YTUxMDIwMjIyMDdkZmNkNmIyYjQzODA5MzllODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyNmU0MzY4ZjIxZjg4OTFjZWQyNGNmYWY3Y2EzYmY5OTg1YjNmNDY5ZDRhNjgyNTZlMTYwOWQ2NTZmMWE3OWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzOTc4OTQwZTMyZTU0MzFkMjNmZmZmZjNkYzhhMzYyZGQwZGZmYzRhMzJhNjdhNzk0NGQ3YTQ1NzUwN2M0MDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ4YmE0NDIxMjM0OGYzZGUyZmI4N2UxZTVhNzdjYTYzZWM0NDQ5YmQxNjUxMDdlNWJjNzU5ZGI4NGFmMDE5NTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_92289d1112fd4fd9bb0d0e5b0f3e1516",
+      "statement": "A notification whose channels list does not include slack is treated as successfully processed and removed from the queue, so push-only notifications are not retried indefinitely by the Slack consumer.",
+      "evidence": [
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L302-L312",
+          "version": "repo-lines-v1:sha256:4d30d8fba9779f270f4ac6ab22d0b0026a75c405bcb70edc6c4ee96e1358c5da:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkYTkyMDQwYjMzNDllZTAyMWRjZDQyNGFjOGQ5ZGFiNzkyZTdiMDkyYjhmNzQ1YjYxYmRlNDA1ZGRlYWViMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2YWY1NTYxYjYyMDkwYjA2YmM5MGE2NWU3NmYzNTQwMDJmYzE1NmFmMGYyMjkwMDU4YTM4YjI2MThlNjhiMGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjNzdmYTk5ZmNmZWM4YTk4ODQ1ZGJjN2U3NjkwMWM2NzhmZWNmZDQyNzZiMzRjYTRlODQzMGY5OTViZGU3YWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmNWQ5MDYyYmJmNTRiYzE3MjlhMDZjMDIyN2MxNWFhYzhjZjk2YmY5YmQxMTdkYTkxMzYyYWM0YTM2ZDMwMzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c33d3bd08df4084a2102adbcc04305b",
+      "statement": "Failed Slack messages are retried using PGMQ's read count until max_retries is exceeded, at which point the message is deleted, giving bounded retry with an effective dead-letter outcome.",
+      "evidence": [
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L691-L700",
+          "version": "repo-lines-v1:sha256:bcbfa57980480641a6dc2436484b8b565f116a00757df535d0e42d01e4442d70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhY2Y0OWRmZmZmZmI0YWNlZmE5MWZkY2UzMjJjZTE0ODZhMTNhZDIwMDJlMWM3MjJiNDgwOWNlY2Q2NDgwZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxYzgxMjhlMzdmZjU2NTQwOGZhMTVhYTg3MzA2ZWIyOGY1OGNjNzliYzM2YmQzZWUwZTVjNmFjZTUwYTg3YWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYxY2IzMGRmMjBhZDQ4MDc1NDllNDY2MGI5OWIzYjUzZjJjNDE0ODQ1NmFmODk3ZDkzY2NjMTRhZTcxOTQ5YTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0YmMwYThhYjQzMTg4ZTJjMmI0MmRhNTlhYjE0OTZlOGRhYzRmY2ExMDg4YzM3NGQ3NmVmY2E0OTNjOGZlMTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5a161445000d49a1b46b39bf235ebf05",
+      "statement": "A queue message is deleted only after successful processing, so a worker that crashes mid-message causes redelivery rather than loss.",
+      "evidence": [
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L280-L288",
+          "version": "repo-lines-v1:sha256:bbc205ecd7b7f03d1f882770629ea43e088935afff79a424f7463303bd3ba808:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzg0NTI0YjRiY2JkNmJlNjU4NDcwZWMyYjRhZTk2OGVkZDc5MjE4ZDY0NTIwODY3OWNiYzk0MjZiYjg4ZTgwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGFjMGU0YjE5NjU2NmY1NTc5OTZhYTYyNDIwMjBmZmI2YTc4ZTVhNDJkOGRjOGZkYmE2OGYxMTU2MjExOWU2ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGU0MzdlZGVhZTYyYTBkNDIyYjFmZGQ5N2JiNWM2M2RhYmIyNjFlZGNlMTc5OThkZTllNTliNzVlNTIyZjQ4YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc265998316b4257a6681891ab1d5c32",
+      "statement": "The Slack worker's main loop survives failures by catching per-message exceptions and sleeping ten seconds before retrying after a loop-level error rather than exiting.",
+      "evidence": [
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L195-L215",
+          "version": "repo-lines-v1:sha256:62d553832debaa66c2c788fc9fc1976199fa81a6305c0bfbe9802bef0ce4f48b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3NjJmNTYzMDliNTY4M2U1NWI2NzZhMTlhMzQzNjkwY2NhNGM4YjkxMzE5NzI3MTUyMzI0ODhhNDYxZTViM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjOGU4YzViMzU1OTc3MGUwZGFkNzVhYzgzNGFjZDc3YzhkN2NkYzMwZTk3Mjg2MzkyMDE5OTkxZTczMGZjYWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5YjEzYjU4ZDViMGZhNjcwNTQwOTM5YmRkN2I4ZjIzZjE4M2Y2ZWFkOGNmMWY0ZTcyYzcyODMyMGJiMWM3ZjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4N2U1OWUzMzMwYzZlZjEyYzIxN2IwMjY0ZGQ2ZmRhMzQ1ZTAzMTNjYjkxY2I4ODllNDM3YjI2NmI5NzYxM2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee0a29771bb74d4eb0e0f639f32e1534",
+      "statement": "Push notifications support a cloud relay configured by URL, token and instance id, which lets a self-hosted deployment send push without holding Firebase credentials itself, and the service falls back to that relay when the Firebase app cannot be initialised.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/fcm_service.go#L37-L70",
+          "version": "repo-lines-v1:sha256:8c2e2c0dc11a9d83668d5620a57f33e379692aac51ffbf52263fcb293c943cbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiZmJiY2JlZDg3ZGU5ZDFlNWFjZjliY2U2YWVhM2MxNzZmNGY1OGNmOTNjNDA3NThlM2RjN2RjMWRiMTQ0Y2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiMjNjNGE2NzJmMTg5ZjlmM2ZhMmQzMzhlNjdjMzFhMzg4Mzc1YmExZDJkOTliMzQ2MmQ5YWYxMmNjMTczMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllMjViNjQxZmMyNWMzOTA3ODk2YjQ2NTk2OTU2NDM5NmIyYWEyYTZmMjZlNDRmOWJmNTc1NjQzYjA1ZmI2NzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7cdf7d5f0e7c46d1a43a06931b72d357",
+      "statement": "In-app realtime updates are delivered by posting a channel, event and payload to Supabase's Realtime broadcast API through a service injected into the incident service at startup.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L100-L106",
+          "version": "repo-lines-v1:sha256:61664f953e3dc171f11308c05cfe54b0fab14b277307f12eec61475dfdd78ccb:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjNhY2I0ZDNjMWQ1NjNlMGRjMmFjZDk0MTkxMjZjNzJmZmFkYTk5OTk1YjU2NzM4M2Q4OTllYWI2MjU4YmQ3ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzkzMTNjZjVlYWQ2MDU2ZGMwZTU3OWYyNDcyYWVlNGNkMmJkZjE3M2QyZGJmM2FlMTBhZDM0MmJjYjIwMTk3OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGY2YTFlYjUxNGJmZDdlZDBkOWFmZTY4NmRiYzJhYTNmYmU1OGY3MjgzZjIyYjkxOTBkMGZhNTc1NGY5NmQzMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjk3ZDNhMDFiOTQ1ODJiZGNiNWE4ZTg0MWM0MTVhYjNhZWVjNGUxZWRjZjdmZTkxNjQyOGM2Yjk1YzU1ZGU5OSJ9"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L46-L49",
+          "version": "repo-lines-v1:sha256:08bfaf0a8ccee0bbb68c14eea3a8a4c57785ac29e346f52bf3e590989bfecbab:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzkzMTNjZjVlYWQ2MDU2ZGMwZTU3OWYyNDcyYWVlNGNkMmJkZjE3M2QyZGJmM2FlMTBhZDM0MmJjYjIwMTk3OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMThkNDc2YzQzZmI5NTllNTUxYmQ2ZDhhYzVlZDk4N2I1MjZmMjFhOGUyNDg0ODI5YTdiZGFhOTQ0MGNiMzdiNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGE4ODZkYzUyMTA4OTM0OTBiZjc2Mzc3MzE4MWViYmYxOGZlZDc5YzJhYzIxZTI2MGQ0ZmIyYWQ0NTA4ZmI2OSJ9"
+        },
+        {
+          "resource": "repo://server/api/services/realtime_broadcast.go#L14-L35",
+          "version": "repo-lines-v1:sha256:df09e3f4ed33a30588992a2a737849cb9e60b2fb097351b321fce58c99389b66:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwZmQ4NjIzMTkxNTZkMDg4Zjc3OGEwY2NiYzM1ODMzNTNlZDllN2ViMDFjOTIzMTAyYWRkMzRkYTljYzkyMTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzMGUwNzZlY2M0Y2QwY2IwMGFjMjJkNzMxOGY5OTViMjViZDU4N2IwNjJjYTZkNWQ4MjIyYzA1OGNkY2Q5NTMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d4885e80d90fd37ee42746cf3552a88b8525ce40d9b8838047ec2a7b6f621cf5",
+  "claims": [
+    {
+      "id": "claim_d445c74138764bf281db876aa21b7c09",
+      "statement": "Uptime probing runs as a Cloudflare Worker on a one-minute cron trigger with a single D1 database binding, and D1 is deliberately the only storage because KV was judged unnecessary, simpler and cheaper to omit.",
+      "evidence": [
+        {
+          "resource": "repo://worker/wrangler.toml#L1-L14",
+          "version": "repo-lines-v1:sha256:fa4578d1a81bf5403062c8a92f63a9368c323303ef05dcda7af23cc4885f2b7d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0MWFkNjhmMjZiODRlM2Y5ZTYzOGQxNDVkZTVkNDkwOGZkNTY5MDE2MmQ2NzBmYThlNGRjNmM5NDlmYThhNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzODdiYzI1NGNiMDIxODkyODE1YTJhZWMxZTNiMDZlZDM4ZjBmMDZiMmY3ZmM4Zjc2ZTY4YzkzZDJmOGQzZjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6dc3723310874c6eb16cb4a13026971b",
+      "statement": "Each scheduled Worker run reads active monitors from D1, probes them all concurrently, batch-inserts the results into monitor_logs, and then reports state changes upward, returning early when no active monitors exist.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L1-L62",
+          "version": "repo-lines-v1:sha256:834cdb1b47e2b36c67ca28ef909cda16c091ccb4a16a8dfb535b993419631880:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3MDY3YTUxNTBjZjFkM2EzYjhlMzRmNjQ2ZGUwYmUwZWFkZTkwMTA0MzhlMWFjNTAxNWYyZmQ4MDEyNjM1ODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3OTkwNDhjNzg2NzM1YjY1NzE3ZjM4ZThjMzg3YWE0MjQ2NDRmOGFlYjllYmRmNzJkMzMyOWE2YThhYmNjMGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_25004c314eed4c26a97f3ad7c3a9f186",
+      "statement": "The Worker dispatches four probe types by monitor method — TCP ping, DNS, certificate check, and HTTP as the default.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L249-L260",
+          "version": "repo-lines-v1:sha256:65eaadffd873a598195dcf03fd45f3c5b2d1a15e5689b1c5aece2a4eb5fa2499:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NThjNDI1OWZkMDdlYjVmOGJkOTU2NWJlY2RmNTZlNGRjYzkxMjkzODljNGI0MGNkMzUzNjQzMWEzMDBjYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwMjlkMzkxYzJhOTk2NjE1YzYyNDgwNGMzMmRiMGExOWZkZmZhZGI4ODg4MzM5ZmZlNzAyOTE3YTE5MjM1NGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3bf24eed17e34ffaaad0f3d407b61f6c",
+      "statement": "HTTP probes enforce a per-monitor timeout defaulting to 10 seconds with AbortController, parse custom headers defensively so malformed header JSON logs and falls back to empty rather than failing the check, and include a request body only for methods that support one.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L262-L299",
+          "version": "repo-lines-v1:sha256:dde7dea23359ef0ffe276239c31d49fa95be838604271824347c3bcfad013735:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYjljMDkyODg5OWRjNGIwODA4ZTk1NjE3OWQzYjllNGFlNWFlMWRmMDE3NjYyMTRmYjk4ZjcwNjc0ZGY4NmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZjY1NDljNDczOTU1NDZhODVkNzc5MDY3OTg1NWZhMTk3MzZjNjU0ZWNhOWM4ZTg1YTRiMjQzMGNiMTdmMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg4MmI4NDM1YmYyN2FmMGY1OTcyZmQ1OTZjNDZkYTc5ZjgyMjQzYmZmNDc5MGNhM2QxZjBkMTkxMDFjMjk4OTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f5a31cfe9884b50944c789057ecba59",
+      "statement": "A probe passing its status check is still validated against required and forbidden response keywords, so a service returning a success status with an error page is correctly marked down.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L304-L325",
+          "version": "repo-lines-v1:sha256:e90eb3c5740ec2588b118bf032b2791708c04f25fd442ca66e05710027892b1c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MzA2ZTQ2MzczMjIwMGNjNzM4ZGFhYmIyNmMyNGU1Y2IxNTNlMDVlZjVkOGJlM2RlZjVkYjU5NWJkY2U4OWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNWRlYThlNTJmNDU4YTVmMGY5ZDdkYjY2NGY1ZWI4Y2QzNTVkY2IwYzQwYzhhZjJmZTY4YzBiYmFlYjFjZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjY2U2NGQ2YmIzMTY0Njk0MzBkMmFkNGUwNWVkNGE0MzFlZGQ4YzQwMDBhZWE0ZWVlNDQ2MzJiNzUwNTY1YTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e2795b38a387405a8642fe14e5750eab",
+      "statement": "The Worker sends a webhook only when a monitor's state changes between checks — trigger on up-to-down and resolve on down-to-up — explicitly suppressing repeat notifications while a monitor stays down, in order to prevent alert fatigue.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L142-L177",
+          "version": "repo-lines-v1:sha256:5a00052db5882df0e55dd786fede65a74e969bc2bf508e87cd2080eef202c1fb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZDFlYzQzYjk2Njc2YzM2YjM5MzQxMDZjODY4YzhmYzY1NTNmNGJlMjAzYjhhYWUwMmU4OTZhYWJiNzQ2MWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlOTNiYzU3MDBkOTQxMzgxM2ZjOWU3NTU2MzA1N2MwYWQ3MGM0ZWQ3NzJlNDFkMTgwZTQzMDk1OTMyMDdlNTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2809ef2725044c8b99f6ad7490abab1b",
+      "statement": "A monitor with no recorded history is assumed to have been up, so its first failing check does produce a trigger event.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L155-L160",
+          "version": "repo-lines-v1:sha256:edc4510a6a78ee4a350fadc86d533eaa5d73dae0598cdead694fbf38d61f3be6:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTU2NGQzOWMyMDk2Mjg5MzgzZDgzNThhOTYxZjM3Mzc5ODllMjYyMmYyYjJmZGEzMmZkOTU3NjhmNGQ2ZWFiNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJhMjQzMWNmYWNkMzBhMjdiMjI4NTM4YTI0MWYwOTBjODdkZWU1M2M2NTAwMTYyYmQ3YzE5MGJjMTIxNTNhYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjZmZTBkYjliNGVhZTE5NGQ2YzNiYjE0OTIwYTkwYTlhZmJjNzJkZTE4YjYwYzZlNzdlNTQ5YTgxMDJhOWQwZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2I0YmRjZGJiM2NmMzAyY2JjZjEzMWVmOWFmZThmYTQ2OGIzMTZiZGRiOWQzZGU5NGZiYmQwYzc0OTJhNDgzZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4005c65ce04a42609ca2501ad26c0548",
+      "statement": "Uptime events are emitted in the generic webhook format the Go API already parses, carrying alert name, severity, firing/resolved status, labels identifying the source as uptime-monitor, and the monitor id as the fingerprint — which lets existing alert deduplication and auto-resolution apply without special-casing.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L203-L247",
+          "version": "repo-lines-v1:sha256:073ba33300542a77f9582c5ccd6afb82e49bbbf0c610ff70237104630ec0505b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4ODY5YzMwNzIxMTc3NWZjODU0NjA0NTI4ODBmZjI2MmI2Mzg1NDQzOGM1N2JhNWJiNjg1Mjk5NzRhZGIyNzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwM2ExMzUyZWZkZjY5ZDU2ZjVjMTljMGE0OTQyODA3Yzc0MjlhNTNjMDgwZWQxM2E2YmQ4NGNkYzhkNDM2ODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45b9dd2563d949bb9f6b4e4898ac2eab",
+      "statement": "Besides its cron handler the Worker serves a health endpoint and metrics, monitors and per-monitor stats APIs, caching successful responses in Cloudflare's default cache under ctx.waitUntil and reporting cache outcome through an X-Cache-Status header.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L65-L138",
+          "version": "repo-lines-v1:sha256:be5979beae60676b1e623dd7e87469462970bc44508e6322b35da24752a540c0:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiNDAyMDA2YmFkZjc1Y2JhMTI5NTJkODIwMWJjNjZjM2JjZDgwMzM0ZTcxODMyNzc3NzcyOGIxNDVjYTRmNDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwYzQxM2I3NGYwYmI5MmQ5ZWU5MTJjZjZmNTk2OTMxY2FiYzBiZjQ4YjE1N2UzOGYwNTgyNGQ5NzM0OTg4ZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d138cfbc524b42f38b6c1aa6101d0ac7",
+      "statement": "The Worker chooses its reporting path by priority: an integration webhook URL when configured, otherwise a fallback webhook used only for monitors that are currently down, with the legacy /monitors/report endpoint retained only for backward compatibility.",
+      "evidence": [
+        {
+          "resource": "repo://worker/src/index.js#L48-L63",
+          "version": "repo-lines-v1:sha256:fd2fcd72f4edf2d05b723de1b05e50a1f4286501ee113d9f5d93518fa56a0a02:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxNjY3Y2MyNWY2MWVmMGE4YTY1MDZhMjZhODcxZjRlNDJhYzY4ZDA3OTJkZTI2ZmQ4ZmViZDE5YTVjYTVmNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGNkYjk3MmE3YmZiN2VkMjQ2ZjlmZjY3MjM4NWU1NWY0OTY4ZmMxMTA0M2RjNWI2ODRkNTFkZmEzMWRiY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhYWZhODA5NzVlNmU4MWY4YzU5MDYyODVjMzY1MjI2MzY3MTJmZTMzYTVmMWZkOGZjYTI0MmY1ZTcwNTVhYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAzNjQ3MGNjYzA4MjQzYmM0ZGRlZGM0MTZjODkyOThlN2ViM2E4NzBkZDJkZjNlYjkxN2YxOWFlZmYxYWRkZGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b453431af1e468e9026e89e105ee3fe",
+      "statement": "The legacy report endpoint updates each monitor's last check time, status, latency, error and up flag, then creates an incident on an up-to-down transition and resolves the active one on a down-to-up transition, also creating an incident when a monitor with no prior state reports down.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/report_handler.go#L39-L96",
+          "version": "repo-lines-v1:sha256:13e123c513021fca987f32a6bcc114a41a2e7c8209c6ae963645b615cc9ee229:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1MDQ3NjMyMzExYWU0MGI4M2Q3NzBlZjFiNGRjODJmYzgxZTc1ZjQ4OTQ0MjYyNjVlM2VmY2IzZmNhMzQwOWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4YjMxZjlhZGU4NjhiZGI5ZDUzNTFiY2Y5MGQ0NzBlMTE0MTM1NWMwNjdkNTZiNjg0OTUwYTA1MmUzZjRhN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhMDg1NTE5NzMzMmJiM2YwNzZhNGU0M2ZjNjQzMTNjODdmNDdkNjcxNmJjN2ZhMzIyZDlhNTllODBjOGE0MWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc34ce264e3947698079eb659cfdc48f",
+      "statement": "Incidents created from uptime failures are titled 'Monitor Down' with high urgency, critical severity, source uptime-monitor, and the monitor's UUID stored in the incident's external id field, which is how the resolve path later finds them.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/report_handler.go#L98-L116",
+          "version": "repo-lines-v1:sha256:fa4f90d10753515eae35073ff64d45d8cf6ce2d21f5bd89847035071041caffc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmODRiMTk3ZGEyNzQ0OWY1NGMwMzIyMzZlYTRkNTU2MTYyNjM3NDM4YjM1MGI2NzNhMWQ5ZjM1ZmFmZmNiMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0ZmFiOGYzOGI0NzEyZjQ0YWQ5NmRiNWFlMzhkMDExNjkxZWNhMDA5MTdiZDAxOGVhOTA0YmE4MTNiOTdmNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjNGFmZDkxNTcxM2MxZjc4NmU4ZjNlMWJlOGQ2ZjNmZTI4NDZlMGNjNTYzNTllYmE1YzMzNzVlMTc2MGUzYzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_739ef4e9208443b78526ebec7419bbce",
+      "statement": "The uptime report endpoint does not yet validate the Authorization header against the deployment token, which is recorded as an outstanding TODO in the handler.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/report_handler.go#L45-L50",
+          "version": "repo-lines-v1:sha256:c18466b6d48486dbe3262fb6f9069c2c7d71283959c2182c8306d7a47f902d62:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2UzNGUwNTE5YmEzOWRhMzViZWNmMmJiOGYwMDRhMTY3NjRkNWNkNjViZTBkM2NhOGU1NzUwYmZmMTIxZTg4ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGYxMzkzNTFhNWYwNDA4YjFmOGIwYjgwMWU3ZjZhMmZmNTkyNTVhNDIzODRlZTU0YWNmM2E5NTY3ZmVlZGEwZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWRjZjdjZjJhMDcxNTA2NDE3YWNjMGI5NTFmNTc3N2Y4OTQ3YWZmMGViYmE4ZjE4NmEyY2Q1NTk3YmZjOGNkYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1d7f120e6abf4ecba971455b4d66f266",
+      "statement": "Resolving a monitor incident falls back to a direct SQL query because the incident listing API does not support filtering by external id, with the reasoning left inline as an unresolved working note.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/report_handler.go#L117-L158",
+          "version": "repo-lines-v1:sha256:62d0645e911421eb4da95e9af4524836a81a4aa2761fde474d8b3f07efa4a9f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzMzdiNDBkZDA1ZWNhMWFjYzg3YTEyZWEyYzQyMGY0NTM1NGQ4YWY0ZTc3YTNjMTIyNDQ2NTY4YjUwMTlhYzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c138f53946cb45f89b2e3d07b2532860",
+      "statement": "The deployment endpoint provisions the uptime Worker into the user's own Cloudflare account, so the request supplies their account id and API token rather than using InRes-held credentials.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/deployment_handler.go#L33-L52",
+          "version": "repo-lines-v1:sha256:6a28548e4a1c73405016aa403e3a15980a49024b1528948163aa4ff650918705:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2ZTg2NDk3MTY4Y2M2YzVkNDQzMTAzYTczMmE2NDZkZTA2OWQ2ZDY5YjU4NzBlYjU5NmRmNzY2ODRmYjIwMTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5ZWIzYzIwMGE2Mzk4YmZkMWE0OGUzMzhjZGUyYWIzYzdiMjNkOGRmMGNiNzM0ZTJhMTc5NjdhY2E2MmUzMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmYzYwOGU5NjY5OTk5MjY2NGNmNDlkMmRlYzkwYjFkMjVmMTBjYTVkMThmNzI5MTI3MTQ5MDUxZTkwZDQ3YmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2df8e42c4e24eabad6b0712159a5cd2",
+      "statement": "Deployment input validation is written around common user errors: whitespace and an accidental Bearer prefix are stripped, the account id must be exactly 32 characters with an error warning against passing a Zone ID, and a short token is rejected with a hint that a Global API Key is not an API Token.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/deployment_handler.go#L46-L67",
+          "version": "repo-lines-v1:sha256:3f982563ebc330bee172805a62058350a5ffb99c7ea871d972c9f32e5dc364a5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5NzBjZDc5MWYwODcxZWZlOTU5NTg3MDAxMDcwMDlmNWIyMWE2Y2IyNjBlZjkyMGY0OTBlNjE0NTQ1ZjRmMzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzNzU1NGI4M2VkYTM4MzAxOTJlOGJjZjE0NWFhMDUyMTk5NTAwN2E0ZTU3YTk3MTAyYjFmYTcwMWZkNDVlODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViYmZjNjk2NzQ1ZGNjY2MzNzg4MjMzNTgzNGVkYmM5ZDA3ODZlMzYyNzk2ZmVhZGEyZDRhYzNiNTFlZjg0OTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5af00b6851f45c192f8f304b2212576",
+      "statement": "A Cloudflare authentication failure during deployment is rewritten into an actionable message naming the three required token permissions: Workers Scripts edit, D1 edit and Account Settings read.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/deployment_handler.go#L98-L110",
+          "version": "repo-lines-v1:sha256:e8b22550b5c9e9b0d9237639fe3a729fe890291929d6334218fd51a0ebde1128:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5YTliN2QwZGU4MmQ2NDhlZDQ4ZTY2ZDU3YTQzOGQyNjI2NTVkYWIzN2NmODQxOTM0NDY1MTU5YzNhODQ2ZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2ZmRiMWIzZjFiYzU1YWFiNTMyMmRjNDU4NDE4M2U0MWJmNzU0N2QwMDU2NWRmMzM2NmQ4NjJhODdmY2QxMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxMmRhYTlkNGI3ZmRlZDU3NWMyYmI5ZTczYTk2ODRkY2UxZjNhNGRhMWQ5NTRhOGRjOTY2Y2NiNTBiY2VhMTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b3fd318c7dd0473ba45a00cc2156091c",
+      "statement": "Deployment reuses an existing inres_DB D1 database when one is present rather than creating a new database on every deploy, then ensures its schema before uploading the Worker.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/cloudflare_client.go#L161-L178",
+          "version": "repo-lines-v1:sha256:2b0b5cb4f158cec580e6fc079ad107737ffef04660b661724fb8c4f4e9d845d3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmZDYxYjQxZGFlY2NkYWJjMzIyNTM1MmFjMWQ5ZTA1OTEyMTAzYmE5OTlmM2JiY2JmNDllNzA5OWFiNmExZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0NjRmNmU5NDEzNzI4ZTMxOTU4OWM0Yjc3ZjM1OGNjY2Y3ZjQzOWQ3NjFmOTMwMWU5MDQyMWFiNDc0MDZiN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1YTgzMTI2NWNmMmJjMjBiY2Q2ZWM4MGRiOGZhOWI1ZWY4YjM2NmJhZDIzZmZmYTIwMGRiMGNjMTM5NzIwYzYifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/monitor/deployment_handler.go#L98-L120",
+          "version": "repo-lines-v1:sha256:928ca057e4d0593c227daa4ad663db557ea1df90d0bf4256ea51941ec0467430:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5YTliN2QwZGU4MmQ2NDhlZDQ4ZTY2ZDU3YTQzOGQyNjI2NTVkYWIzN2NmODQxOTM0NDY1MTU5YzNhODQ2ZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0YWNhOGFiM2E4NmFmZjdkMGQ5YzFjNmIyNWQ3MjAzZTI3NmNkNWI3NGQ2Y2UwOWE5NTkwMTcxMDQ0OGY3NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2ZmRiMWIzZjFiYzU1YWFiNTMyMmRjNDU4NDE4M2U0MWJmNzU0N2QwMDU2NWRmMzM2NmQ4NjJhODdmY2QxMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0ZDFhNGU0ZDJjMTAxYWE1NDhmZWY4Mjk1NzRmMWRiNGFiM2Q3MTk1YjhlMzJmZTMzZGE2NjBkNTI0NDY4MzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_82fee63b90fe4c01b6e891ea967a6450",
+      "statement": "A Cloudflare API client wraps the full provisioning surface — D1 database creation and SQL execution, Worker upload and deletion, cron trigger creation, KV writes, worker details, metrics and subdomain lookup — so the deployment handler composes those calls rather than speaking HTTP directly.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/cloudflare_client.go#L257-L330",
+          "version": "repo-lines-v1:sha256:3280fd6a09955186f16cc58458f29bd293c8b4ec62ff882a7c3801debb8c24ca:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwYTA5NzkxMTIzZmZlNWMzYTIyYjAxNWI3YzQ0NTExZThkNDhiOTc0MzU3NTA3NGFkYWY4ZWFiNmI0NTUxMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlNTc0OGFlYTkxYTJmNWYxMTQxNmM5OWJjYTAzMWE5ZjdmM2IyNTk1NmI0OWUzZWUwYzdjNzVhNmEzN2ZjYjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4YWFmNmNhMThmMTE1ZTU5ZDMwMDg3ODJiNzRkN2M5MTEwYmQ5NDVlZDBiMmZkZjExZmJhZTM1YjZjOTI3ZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzNTJmMjVkYjcxZTQzMDQ2M2ExZWJiNmZkOWRlMjVjZjNjYmYyOGRhYzJlMjI3MjE2ZjBmNTgzODQxM2I3MWEifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/monitor/cloudflare_client.go#L338-L460",
+          "version": "repo-lines-v1:sha256:2da5a637c7ddcfbe7206c7be9bacc67a9b67e74b0810efefa542379179eb9d19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhM2Q3MWMxNGQ1YThmZmQyZjZiNzVkZGEyMDc5ZjIyNTAzNmQ5NDkyMzU5NzE2NjIzNzAxNDE2ZmIyZmJiMTA1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmZTFiNDlkYzcyZjYzMjYzZGM0ZjgxZGQyMWRmM2VkYmZlNjVlOTY1ZTdhZjI4YzQzODhhZjI3NDU4ZWU2MGNmIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJkYTU3OThjOGE4OTM4NTg3MDhhZWVkODk3NjZkMTQyOGNkNzA4YmI1MTMxNmVhMzE3MmY0MTA2OTA1ZmM2OTZmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhM2UyN2QwMWY5YWRhMWY1MzIzZTlkYzQ5MmU5N2U3ZjQzZWVkNWRlYTA3OThjNzNmZDg1ZWMyZWMwZmQyZjMzIn0"
+        },
+        {
+          "resource": "repo://server/api/internal/monitor/cloudflare_client.go#L81-L120",
+          "version": "repo-lines-v1:sha256:8b08fe44329f2ad250db3b37d3405360905705af28c4475c90c5766aa24a1da7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzYjFhYjYxZWQ5MzhhMjhiMjYyZDFjNzIxYmYxZTEwMmIzZDk2MWIxMDA0OWE3ZGM2OWE5MWI5YTk2YTdjM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExYTYzMDhjYzVhOWExZThmOTRhYmIzMDRhMWZjMjVmNzkyNmE5NTc1NjNiYWRkMjQ5MTAzMGE0MjJkZTBkODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxMzMxNGFkZDAzNDQ2YjNkYjQ3MDhmMTQ5YWY0ZmFkNjFlOTA3MGY4YTY5NGQwZjVjMDkxYjkyZTA0YjNlNTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a20cba20b7b045f495b851b3dc69bee2",
+      "statement": "A Worker deployment may be bound to an integration, whose webhook URL is looked up and required to be active before the deployment proceeds.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/monitor/deployment_handler.go#L77-L95",
+          "version": "repo-lines-v1:sha256:181fc10b8192c39daa56c033693acca2ca260b032e1bbb1a247e840ec426f29d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmNzVkZTk3Mjc0NGU1ZTZjMjQyNzlhM2VkNGQ1NTAxZDM4N2EzOTYxYjRjNmU2ZTI4MjA0NjVmZGE2ZmQ0Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1YmJmZDM4NzgwYWIwZGUxYjAyZWVjMzRhZDgzNTIxODU2M2Y1ZGFiZmU5YTIwOGI5ZGMyNGNjMzY5MmY0YTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljZWY3ODk5N2M3NGQ1OTQyYWQ1ZWY3NmQ3NzVkNmFjMzg5YzkzOWVlZWEwNjIyMjUzZGZiZmI4Mjg5Y2ZkNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRmMzA3MjQzM2JhMDhjZGY2OGViOGM3MWFmOWY4M2NiY2Y3YjM4ODQ0ZTM5ODY1MGRhZDM0MDFhM2JjZTNmM2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f1fe8c4e4b64ee8ac04958ecda83a04",
+      "statement": "Teams already using UptimeRobot or Checkly can register them as providers instead of deploying a Worker, with a sync operation that dispatches to the matching provider client.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/uptime/provider_handler.go#L276-L321",
+          "version": "repo-lines-v1:sha256:3e0c53160d1c58f65d3c5813557fdeb17a26d659a842262a29dff834d90ee041:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZmM3NWExMjJhZTU2Njc0ZjRhZGU0ZGE3MmJkNzk0YjBiZTcwYzAzZDk1NDhjZDgzZTJiNTExN2JjMTYwNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmOTE5ZWQ3NDhkODg5MDM4NzcxMzEwNTA4ZTY0MDY1NmQwMDc3ZDEwNGY5YWFlY2EwNWE0YTNjY2M2N2Y1OTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxZWI2MzA0N2YyYTU4NWI0N2IzNDg4MzJiMjgyODQ3NTkzZThhMjcyM2E5NGI3ZThlYjA3MzhkMmM1MzQwNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI3YmYwNjYyY2VhZDdhYWIxYzczZGYxMTk4ZGYxNmJhZTEwMTMwYzEwYTQ1M2FlMzM3MDRiZWI0OTFmNjBkYTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aeaad7dd8820463488b8092706bb1a4d",
+      "statement": "Provider data is normalised into InRes's own representation — UptimeRobot integer status and type codes are mapped to names and its combined uptime-ratio string is split into 1-day, 7-day, 30-day and all-time figures, while Checkly status is derived from a check's failure, error and degraded flags.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/uptime/checkly_client.go#L257-L280",
+          "version": "repo-lines-v1:sha256:eb3012e4bb0c4f042035db9cbd16d0b7052eed2a1ab46991df6e785741922f6d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmOTQzYmIzNDI0YmJiODExYmRkNjA0MDZjODIzOWE1YjMzYmNiMTE5ZjM2Nzg4MTcxNzU3ZjlhZGQ4ZWY2N2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxYjBkMzAzNGNkNmNjZDBmM2VkOGYwOWViMmRmMzdmOGRlZGUxYTQzZDFjZThjOThhM2UyOGNjMDJlYmJiOTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2YmMzYjFjZDZiZTFlNTc0MzAwM2Q1NjU0MTI3OGQ1Y2JhZTc4YjhjZGQ3NjAwMjQyZmQ4ZjY2NTJkMTI4ZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2MDU5ZjEzMzY0ZGVjMjlkMWMyZjc4OTA1NmEwNzFmZWVjMzY3ZDA4MzdlZjU2Y2NhMjJjNDJkNzQwNzM3YTgifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/uptime/uptimerobot_client.go#L168-L224",
+          "version": "repo-lines-v1:sha256:1f62988ab4e0af4ad4e43b899dfe9e1b67bdcd4043c8b5739970ee4e344f9877:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmOThlMzQ0ODAyMzZkYmZlMzhlYWZhNzEyNTQ1NTdhMGEzYzdhZDE3ZDJmYWM4YTE0NTEyN2VlYzZlMDdkZGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzN2M0MjkxZTFjNmE1MmQ5ZTQyODU1YjhjNmY4ZTQ0OGIyMzhjZmMxNDUzYjk5YWRhNzAxNDRiZGM5MDc0ZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee0ee1c7968c4edab88444eb685f4e7f",
+      "statement": "Checkly requires two credentials rather than one, so a combined stored credential is split into API key and account id, and those credentials are validated before a sync runs.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/uptime/checkly_client.go#L144-L152",
+          "version": "repo-lines-v1:sha256:91a943d0c136ac8129014260487366ad0bd2743b13d96350fb654006326c89e0:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDQwMDY4ZmQ1OTMzNzc4NGM0ZGY3NzBiOGJkNjBkMzQ4NmQwYTQ1NzdmZjExNjBlOGIyZWU0NTY4ZjY5OWE2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjRjZWFjOWQzMGZmOGIzNjIwYWNhODEzZmNjMzU5OTRjNTFlNzM1Y2M4OTkwOTNiOWM1Yjg0ZmY4NWYzYjI1NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTllNTY4ZDE5ZTJkNTM2OTQ0ODVhN2IxNTZhZmUzOTdlNWZiM2QyNDczN2Y0ODhjNDc4MDVkNGYyZDExYWUxNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDVlZjViOTE4MTRhNWEyNDM4Yjc2NjQ1YTgyZDQzMmIyNmE0Yzk0Mzc3MmZkYWI3YWUwNDRlZWVmZWMxMjMxZiJ9"
+        },
+        {
+          "resource": "repo://server/api/internal/uptime/provider_handler.go#L397-L440",
+          "version": "repo-lines-v1:sha256:e4555e666ec75038b6543779202cd843c64ee83337b477bbcfa2993061d4a6fd:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzMDkyNWI4MTQyNjlhY2E3YjRkOTYxOTY0OTk5OGQxZDdjNmEyYjVkOWI1NWJlOTQ3YjVmMDM4ZWY0OTUxZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ODZkY2VmMTEwN2ZlMTE4ZWU4NmEyNDFiMDIxODJmN2E0ODVjZGZiNDhmNzg4ZmI5MjJhNzgyYTg2YTM3ZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgxMzg5YmM5MWY0ZmQwNzFjNzUzNjZmN2Q2MGFlZmM0MDFhZTdmYTYyNjdlN2EzOTJkNjM5N2RlY2NlZGJkMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmMmVhMDBiOTIyZDBhMTZkZjgxMGJmNTY1MmFiY2ZhOGQ5ZDMxOTMyMTllMDRmMzg1OTIxYTMxNjk0ZmYxOTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4e6321f1f02d44f59c86b4bac8367162",
+      "statement": "Externally synced monitors are scoped to an organization and are merged with self-hosted monitors by a combined listing endpoint, so the dashboard presents one view regardless of where a check actually executes.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/uptime/provider_handler.go#L322-L340",
+          "version": "repo-lines-v1:sha256:9400a72a2a8d7b5e9e23f3e1b9228c41a8e0f0d34176c46a1bc0e4905bc2a821:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NjcxMjc5YTliZThmYTg1YmUwYjg1ZGQwMjMzNTc5NDcwM2JiMWY3NTFlYzE3OGRjNTQ4N2RmYzc3MzhmMTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjMzU4YzlmZWEyNDgyMzY5NDc2NmE1MWY4YjM1MTg0YzVjZGFiZWQyZTdlMWM1OGVmMjc3NWY2ZjFmYzA2ODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5ZDJlZGVmZjg5ZTFiOGNkN2E0ZGQ0NjA4NmQxN2Q1OTNjNzZlMmE2YWMxNDM0ZTJhNzRjYTZkZmEyODdlOTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1M2I3OTdlOGQ0YWMzYmFlMjIxOGExNzFkM2VmOTdiZTM1ZTU0NzkzNGIxYWMyMTVhNjNmMGVhYjE3OTZiNTAifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/uptime/provider_handler.go#L493-L600",
+          "version": "repo-lines-v1:sha256:73e48d87a462912497ef598c5623a6633c69a01fb61072ab71579df997268249:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmNjc2NDc5MTQ5OThhZjBmN2MzNDYxN2JlYTc5MjhlZWI0ZTY1ZmEwMzBiMDc0N2VkN2JiZTU5YmE0Y2Y2MjliIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmZTUxMDdjOTQ0YTMxMTUzOTRiYmE5MTZlMTM2YmRlZDA5Y2ExYzU4ZjVjYzMwMzhhZGUyMWQ1NTg2YmI4MjI4IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJkZTQ3NGU2OTcxMjQ5NWY3ZDVjMjZiYmFiNzJjMDQ1MGI1NzNiYTMzYzIyMmFkOWViNmYwZmY2NjE1ODk5ZWM3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxZGVhOWZiMzUzMGFjOWEyM2RkOGM5M2Q3MmVlMTQzZjg2ZjA1YzY1NmUzMThiZDkyOWM3Njc2MDYxNjdlYTYwIn0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

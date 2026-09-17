@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:029015ac264b6742818eee370aa8f29f81362f4fbcc5d041e4adc64b968a256d",
+  "claims": [
+    {
+      "id": "claim_0459560fae0a47418494d0f673f09e0f",
+      "statement": "Migrations live in supabase/migrations and are ordered lexicographically by a fixed-width zero-padded timestamp filename prefix, which the migration runner relies on by collecting .sql files and sorting their paths as strings.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/inres-cli/cmd/migrate.go#L159-L179",
+          "version": "repo-lines-v1:sha256:46ae5e76751324bd1a36d859be6b93db9da87286ff94c4d12fb81715cb0c6d70:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZDBhZGI2N2Q2ODNlMGQ3OGNlN2YxNzg3NTVlNTM4MmY3ODAyZmNhNTJkN2MxZTcwNTdlZTllMjBiNTcxOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0NTY1NTgyYmZlOGMxMzk3MzU4Yzg4OTk5MjdjNzZiZTc5MmEwYzgzZDdjMDQyOGViZjlkMmY2N2FlM2ZlZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxZGE5ZmMyYjZkYTA2ZDEwMWY4MmVkYmJmM2NmYzcyNzdmOWRlMzEwM2QxYTZjMmM4ZjUwZTE1YWFjZjg3ZDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d789a8724ef47a39a1d24731dba660e",
+      "statement": "The migration sequence begins with a remote schema migration that creates the pgmq schema and installs the PGMQ extension, with all later migrations applied incrementally on top.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20250925091841_remote_schema.sql#L45-L50",
+          "version": "repo-lines-v1:sha256:820deb5cbdcf73b7937378cbe8d2bd8b3ccb95addd40e6260795b1d992817956:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmEzY2Y1MTkyMzU0ZjcxNjE1YWM1MTAzNGIzZTk3YzIwZWRhOTk2NDNmY2FmNWJiZTZkNDFhZDU5YmQxMjE2NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b838cb3f330045bd85d261691dc70203",
+      "statement": "The inres CLI migrate command requires DATABASE_URL, requires SUPABASE_URL unless --direct is passed, extracts the Supabase project reference from the URL by regex, and supports overriding the migrations path or listing migrations without applying them.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/inres-cli/cmd/migrate.go#L181-L195",
+          "version": "repo-lines-v1:sha256:cfe5d763672a0b099b8d7c343710cc85792c3de043ee079aba55deca1f32aea9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMThjMmZjZGY3NTRhZjc3YjQ4YmVlM2QxMGZjYWRhZWQ1ODMzYjRhZTE4ZjNjOWM0YzJhNDI2YWY5MmYwNTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhNDdkNmFlODYwYmU0ODBjODc2NDI5MGE2OGU2Y2NkZTRhYzY0MzhhMjBhYjA3OTNhOTU1ZTRjMWM1MDcwNzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlZmYxMzI5OTllMmMzODI0MGYxODhlMzQ5ZGIwNjQ1OTVhNTU5MjA1MWZiMzkzMTA2MTAyOWZlNzhmMzkzNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzMmVkZTExNjQ1MWZjMTdhOGU0ZWM0MGM0ZjBmZTc5NTJhNGM3ZDU0MTFmZTU0ZmVlNDg3ZDA0Zjk1MTIwYjUifQ"
+        },
+        {
+          "resource": "repo://deploy/inres-cli/cmd/migrate.go#L20-L80",
+          "version": "repo-lines-v1:sha256:198b317f6c1b1dd04aeda32d48a364efb1afea26760747048114e8d4194ca487:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlMWI0OWRjNzJmNjMyNjNkYzRmODFkZDIxZGYzZWRiZmU2NWU5NjVlN2FmMjhjNDM4OGFmMjc0NThlZTYwY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkYmE3YTQwMDVhZWY3NGE5OTQ3ZTc1MTAxZTk4NmE2YzQ3MDg4MGI3MGNjNGM4OTAzZTA3OGU3MzM2YjM3ZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5ZjY5ZTIyMzhiMDA1YWI0OWI4N2Y5Yzc5YTA4YjJhOThlZWEyZDkyN2NkMDdkN2M1OWM3MWExZGM0MWQ0Y2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_41030d18cd68459c9dba879f80508a8c",
+      "statement": "In Kubernetes migrations run as a Helm pre-install and pre-upgrade hook Job with hook-weight -5, so they complete before any application pod starts and before other hooks, and a failure blocks the release rather than allowing pods to start against an unmigrated schema.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/migration-job.yaml#L1-L30",
+          "version": "repo-lines-v1:sha256:e38388e32dc5e6cffc4f80f3a668729bd81b1e7738bcb31d44cf6e765807d7f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlNjNlNjcwNjBjZGQ0NjcxODZhYjY1YWViNDlmOTM2NGM4ZjE5ZTY1YWE2ZDQ0NzM0N2UyNGM0NmUyMjJjODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NzI3YjJjYTVkOTlhYjhkMDZlYTc4Y2YyNGYyYTFkMzJiY2I0NzM3ZDI5MmUyOTFkODYzYzk5ODMwZGY5MzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAyYTNhNmMxNjM5MWNjNWUyMWM5MTYxMDExZTg5MmU1NDU5NWYxYTk4NTJkMTI5M2JmMGE5NTFhODU4MTViZmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bd0b47fbd6004d079a0427dd3f06c0a0",
+      "statement": "The migration Job uses restartPolicy Never with a bounded backoffLimit defaulting to 3 and deletes prior jobs before creation and after success.",
+      "evidence": [
+        {
+          "resource": "repo://deploy/helm/inres/templates/migration-job.yaml#L8-L27",
+          "version": "repo-lines-v1:sha256:f279b9389cb4a7d7525f8c5415e8895c8dfa0658517921f68c56db40d40f9729:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1MTJhOWRlOTE3NGQzNjVkNmY3MDQxNmM5ZWUzODI3NWY1M2E3YjExMDk0YzFlMDliNTA2MDU1ZDMyMDk3ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNTQwMGMyOGU1MTgxY2Q3ZDM3Yzg1ZmEyNzg5NGUwNzMwYjQwZmNmMGViZWI1MmRkYzRhYzFjNjZmNDBhZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkYjc3ZTFmMWU3NDYzYTVmNDNjNTcxMjE2MTZlY2NmNzgxZWE1MjNiNTdjODFmMjMxMTZhNGE0NmYyMmQ1MzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmODJhNDM0YmVjZWY3Zjk4ZDE4NzkzNDY4MGFiMGRkOWRlZDgzYmE2MjZhOWY0MDdjMDNjNjBhNjY3ZTA3ZjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_678a20cd6add46a584887781cdc3e798",
+      "statement": "A separate small binary at server/api/cmd/migrate applies one hardcoded monitors migration file rather than the migration directory, so it is not the general migration mechanism.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/migrate/main.go#L36-L55",
+          "version": "repo-lines-v1:sha256:4c681b39bcf2e0e7392ea0e91b5fcc4597274e1aa14891c6ba50125f094f727f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0MmM5ZWJlOWRjYWI1ZWE3YTc1MGNmM2U5MDRmMTJmMzgyYzBlMWU0NDliZWNlNTI3NjQ4YjZkMDkxNDc2YWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiMmYxMGEzNzhlMDc1ZDg3MjM4YTQ0M2YxYTg5ZGRjNDVhMWUwNGE0MmRkNzZhMjliMGQ5MzI2ZTA3MWU4M2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d2bf879d361e46b3b2962724cafff927",
+      "statement": "PGMQ queues are created declaratively inside migrations with pgmq.create, and the analytics service additionally creates its queue at startup while tolerating an error because PGMQ's create is idempotent.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident_analytics_service.go#L108-L126",
+          "version": "repo-lines-v1:sha256:e515ec02cdc36f53723ea6dd63077afb28ecfd40723933540ef22f4c02b9c834:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkYWRkYTQ4MDdhNTdlNTMwM2EwNjBjZjA5MzM1NzE4YzBkNDI2YTFhZGU3YzAwYzRiNzJiMDBmNDY5MzkwNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4NDA1N2U1NjlmODkzMTUwNDgyNTg3MGY4NWRmNzExZDBmY2Y0MjI3M2Q2YTE5NzMzMDQzYTlkZWMyMTcwMGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20250926160648_queue_initial_data.sql",
+          "version": "repo-file-v1:sha256:a36ab3573b15da58a39222de7473f9a061e21fcfdfb69d9c01645536e3a72e24"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251125144121_create_incident_action_queue.sql",
+          "version": "repo-file-v1:sha256:e1f20d268f2c7685e365b119323b4d3ae5c76c2d187fb033278a615f4c57c90b"
+        }
+      ]
+    },
+    {
+      "id": "claim_11fac81fea6d41dfb6b971c52d091bc3",
+      "statement": "Incident notifications flow out of the Go API onto the incident_notifications queue and are consumed by the Python Slack worker, which posts the interactive Slack message.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L62-L84",
+          "version": "repo-lines-v1:sha256:018f4808ae78b41aa6ce51aaa2910f5f06ce447c3673c7a418f53afec081f66a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjMzZlZDY3NjFmYTM4ODIxMTc4OTA3NTNhMTcxOWM1ZjI3Yzc4NzJiMzZiOGE2YzU4ZGI3YzNjY2I4YWQyNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5ZWMzMGUxYjM2NGU2NGY4MzhkZWJmYjY1ZjdkYTI0MGYzNzFhM2Y3NDhhZTQyYjhhN2ZmNDc1ZDEwYmUxNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmY2YwZTcwMTQyZjEwMzQyY2EyOGQ0YTYwMzk4MDk5MTk2ZTY1YTllNGFjNzA4MjFlZjNhNTM2NzAyZWFkMGQifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L217-L275",
+          "version": "repo-lines-v1:sha256:a4ed99babdf8406f7e521f582567da918160d5311de4be83437bc25f7bae9f5f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMTA1N2RmNjE2MTFjN2I2ZDE0YjEyZTI2NGFkZDM3MTI5MDJkYjJjZTYyNTA0ODE3MDUxMjU4YWFlNWJlZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3NDA2ZjI4ZTY3MThkZWU5ZWJhMGVkNDEzYzE3NjFlYWQ4ODhjZGUxMTdhNjgzODNmMjE0MTM3YWI3MWYwNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2MjVkNzg4MjU0YWFkNjQ0ZjY1ZTJmMWY5NjBmYTU1NWQwMGQwZTNmMDJlNzUwNjQ4ODdmZGVhMDljY2VhNDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1OGUzOTU5ZDNmY2M5ZjU5ZjVhMjU2NzJiYTIwMWEwYzVjMjc5ZTZkNTFjYTdjYWE4YmI2ZGY0OWYyNzVkYzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d4a8bc23e3454ffeb79604ae9be6bcdb",
+      "statement": "Slack interactions are routed back through a separate incident_actions queue produced by the Slack worker and consumed by the Go notification worker, so that externally triggered actions pass through the proper API layer for consistent business logic instead of the Slack worker mutating incidents directly.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L60-L70",
+          "version": "repo-lines-v1:sha256:e2b3e636e673da9254f01acac0fea4890c0abc3803e6ef2398186121921b49c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ZDE2NGE2ZjVkOTc2YmYxOWVmM2ZjZDJiNjU5ZGFmOWNmNDdlYjI0ZjY0MTVkMGQzYjUwNmNlNTg4Zjk0ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiYWExZmNjYTc5Yzc2NDAxYzc3MTcwNzEyNTZmODg0OTBjZDY1ZjA5ZGQwMjc3N2U4MzE3Y2M3ODg1YmQ2ODIifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_repository.py#L268-L278",
+          "version": "repo-lines-v1:sha256:755148eabfd35c22788fea94f11b234a5482cc3e8db91ae422ff7b8804417864:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3NjJmNTYzMDliNTY4M2U1NWI2NzZhMTlhMzQzNjkwY2NhNGM4YjkxMzE5NzI3MTUyMzI0ODhhNDYxZTViM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3NjJmNTYzMDliNTY4M2U1NWI2NzZhMTlhMzQzNjkwY2NhNGM4YjkxMzE5NzI3MTUyMzI0ODhhNDYxZTViM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2ZDlmY2VkZDMyMjk3MzlkMTM2MTI4MjhjNGE4ZjM5OTg2NzM0MjgzNzAzZjYyNzhkM2Y0ZjVjNGJiZjNiMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1YzVkYTViYWNmZWM2ODhjNjdlZDBmMTA1N2JiOTY5ZmRlNjUwODUzNjViYWY1ODA1ZGQ0MzgzNmYyYjNiZTIifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251125144121_create_incident_action_queue.sql#L1-L9",
+          "version": "repo-lines-v1:sha256:5a4f10af7c9e5bb1292a552f52272e1e563c8a33e9fd9190d45a1047b850359c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzlhMTVjZWYxNTIwOWZlMWViYmYxNjJjY2E2ZjU0ZDM0M2ZlNjM3OTIwMjk2ZDYzMWYwYmM2MWUzY2MxMDc5MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTllN2FlYjIxNmZhNmFhNjEyYzRmMTFkNjI3N2Q5YTFkYTBmOWQ0NjYzMjFmNjFmYTlhMDQ1YmVlZTUyNTJiMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2E5ODgxYjgyM2FhZTYyNmI1MmJmZTY4ZjFjZTg1YzUyZTc3NWUxMjc2MGQxMjNiMDNhOTYzZjA5MWI3YWIzMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_de9cd6d954b5462490b62806311c2321",
+      "statement": "Queue consumers read with a 30-second visibility timeout and explicitly delete a message after successful processing, so a crashed consumer's message becomes visible again rather than being lost — which makes handler idempotence a requirement.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L218-L232",
+          "version": "repo-lines-v1:sha256:6112267140434e2d48c116aad1197a7c823dee2ee049ab0f67d7cd1cf8ff8550:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZTU2NGU2NDYyNGMwY2VlMTFmNGY0MTAyNjA0OGMwMzdhNDNkY2ZkMjBmNzdiNDAyMjYxNGE0ZmI3OTRiNDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NmUyNmZkNDQyMDFkYjA2MjFmYTM2NTcyYjE3ZThjNTRkY2VlOTFhYjczMGNhNjFhYWRkZTJlZDExMjhlMzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwYWI5ODQwOGRmY2UwYWM3MzY0NGJiODI2MjZjZDZkMDA2MWUzMDg4OGQwYWRhYWY5Yzk3OWI4ZDNkZTBhM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlNWQxYTRiZTQ5NTViMmEyZmY1OWFjYTQxZDg3ZDM2ODlmN2UxZTk0NDdkMzdkODllNWRmNmY3YzA1NGYwMzMifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L72-L80",
+          "version": "repo-lines-v1:sha256:1c1e1210f5d2f1979ba4fd9266c6109916a8481b41a5683da553d498c8da0d11:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWUzNWQxNjVmZThlODdhMTMzZDVhMGJiNzdjNzY2ZmUzZDM4NTRlYTQwYTY1Y2Q2YWRjN2E0ZTRhMjdhZTEyNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJiZDhmOTcxYjY2ZmViNTQzNjg1NDM3NDI3NWM1MWMxMzljMGY1MGQzMmRiODdhMjgxNGY4MzNhY2MwN2NlYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGQzMzUxOGUwNmU1MmZhODgwN2UzODk0NTFmZDFiY2ZhYzJiNjRiZWIxNDU5ODQxMDIwMDRmMTNmZmRkODU4NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_642f439a5c97482e8cecb0d288f8f069",
+      "statement": "Messages can be enqueued with an optional delay through a three-argument pgmq.send, which is the mechanism for scheduling future work such as escalation steps.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L81-L106",
+          "version": "repo-lines-v1:sha256:28ab521bec1d0a059cb00eab61785327b62edebc7f7f222028017d236dc0bc19:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5N2M2ZmJkYWY3ZWEyM2UwYmQzZDI0OGMxNjJiODQ3N2QyOGI4NWYxMzcyYzMzYThhYmIxYzAwZWU1ZjgxMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_533c09f1c63c441e89f7c66312955b1f",
+      "statement": "The Go notification worker currently processes only the incident_actions queue, with its incident_notifications and general_notifications processing calls commented out because Slack delivery was delegated to the Python consumer.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L60-L70",
+          "version": "repo-lines-v1:sha256:e2b3e636e673da9254f01acac0fea4890c0abc3803e6ef2398186121921b49c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ZDE2NGE2ZjVkOTc2YmYxOWVmM2ZjZDJiNjU5ZGFmOWNmNDdlYjI0ZjY0MTVkMGQzYjUwNmNlNTg4Zjk0ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiYWExZmNjYTc5Yzc2NDAxYzc3MTcwNzEyNTZmODg0OTBjZDY1ZjA5ZGQwMjc3N2U4MzE3Y2M3ODg1YmQ2ODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_24959e1a4f094302a009c8f35e154b42",
+      "statement": "The incident_analysis_queue crosses the language boundary by name alone: the Go analytics service enqueues onto it and the Python agent's analytics module consumes it, sharing only the queue name string.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/services/analytics.py#L25-L35",
+          "version": "repo-lines-v1:sha256:ab811a8f2e0ac7dfc35931af1aca7ac065e1ec733e1a8a4a388db8ea38852ed6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZDk1Y2Y0ZDI3NGRkMTgxNjllMzRmMzZmYWEwMDEwNTE4OTdmZmQ4YmNlZGQ1ODk5NDk1MWM2MDQyYmI0ZGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlN2JjZDM2ZWY1M2I0NDUyM2U2NWU5OGQxOTQ0OTkzZTBmZjE3NDZmNTUzNmMxYTUxMTc0NmYzZTAxZTc1NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxYzNiMGI2ODNiYjM5MGNhMzNiODg1ZjE5ZTVlNzZiYWUzYjEwNTYxNmFiN2VkOWQ0YzNiMmZkYWM4YzBiODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5YzM3MDkzMzEzMDhlY2NiZmM5ZjNlN2Y5YzJmNGRkZGViZGYxZDQzYjJmNDQ1ZTM2NmRkNGM3OTJhMDY1MjkifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident_analytics_service.go#L45-L60",
+          "version": "repo-lines-v1:sha256:2bd03f43200866cd4ebd08cd9c3d225dc7157433a78d22b2d40ace79677c2598:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3NWZhZjMwMjdiNmFkZDJmMDI0ZGI4ODE2NDUzNGQ3MjQ4ZjZkN2RmODdkM2VkZDE0YzI4ODMwMjQ5YjQ2OTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1OTc1NzQ3ODk0NGJjZTRlZGNkZmM2YWEzMGRhOWQxZjY5NGE2OTI4ZTU3ZGQ4ZjJjMDBkNWQ2MGQ5YjYzMDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjYxY2UzNzI4MzI1MTUwY2YyMTQ0MjMzNGQ3ZGUyMTRmZjY0NTI5ZTFhMzg5NTRjYmVjZGI0ZmQ4Y2Y3ZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjZTZhZGNhNDlmYzkyODI4M2JjMDkzZDVjOTJjMjUzNjJlNDY3MGM3YmMxZjdmY2Q4M2NmMzg4MGI2NTg2YjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_963b995a783b432fb4dbe8dafa0b4789",
+      "statement": "Row-level security for organization isolation is built on three SECURITY DEFINER STABLE helper functions that resolve the current user's organizations, projects and org access from the memberships table.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251202172650_add_rls_policies_for_org_isolation.sql#L5-L59",
+          "version": "repo-lines-v1:sha256:13a6ad92f86f7a955598fe59519946cb3ffd77e5bf0e8d2de97ae6136c5d0f4e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2YzMwMDNkNmVlYWQwZjQ5YWQ3YjdjZmVkNjdhNjk5NmE0OTg1MTQ4MjA3NTE3NWE5NDM5MzEyNmQ2MGU0ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjN2UzY2FjMjZjNjZjOWRlMTExNTA1YTIwNDA4YTY0ODNhMDYzMDkxOWM3ZGZmYzhjNGM4ZWIxOTU4ZDc3NzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4YWZlZGZjNTE3ZDc0Njc4ZDgxMjkzM2YyMTEyMTNiMjNkZmFlMzE2NzAxZDMyZTFjZmI5YjUzODdjMjNkODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjNTJlZjkyMTUxMzRiNTc1NWVmNTc4MzM4NDkyZGU1MmZmODZjM2FiMTI3ODE3MjJlZmY3NGVkZmQ4ZDkyYjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_18ab767a26eb4a37a00d4559adeedb83",
+      "statement": "The RLS helper functions read the same memberships table that the Go authorizer queries, so the database-level and application-level isolation layers cannot disagree about who belongs to which organization.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple.go#L49-L64",
+          "version": "repo-lines-v1:sha256:7a2410abda5b7eb10b4bd1c156f39be154a6555053332d4d1a4b1d622822593f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwOWNiZDMxMDQ1YThhOWUzMDJhYTBlYmVkOTViZDYzM2MyZTljYmY5MTUwMGMxMjBiZjIxNjRmODZiMWQ3NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3YjY0MjdjYTkwZjFjYzg3Y2E1YjAyOGM0NDE4OTUzNmUxZWE0OWU1MGMzNzI5MzUwMGEwMTg5MGE0MDk0YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFkMDkzOTBlMGRmZmM3ZjdkY2YyZjc1YTBkYmU5MzczMjdmYjQ0OWNjMTUxZTg4Y2Q5YTdhYmYzOTVlMDQwODEifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251202172650_add_rls_policies_for_org_isolation.sql#L10-L38",
+          "version": "repo-lines-v1:sha256:416c722ddaeaa8a2c1e5d17aafb5b2b7e1dbf04d465b282c330bba4dc55d9ab6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNzVmZWE4ZmMwZDIxMTg5NWZmOGIyNjJjNTA3ZTJkYTg5ODA5NTA2ODc5MGI1ZjE5NTZhNGZkYmE4OWU3MTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4YTA0MDE4MTU3ODgwZDIzNTU2NzU4NWQwYzA2MjgwMGU2OTZlMGEzYjhkZGQ3YjgxMjkwNGFhZTIxODk3MjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4ZWM1ZGNiMmUzOTYzYTUwOTBkYmZjNzkzNmFjMzRjNGI0NTExODlkMDQ0YmRlZDhhZWZkYmMxZDhiYTQ5ZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5103a96f02d848e48571aef05c976b9b",
+      "statement": "RLS policies restrict each protected table to the caller's organizations, for example allowing selection of an organization row only when its id is among those returned by the user's membership helper.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251202172650_add_rls_policies_for_org_isolation.sql#L60-L70",
+          "version": "repo-lines-v1:sha256:e7031e41ba94116657480122c3d008ed7ec4c7418c808bf797644322bbda83f6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczZjQyNjM4NGYyOTFlZDE3YmYxODA0N2NmNjM4MzA5NzEwNWZhMmY4YTI2M2I5ZDIyMjQ1N2E2MGU1YzllYWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1Mzg4ODgwODVlZDczNDA3MDE3OGE2ZDlmNWY0ZDk4ZmJkY2E0YWQ3NTk1ZWI4YjNjYTE2MjQxMDQ5OTQ2YmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2MTBiYzA4ZDhkYzllZDIyYmIwM2IyZmVkZTY5NGM0MTUzNmIzNTYzZWQ1YzZiYmY5NGM2N2U2MzU3YTExNzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_120a9394290a4f9b93a64f3caf75ca93",
+      "statement": "The RLS policy migration declares an explicit ordering dependency on the earlier tenant isolation migration that adds the columns it references, which the timestamp naming convention guarantees.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251202172650_add_rls_policies_for_org_isolation.sql#L1-L4",
+          "version": "repo-lines-v1:sha256:61cb016a416dec6a4c612efb630e1b03b3121bb03677133c9c32627d95185f5f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmMzZmJkM2YyNWY4MjMxMWU3NTk5NjM1MGZiMDQ2ZmQzOGIzN2VmMDJhNzYxZmE5MzIwOTVlODUzZmZiYzQ3YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDgzZjEyOGE5MmU4M2Y3ZTlhODc5ZWJiNGQ3MWIwNGVlNGM2YmU2MTQyYWRjMDE2ODc4Njc1MWUzOWI0ZGY0YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_afb46f8df9014287a762278339969171",
+      "statement": "The Go data layer uses no ORM: db.go provides only thin Postgres and Redis constructors while model definitions live in separate model files and services issue parameterised SQL directly.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/simple.go#L49-L64",
+          "version": "repo-lines-v1:sha256:7a2410abda5b7eb10b4bd1c156f39be154a6555053332d4d1a4b1d622822593f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwOWNiZDMxMDQ1YThhOWUzMDJhYTBlYmVkOTViZDYzM2MyZTljYmY5MTUwMGMxMjBiZjIxNjRmODZiMWQ3NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3YjY0MjdjYTkwZjFjYzg3Y2E1YjAyOGM0NDE4OTUzNmUxZWE0OWU1MGMzNzI5MzUwMGEwMTg5MGE0MDk0YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFkMDkzOTBlMGRmZmM3ZjdkY2YyZjc1YTBkYmU5MzczMjdmYjQ0OWNjMTUxZTg4Y2Q5YTdhYmYzOTVlMDQwODEifQ"
+        },
+        {
+          "resource": "repo://server/api/db/db.go",
+          "version": "repo-file-v1:sha256:996afceafdb6a5be45f658fb4daeee94fbc8719a42c4b46be2f7fb54eb9a5aad"
+        }
+      ]
+    },
+    {
+      "id": "claim_d8101cb424b44b19b0d1d2333ff7771d",
+      "statement": "A full-text search migration on incidents is what enables the agent's incident search tool, and a realtime notifications migration enables the Supabase publication the frontend subscribes to.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/tools/incidents.py#L733-L757",
+          "version": "repo-lines-v1:sha256:c2e70f857211270dcd87a712468940433b48351ac0dcad8b3bb925147570f5b9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxZjFmYTJkZTAzNDA1Yjg5ZjU0NjI1ZjlhOGQ2MTZkNmVlMzQwZDRkYjY0ODVlYzBjOTQ2MmQxNzllNjgyY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOGNmNmU2MjBjMDg2ZDAzMTIyYzIxNThkMTY2ODZkMmIzYzBkZGE3YjY1ZDdkMjc4YjVkNWFlOGE2MDMxMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkYzJmMzU3YzE1MTAzNzZhMzhkZTY4NzEzNzBmMmIxMWZmZTEzNThmYWQwMDlmMmMwNTYyOGE5MzdiZjRlZjgifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251127150000_add_fulltext_search_to_incidents.sql",
+          "version": "repo-file-v1:sha256:48c6f023612cdf63a959e0eedc1781ebd91702f6f88c68608a0841c0b5ee22e3"
+        },
+        {
+          "resource": "repo://supabase/migrations/20260111000000_enable_realtime_notifications.sql",
+          "version": "repo-file-v1:sha256:394f422d743fc34491403d80a47189edcfd55598052d5eb4ea76060dbd4091d2"
+        }
+      ]
+    },
+    {
+      "id": "claim_87420d65911540c3a5e151a6d77b5138",
+      "statement": "The migration history records the system's growth in distinct phases — scheduling indexes and the effective shifts view, agent extensibility tables, monitoring features, mobile and zero-trust identity, multi-tenancy with RLS, and conversation persistence.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql",
+          "version": "repo-file-v1:sha256:fe4147178170064b9fc9fa52617fbea3884192ca0fbb6181903bc4c42c8197e2"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251202000000_add_org_project_memberships.sql",
+          "version": "repo-file-v1:sha256:514c67d2df737779aeaa6f9c20e8159b2ea4acab7a45ab5a5953206658693cc3"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251220000000_create_claude_conversations_table.sql",
+          "version": "repo-file-v1:sha256:7ac33db390835de4d888d843d81dee368933c11401b072eb2e90d3dc5ca46e24"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251223160000_create_instance_identity_table.sql",
+          "version": "repo-file-v1:sha256:339433324036787ad029c65a47400c979258607082e603f0ac9acaeadaeece0c"
+        }
+      ]
+    },
+    {
+      "id": "claim_bd9c7ba162984f4cbecac8e62c73eeae",
+      "statement": "The slack_feedback queue closes the Slack interaction loop in the other direction: the Go notification worker enqueues onto it and the Python Slack worker drains it to update a message that has already been posted, so the button a user pressed reflects the applied outcome.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/notification.go#L393-L408",
+          "version": "repo-lines-v1:sha256:b4a7011998ebd816faf58c93483434c754ca7a06d944536476383eaf75721682:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2ZjllY2EyZmM1M2Q5NmI4M2UzZTEwM2M3YWJlMzY1NTM3OTRiOGNjMTViMDc4ODIxNTc3M2I4YWQyMjUwZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L217-L228",
+          "version": "repo-lines-v1:sha256:e981b1765d82d465d32eb0e27f02ba7ce73d36c6408ba467537087e8d6957f06:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkMTA1N2RmNjE2MTFjN2I2ZDE0YjEyZTI2NGFkZDM3MTI5MDJkYjJjZTYyNTA0ODE3MDUxMjU4YWFlNWJlZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2M2UzNTk2YzY3YmRhNDQ0ZDRhZDY0YjE0NTE4YjFjY2JjYTk4YjI3OGI5NWZkOGJmNjVkMGVmZDBjMjM2MDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2MjVkNzg4MjU0YWFkNjQ0ZjY1ZTJmMWY5NjBmYTU1NWQwMGQwZTNmMDJlNzUwNjQ4ODdmZGVhMDljY2VhNDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3Yjc2YWZhYTBlZTczZjQzYmU1NzRlMTBhYTYyMzE3Mjc4ZTI3MGZmYmVhZjA4NDYzYjNjZGRlZTQxNzgzM2QifQ"
+        },
+        {
+          "resource": "repo://server/slack-worker/slack_worker.py#L276-L288",
+          "version": "repo-lines-v1:sha256:099a35053fa7d3a7b33a93cb459a95c15a0fbf20f8c8d3ef1ae84b340576a098:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjMmQyZjkyMTE5NzQ3ODNiNjFiMTYzNThjZDNlNmQ2ZTY2YjFjZmNhYTYwOWRmZGE3Mzc5YmU1MTQ5Zjg5ZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4NDUyNGI0YmNiZDZiZTY1ODQ3MGVjMmI0YWU5NjhlZGQ3OTIxOGQ2NDUyMDg2NzljYmM5NDI2YmI4OGU4MDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4N2IxMTdlOTM3NDE3OWY1MTQ1Y2M4YTRjMmNjMmE3NTczYTc3NzY2YTU4Y2I2NzhkZWZjZDRjZDgwMGVlMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNDM3ZWRlYWU2MmEwZDQyMmIxZmRkOTdiYjVjNjNkYWJiMjYxZWRjZTE3OTk4ZGU5ZTU5Yjc1ZTUyMmY0OGMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T11:09:25.960Z"
+  }
+}

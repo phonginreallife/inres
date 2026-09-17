@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d5d4ec5311e6cfbdd7176de839c5f490c01423af37be1699f29ab1b82b0d7fa4",
+  "claims": [
+    {
+      "id": "claim_32bc688425e0480da3e44e9f91ece1a8",
+      "statement": "External alerts arrive on a single public webhook route where the integration id in the URL path is the only credential, so that identifier must be treated as a secret.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L71-L90",
+          "version": "repo-lines-v1:sha256:ca143e7974463cf02b9fd0958bb033c20ae296896078ca7580032ff06561119f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MTc3ZGI4ZjVhYTlmOGNjMzU0ZDRjMDUzNTNiMDIyMjcxNmRlZDljYmRiYjNiMzBjNWExNjA4ODQ5YTJmY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1ZjlkNGQwZDEzMTMzODhlMWQ2ZmZjYWVmOTcxMjVmOGQyMjE5YzZlZmJmZGRiMWM1NTAxMDFmZjZhZGVmNGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNhYzFlM2E1YzhjN2Y0MTJhNmY2MDhmZDgyYjU5OTc4MTQ4MzJmMWY3OTA3M2UyYWYyYTkzOGU2MWViNzdhZGUifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L155-L161",
+          "version": "repo-lines-v1:sha256:28fee115be26462bef078ab21632cba571b93ae81c01844b63d4fd476bc89cfe:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmJhODJkNGNjNTE3ZGI1ZmUxMmRhYjE1ZjY5MDIwMThiMmNjYzQzMTMyMDljYjVlNmY0MmIzYWE4YjdjMGY1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTU5ZmIzZGQ3NTlkMzUwODJkMzM4YWUzZmQxY2M0MmEzZjVhZjEzN2I4N2MxNjA3YjY1NTc5OWViNTQxZGJiNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWE5ZGFiMWMzMThiOWVjMDZhODQ1NTMwNTMwZjcxYmUzZTlhNWM2NzM3NmU2YWRkNDFjOTg3MzZhOGE3MmMzYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c9c227e7782845c8843f9fc266123138",
+      "statement": "A webhook is rejected unless the integration exists, is active, and its stored type matches the type segment in the URL, which prevents one provider's payload from being posted to another provider's integration and silently misparsed.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L71-L97",
+          "version": "repo-lines-v1:sha256:3b7fe5a124a66ab49832c58a7e22ec6ff47f3a2e90a8e05a42bd44768b0c869a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MTc3ZGI4ZjVhYTlmOGNjMzU0ZDRjMDUzNTNiMDIyMjcxNmRlZDljYmRiYjNiMzBjNWExNjA4ODQ5YTJmY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1ZjlkNGQwZDEzMTMzODhlMWQ2ZmZjYWVmOTcxMjVmOGQyMjE5YzZlZmJmZGRiMWM1NTAxMDFmZjZhZGVmNGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhMzdlOGE2MjE0NWM4NGFmNjc2ODkxNDU0MjMwNjkwZDFiZmNkN2Q1MmFmNDE5YTEyMzg5NGE0NTU3ZDNiM2YifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d6edcaeb2964ce0a15b7e1baf751112",
+      "statement": "Updating the integration heartbeat is best-effort during webhook processing: a failure is logged and the alert is still processed, so health bookkeeping cannot cause an alert to be dropped.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L105-L111",
+          "version": "repo-lines-v1:sha256:5f4206a9c3e4f50608b3f32513ec271f6a6e70f9a7fca58cadd51c16f2f207d9:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDM4YWMxZjdkYjAyMTI3MzQ1YmZmMWJlMGNlYzkzZmM4NjllNDA4Yjg1OTdmMDY0YzZkMTViZDFmYTY2MzMzNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTVkYmNhOWM4ZjkzYjdlMDk1YWEzZjhjMGM2NTFlYTkyZjRkZjU1NDdhMjExNGU4MTc2YWZiYWVlMjkxYzY1MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_adaa1ee7410b46baa816b89c253e89d6",
+      "statement": "Seven provider types — prometheus, datadog, grafana, pagerduty, coralogix, generic webhook and aws — are dispatched to dedicated processors, with any unrecognised type falling through to the generic processor.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L112-L131",
+          "version": "repo-lines-v1:sha256:cb4f73a61957f19b88d0062e803c6e582c68f131001f940cc4349869475f537b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhN2M4MzE2MWM3ODhlYzQ5NTU3ZjQ5ZjgzYmQ1Njg5NjdlNjEyODg2NTZlZTliMGE3NmU0MjkwMjliNjM3ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhNjAxNmEyZGRjMjRkM2QwNDcyMGIzOTc0N2M1YTcxYThhOTM1ZTJlMzRhMDc1YjY2ZDVlZGM2OWZhNjhhZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1OGMyZDM0NmE0NTcxOGQ4NmNiMjJiMWQ1ODYzMzhmY2U3YmNiMGMzNjRkYzA4NWNhODAxZTMxMTVhOGE5MmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b18d570f48524cfcb00d42aec4aaee15",
+      "statement": "Every provider processor converts its payload into a common ProcessedAlert shape carrying alert name, description, summary, severity, priority, status, labels and fingerprint, so all downstream routing operates on one representation regardless of source.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L112-L131",
+          "version": "repo-lines-v1:sha256:cb4f73a61957f19b88d0062e803c6e582c68f131001f940cc4349869475f537b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhN2M4MzE2MWM3ODhlYzQ5NTU3ZjQ5ZjgzYmQ1Njg5NjdlNjEyODg2NTZlZTliMGE3NmU0MjkwMjliNjM3ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhNjAxNmEyZGRjMjRkM2QwNDcyMGIzOTc0N2M1YTcxYThhOTM1ZTJlMzRhMDc1YjY2ZDVlZGM2OWZhNjhhZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1OGMyZDM0NmE0NTcxOGQ4NmNiMjJiMWQ1ODYzMzhmY2U3YmNiMGMzNjRkYzA4NWNhODAxZTMxMTVhOGE5MmIifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L166-L201",
+          "version": "repo-lines-v1:sha256:bc20fbe10cebd568ec8acaa4ea65b80139d863b4b2883d3136f91bb058399f81:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxODBjN2I4MzU4ZTAwYmRiMGM4NDQ4MzVjY2FjYmEwOGMwNTk3OGJiMTlkMDNkZDE4MjkwNjRmNjRlNTk5NGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3N2M2ZjdhNGMzNDQyNzk5NjI0MDI0NTU3MmNmNDk5YTcyNjdkOTk4OGZkMmNkOGYwNTkzZGVhOTA2OTQ2ODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiNjExOGJmYzU2MzgzZmRlYzI4OWRkZGYxZTE4NGNjNTFiZTZiNGFkYmYyMzY5M2RkNGE0ZWQ0ZWE2MjkyZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFlZTdhOWJjNmNkNWFlMDJiNGE3ODRhYjY1NmZmZjAwNzc3MWNkN2E3NTc0NTkyM2M3ZTg2N2MzNjVhYTI4MjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3e04d34cc69b40988f007ff85f5c130e",
+      "statement": "Provider statuses are normalized to the two values firing and resolved, and every status mapper defaults an unrecognised value to firing rather than resolved.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1236-L1246",
+          "version": "repo-lines-v1:sha256:9f9d2d19004e2fd19371200d484b700c226aaa7e7b3c8bf2df21e04b5d35ce8a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MWVmMWQ3ZWNhNWI5NWM4ZGRmMjY5MWI1MjI4NDdmZGE3YWM2ZWIzNDZiNWJlY2ZhNzkyNjEyNjc0OWFjYjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczOWFiOWVkNzIzZjUzYjNiZTZiNTI1ODhlZTYwNGU1N2E1NjhiYmY2ZTU4ZTBiM2ZkZGNiZmNlYmY0ZTkzZTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFiMWU3MDlmYTc5ZTg5ZWMyYzk4MGI2YzQ3MjcwNDQwYjQ2YWI3YmU0YzgyNDM1Y2RiNDZmN2RmNWRlYmIxNTEifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1259-L1268",
+          "version": "repo-lines-v1:sha256:07981b32704e8fe3fbdcf5ec25241e4fb7640af2b85fdcb4b911f36a8185d8f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyMjYzMWM5OGViMjYzN2Q2OGQ2Yjk2NTM1OTM0NDU3ODE1N2U3NWVkOWYzNWU0OTdlY2IwNDY0YjI2MGVlZTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0MGM1YzE2ZjdlOGUyNjM4NGRhZGMzOTE0NTEyN2U1OTA0NzQyMGI0OTE0YjdkODQwY2M2MTFmOTI5OGFkZDgifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1280-L1289",
+          "version": "repo-lines-v1:sha256:455cc11dc5d35bacf85824ea29c1c9db104b666c01164e9bbf318190cb44f623:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmMjI4MjdkZjNhYjkxOGYyYTczMWFlMjRiMzU1Y2QxZjdhNTBiZjkyMzQ5MWM4ZjY5MDkxY2U1ZDkzNDI0NTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MWE1ZTc0NTlmZTBmZGYzZWE4YWVlY2RlZjNkODNhNGVjYzVhYWUyY2Q4OWJkN2M2MjEyMWRhMzNkOTllZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2ZTFjNjllNDM3MGJkM2U4OTlkZGE3ZmI0NDg4YzcyMDRjYzNiYmJjMDhmNmU4MjY3YzFkOTY2MDMxY2NiZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxYzA5ZGEzMDhkMmM2NTNjOTM3MmU5ZDU3MWM0ZTY3YzBlMDM0MjNjNTA1Njc1YzJlZDllYzgyYjc2Nzc3ZTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a946f12961824a358ab7c55615394d95",
+      "statement": "Provider severities are normalized to a shared critical/high/warning/low/info scale, with Grafana alerting states, AWS alarm states and Datadog P1-P5 priorities each mapped onto it and unrecognised values defaulting to warning.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1197-L1214",
+          "version": "repo-lines-v1:sha256:7d5349c64533b2c6fa5b9402d505ff4c3439d345b48d034466baa96ce38f765d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZjQxYTQ2NGI5YTgxYTg3NTJiZDg4OTQzNzIxYjNiMmQ0NTE3M2E4ZjNmMWEyZWY5Yjk0ZDMxN2IyZmY5NzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhZTg2MTExM2FmNjUyODY5MjVjOWM0MzQ0YWU2MmE4ZTE3MzBhNWE4NzgyZWYyYWMyZjZhMWRlMmE2YjkxMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM4MDk3MDJlZGQ5Zjg2MjgwM2M2Mzg1MTg2YjE1NDY1YmM0N2I2YjdlNTc5YzA2YTkxMWEwYTM2ZmExYWQzY2EifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1247-L1258",
+          "version": "repo-lines-v1:sha256:1cf29e820454be9d33c7df4000163aa29c13479bcfbc5fc112b559dfaaf36f16:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3MjQ4MjNhZGM5NjA2OWQzMWZmZjUzZjVhNDQ5YjQyMWEzM2RhMGY1YzY0ZDFjYThmNzhjMjBhMWUyMDExY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0MTJkMzk5ZmEzOTJjMDA0MzcyYWY1ZGY0NGQ0OTc2ZDFkYTlhNjA0YjA2NzkzZjE4YjYxNDNlMWQzNWNhNGMifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1269-L1279",
+          "version": "repo-lines-v1:sha256:1fbaee89d37b942f85439a7fa700b41e8cf73a290aef11b67872dc76d7efe703:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZDczMjI5NWFiNDM5ZGFhMDk1YjkxODNjYzc0ZTZiNGY1ZDZiOGRkZDZjMzU0MDMwYTMxMTJlNzJiMzJiMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxYzA5ZGEzMDhkMmM2NTNjOTM3MmU5ZDU3MWM0ZTY3YzBlMDM0MjNjNTA1Njc1YzJlZDllYzgyYjc2Nzc3ZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMyMjYzMWM5OGViMjYzN2Q2OGQ2Yjk2NTM1OTM0NDU3ODE1N2U3NWVkOWYzNWU0OTdlY2IwNDY0YjI2MGVlZTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_78890b59789243aa99d70e50d2833b4c",
+      "statement": "An inverse mapping converts internal severity back into PagerDuty/Datadog style P1-P5 priority, defaulting to P3, so the system can both accept and emit either vocabulary.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1216-L1234",
+          "version": "repo-lines-v1:sha256:6e265951c9007c19e89ebad7d34bf6ac878e8e2dbf91f010406ed0d2ac6abd97:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4YTRiODM5ZDBmOGM5OTIxMGI5ZWRiMDE3YTVmN2JjMzNhMWM0MzdmNDczMDFkNzQwZmJiNWEyZmQ2ZGIxOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ5OGFhZjM1NDk2YjAwYjc1Yjc2OTlkZDgwMDRmNzIwZWRhNGQzNDVmNTc4Mjg4MWJlMGEzMmQ2OGM5NTNjNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_68a4c64513fd4b4889848b38910cd9db",
+      "statement": "Datadog timestamps require dedicated parsing because they arrive as Unix milliseconds encoded in a string rather than as a numeric timestamp.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1178-L1196",
+          "version": "repo-lines-v1:sha256:033284716a19359fd9790601f4c193b5f13cc99eb3030026e762fbc63d5f2927:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MjY4M2I3OTY0OGUxZGM1ZjE4MjQwYzM4NzViYzYwYzM2ZDViZTI1Njc2YTdkMWI4Y2I4OWNjMDVjZTdiYjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjOWU4ZGNhZGU3ZWQ0NjI2MzUxODE2YmQ1OTI4NzQzNTVkNDQyNjhmZjRhMDY1YzE5YzM2NTM0Yjc1YzNhNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4ZWZmZGE1NDc1N2YxNDYxOTM2YmExMzc1ZjFjMGZiNDg0NjhkYzc5MjkxNDQ1NWRhOWY4NmJiMmRlNjI2MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiNmQzNmViYTQ4ZDVkNzI1ODczY2I4M2NmZDRlNjVmNzJlZTBhYTQxNzVlMjZiOWI0YWYwMzgzNTE0YWFjZDYifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook_types.go#L36-L50",
+          "version": "repo-lines-v1:sha256:e4f0218d033ff1d714878d46aaf0ed878b34b1e7285a562e9b9c09743befabdd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxN2U3YmMyY2IxMzNiODNiN2Q0YzQxYmUyZDhkNzdkODM3ZWMyMjM4ZGM0NTBiMjg5MDllZTRlNGI1MWIxODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkZjBiMjhiZjYzMzg1ZjlmZjk4NjI5MGFlNTg2NmZjODZjNDQ3MGM5MjA4YThhN2M4ZDkzYjY2MGFlNmU3ZTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjZDIzMDEyZTQzZjJmOGIyMTllMTcyOWQyNmU2NzU4OGExNDc3YmNmYThiZTk2MzNlYzYwOGU4ODFiNDc5MzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3OTdmZmE0ZGU0ODNjYjFjNThiNjE3ZGE4MDdiMmM1MTI1NmFkMzk5N2I2YWIwZTYyNGU0ZDQyYzMyNTBkNWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2e63e51fc334140b277ede59df95d63",
+      "statement": "Alerts are routed by normalized status — firing creates an incident, resolved resolves one, and an unknown status is logged and treated as firing.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L676-L689",
+          "version": "repo-lines-v1:sha256:69fcc63abfd15b14c8447471f7c4871f5a485ec3ab71d422fac4b0ff4a995c6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0NDNkN2UxODlkOWI2Yzk1ODA2NDRlYzQyNzBmZmY3YmUzZjU3YjI4YzQ0MTgwMjlmZTFiMmM5ZDM2OTk3MmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjODEyNjIyMjUwOGQ2MWU4MzdjN2VmMjU3NDg1YmExMGQzZmY1NDAwOThiMGE3YmEwMjc4ODJlMDJhYjVmNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3ZTFiZTAwNmJkYmZlMjQ1OTRjMjA4NjQ0MWUzZTEzNjI1MTJjYmEzNTAyYzRmN2FhNzA0NzliNTc1YzcxZmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_49f1de58e0e24b45acc6be43642a7132",
+      "statement": "Each alert in a webhook batch is routed independently and a failure on one is logged while the loop continues, so a single malformed alert does not discard the rest of the batch.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L144-L162",
+          "version": "repo-lines-v1:sha256:6891dd6f09090344dd74acdbf0a1c456a57da9444ec33b803f545800c2048c15:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhMGNhODdkZTAyZWFkNTUyNDkzZTYxNWFlMTg4ZDZhOGE5ZDk2Yzc5NGFlYjY0YzFlNWEyZWE2NDU5MGFiMjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3YTliNWU5MDE5YzhkYjg3ODNlYzljM2ZlYmIwYTJjOTg2MmY2MWEwNWMzMDhmZTg5NWU0YTliZWQwM2VkYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwMmE0MWJiNDU1OTkwOWExYTg0OGE3NTc2MWI4YmU1ZTI2M2M0ZjllOTc4OTdlZGM2OTFmNDE4YzZlODI4OTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiNjExOGJmYzU2MzgzZmRlYzI4OWRkZGYxZTE4NGNjNTFiZTZiNGFkYmYyMzY5M2RkNGE0ZWQ0ZWE2MjkyZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_28a553efb1114939b1bd0ae644bf4419",
+      "statement": "A firing alert carrying a fingerprint is checked against existing incidents first, and on a match the existing incident's alert count is incremented instead of creating a duplicate, so a flapping alert produces one incident with a rising count.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L690-L706",
+          "version": "repo-lines-v1:sha256:b5a7763f6b637d68130421656df11d4714c7abfe43654acd9d66fa4e2639bed8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyYTU3NmFjMTQ2YTZlMGE3MmJhNzlhZmUyZDA5ZmUzM2EwYzExYTNkMTk3ZGIwMzBjMTA0M2MyZDk4NjA4MWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlNzY1MGM5OTIyYjljZWI1YWMxM2VhZTFkNWMzZGUxYzI0ZDQ0MjIyMDkyMDZjNDlkYTdiY2U5ZmUyOGNiZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyMTRjZDQ3MjM2NmExYzhkNjE5ZjA4YTRhZjliZTdhYmExMjkxMTYzYmMzN2Y1ZTZiZTdlZWM4ZjY2MzQ0NWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f12744076de4880815142d011d2bf58",
+      "statement": "The alert fingerprint is written into the incident's labels at creation time, which is what makes the later fingerprint-based lookup on resolution possible.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1040-L1048",
+          "version": "repo-lines-v1:sha256:ce99f641058ae3707e4370109b1ff67d7bb1262916e197d8465eeb427de9789c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTBmNTFhODgxOTdkMmIwZmRlYTdkMmZlZDI4OThmMTkwZTgzMWU0NTU3NjBhNGU3NmQ2OGZhNTdhMmYxN2ZjYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjJiZjgyYmVhMWI5YWNhODU3YWVkZmUyMGRmNzNhMDRjYTJjM2ExYzQ0ZGZlMDI1Y2I1OWYzM2JiNjk0YWUzNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWEzODgxZDMxMDUxNzY2N2JjZGE2ZjkyMzVkYzI1ZDk4MzU1ODA3NGE4MTFlZDgzMGFjNmE3YzdjZGQ1YzU5NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_66ebfd01bd614b478ba9f88204ad9ab6",
+      "statement": "Service and assignee resolution runs before incident creation so the incident is written once with all associations already attached, rather than being created and then updated.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L705-L723",
+          "version": "repo-lines-v1:sha256:a45605c3c59135d485ff8fe612acb707766753d53818dc0f2ce949772e309e60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxYTI3OTIxN2M5NWVhYmRlODFiNTYxZTZlNjMxMTMxODQwZmRjN2RjMGJlN2JlNDkzZWZhYTM2ZDRjMTgzYzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzOTdiYjc2NTRlZDI5N2IxMTY2Mjg3Y2ZmMTBjZWMxMGJiMTNmMWY4YzhhNDhkZWRjNDg1MTA5NDRiOWE5YjUifQ"
+        },
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L932-L1005",
+          "version": "repo-lines-v1:sha256:c88b418a37d517bf811db12ee20214b9827000d5fb6fd6d8795f66cecd59a6f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwMDM2YWNmYTYxMDdhZjljZWJmNzUzOTZiY2I5MzhhNzZiODE1MDliOTI2MThjNGMyZjBjN2U4YWIwODljNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzYzZmOTkzZjRjN2JlODNiODNjY2ZkMjk0YzM2ZWRjOTgyODU2NGRkOTk1Y2MzMGE1MjIyNDlhNmE1MWVkYTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNkZWEwNjg2ZWVkM2UzYjU0MjQxNjEzNzBiNTZkZGRiYTgyMzRiYzE0Yzg4MzI3YzVhMmYzMjk0ZGM0ZTZkMTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYwYzc2OGU1M2EyYjE3MzA4MjBkYjYyOTgwYjRiMGM2YjAxYzNjM2U1ZmE3MTNmNjY3NTdlM2ZjNTgxYzNkYmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_03c02ddab9024faaa062026fc5ae286d",
+      "statement": "Service matching evaluates each connected service integration's routing conditions in order and stops at the first match, so the ordering of service integrations determines which service an alert lands on.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L951-L1000",
+          "version": "repo-lines-v1:sha256:ede438a0032c00f07b3620d07add98ecc3663d0fb979e2cbe1eb73a1ad4f5b36:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0ODBmZGY1N2Y3ZWE4MGJmOGMyOTc5NmI2ZTZjNjQ1ODdiZTU4MTM2MWM1ZDAyNzE4YjhmMGY3ZjcxN2Q4Y2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0NTA3ODRmMzY3OGYxODlkMmY1OTlhZDFkMGU1N2M0MDk2ZTJjODQwNDBiNzE3NWZjYmMyODhhNzhhZTA2MjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0134df51590442beac72f386c8bd0c57",
+      "statement": "An assignee is resolved from the service's escalation policy and group when both are present, recording the resolution method, and a failure to resolve is logged without preventing incident creation.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L976-L1000",
+          "version": "repo-lines-v1:sha256:2ffa7daf547c1612ee51adb55337e852508bc40a8a7db83def5db9f4d5a02ea8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmN2QyYzliZWI2ZTA4Nzc4NTQwYWYyMTg5ZGM4NDc5MjQxY2RlNTk4MzJkOGE2MzYzZWQzZTFmOWY1ZDRhYTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyYzVjMzUzYmVkY2I5MTU0MDVlYTBhY2NkMTUzZWM0MDU0YzU4OTNjNDhiMGM4NTBiZDEwNzVkNzJkNTE5YzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc0NTA3ODRmMzY3OGYxODlkMmY1OTlhZDFkMGU1N2M0MDk2ZTJjODQwNDBiNzE3NWZjYmMyODhhNzhhZTA2MjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_03808cc34f44482aafd83a19bead8a82",
+      "statement": "Failure to resolve a service or assignee does not abort incident creation, so an unroutable alert still becomes a visible incident rather than being discarded.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L706-L712",
+          "version": "repo-lines-v1:sha256:5aa3a4219d463b550bcef4829fb529365cb8e76fc0715c7aba8e0180a7a11b37:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmU3NjUwYzk5MjJiOWNlYjVhYzEzZWFlMWQ1YzNkZTFjMjRkNDQyMjIwOTIwNmM0OWRhN2JjZTlmZTI4Y2JmZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjJmMmZmNWZlZWM2MGY1ODdjOGZhZTRlODdmODA5YTY2MWNmZmVkNmI0N2FhZTVmNmQ2YTI2NTNhYTg5NTJlZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmFiMjA1YTUxNzI2YmI5N2I2ZDY2ZGNiOGZjNTQzZDBiYmIxNzM5MmQ2OGI2ZWU1NGE0NzkwNWVkYmJmZGFmMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fb59df53459f47bfa827e349adce4766",
+      "statement": "Incidents created from webhooks default to high urgency but are downgraded to low urgency when the alert severity is info or warning.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1009-L1035",
+          "version": "repo-lines-v1:sha256:403af3c0e6213f8d3ec45ffecc46fe70f3b0254afb64699eb2b0cc203fed19b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMmJlZmM5MDEyYjI2OTIyZmUyZjA4ZWMxYmFjNDRkNWNkYjE1OGQyY2IzZWM2ZDhkZTFkOTAwYzJmNGZkNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwYzc2OGU1M2EyYjE3MzA4MjBkYjYyOTgwYjRiMGM2YjAxYzNjM2U1ZmE3MTNmNjY3NTdlM2ZjNTgxYzNkYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2YjFjMzQyMzliOTZlOGZmMDlmNWMzMzdiZWE0MmE4Njc4YzU4NDBhOGZjY2UwOThlYWEwOGY5Y2VhMzI3YmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f3a70c9193b3401c9e97d863fb0320ab",
+      "statement": "The incident inherits the organization id from its integration, which the code marks as critical for ReBAC visibility — without it the incident exists but is invisible to tenant-scoped queries.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L1050-L1062",
+          "version": "repo-lines-v1:sha256:8a051eadb72d83371a2a071e1f32603bb00243a13c7573fec0ade9ce187cbceb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiMTZlNGZjMzE5OWI2YmRiOTI4NmEyM2JjNjE3MmUzY2FkOTA1N2ZjMDZmMjE0NmMwMDUyZTgxMTIyYmVlZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNmQ2MGJiMjg4ZTU3NGJiOTY3NzJiZWM3OTVkM2MwNzdhZTNmNWJlMGE0ZWUzMDUyYmFlYzdlMDA1MWVjY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3NDZkMzNiNWZmNWM5Mzk2Nzc2MmM0OGFiODk4NGRhNjhiZTAwZjY5MmQyMGIxMjZiZmRmYjYzNjk4YzA4NTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwYmE1NTg3NjY2OGZjZmMwNTI5MjU2OTkzYjA2ZDJmNmZhOThjYjM3ODY5OGZjNjZiN2U4YTE2YTcxMWE1ZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7d9996fc16fe4f56809902a3ee079370",
+      "statement": "Resolving an incident from an alert uses a three-strategy fallback chain in descending reliability: exact fingerprint match, then alertname plus instance plus job labels, then a title match explicitly marked as a last resort.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L761-L800",
+          "version": "repo-lines-v1:sha256:aba98d8165dd6b282810d1daae34fa79b1fc9e8aa02db74b8447b944f3a460dc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjMmY2NjAwZTE3NGZiNGExNWFiNTVhZTEyZTRkY2Y4OWM0NGU2NTJhZWU3M2YyZWJmMmYyMDQyZjM0ZTVhYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlZThmYjQ4NjMyMDM0N2JjNGNiYmM1NWI2MmFkYTU4N2MyZTNjNWU2ODVkN2NiNjNhZDAyNDIwOTI0MmVlN2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f8d8d3671a4e44ce8c393c72ab2395fd",
+      "statement": "When no incident matches a resolved alert, the handler logs a warning and returns success rather than an error, because a resolve for an already-closed incident is a normal occurrence.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L727-L745",
+          "version": "repo-lines-v1:sha256:7943b2cc7db9ddd43abe8d66d02bfa8276a73fb5e94cc987264fbb6df015eea1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2ZmZhNTQxMTllYTkzZTdiYTBmNTk0OTVkYWY4MDBlMThlZTk4MzllYjgxMGNlZWY1NjBjN2Y5OTc5YWY2MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0NGE1MWQ4NmFhMzliMjM1OGFhNzQ1NGY3NmUzNGEyYWU4YTc3MGM3NWQyYmE1MTZjMThlMmYyODY3MjNjMDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzOTdiYjc2NTRlZDI5N2IxMTY2Mjg3Y2ZmMTBjZWMxMGJiMTNmMWY4YzhhNDhkZWRjNDg1MTA5NDRiOWE5YjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlMmNmMTJjMjE3YzRjOWM3NjE0NjFlN2QwNTIzN2UwMTM4M2NlZGQ4MzlkNGYwZmQ3MDc1YjMxN2VjZjFlNmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9dd29e46dd84bf8a7e57ebd8fea5b12",
+      "statement": "Auto-resolution is attributed to a system user selected by integration type, so the audit trail records which provider closed the incident rather than attributing it to a person.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L746-L760",
+          "version": "repo-lines-v1:sha256:4aed9c514feac0c53dac3b5b576166658df5ca222c5f9d1cb502a5212ab3c187:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlYTBmNTU0ZmZiNjU2YjkxNjFlMDVhNjE2NDE2ZGE1NzYyZDI0OGU0MmVlMmYxOWNlOTIyOTlhMTIwYTk3YjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwZTk3NWEwYTBjMmFhMWZmOTcwNzUwYmVjNTVmY2JhZDgyZWNmYzI4MzA2OTU3MjBlODNlMGYxZDY3ODM3NWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwZjBhM2ZmN2ZhMDBkYzhhNGVmMTc2NGUzMmQ5Y2IwMzVlMWM5YzNlNDM3ZTA3ZTMzYTc5Nzc3NGNjMWVhYzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8498e4d93fb74ee7a7a837c052f730d5",
+      "statement": "A separate routing-table layer evaluates ordered rules with match and time conditions against alert attributes, supports a dry-run test mode, and logs every evaluation with the matched table, rule and evaluation duration so routing decisions can be explained after the fact.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/routing.go#L386-L468",
+          "version": "repo-lines-v1:sha256:ee627518516892c859e28ec70b5095de7ad9af9bbe8ea9ba75de44e44d929789:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjNTgzY2QwNTI5NTMzMjBhZTc5N2NjZDlkMmMyYzA2NTNjNDk5MTkzOTJkYzY3ZGE1NDBhZDBjYjRkZjNmMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkNDNjZWJlMGZhZDI1NjMzZTU0NmY0OGM3ODdmZTI4MTM5OWVmOGQwNjVmODVlNjMyODQwZDI3NjE1NzA3YTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4ZjE3MmM0NWI4ZTlhNWJlNTYzNjBkODc3YjdhM2EzNmUzZjYyZWNlNjVlNzgzNGIzMDg5OWE4ZDA3NjY1YmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1YjAxNzFlMWQ0NjgxNWJmZWFkOGQzZDAyMjZhNWFhYzVjZjVkMmVmODk1Yjg2MjUzNzBiYWUxMmE2ZTFlNWYifQ"
+        },
+        {
+          "resource": "repo://server/api/services/routing.go#L526-L560",
+          "version": "repo-lines-v1:sha256:9e76ed226f085b1354578166f1d69d4deddf610354be820fed31de66360b2a9d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5YjQyNTkxZDMyM2YxMTg0Yjk2NzYxOGRhYjc4OWU2NGI1OGFhMDdjZWJiNjYxMDRmY2VlNzg0ZDRjYjM2NGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0NmI0NjVmNWRjYjhmOTExMGFjYmE2M2U5YTAzMmZmYWM5OTgxMDJiNjIzZWM4NDc3MjgxMzQzN2NjM2I4N2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImViNmQ0Nzk4NDdjZjc1YjYzODVlNTAyMmE2NzhhMTAyYmNjZDc4NDlmMGQwYTU4MTFhMzFhMDI0MTI5OTg2NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViYjAyZDIzZThmMGQyNDU1MmZhZTFlYjQyNDQ2YWI2ZWY2N2JjYWFhN2JkNjg1NWNmNmY5ZGExNjg4OTRiMWEifQ"
+        },
+        {
+          "resource": "repo://server/api/services/routing.go#L753-L790",
+          "version": "repo-lines-v1:sha256:fb07571f17627501c80e36d05add12a5dd190899cebd73fc5899fb0c2a57c0c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0Y2VjZTM1MGEzZGZmOTQzMDNhZjBhM2Q5MmI4YzFlNjJlZjhhYTBiNTk1YWMwNzZiODEwMWJiYTczZGVkN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5OTAwYWM4ZWJhOGMyMGY5NjJjZGM5MzVmZjUyYTJjNzZkNjlmMmNjODdiOTUyOGYzYmUzMWEyYmEwOThhZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzMjRlZDhlNzdhOWU0NjY1OTAyMzc2ZmUxZTQ3ZWE2YjU3YzhmMDVmYzEyZTg5ZTg0MTQ1ZDNmODQ1NzllNDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM3NTBlMGIwNTk2YjJiYTYyZjEyMTMzNDFlNTNlY2FkNjIzZDkxNGQzYTg2MmUxMjk5YzA3MWRiYzI4ZTQyNjIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

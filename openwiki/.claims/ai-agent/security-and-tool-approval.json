@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6953c4c56b8155ec5f24f300300511e8a5e0c2c7ef74481494179c9105852878",
+  "claims": [
+    {
+      "id": "claim_06545400324e4ff8b18c2df1c3978b4a",
+      "statement": "PermissionBroker mediates tool approval by minting a request id, creating a future, emitting a permission_request event to the output queue, and awaiting the future, which the WebSocket receive loop resolves when the user answers.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L142-L175",
+          "version": "repo-lines-v1:sha256:ca0e8edce47c14d00d3c732abfe3c7b1d3076ce525a5f7e99e07a6f0a0e7503b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMWVjOGExMGI4ZWJiNDIzNDc1NzJmMDg3NjA5ZDMxNDU5N2RjNjNiMTg0MGQ1MmQ0ZmFkZjBkOWFhNWZkNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1YmI3ZWZmZjhhNWVmMzM4YjE5NmJjOGU4YjkyNWQwODIxMjVlNGQxNTM1ZDQ5ZWVmZTExZDk5ZmNkZTQzY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2NTkzZjFmNWE3MjE1MTc5YWI0ZGJjNjMyN2VjMDUxNmM3OWM0ZjkyOWEyMzJhNmZhYjJiMjNkMWU5YzQ4YzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4ZThhM2Q4NjNiZmUxYzhiODRkNjZjNTk5Yzk1ZGU3MTI2MDQ1OGUxMTJhYjk0OGUyZjU3YWFjZDgwNWFmYjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d75c10777ed40b68dcf81b49ea2fb99",
+      "statement": "Every tool denial path uses interrupt=False so the model can explain itself or take another route rather than having the turn killed outright.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L145-L195",
+          "version": "repo-lines-v1:sha256:f3a23291aa70e399b0f777210adcac82bf2bc22a749cc963012b9d21fae4a377:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZGUyNTg3MTk2MTQ5MjYwNzFjOGZiMTlmZDg2NjE1MDU1NWYxYjAxMzU0ZjhjZDE2MDNhMTA5YTdkZGFlNDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzYThjY2UyMzgxZWNjZjJkYTIyMmVjZThlMmQyOWM0OGUxMDU2YzcxOGM3YmVkZmQ1YzRiYjM5ZWRhNzQwNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzYzRjYTA5NWZjZjA2ZTQ5ODIwMDcxMjEzMTgzNGI1MmIxZmViN2FjNTBhNzcyYjRjOTFhNzhlNTY1OGIyYzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_941994da49a24d21ade674c83d65b492",
+      "statement": "An unanswered approval request times out after the configured permission timeout, emits a permission_timeout event to clear the UI prompt, and returns a denial telling the model no user response arrived.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L172-L189",
+          "version": "repo-lines-v1:sha256:a226bafb7f9bd75e5c7d077e76055c7723f7c2726190db8971eee58139d589fa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1NjljYjA5MjgwZWUwNzgxOTQ1ZTQ4ZDQwNDFiZDJkZmFhZTY5MWFkMmVhYmY1ZDNjYmEwODQ2YzcyMTZjYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMzZhODNmOWEyNGZhMzlmNjM3ZjEwN2FkZTIzOGU1MjkyYTE0OTljMTYxOTViMzQ5ZjI3NjMzNGQ2NThiZWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0MjBhNmQ1MjE5YzZiNzIzMjhlN2NiYWY5OTY2Mjc4M2Y4M2NmZmQ0MmY2ODc2Y2Y5M2U4MGM2Njg2YjUzM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1NTYyYzllZTBlOTMxMGE1MWM2YTg1YTI2NjNiZGIzYzI4N2I0NDhlZGRhZDNjYWMyZjgwNWZkM2Y3ZjU3ZGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d21060c2d048402b9c89e1dbe8789dd3",
+      "statement": "Approval round trips are deadlock-free because nothing the SDK owns feeds the ASGI receive channel, so the wait graph among the SDK reader task, session runner, sender task and WebSocket receive loop stays acyclic and the receive loop can always read the response that breaks the cycle.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L1-L37",
+          "version": "repo-lines-v1:sha256:e08857ea880efedd37bc0eabab999ebfb25821adffa03b71a73231a73fe7d8a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmMDkwNjBlYTcxMWYwYjdkYjYxMjAzOWJkODRjMTk5YzlkYzEzMDk2NWRhNzk4YTNmYTYwZTViYmVmMmQ5YzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e01d4cb527374f728bcf0460fd6cdc7a",
+      "statement": "ChatSession.interrupt() calls broker.deny_all() before invoking the SDK's interrupt(), because awaiting an SDK control call while an approval is pending would wait on a reader task that is itself parked inside the permission callback.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L20-L26",
+          "version": "repo-lines-v1:sha256:a7dd07b69778619acdc93fc8d3204af726ac3a99802bfb823ea7f30a5017bf21:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTZhYzZlMjlkYzc5YTg2Zjg5NDA3YmYxNjhmOTliMGQ1Mzg1YWJjM2NlYzg3MDhkMzA4YWQxZjdjYjMxYzYwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjM4ZTZhMDcyZGQxYTA2OWNhODhiZWQ1ODA1MTNhMGJmY2U4OGIxYTBmY2M4MmY3MzNhMzBkODM1YmQyYmRkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjA0Y2YwZTk1YjgzOGQ4NWU5ZGQwYTI2YTI5ZDUyYTFiNWNhNzE4ZWVmMDJmMDM0MjMyNmUxZGY2MWIxOGM1ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjk2ZGExZmJiYmE4YjMzMWRhZjhkM2RiOGFmMmYwNmUxNWExZjFhNzhiMzgyYTNiMzA2NGY4ZDdlYTNjNjZhYiJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/session.py#L178-L204",
+          "version": "repo-lines-v1:sha256:e686b0632dbe10babcd21d432bb0867c68dd1c6758e3715cab877f2bc67a738c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyODMxMzNiM2FhZTU0ODZlYTE5Mjk5YjNlNWQ0Y2NmZWJiZmU4YzZhZDJlOTA3NjEyZTA4NjI4ZWFhZDk1ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3OTBmOWRiMTEwY2ZlMTdhY2E5Y2I2MTYzNmE4MzE2ZDJlMzIwNjM2ZTdiYzgwY2EyMGU1ZDk1YjYzMTI0YmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmZTFiMDM3MTYxMmE3NTdmMTU2MzNiMjViN2M0MGM2ZjIxMTk1M2YyYzBlMGFkYTEyZWRjYzVhNDZkMWFjOTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjMjkxMWQ0YTllM2FhNGIzNjFkZGNlNTcwODIzMjQ0MWIwYWI4NjRlNDY3N2VhNTVjYzhiOTFjM2U3ZjIyZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_689802f5876140e7bead3d3c7786c759",
+      "statement": "The permission output queue is deliberately unbounded and the pending future is deliberately unshielded, because a stalled bounded queue would block the request before transmission and a shielded future would prevent cancellation from propagating during shutdown.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L26-L37",
+          "version": "repo-lines-v1:sha256:5a68eb0a4def5b937ce5710aa3c839429dea8cac3c05e60bf5dde0c53010e1db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzOGU2YTA3MmRkMWEwNjljYTg4YmVkNTgwNTEzYTBiZmNlODhiMWEwZmNjODJmNzMzYTMwZDgzNWJkMmJkZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5MTYyZWY3MjViY2JiZGRmOGYyMGJjNTY4YmUxODI4YWI0ZDY4MTUxY2MzNGU5NTZiY2I2NWRmNGMxY2E2OTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmMDkwNjBlYTcxMWYwYjdkYjYxMjAzOWJkODRjMTk5YzlkYzEzMDk2NWRhNzk4YTNmYTYwZTViYmVmMmQ5YzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_42ffd04547f441ec84213426a341ec71",
+      "statement": "resolve() and deny_all() are synchronous rather than coroutines so the WebSocket receive loop never blocks while holding the only means of answering a pending approval.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L196-L234",
+          "version": "repo-lines-v1:sha256:f3ae65c9d16eada2d820021bb6ced5ea8685309b2910db3104904d7e7c423730:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNWY5MjZmODZlZTIxMDkxODNjN2M0ZmEwYTY2M2EwZGYzMDQyZmQ2MWZlODA0Zjg5MmVjN2Q0MDBiOTk2YWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEwNDFkZWUwZjdhYjM0OTc4OWY0NzExMmZiNjRhYWRkZGM3NTM2NTk0MzVlYmE3ZTU1M2MyNDZhZDdlZTYxZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://server/agent/session/permissions.py#L34-L37",
+          "version": "repo-lines-v1:sha256:e8a65ab5bdf9b8689f19c34a8b23e0c0155548dfaf0a97198117306dbcfec187:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWI4ZWVlNzc3MDVjNzc5ZTM4OWQ4MGU4MzQwM2FhYzg0OWFhNzI5YjYxMThhMDE0ZDQwNTM2ZDg1NzlkZmFjOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWYwOTA2MGVhNzExZjBiN2RiNjEyMDM5YmQ4NGMxOTljOWRjMTMwOTY1ZGE3OThhM2ZhNjBlNWJiZWYyZDljOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_46eea96d66cd40e5bdd2ce4b3af27560",
+      "statement": "Shutdown resolves outstanding approval futures as denied rather than cancelling them, because a cancelled callback can leave the CLI awaiting a control response that never arrives and make disconnect() hang until its own timeout.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L212-L234",
+          "version": "repo-lines-v1:sha256:28327703e0949a67740840f6b52ff9611713fc5c6d9d3c2fe1dab73f5321a517:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNWY5MjZmODZlZTIxMDkxODNjN2M0ZmEwYTY2M2EwZGYzMDQyZmQ2MWZlODA0Zjg5MmVjN2Q0MDBiOTk2YWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5ZmEyMDM4MDQ2MTZhMGRjMDIzNzYzOTRmNzdjYzA5YzQ1NmE1NzY4NTZhZDAyMjIyMjU5ZWI4MDY2NDEyYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0339c22210694348a74cb79d4d1d9381",
+      "statement": "An allowlist consulted before any round trip lets pre-approved tool invocations run immediately, using Claude Code's pattern syntax of a bare tool name, a prefix match ending in :*, or an exact argument match.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L144-L148",
+          "version": "repo-lines-v1:sha256:7ec28a1c0c40a620f6615ae540d277df28a207dd3121bb246376158eb3ea91ba:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTljNzg4NzFhZGQ5NTBhNjNhMGIxZTRkNDhhNGY4Y2JjY2MxMThmNGU0MGE2ODJhNDMwYTgwYzMwNDYzYzMxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2YxY2UxYjZkZTgyM2VlMjhlNjNiMTIzMGU3MzZlMDMyMzBjNTFhMmIxYzRmNDdiMGNmYjk5OWFkYjFiN2RiZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjZkOTA3MTUxMTU3YmRkZjUwNzE5MzMzOWIwNTBlNTIwNzlkNTQ2YzRkNWY5ZmViMGE2MTkyOTlhZDhkNmMwOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTRlMjNmMTE1M2Q0NDVlNGQxYTkzNmQxNjkzN2E2NGQ3YjU3ZDc1ZDVhNWZiMWVkOGExMmMyNjA2MzZmNzE1ZCJ9"
+        },
+        {
+          "resource": "repo://server/agent/session/permissions.py#L76-L110",
+          "version": "repo-lines-v1:sha256:7e3886c13779591d52a55d3092e3cff95ee30b9095320706af15bbddd79793a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlZTdmMzZmZTFhNThjOWRhNmJlMjYwMTNmMThhMTNkODc2Y2NlYTM3ZTBlMzE5OTEzZTlkYmU5YTBjZGRiMmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0ODU1NmNiNGFmY2Y0ZTA3NzE3ZGM2ODk1MzgzYzM2MWExZTRmY2Y5ZDU3NDE1MTYwZmIzMjdiMDk4YWQ4ZmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea00826c4f90448b9539c261c7d61caa",
+      "statement": "Allowlist prefix matching resolves which argument describes a tool's action through a per-tool map (command for Bash, file_path for Read/Write/Edit, pattern for Grep/Glob, url for WebFetch), falling back to the first string value in the input and to an empty string for non-dict input.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/session/permissions.py#L50-L74",
+          "version": "repo-lines-v1:sha256:43d47dc59353d31b128e00938d20a547d7e3c9ad3557d95b377a3a4c26046aa3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0ZDgzMzkyN2JkNzlhYzM0MTAwMGEyOTVhM2FlOTk0ZjQxZGRmNTNlNTAyMDkxOTgzMjliYWM5OGE4YzQ2YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1MTIyZDNlYjdmZTA0NDM5YjJmYmJkZDU2MGZmZTc1OWM1OTFiZmNkYzhhYmY2YzNmOWFmMWViYWUyOTMwZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlZThkZWRjY2ViZmYyMmEyMjFiZWM3NzQyYjI0ZjU3YzE3Yjk5MzJlNjA2N2QzMmI4OWQ3MDE0YTEzMWIzOTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4ZjRkZWE3ZDVhOWJmZGU5NTY5NmJjOWEyMjU2YzYzZTI3OTVmN2Y3OWI3ZTViMThkMmZjODFkNzJjZDA3NTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d0310ccc18041edae750406eda394e6",
+      "statement": "The permission test suite pins the invariants the deadlock argument relies on, including that denial does not kill the turn, that late or unknown or duplicate resolutions are rejected, that deny_all and close release waiters, and that cancelling a waiter leaks no pending entry.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/tests/test_permissions.py#L43-L170",
+          "version": "repo-lines-v1:sha256:84930779ed1c750de604388fb1da46f05afead7b72eb480fc731bed94300c5d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjMGM2ZjQ3MTNjNjkyOWZlYjMzOTdkYzU3NzkzNDcyMzQ3N2ZjZTgxNDI0OGQ2ZTI3YTk4YzU3M2U1YWFkZTU5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwODI2NzZjODg4YzFhNGQ5ZmE3NzJmY2RjMzAyZjc3M2JjNzI5MGVlYmZmOWRhMzZhMzlmNDRjMzIxMTk4Mzg1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhNDFmNjg0YzM4MTQ3YTc0NWI3ZDkwZDg3MDQwZDE0OTA4YTdjMjVlNzMwY2Q4ZDk2ZmMxMzQ2MGUzZThlMzEzIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_96697d322eeb46a4bb9476230fecf9d4",
+      "statement": "The zero-trust socket uses two key layers: an instance-held ECDSA P-256 key that signs device certificates binding a device public key to a user, instance, permission list and expiry; and a device-held Ed25519 key that signs every individual message.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L366-L412",
+          "version": "repo-lines-v1:sha256:ea3a1dc2e2cd420cae0d596199855c4fe6f87517039a2408ed84a1685c759cee:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2OTkxZWMzMWZmNGNjNmZmNmEzNWFmMGY3ZmIzYTExYjJlN2NlM2EwNTgzOTUzNDg3MzRhMjRkNjA3ZmY1MDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5OGRjNTI4YjQyNjVlZmZlY2I1ZjdjZWRlNGZkZGZjMjFlMDkwNWU5NDVhYTg4OWViOTExZGEwZDQzNzQ5ZDUifQ"
+        },
+        {
+          "resource": "repo://server/agent/security/verifier.py#L50-L96",
+          "version": "repo-lines-v1:sha256:fb83add70a5234c7968e2ad9e41bac61a504621f5e54b4d5236928d8c2821668:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkODFkZGM5MWIwNTkxMWM1NGYzODM5MmE1MTVjZDI0YjVkNTI2YTRiNTBkZDFlYTI3MGZmNmYwZjA3ZjRkNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhOTAyNmJjY2Q5MDU5YjZmMjM1NmQwM2M1M2Y1Zjc5NDAzMmU1ODY0YjQ0MDI0MmU5NDk4NWEzMDFhM2IyZDUifQ"
+        },
+        {
+          "resource": "repo://server/agent/security/verifier.py#L536-L556",
+          "version": "repo-lines-v1:sha256:a16ec2b8bee210d7b9f7e01bad3e42bbf6ef3663111fae1086f25129208e9fa7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYmJlODMxNzNhYzYwNzliYmIzNjdlN2QzNTQ0OTZiZDc0NzgxMmVhZGFkYWVkNDA4NjE4MDI3NzU2ZjQ5NjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YTEwMDAzZWE2M2Y2Yjk4ZjliOGMzYmUyYzFiNjJjMDMxMjc0ZDg2NzU5ZTU4ZjdlMGVmMDE4MTYwODdlOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyMDZiOTE2MTJhNzRiYmU2MjVmYThkMjkyY2IxNjYyMWYwN2RhZmVmZDBiMDg2MzdhNjkzYjNkOTYxNDE3ZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_86e9e00e6c6e4e09a0bdce07021e6918",
+      "statement": "Certificate verification converts the Go issuer's raw R||S 64-byte ECDSA signature into DER with encode_dss_signature before verifying, because the Python cryptography library does not accept the raw format the Go signer emits.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L379-L405",
+          "version": "repo-lines-v1:sha256:ab37c23951b04ae464bdeaa1137d815f442e1e4d7c54bf11c202a75f3400e57f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwOTJmYTIyMjM0ZTdjMWQ1OWU2YjA0OWM3ODE0YWE4MWEwZDJkMWQ3ZjFjMzNmNTU3YzliZmJmZjdjMTMwN2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2Y2Q4NDNkZjc0Mjk3NTM2ZjhiZjdjYjY3M2QxN2QwMjI4MDQzMTJkODYyODU1NGE1ZTcxNjA0MDczYjU2YTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkZDY4ZjIxNmQ2YTQ3MzA4MzhhYzMxMzAyNDExOTE3Nzk4MzVjNGVjMzQwZjg5ZmVlMmY4NzA4OTNkMjcxMDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_372f988b683a4815ad700e1ac960c1a7",
+      "statement": "Every message on the zero-trust socket must pass session resolution, payload/signature presence, certificate-id match, a 60-second timestamp window, nonce presence, a database nonce-reuse check, Ed25519 signature verification, and a per-message-type permission check before it is accepted.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L45-L48",
+          "version": "repo-lines-v1:sha256:8940717d3d2ba3376e016f53b0330e12add55f5e320ff7a55db9d1c30cc7db90:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjg5Y2E0NzIxOWU1Nzc5N2RkNmVkZDgwZDIzNzQ0M2M5Nzk4ZjQ4YjE3NTA1NmFhNWUwM2M1NDI1OWQ1ZjljYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI4N2NlMzlmYzIyMTBmYWY2ZTkyM2E5ZDhkNjA2YzM3Y2U2ZTVjMDQzNDNhZmQ4YmZmY2JjMzU5NjY2YTEzNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODg2NDFlZThjNjMwOGZhMGExYTU5ZmNlNTQ3YjczZTgyZGQwYTZlZWNiOTJlNzdhZmFkOTFjNTg5ZjY1NTFkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmMxZjAyZmQ3ZWMxZDQ2MmMwY2I4MThiOTQ4ZmZlNGY3MTViMmMyYzQzMjYzMGMyMzJkZmUzNGQ0Mjc0M2ZhOSJ9"
+        },
+        {
+          "resource": "repo://server/agent/security/verifier.py#L491-L569",
+          "version": "repo-lines-v1:sha256:17bbfcbde63ea189b044514d4c5e1d39c85fee7f3eadeecd93a2744e9953640c:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3ZDc4ZTc4M2Y2ODEyN2FkNTRlNjcwMTkwZjU3ZDBhYjcwNjhiZjQ1YjIzYTI3YzM4OGQxZDM0NjdkNGVjOWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczZjY0M2NiZjVhN2M1ODBjNmE3OTQ3MmE1NTZhMmM4NmRhMzc5NDhjZjRjMjc4NTgwZjhhMzJlM2UxZjgxMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiNmExYzJhMzhlMDc4YTMxNjk5YTJhYmU3YTUyZWI3YzkwNDk0Zjc4YTg1ZjlmNjYwOTQzMjZkZjJlYTA3ZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2ZjdiMTA3NThjY2Y3ODI0YTQ3YmJmOTRlYWVlYjUzOGE1YjYxMmVmZmViNTNhYzY1MjM4ZWE1YTRjNzVlZTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ace40c1988804f71bf5af28353f42c05",
+      "statement": "A nonce is persisted only after the message signature verifies, so a message that fails verification cannot consume a nonce.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L536-L560",
+          "version": "repo-lines-v1:sha256:3820fc10d8c7544c6ec3d7ceb60877cb9409fe5b0ed559c0e52cdf95be2f9436:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYmJlODMxNzNhYzYwNzliYmIzNjdlN2QzNTQ0OTZiZDc0NzgxMmVhZGFkYWVkNDA4NjE4MDI3NzU2ZjQ5NjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMTY5N2RjZjMxMGQ1M2Q2OTY3NzNjYmU3ZWM0OGY1ZDI4NjcwZjRlZjU2Nzc2NmEzZGRmZjYwNjVjOWQ1ODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YTEwMDAzZWE2M2Y2Yjk4ZjliOGMzYmUyYzFiNjJjMDMxMjc0ZDg2NzU5ZTU4ZjdlMGVmMDE4MTYwODdlOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjZDI2MzdmNGVlYzNkMWJmYjA0NGJlYTBhM2U3OTdiZmVkNzIwZTQ0YzY1YjAxZTM0MjRlY2JjYzIwMmQwZDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f57835f598c84426a40f0817f6c08af2",
+      "statement": "Signed payloads are canonicalized as JSON with sorted keys, no separators whitespace and ensure_ascii=False, because ensure_ascii=False is required to match Dart's jsonEncode on the mobile client and non-ASCII text would otherwise serialize differently and fail every signature check.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L636-L647",
+          "version": "repo-lines-v1:sha256:fa5f7df1e72dcf216f6db56ba7bb089d606c90cea880af0c324a868426d17a54:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhYWEwZWE4MmI4YmJjN2IyNjQ3NzQzYzI3MmY0NGVmNTNhMzU2MjA3ODI5YWFjODU0Nzc1YWRjYzMxMDFmNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyZjU0YmVmYWZmYjhkMTQxYjM1MGJlNGFjNzIyZDc2MGIwOWMyNDMwMmI5YjAyZjNiNGRiZGUxZjFhMGNmNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhMTZhYzU2MTA3NmRkN2I0YjIzMjhmZmQ3YjA4MjY4NjE5NjM4NWZlZDY2MWVhYTllZmE5MGIyMDcxNmVkN2YifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_663a34a305f541baaebcf354e98586f8",
+      "statement": "Zero-trust sessions, nonces and instance public keys are persisted in PostgreSQL with in-memory caches treated only as a performance optimization, so replay protection and live sessions survive an agent process restart.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L107-L127",
+          "version": "repo-lines-v1:sha256:68b9349de5d3a48ac8145848e54209b1290c74be6ceea2312c258e25097e3042:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NThhNTUxMjdlMWRjZTk4NDE4ZWM3YWU3ODdhMzI2NmNmNTExNGY5NjBjMWJjNGQ4NWM0ZDQ1ZWE0NzhhOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiNzQ0MTQ1Mjk0MmEyZGIzMGVjYzAyMWY5YjgxZDY3NjQ2YTdjZjI1N2ZhNjI2YTI3N2VjZjUzNDljMzFmODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhNzQwODllYzdlZmQxMDZmODM3MTU1Mjg4MDMxZDgzYWEwOTQyYTBiM2MwYmQ3ZDRjN2I0MWUxMjE3OTZmOTAifQ"
+        },
+        {
+          "resource": "repo://server/agent/security/verifier.py#L172-L260",
+          "version": "repo-lines-v1:sha256:9d8ca57c811489d671f0a183444cd4e3770188ebcf5068d3bb3f40530a5ea19a:eyJzZWxlY3RlZExpbmVDb3VudCI6ODksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5MzU3YWYwZDczNDhhZWNhODY5NTdkNmJkNjFmYjEwN2JjMDZmZmU4YWJhM2Q4MDE5YjVhZDk1MWIyNWU3OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlNWUwMGNkNzkwZTUxMTE4OTJhY2M5ZThkMTA4Y2Y2OTFmZGVlODhiMmFiOTYzMmMyYWYyNmMwOTljN2YxODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExYTZhYjViMzM2ODg5OGFmMzNjM2I5MmU3ODgwYjNhMDEwMDJkYWI2Y2M1NTNiNzVhZWJhY2UxMDNkZTRkMTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9182d0c2207493a93f6c933fbce927b",
+      "statement": "Verified sessions are given a 7-day expiry that deliberately exceeds certificate lifetime, and revocation deactivates the database row rather than only evicting the cache entry.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/security/verifier.py#L48-L48",
+          "version": "repo-lines-v1:sha256:2287ce39fc2210faf6e923a9d8d606c37ce6e5c04343afd8bffcbc359666a136:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI4N2NlMzlmYzIyMTBmYWY2ZTkyM2E5ZDhkNjA2YzM3Y2U2ZTVjMDQzNDNhZmQ4YmZmY2JjMzU5NjY2YTEzNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI4N2NlMzlmYzIyMTBmYWY2ZTkyM2E5ZDhkNjA2YzM3Y2U2ZTVjMDQzNDNhZmQ4YmZmY2JjMzU5NjY2YTEzNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTlkMmI4NzIwNzA0ZTUwMDdmZjFlZWFlM2UwNzI1MGJlOGNkYjJjNzNkNWEwYTE0Njk3NWMyMmMwNTc4ZmY1YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmMxZjAyZmQ3ZWMxZDQ2MmMwY2I4MThiOTQ4ZmZlNGY3MTViMmMyYzQzMjYzMGMyMzJkZmUzNGQ0Mjc0M2ZhOSJ9"
+        },
+        {
+          "resource": "repo://server/agent/security/verifier.py#L584-L601",
+          "version": "repo-lines-v1:sha256:5247d86ffc0ce7011d84520d5c13b95e106f769ba3422208f3da5d5d181caf66:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1ZDgwODc1MmI2NjhmMjAxZGEzMGJkZDFhNTAwNjQ4ODdlZjBlNWNlZmRkM2E2NTkwOTBlMTQzN2E3MGJkN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiYzg1MTg0ZTUyMzgyNWQ1ZjQ3MmIwZmFhMmEyNGYwYWY4Yzc1YmZlYTdlNDgzYzM2YmIyOTg0ZDI1NDM5NDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZjMWZjZjU4MTc2YWNmMDU4Mzg2MmU4MDc1YzIyMjA1YzM5ZGYwODMzZDY5MWUxZmIyZmUxYjU1ZjI0MWRiNjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed1c415f299b4b4ba3add38dc328365c",
+      "statement": "Audit events are named category.action in AWS CloudTrail style across four categories — session, chat, tool and security — and each carries a success, failure or pending outcome status.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L51-L104",
+          "version": "repo-lines-v1:sha256:ddc8a8ef7b51474ae5e85168fe409a606266a25b5c38fed10b9da88377163013:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3NzVjNjI0NzkxM2EwMDBkZDUzODY1M2E1YzNiZGQ4NzdhYWU4ZmQzYzdjZGUxNjU4ZDVlYjliMjhmYjNlOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3MDg3M2VhMWNkMmQzZWUwMWNkZjk4ZmZlY2QxYTk3OTYwZGE0NDRmOTI0OWEzOWZkOWQxMzg4M2YxODcxNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4NTU5MTA3MTM1ZmUyYjkxY2UzMDYyODA0MTE2YWY1YWQ3OGU4M2QzZjc0Y2JmMDYzMDg1MWYxZjkwNTQxN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkN2Q3MDY4MDVjM2M3NTM5NjY1NWM0YTQzOWJjMjJkODczOWE2M2I1ZWY1NDQ2NjFkMjJkODViMjBiNmM4NWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_82085c3e38cc49ab8babf643ee1943b0",
+      "statement": "Tool execution is audited through the Claude Agent SDK hook system, with PreToolUse storing timing and input keyed by tool_use_id for PostToolUse to correlate, while tool request, approval and denial events are logged from the permission callbacks because hooks fire only after permission is granted.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/hooks.py#L1-L60",
+          "version": "repo-lines-v1:sha256:d95a5b77f3433aa5991d336cdcb538999f7f2a34e36d1a18ee36a699766f40e7:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiZjVjOWUyYTc2ZDZjMmE2YTJjZTAyYTFiOWZjOTAxYTBiNTAyNTBhMjZjMGVkZjhhMTEzNjVkM2MyMzU0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkN2UxNmIyMmNmMWI5Y2Y3ZTIwNDYzODc4ZWU5ZDMwNjg2OTEzMTg1NzVkZTNmNGY1YjBjNjU5MTk1OTQ4ZTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_44ace62088a34746bd813455347ea4d0",
+      "statement": "DataSanitizer redacts on two axes before events are queued: sensitive key names are replaced with a length-preserving [REDACTED:n chars] marker, and regex patterns replace JWT bearer tokens, sk- API keys, GitHub PATs, Slack tokens and email addresses in string values.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L198-L283",
+          "version": "repo-lines-v1:sha256:e03a62b7ebad35b117f652122d4730940182e304a62b2b47ee0d50d864f89eb1:eyJzZWxlY3RlZExpbmVDb3VudCI6ODYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3N2I3MjMwMzc0YWUwOGM0MDNjMTAyYmRmNDU4MWRjNjgyN2IwZDY5NTQ0ZThjYWVjMDZkNmUyMTNjMDkzYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUxNzUzYzhjZmFmOTlmZTQxYmQ4NGZiZjM2ODk0YzNlZWVjNmJiMmVmODNkZmU2ZWMzOTc1NWY3NzQxMGJjMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllZDU0NDdmMTE2Mzg5NWYxNmU1ZDlmMmRmYWJlYzMwYmViY2JkNTM3YTNlNzM2NzliZDMwNzYyNWIwZGM5OTAifQ"
+        },
+        {
+          "resource": "repo://server/agent/audit/service.py#L385-L400",
+          "version": "repo-lines-v1:sha256:790584dee2f5219fb7d18d356f7a19d3a30644e325a62593753d4b267a72911f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhODAxNWMzMDBkZTc2OGRkYzgwNTgzNzhiYTIwODYxYTE5ZWRmODExMTFmZmI3MDYwMDhmOGM5MzVjNDgwN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MDIyMmE3YmJhZjU1OWY3NGU2OGIyNzYxZmJjM2Q1N2JiMDY1M2U3MjE0NTliNGEyNjQ1YTA2NWFmYjg2YTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4NTgyYmJiZTFiNWYwNmQ5MTQ3M2MzYTk4ZDZhOTE2MzdjMGQ1NDBmYWI2NTNkOTc2OGQ1ZjM4YTQ1ZDViZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4YWU5NjNlYWJmNDIzYTRiZThiNTRiMGQ1YWI0MzFkMTNhYTJkNjg1MTViOTQwZjIzODVkYWFhNGFlMjIzOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f747c39150446f2a417b48ab3e75fd2",
+      "statement": "Sanitization is depth-bounded to 10 levels and truncates strings longer than 10000 characters while recording the original length, so a deeply nested or huge payload cannot exhaust the audit path.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L224-L234",
+          "version": "repo-lines-v1:sha256:1ded883fe1868391fdcf3a373560506cd1947dabee6c394703c05c436cf20b07:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4NWMwYzE5MGM3NWE5MzY5NTkyZDkzZDVjMmQ5M2FjOGRjMTg3MjBkNGU1OTVlM2EwMWQyMjY5ZThjYTBkOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZGUyNTg3MTk2MTQ5MjYwNzFjOGZiMTlmZDg2NjE1MDU1NWYxYjAxMzU0ZjhjZDE2MDNhMTA5YTdkZGFlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiZTNkZjdjMjMzZGNkNGQ4ZmY0YjY4NTE4MmViODExMjcwYzBhNzFkMWZkOTUzOGRiZjI4MDJhYjVlYzQyZTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhOGViYWQ0ZjliYjEzMDdkMmZjMmNjYzE1MmRkMDA0M2MwMDM3NWE3YzA2ZTQ2ZmM2YzhjNDcwZjg2ZGQwNWQifQ"
+        },
+        {
+          "resource": "repo://server/agent/audit/service.py#L272-L283",
+          "version": "repo-lines-v1:sha256:c936fe123311c409089d456f96cc18ce9da52e29dcc0f1378d6c729ff6b714e7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNGQ1MjI3NjY5ZTg2MmJiNDMzZWQ3N2I5OGRjMTZmZjYwNWY2ODBlNmQ4N2U1OTg3ZTdkNjUyYmNjZTcxYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhZmFkMTllOTA0NzljMTZiZmNkMjk5MDAwMjhjYzIxNTRiNDg1M2I1ZjZhNmY1M2UzYjk3YTQyNzcyNWY3YmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllZDU0NDdmMTE2Mzg5NWYxNmU1ZDlmMmRmYWJlYzMwYmViY2JkNTM3YTNlNzM2NzliZDMwNzYyNWIwZGM5OTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa5a30b543d24b39ade6dfd9dc9cc46e",
+      "statement": "Shell-shaped tools receive additional sanitization that redacts inline credentials such as --password, -p, PGPASSWORD and AWS_SECRET_ACCESS_KEY inside the command string, which key-based redaction alone would not catch.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L285-L309",
+          "version": "repo-lines-v1:sha256:4dfac2a1fb5f6214ae92936d7d8e1637c382f7252f5772f5a63390af21cf6911:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0NzZmMGI0ZjMxZTJiNDNhMmRmYTUyMzdjZDQyMzM2NjgyMmFiMDQyNzUwMTk1ZTljZGE3N2M5N2JlZTQzNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzMzk3NzlhOTk3YzU0N2ZkNmU0MDk4NzY3NjkwZDI1N2ZiOTA5NDI5NGYxYTA0ZmJhYmUyZWI3MmRiZThkOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5NGJjNGNhNjczZmNiODdhYmNlM2QwMzc2ZDkwY2RhM2I3MzU4MWU5ZmZmMjAwM2Q1YjNiM2UxYTcwZDc4NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5M2I3YzM4NTc4OWY4ZGU4YTg4NGU4NzE5Y2VmMTMzOGQwNDY5NmQ4NDBkODA4MWI3YTkzMWY1OGZiNWU2NmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_15ee3d65dcae464bade3b86e46e2751e",
+      "statement": "AuditService keeps database writes off the request path by queueing events to a bounded asyncio queue and flushing a buffered batch when either the batch size (50) or the flush interval (5 seconds) is reached.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L312-L353",
+          "version": "repo-lines-v1:sha256:492fff94d949025c6f330a69e5429a8ed2f4b8888f8f9a489106078bcd7418fe:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmZWQ1YWEzZmM5YjkwY2VlN2U0ZmNkMjhlYTI5MmZiNjViOTA1NTlmNTIxNmUxNmNjMmFiNTlmNWQ5YTAwYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkYjljODhiN2VmYmU4MWQ1NzQ4Y2ZkYzY0NTYzMTRlNWM3M2QwMGUwYmEwZjY2N2NiNmEzODY3MmYxYmI5YTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkNTg4YmM1Yjc3ZmI2N2U5NmIyNjY3M2VjODE5NjhkZGNjZDU4ODk3ZTgzNmNhMmU1Mjc2MTQ0YzVlOTA3ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYjY3NjVmZDYyMTIwZTFlYmVjMTc4YjM0YzAyMjIyZmViMTBmNDdiYmE0NDc0YzJiN2M5OGM3M2NkN2ExZmEifQ"
+        },
+        {
+          "resource": "repo://server/agent/audit/service.py#L420-L451",
+          "version": "repo-lines-v1:sha256:0166c5a6657972f95db24b6504cfae05f6ad5293bee63601204499157aefc4b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0YzllNjA3ODFiMjA1ZjM3ZDc0ZjA4NzAyMTQyZGI3OTY5ZDFlMTliNjA3YTVmZjU5MWZmMjJkODVjOWZjNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5ZmMyZDViNDFiOGVlN2ZkYTZhMDdiMGJkMjFhOTI5NTZjMWMyOWRmMTE2MzgzODFhN2Q5YWU0MzhhYjc0M2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE3NzEyMmI5NTgxMTBjYTA4Y2MwOWVhZDBmNTQ0ZDE1MmE0NzhiZmU3ZGI5ODMyZmU2MGUzOWM2YjRlODNlMjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e609eacf7ae424393d9a144648e1fe5",
+      "statement": "A failed audit flush re-buffers events for retry only while the buffer is below half the maximum queue size and otherwise counts them as dropped, so audit logging degrades under sustained database failure instead of exhausting memory.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L452-L475",
+          "version": "repo-lines-v1:sha256:b4813f83c701b6c7434257c9c77805dc820541f2be4ab9d1c57261c2321465bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhZDZkZGZiMDVmYmUyMTRkMTRlNzliZjE4NjFkZTNmOTQ1ODAwZjRlYjBmYjFiYTY2OTRlODIzMDEwNjcyYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwZGZmZWMxOGUwMTIwNDQ0ZTQ4MGMxZjcxMWMyMmM4YjE5MjE4YmM2MmY4Mzg3NGQ3MDI4ZWNiZGNlOWY4ODIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYjc0ZTEwMDFjMTYwZmQ4MTQzMjExMDNmZTQyNTE4MzQ5NTUzYmM5N2IyZDAxMzM1ZTRiOWY5NTFjOTk5YWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4c9388ab328c442385f4c5b8f6183672",
+      "statement": "Stopping the audit service flushes the remaining buffer before cancelling the background worker, so an orderly shutdown does not lose queued events.",
+      "evidence": [
+        {
+          "resource": "repo://server/agent/audit/service.py#L366-L383",
+          "version": "repo-lines-v1:sha256:a04811060dab35a4468f754308f8098d9b7a3b5a7d4bb91c10d4c5198e0e84e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzZTc0M2I1MzBiYjk1YWNmN2I0YzMzZDBiZDQ0MTVlZmExYThlNTZkMWY2NGJlMTFjYTQwZWYxYmVjMTJlMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkMGI2NWYzNTJjNTYzNmU0MmNjNmFjODYyODdmZjdmNTJjMDdhM2QyNmE3YjkyYjEyNWJkMTI5ZDdmZTg2ODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyZWI2Y2I3ODc5NDFhMDM5MDQ3MjljOGZhYTc0Y2ZmY2IxNTIwZjUyZTU1M2UzYTU5MTNhNTM3Y2RiZjlkZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5YTU1ZTBiNzdlNGIyYjc4YTEyOGU1YWEwYTJkMTc2Y2MyY2FlNDQ1OWUyMDc2ZWNiNmZhMTU2YmY5Y2JmZWQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

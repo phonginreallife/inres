@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9a8724a5d7d4d6fe5ae5bb891bcb37f9b9f75becf2768f0604fe21be15c0c7f8",
+  "claims": [
+    {
+      "id": "claim_b49b6a7de4f848319b1be6054e38c258",
+      "statement": "On-call scheduling is modelled as groups containing named schedulers, schedulers containing shifts, rotation cycles generating shifts by cycling members, and overrides substituting a different person into a shift.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/override.go#L21-L40",
+          "version": "repo-lines-v1:sha256:2c2494f5859fc284aac81f71adaef27b789d09a639d0664ab70541cd071c1bae:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjZjk3YTBhY2FmYzU2MDM5NTdkZmY0Yzc1ODQwMzc0ZjUwOWNiMDgzYzRmZTcxZDkxM2ZkNDhmYjQ3OTZlZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwZmNkMWQyOWNhNzU2ODE3YjYzYTViODhiOWIwZmZiYzljNjM0ZTU4MGJmMTdlMjcwMjkzYjM4NGNmZjc5NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlMzZiYmE4ZTEzZmY4MGJjMjdiYzU4YjcwNzE5MDNkMWFiOTVkZWI2ZDNhOTYzOTk5Zjc2MjlmMzgyNjI1OTcifQ"
+        },
+        {
+          "resource": "repo://server/api/services/rotation.go#L23-L40",
+          "version": "repo-lines-v1:sha256:b1dca6413543b40932716af8935ab5723f314fc2ab4ecb7290a4dd105ee71758:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiNzE0ZmM0NzJlZmNmZjE2ZWVlN2Q5MWY2YzIwYzA2ZGNlNTIxZjVkOWVkMDUwNDU5N2ZmNWM3OTFjMWQ3N2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY1ZmZkYTg5OWRlNGQyZmUyMzIxYzgzMTI4ZDQyZjc0YjQ0ZGFlMzYxMWRhMGYxMzk2MWVkZDY1NTBiMzlhY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwYWIwY2NlNTBlNWI2YWE5YTI2Nzc3NDQ1MTE5YWI4NWMyYTI2N2YwMTAyNjYxZDU5Mzc0ZjA2OTlhOTg1M2YifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L9-L30",
+          "version": "repo-lines-v1:sha256:a9b6b40e5094fd959b82aefb6acf54ffd73c14b05dda1fc46f48460909215264:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyNGE3ZmI4ZGZlMjkyNTEyMjIxZGI3NDFkMmRlYjc3MDQ1MzkxMjMwYzQ0ZmM4Njc4YWE1MTFiNDA3ZTQ4NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiYjUyNDNmNzA0YzBhNjE5ZGRjODI2NGU3MDQ3Mzg2YThlMzc2ODUxODQxOGRkNGM3N2E1MWEwYTdhZTY2MTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyOGJiM2MwNDBjNjcxMmVkMjEyMjU3ZThhMTNmMjNmYWM5OTIyZWFkNmI0NWM4NWM5MDYxZDE3YzJjYzQzYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI0YTliYTdhYTYzM2I3NzViNzUzNjRkMzI4ZDg2M2JlNGE3NjdkNGFiM2NlYzIzMmQ5NTUyNmZhYmM5NDZhZGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c4532824bceb4f9ba4a434d7b00fa2aa",
+      "statement": "A shift carries a schedule scope of group or service plus an optional service id, which allows a specific service to have its own on-call rota distinct from the group's.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/scheduler_service.go#L147-L160",
+          "version": "repo-lines-v1:sha256:8d3dca554cd2f44e83d1abe987a67eeb16f22d17df46abe8ca1e99d6fb63046f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmODM1OWMxYjhkMDRlODY3ODJhMTM5YjQ0NmJiY2Y5MGM0NTdjNzVlMzVlN2ZiYjRkZWUwOWYwYTY1NjFlYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwMmQ5YjQyNjM2YWIwMzg2MGFkMzkwNmU3MGFjZDI4N2NmYTIzODNkY2IzNzhlMzc5NzZiYTlhOTJmZDQ1OTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxNzBhYTA2ODgyNGQzNDE1NDU2OGY0NTYwMTE5YjhiYzJmN2VhOWQyYmExOWU5MTllNmNhOWEyMDQ1Nzk2YjcifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L60-L64",
+          "version": "repo-lines-v1:sha256:9dafcc924c8444fa8b072155e29bc55eafdb2c135721227590c47d5f2b22d14c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTAzMWMxNzQxZTg3MzkyYzY3M2FjYjEwOWNhYTZmOTNhOWJhZjZkNjQ0NmUwOWM4NjZiYjkwYzk5NzBhODg0ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDNlNWRhOTEyYmE2ZTEzZTcyODUwNGMwMTE1YjRiYzNmYjU4YTk4ZWVhYjRkMDk0NWI3ZjE1MzBhOTkwOTI1OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzk0MzA0NWY0M2ZmYmI5YzM1ODBhMzg1M2VlN2Q3Y2NmMTMzNzFmNzIxZjU4YjE5MGU2NDcyYjhhMTYwNjU2ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTI4MGY0ODczNWYyZDQ1OWFlNjk3ZmU0OTM2ZTY2MzcyNDk2YTY5MTU3ODQ5MDdlMzM4OTQ3NGU5NTRmYmJmMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_41f3ad57f11e4c2390ff9da6d03b9eaf",
+      "statement": "Override resolution lives in the effective_shifts database view rather than in application code, exposing effective_user_id as the coalesce of any override's replacement user over the originally scheduled user.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L9-L22",
+          "version": "repo-lines-v1:sha256:69c0b12341a75771b5834fcc08b89fc005efe773f87f08bbf6a08cdf304e8549:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyNGE3ZmI4ZGZlMjkyNTEyMjIxZGI3NDFkMmRlYjc3MDQ1MzkxMjMwYzQ0ZmM4Njc4YWE1MTFiNDA3ZTQ4NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMGNiMGJhM2M2MWM1Yzg1ZDI1ZmM0ODMxNDkzZDczNWY1MDY4M2ZmY2JkNGJiNzU4MWE5NzA5ZjRjNThhMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyOGJiM2MwNDBjNjcxMmVkMjEyMjU3ZThhMTNmMjNmYWM5OTIyZWFkNmI0NWM4NWM5MDYxZDE3YzJjYzQzYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiODVjOWZiZWFjM2EwZjNlZmE5MjQ0ZDVlNTAzZTM2ZDE5M2M5YmE3YThhMTE4NzM4Y2YwZTM5MDRiYjM3YmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_422dda1461004096a9bf4127114783b9",
+      "statement": "An override applies only when it targets the shift, is marked active, and the current timestamp falls inside its start and end window, so an expired override stops applying automatically without needing to be deactivated.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L70-L76",
+          "version": "repo-lines-v1:sha256:1f17da5da38b07644a8f2e6008bd92c456f67e63ece9c71cd9749b2d2036aece:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2E4ZDlhMmIwMDcxZDE0ODJmOGZlNzJlNThlYjgyMDA1YzVlN2I3Mzg5MGU0YTg1MWMwODY0ZGU3ZWFlYzQzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQ4ZmRmNTBmMmEwZDQ5NTFiZGI1YTMxZmZiN2ExYmM0YzkwZDU1YjdkMTk1NjExN2NjN2RlNGE5YTE3OGJhNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmM2MjQ5ZDAyMmEwZGVkNGJhMGM2NDRlNGIxMDQ0ODgxNGEyOWFmODJlODRhNDE4NjY1MjY5YThiMDZiNGM0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzUxYTVlYzA0NjBmMmU3MGUxMmJjMzFiNjM0YTI2YzViY2EwYTA0YzhiOWJlYTk4YTUzYWE0M2U3NjNiNDMxZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bf24d83e10642ba85a7a6c07b04b967",
+      "statement": "The effective shifts view filters to active shifts belonging to active schedulers, so deactivating a scheduler removes its shifts from every on-call answer at once.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L76-L78",
+          "version": "repo-lines-v1:sha256:ffc0ad5cc2a40e3ef4884a0abe6a638f62441b4d211bd9f90cbfe59595a69505:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQ4ZmRmNTBmMmEwZDQ5NTFiZGI1YTMxZmZiN2ExYmM0YzkwZDU1YjdkMTk1NjExN2NjN2RlNGE5YTE3OGJhNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTU5ODkwOGVhYmMzM2QwN2M4Y2ZlZjUzNzgyMTE5NWIyNDBkNWI4Mzc2NTM2MTczNGY1ZDhiMDhlYzQ0NmEwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzFmNDcyNjM3NmIzODAwZmFkZTVhMDY4NzU1YjA1OTU1OTE0MjEzMGZkNzYzNTU3NTMyMjRiMDE0MDVjZTAxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDExNGJlZjgzMTI1ODMyNGIwY2Q2NmZhZWRhMTc3OTFlNzI1NTcyOTg0NjZkMTY1NTg0OTc4YjNlNzUzOGJjYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_967d4c661336460691793424ccaec0e8",
+      "statement": "The view distinguishes a partial override from a full override, marking is_full_override true only when the override window entirely covers the shift's own window.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L28-L34",
+          "version": "repo-lines-v1:sha256:a866a23bca3a09209ff9ef8d7d3e1adb4d675757720e52141e09eb20a440676f:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjNhZDhlODUzNDlmZTExODE5ODg1OTc2ZWY5NmNiZTNmNmY2NWMyODhiMjkwNzEzYWNhZGJkZjlhOTI4MDM4OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWY5YWQ0ZGViOWJjNWU3ZWE1YmIwOWYyN2VhZmRmN2U0ZGQ5ZTY2NTgyYmM5OGJmMTJlMDgyNWYzZDBmYzhkYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjFhZTgwZmYyY2RkNjQyZjQxNjlhMDFmMmY3MDk0YjM2NDA4NTlmZWI1MTdlOTJjZThlMGRhZDMxN2NiZmUzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmRhMzk1NmQ3NzM1M2Q3MjUxZTY1ZTNlYWVjMjYyOTE1ZjJiNzQ2MWU3MjNlZTY5YTEwZTM4ODJlY2IxZGFhMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0f87a37e47d64549bf14e5b497bb08ae",
+      "statement": "The view surfaces the original and replacement users separately while coalescing the generic user name and email fields to the effective person, and its own documentation directs callers to use those fields for assignments and notifications.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L36-L56",
+          "version": "repo-lines-v1:sha256:82c2d1ac16d1ac1ee35deac0484c354b5f0435447b6507d4807475161368bc19:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NzNiYzkyNmZhMjM0MTIwNDhlYzc4ODBhNGNiYjFiZGE1ZTFiMDZiODQzMDE0NTBjOTEwOWM0ZTkzYjkwOWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwOTY0MGI1ZTRhODI5YThhN2NiNzQ5NDY3MmJkYjE1ZmZhODZiYjMxNmM4NWMzMTA5Mzg4ZWU5YTNiZWFjZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5ODIwZTkyNmRkZTUyY2ExZGQ2OWY2MWVhNTFkYjM0ZmQyNWU4MGQxMzhhYmU2MTMwN2MzZjZmM2YzNTllYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5NDMwNDVmNDNmZmJiOWMzNTgwYTM4NTNlZTdkN2NjZjEzMzcxZjcyMWY1OGIxOTBlNjQ3MmI4YTE2MDY1NmQifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L80-L92",
+          "version": "repo-lines-v1:sha256:404931b7640dafb5bb8f5192171f2ff18cce7615f61a63e2122b0858922d6d5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhMzI5MWY4ZGY5ZWRjZmNiMTU2NzI1NmMyODM1NmM2ZjI4MmM0MzZlYzVmOTkwMGU4MjFmYzVlYTY3M2ZkNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1MWE1ZWMwNDYwZjJlNzBlMTJiYzMxYjYzNGEyNmM1YmNhMGEwNGM4YjliZWE5OGE1M2FhNDNlNzYzYjQzMWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2Njc4YzA4ZjllYTY4ZTc2NmY5OTljOGM4MTM0MDk5YmMxMTUxM2I4OTJmODUxZGUwMjlmNzIzZTNlNjYwYjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1bf09a6af3874bd59b6dbc9bce4de186",
+      "statement": "Consumers that query the effective shifts view get override-correct results without any override-specific logic, which is how the escalation worker resolves the on-call user.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L456-L475",
+          "version": "repo-lines-v1:sha256:1a72392b05cae3609332a33dab26b023cfe3d5dd283d87771ceeeb6cab3342ca:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzYTliY2Q4MTNmNTI0NzI1NzVhMzhkMGVkMGM2ZmI5M2VhMzdmYTg1MjAzZTdmNzAwZmYxZjk5ZGI1ZDRmNzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxZjE0Yzk3ZTUwNjE1MmZkOTk5NjNmODlmNmFhZGNhNTA5YjY1ZDk3YTNkNTY4ZDgzNmY5NzBiMmViMTYyMGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljNWZmMTI0OGM0OTY4Mzc3NjgwODhmODgxOTAyYTc1NDRjMGIzYTliZWNjOTE0MzU1YThlY2QwZWU0YzExYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhMWM4ZDUzNDk1NzcwMjA2ZTgyMjdjM2M1MzE3ODk2MjNhMmIyNjg1Y2M1ZTIwMmY4MjMwOTk3ZjBhOWQ1NWMifQ"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L80-L100",
+          "version": "repo-lines-v1:sha256:001bd12bc333c78995b33fed94c99b55b1cdeee91a06290e2df510efda09d6af:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzY0ODcxM2E5MzI3ZDAyYmU1OTVkNTBhMzZiMDRiMDRjNWFhNDBkZGEwNjFlZTViZDVkNmE3YWIyMDFmMmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1MWE1ZWMwNDYwZjJlNzBlMTJiYzMxYjYzNGEyNmM1YmNhMGEwNGM4YjliZWE5OGE1M2FhNDNlNzYzYjQzMWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0YTlhNjRiZWU4ODEwM2M1ZDc2YzNhYjRiMzNhNTQ0MjM3NjczZWFlYzg4NTNiNDcxOGUxYTBhMWY0ZWQ0MDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb6da1a3ecfe4bc292cfdfdd2a976bb2",
+      "statement": "Code paths that query the shifts table directly rather than the effective shifts view bypass override resolution and return the originally scheduled person even while an override is active, which is the case for both the scheduler service's current-schedule lookup and the on-call service's current on-call user lookup.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/oncall.go#L66-L95",
+          "version": "repo-lines-v1:sha256:a714bcd4b6cb9b862d03f62733ceac53cfe5c488662d31b9bc642769802f058d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjNDBlMmNhM2E3ZTVkMWJlM2M5ZTIzZDI3NGM0NTQ2ZDU0MjQ0ZjVmMTdhODgyMTE0MmUyZWEzOTk5OTcyZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExMTczODQzNGQ0ZmY2MmU1MWEwYTEzN2E4NTI3NDkyZGM0ZmY4NTg2OTY2OWE2MTE5YTMzZWZiYjU5OTE4ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0MThhMDk1ZjNmYzgwY2Q5NTM1NTk5ODYxZGM1MDUxY2YwNzQ1NzcxM2Q3ZTM0MTgwMGEzNzdjNzI0OWJmM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjljYTIxZTJiZjA2NTUwMzc1YmZjMjc1MWFkMmRlZjdlYzZkYjc3NTZlYmY0ZmY1MGRiNzRhOWQ5MDcwMzY3YzgifQ"
+        },
+        {
+          "resource": "repo://server/api/services/scheduler_service.go#L215-L250",
+          "version": "repo-lines-v1:sha256:64c28cf1c7c0bfd41b29ae1dce5a2f6eaec569c2b19b718766adb65e37389b50:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZTJlYTE5NTkzODVkNTljNWZkOTg5NThhYTkwNjg0ZGUwM2E3OTI1YWFmYmJmZDJjMjgzOTIyNTE3Yzc2ZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwZGE5M2RhYmE2M2VjMzU5MWE5ZjQwNTNiMjI5N2JkZjJkYWM0ZjEzZGNjNTliZjU1MjUyOTY3NjgwYTQzMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiYmViZGQwNTJlYTM0MTNiZDEyNjU3YzYyNWIzNTEyM2I3YmJmZmFiMTlmYTM5MGE3MTNhZDMyNDlkZWJkZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f5500ece95d34d09b538e72579d1fe67",
+      "statement": "Time comparisons for on-call resolution are evaluated by the database using CURRENT_TIMESTAMP and NOW() rather than against an application clock, and both Go entrypoints set the session timezone to UTC so those functions evaluate in UTC regardless of server locale.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L53-L60",
+          "version": "repo-lines-v1:sha256:847f227da91766ae0d9a5aed1186de2f2795c699c08b77798c5a240d112f7c34:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDBhZDVhZDYzOThmNjgyYWEwYzY2M2E4NjI1MmRjOTE3MjJjMjRlMmViMGJiMDA0ZTJhMDU1YTRjOWUyMjZmYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2ZjNzJjNjc2YTU3OTNkMjI0ODhlOTc2ZmRiNjVkODdkNDczMDJiYjk2NGMyYjM1MTY1NDg1ZmNlMjI1YjhjZiJ9"
+        },
+        {
+          "resource": "repo://server/api/cmd/worker/main.go#L42-L49",
+          "version": "repo-lines-v1:sha256:cc69ab914f2f135843e41424c747403ff2fb21acc44e072629b47de453ee7414:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmI4ZWNkOTdlOWQwZmRjMzRkNjhhZTQ2MWFkNjUwOTMyNTg2ZGFhOGVhMzVmYTBlZDFmNDIyMmViMTFiY2JkNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzYwYzQyMzE2MjFiYWUyOWY1NmJlMGY5MjhiYTgwZTc1MDgyODc4MzBiZWI1Y2NhZjYxYjU0MWViOWJiMDJjMSJ9"
+        },
+        {
+          "resource": "repo://supabase/migrations/20251017163508_create_effective_shifts_view.sql#L70-L76",
+          "version": "repo-lines-v1:sha256:1f17da5da38b07644a8f2e6008bd92c456f67e63ece9c71cd9749b2d2036aece:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2E4ZDlhMmIwMDcxZDE0ODJmOGZlNzJlNThlYjgyMDA1YzVlN2I3Mzg5MGU0YTg1MWMwODY0ZGU3ZWFlYzQzOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQ4ZmRmNTBmMmEwZDQ5NTFiZGI1YTMxZmZiN2ExYmM0YzkwZDU1YjdkMTk1NjExN2NjN2RlNGE5YTE3OGJhNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmM2MjQ5ZDAyMmEwZGVkNGJhMGM2NDRlNGIxMDQ0ODgxNGEyOWFmODJlODRhNDE4NjY1MjY5YThiMDZiNGM0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzUxYTVlYzA0NjBmMmU3MGUxMmJjMzFiNjM0YTI2YzViY2EwYTA0YzhiOWJlYTk4YTUzYWE0M2U3NjNiNDMxZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_82d36dbf059c4f2884f7f8cd2336d9df",
+      "statement": "Override creation coerces an unrecognised override type to 'temporary' rather than rejecting the request, while rejecting an end time that precedes the start time.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/override.go#L36-L46",
+          "version": "repo-lines-v1:sha256:ec4ef35112fedcecba229a117f9868c3f58efb2ae698a6d0e0efeec6a4b0c7ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNDg0ZTcyMWYwMWE5ODlmMzBkMjUyNGQwYzBmNDA1NThkMWQyZDIxYzIwMmU1MzJmNWQ1NWViMmM4MjFkNmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwZGM0YjVhM2UxMDYxOTI4ZDM1N2NiYzcwMGYwODZhZThmY2VjMjdhODIyZmM1NWIxMTdjMDIzN2RiMDlkMTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNTJkNDVkZGY5MDBkZmNlZTAxMjRiYTFmOTBiZmM0ODA0OGYxOWJhNjA4ODk5N2VmZjczYjc2YzY4ZmQ1MWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1OWQ2OWQ1NWUwZjRkYjI2OTkwNzJkN2U2NTI5MzA3NmM4ZDJlMmQzOGQ3MGI2MWExODA1YzJiYWJiZWM0YTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_79d89178e3a64e009e293463c60c2fdc",
+      "statement": "Override creation reads the group id and original user from the referenced active shift rather than trusting the request, and rejects an override whose replacement user is the same as the originally scheduled user.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/override.go#L47-L60",
+          "version": "repo-lines-v1:sha256:a834f20703a9dd77b96485772c01bc67d93c069aad44a8cd388180c6a68e1cf6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxZTZhM2I3YzRlZmNiMjBlMzNkZGZmOWQ4OTkyYTdjZmIyODZmZTIwODk4MzNjOTZkYTM3Y2JjODBjNTRkMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhNzhhMTc1NTFiOTQ3MDg3YWFlZDgwMzcyZGMzMmFhZmNhODBlNzBhZmU2ZWJiMmE5NTNjODZkYTAxMTNmZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiN2NmNWQwODRmYjA1YmU0OGMzOTIwNGUwMjQxNTBlZDY0NTNhZWFlMWMyOWMzNTc0YmYxMWQxYjY0N2E4YzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ef9d6cea53db41a098cdd16b9722f808",
+      "statement": "Failure to resolve the replacement user's display metadata is logged as a warning and the override still succeeds, so presentation data does not block a coverage change.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/override.go#L75-L88",
+          "version": "repo-lines-v1:sha256:a73965a427252527efa971ac4a6b67bdd90b9254d0c8949e3da20d76578975c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhZDJkYTY5ZTBiNzUwNTM5ZWI0YTU5MzJjMDAxMWJiZGFiMTRjYzdhM2RmYzRmNTA1ZTU0YTE5NTVkZWU1NDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkMmM2YzhlZGExODg4OTkxOTJjNjE3MmQwNWVmMWI1ZjYzNGFkZDU4NmIwYzA3OTgzMGFmZDlmMzhlOTQ0OWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFlZmJmMGYyNGNlNjI0ZTQ4MWNlMThhYjI4MWU2ODBhZDZjNWZiOWVjZTgxMzUzMTE1ODMzMjg4NTY4NTA3ZGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_18f57a8a30ab4fe494120d630ce10456",
+      "statement": "A shift swap runs in a transaction that updates both the shifts and the underlying rotation cycle membership, so a regenerated rotation cannot later undo the swap.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/oncall.go#L512-L530",
+          "version": "repo-lines-v1:sha256:0fb07bfaec89541cb0d69c7b20d2398d261fa9b65f23d240ced9b141296d4572:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhZDY0MWJjMDUzYzc4ZjRkMTU5MTJlNWU0YzZmZDE1Y2VjZmZkMmZjYmZmZjFmYzczMjlmYTEyNGNjOGRlNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3MDFhN2MxMGE1YTBkNjk1MjNmZDY1ZjU5Nzg1NDU3NmY0MWU1MTdhNDU4NzM4MzdiYmM1NGNlMTQ0ODc1YWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmNTViYjQ2ZTBkNjI0N2NjMTcwNjU0M2UwMWFjODIzOWY3ZWJhNjE0ODkxMjZjYWE5MGJkZTI1Njg5YTE2M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjMGFjZGY3NmU4ZDBhYTk1ZGQyYmE4MDlmNjhmYWYxNDk0ZTMxZjZmYzhmYzg0NTk0ODg3N2I0NjkxYTgyMmIifQ"
+        },
+        {
+          "resource": "repo://server/api/services/oncall.go#L612-L660",
+          "version": "repo-lines-v1:sha256:a53c1a3dbee23f4d025d8a5dd2e50463b4830654521fd4bf81292beb2c35d628:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MGQ5MzkzYzg1ZGVkMWE2ZWE1ZTQ4MzkxMzI4NjBmNjNmYTA2MjBiM2VlNDcwMmI2NWYzOTdiYmMxYzFkNTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5NGJmZDVkZGQ5NDExOGM4NjdlN2IyMWQ4YWI5NThhMWU2YTJkMzZhMGE0MDliY2NkNTkxYjhhNTQ2ZTFiODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjMTRhNzhmYWExOTFkNmQzZGRkMWUyYTk4YWQzMmYwNjM4ZjkxZmVmYzgxOGYyODE2MmYzYWIwM2ViMzg0MGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzMjE4NGNhNTFiMjA4ODFjOThkYmIzZjkyOTEyNTgzZjNlMjdlMmE5NGI4OTUyYzg1NTNlNGJhNTc2MTVmYmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf2652325c84410abe9bc8bd61988233",
+      "statement": "Overlapping shift detection accepts an exclusion id so that editing an existing shift does not report a conflict with itself.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/oncall.go#L408-L425",
+          "version": "repo-lines-v1:sha256:e1fbd30a9c15869c26adefd63bf8a9eaeb043e0f94aee314070f4099906b4be1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNWJmNGRjNzVmM2ZmMWYxNjNiZWVkYzI1NzFlNTZhMDg5MDk1NjA2NGQwMTgwOGMwMzdkNmI3NWY4MDExOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmNjg1OGRiNDQyYzkxNTYyYjAwNjBjYmQ3Y2NlM2M3ZDlkODhiZWYyZTNiMTZiYzUxMWE3YjZmYmE1ZWUzY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkYTJhNGZkMDc5YjNlZDM4Y2NhNTk3ZThhY2JmMzA3ZTQzZTQ5NDRlN2ExNmFmNzZjMmY2OTQ3ZWU5MWY4ZWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1Mzg1MjRkYzg0OGMxODhmMWUxNWYwZmY3MTFlMmM1M2ViZDNlYjM2M2NhZjAwMmEzN2FhMWVjYWZlZjU1MjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9520f2a75f2249fa9fb86bbc23a7626b",
+      "statement": "Rotation cycles support forward projection over a configurable number of weeks for preview, a current-member lookup, and deactivation that retires a cycle without deleting its history.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/rotation.go#L203-L220",
+          "version": "repo-lines-v1:sha256:473e688bbd25980208f899fe975ee6235dbf8e8191d5c36914f1901f9c21d6fe:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjMDhkMDllNmZhNjYzYjdjYzE1ZWRkODc4YzFhYzFjY2MzNDBiZjBlMTczZWQyOGZkZWI2YWYwZTEzZjE4MWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjMTFjZTcwYjE3Mzc3OGM2ZWYxYmVjZTA0MzBkYTY0NDBmYjk1NzkyYTFjNzUxOTFkZDdkMjY1ZTAzYjhlZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2MWFiZjlkNzU1NTljYjY1ZGRiMjU1NGViY2NjNmY1YWNiNWQxNGY4NDI1OWZmMDQ1ZjI0NTMyZWE2YzEzODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQyYTY0YWZiZGJmMTEyNzZjMGViMDA1YWRhZDU2YmEyZGI0ZjkwM2U1Y2Y1MGZlMDEzY2FhYTQ1YTFkOTAzNDEifQ"
+        },
+        {
+          "resource": "repo://server/api/services/rotation.go#L306-L320",
+          "version": "repo-lines-v1:sha256:201bc680460285617cc5c59b08519b926848bce88886192feda4ca7132c0fc60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNTYxNGE3MTdmMzdiYWZjNzkzYjk3YTVlYWRhMjc1NjVmNWFiMzQ0MDhlY2I0YzEzOWE1M2JmZjYwM2RkYTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhM2UzN2JiZmRjM2I4OGJhNjkwZGM4OGRiMzQwYmFmZDA3MTNhMzFmOGQzY2Q0NmM2NTNhODA3MDkwMDYzZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0NmEyOTYwYjNjMzU2OTVlZDAzZWE2NjM1YWU4MGFlMzcwMzVlODg2YzgxZjg2ZjI3YWJmOWJiYmE0NGFiYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2YmNiMGNhZmU4MTNmNTRjODRlMDRmMDY5MGI2MzEyNTA1N2IyZTcxZmUyMjc3ZjczNzE0MWM0ZWJjZGM1M2QifQ"
+        },
+        {
+          "resource": "repo://server/api/services/rotation.go#L363-L375",
+          "version": "repo-lines-v1:sha256:6a5f410621057a22e7d4e4bc6d25ab8b866927aad704d6d0795b6378f706e56b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2NmJiOGE2NDZiYmZkMjRlYzIzODNlMDRhMGJkMDEwZGQ4NjNlOGJjZTQ1N2ZlMDFiM2UyMTcxYjVlMGMwZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxZTgzZDE2MmFlNDdmNmE3NGZiMzg4Y2MxYWViNDk3NDRkMDhlYzg1YWZmMDVjMDU5MGM4NDZiYTQ2ZDRhYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0ZjMwMjgxMGEzZDY2OTAwZTEyZDJhYjJhYjU3NDNhMGUwNGQ1ZDA5MjJkOTM3YjI3ZGM0NTNlZTk2YTMxOGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6779b39b690a4c1f816ac2913fa5fd73",
+      "statement": "Service-scoped scheduling resolves with a two-tier fallback: a schedule scoped to the specific service is used when present, otherwise the group-wide schedule applies.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/scheduler_service.go#L198-L213",
+          "version": "repo-lines-v1:sha256:c74f2a1ded9388e52815329ff64d1ee7d5cfb71924b0b52e914c733025f7de17:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkxOTVkMTlmNGU3NjljZjlkNWNkNWRhZjE1ZDIxNDFhZWY0ZDMwOGQwY2Q0ODZjN2U1ZTQ5MmFlYWZjNGM3MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2NTMwOWYxOGQzNzBkYTc2OTdiY2Y3YzI3NGJhZGEyYmZkNjk0NmE0NzJhNmY3NjU0MTRiZGMzODVkNDI2OGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwNTEzNjM3OWNmZjFjN2M0NTY1M2JkZmEwNDMwMmY2OTY0NTIwN2U4MTI4ZWUzNjNiOGVkNDhkODRiYjM1NTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc056a4660224433b902f8df03f18c50",
+      "statement": "Two scheduler creation implementations coexist and are both routed, with the optimized version registered as the default and the original explicitly labelled a legacy fallback.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/router/api.go#L450-L455",
+          "version": "repo-lines-v1:sha256:f812985fc25e6147d36e40cab3506e651c2ee07b21604bdb89c22c53faa41783:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWJhZGY1Mjk2OGM4ODlmMmRkMmE4NWFiMzAxNjRhZTE0NDUyYjg0ZGJhMjBlMzU4ZmJhMWY1YWExMzdiZDc0ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzZmMzg1MWZjZDkyZjM2MjBkNTNkOTU5YzA0MGZiMzU2MjI2OWY3ODViODU1NzYyMmQ5ZWQ0ZTVlNDQxNTFmZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzViNWE0YmJiNGFhNzZjZmU3OGZhZTk1YzkzODhiNGE3NDAxNmZhNDcyNGFiNGE3Yzk4MDc3ODg3NjU4ODNkMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGUwMTFlYjg0YzExMTdiMjVkZmE0MmZkMzJhZDkwZjAxODNiMjk2ZmY0OGZlMzNmZWUxNTIzNjExODAyNTIwNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f4a1ff13139d42599e67fdd1e39ad7e1",
+      "statement": "The optimized scheduler creation runs inside a single transaction applying two labelled optimizations — generating a unique scheduler name in one query, and inserting all shifts in a single batch statement rather than one insert per shift.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/optimized_scheduler_service.go#L23-L80",
+          "version": "repo-lines-v1:sha256:caa838a3494795be7dd5bd99b2565034f8f0bf90ab893d7e159ac133c8dd990a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5YmQwZDMxNmZlOWY0NDc3ZjAyNTAwMGU5ZjM4Y2E0YjUxYjczNjIzMmRiZGI2YjBjNTJkZDA1NDNlYTAxMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5NjhiNWE4NzdjYjgxMWJlZmZkMWU0NjMyYzVjN2U5YWQ2ODA4MGZjYWVkYjVhYzFkN2MyZGI1ZjJjODE3MGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI0MWI5YWE0MWQ4MWM1ODdhNDQxZGJjZjI3M2IxZjJiNjE3MTczZWM5Mzc2ZDRjNGU2ZTUxYTEzYTAxNzg5MmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_26ef322b173a406c9d853ba7c4450fd7",
+      "statement": "Dedicated endpoints expose scheduler performance statistics and a benchmark that runs both the optimized and original implementations over a configurable iteration count and compares them, so the legacy path can be retired on measured evidence.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/optimized_scheduler.go#L109-L145",
+          "version": "repo-lines-v1:sha256:c278f47c2fdb0ce0008ad0f4216d89259c38ec02e44958620b5ad6ceb2fd8755:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjMzQyMGU1ZmI4ZmVlZDIwM2RkYjU2MzFmYjhjYjRmYzA3ZTRiODJkZjNhNjQyMjk4YzA5NDEzNjI2ZGQ3NWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkN2IzZTNmZjExNjQ1NmZiOGQzMWQ2ZTliMWE5MTYyYWY1M2U2NGU0ODIyNmNmNzNlZTRkMjA4ZjI4N2ZlNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzYzhjODdlNTc4NGY3YmM2ZDRhNTJkNTQ5YTdkZjQ3MGY5MmExNGNiYTdkNzkxNWI5ZWFjZWM5M2Y2NjUxNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0M2UzMzUyMzc5M2Y2MGYzY2I0OTQ3MTc3ODkyNDVmNGU0N2ZlZDI5ZDgyYTMxYWIxNjA3YTg3YjM0NTEwMzkifQ"
+        },
+        {
+          "resource": "repo://server/api/router/api.go#L453-L456",
+          "version": "repo-lines-v1:sha256:316a85b815aeb399451f902c8ac7d8404fc35c67a42db266257cfb97e3b880a8:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2M4NWQyYzljMTk4NTQ3MThiMWJiYzYxYWEwM2FiYzdhYTYzYTNmMjU2YTg3NmFkZDA4M2NhMGRmNGVjMmUyNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGVlMjg2Mjg0MmY0YWMyMjllZTg4ZjQ1NTcwYjZhYmM2MGIyYWYwNGM5OGE5ODJkNmJlYzM5YmI2MTM1ZmRhMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDM2Nzg0ZjQ3ZWZhODM3OTJkMjMxMzZkOGZiM2FiZDBmMTcwMzJjZTMxMmU0ZTgzMjM5MjQwNDlkNGI3OTUwZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjA3NTQxZWY5YmFjN2U0OWU3Yzc4N2I5MGVlNmFhYTk5MzAxZTFhOGVhY2MzMzQ3YzdjMzUxNTZhZjkxZTQ4NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6471321d72dd4bd9a18cec355bae1fd4",
+      "statement": "Composite indexes covering shifts by scheduler, group, user, overlap window and service are all defined as partial indexes predicated on is_active, so they index only rows that can appear in an answer.",
+      "evidence": [
+        {
+          "resource": "repo://supabase/migrations/20251017080005_add_scheduler_composite_indexes.sql#L1-L40",
+          "version": "repo-lines-v1:sha256:04595447dbff17861da435c548dcb0e3d5ab7f8175920fb944e0b770221afadd:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0NWJkOGNjOGJkOGYwOGU4NmE5OTY4ZWE0OTg1MGUyMjc2NTNiMTE4NzU3M2E1MDRhZWFmMjBmNTc3OTc5OGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlYzNlNDZmOTVjZjkyN2VhMzZjNWQxMjk0MmExYzZiMzAyYjBmYzhkMDgwZTU4MTdmZjA0YjUyYzU3Mjk0MDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkyMDM5MWNlYTdjZGZiZGJhYzg4MGU2OGE3NjU3YTgxNWJiMWFjYzk2OGQ5NTYxZjg1MzVkNWEyNDY0YTdiZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f6938ea3bd4440a58aa260c0cf36c849",
+      "statement": "A group's default scheduler is created lazily on demand, so a group can be scheduled without being configured in advance.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/scheduler_service.go#L588-L605",
+          "version": "repo-lines-v1:sha256:7afe5e862f8579991dea57cccf8dcdb48845e617b45e45c5b379fad42c94776d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5YjUyYTI0OWQ3MGNjODcwNGE3NjQzZmY2NDEyMTZlZmQwMjk5NzBjNDI0ZDY1YTk2OGNmZTRmZjAzNWU3YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzNmEwMDM1MTZhNDRmODRlNDU3NTA1MTk0MGMxN2VhNmM5YThiY2VmYzU5YTZhYzVmMTQ5YTE3YjAxY2QyNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0Y2YwN2ExNGY4MWZiZGQ1MTkyMjFjYzJkYzFmMTk1MDkzMjc2OGIzZTc0MzY0NGViODczOTJlYzdkNTRkODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2Mjg2ZjkxZjcwZjMyMDZkOTY0YjZkMDcxZDVjMDEyNGNkNmE4NDA5YzIyZDIzYzZjMjUxYzEwNzg2ODUwNTMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e864d304b02117fa6221c5df2c5401f215258a014f143b497ea4c4273ee3ba99",
+  "claims": [
+    {
+      "id": "claim_7f347d0f43ee4b058f7a1043cc29702e",
+      "statement": "An incident occupies one of exactly three statuses — triggered, acknowledged or resolved — alongside a low/high urgency, a severity, a P1-P5 priority, an escalation status and level, and an alert count.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/db/incident_models.go#L185-L207",
+          "version": "repo-lines-v1:sha256:c063cd75ea198d8cb30afecfd237af0f4a43ef0180412eb3145bd19fa64e5fd2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiYTYzODE5ZmM0MzljMWM3M2QxNmI0MzIwMGUxMTFlYzExMjhhZGE5NmE1NmFjZDhhYjgxY2E3YjMyMmZjYjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkYmZhNWNmZjg3Nzc3MTY2ZTAyMDg4Y2E4YmIxZmY5YWI2MzAwNDhiNTg0MTExN2MzM2JhODQxMzA0ZDJmZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ1Y2JlYTRjMzhlZTAwOGVkZGZmY2YwZjQxMGQ2YmEzNjU4ZmIzOTIxOTg3ZDk2ODlhZGJiMjhjMDA0NjdhOWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_06176ce6d9d14799ba71dcf27369e6a6",
+      "statement": "Acknowledgement is guarded in the SQL WHERE clause by requiring the current status to be triggered, so an already-acknowledged or resolved incident cannot be acknowledged again and concurrent acknowledgements cannot both take effect.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L985-L996",
+          "version": "repo-lines-v1:sha256:49519d6362ccae593d485d57faf2ff7c915f96a903e136a67e6a5295f3bd5960:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiMWE5NTM2MTRlZmU3OGMxNjE3MDM1MTk4MDdiNWZiMDJmMGI3NGMzMGVjODczN2Y3OTVmODhlMTQzNDgzNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmNTcwZmMzNDk5NDEzNWUyOGNjMjVkODdjZDBkZDM0NDVlN2E2NzcxM2E5MzY4NTMwYzViMTUyNjJkMmVjYTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlZGVmZjg5ZmJmZGE1MWQ2MDBiMWExYjQwZGNkNDkyZTQ1MzEwNWFlOWQzZDEzMDU3ZjZmNjhjMjM5NmVhOTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_27d06ce7e6bc4f7184d653b4f48af84d",
+      "statement": "Resolution is guarded only by requiring the incident not already be resolved, so an incident may be resolved directly from triggered without first being acknowledged.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L1020-L1030",
+          "version": "repo-lines-v1:sha256:b05d246acc7281a6e1f7b51fa1275b37089d3d0a36d542b9920483555229b1b4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2YmVkZjliMjU3YWEwYWU0NDJkMTBmZmE3ZWU4ZWYwYWI0NDAyNDczMDhmYmQ0ZGUyMjQzMmE2YjMyMGM3N2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzMDViMTBmMmVmZmQzYWVkYTJjNTBmM2I0NzQ3NzE3YmZmNDkzYjM0ZWYyZTdmMzEyZmQzOWEzYjU3MmQ0MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwOTU5YTVlNTZiODRlMzc1YTYyMGVmNzBkNWVkOGM3YjFhOWY0YmQ4YTc4MDQ4NWU2ZGM5NjZiMjUyNTRjY2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5b3c1e31858c4751916e77213a63d843",
+      "statement": "Resolution timestamps are written as NOW() AT TIME ZONE 'UTC', consistent with the UTC session timezone both Go entrypoints set on connect.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/cmd/server/main.go#L53-L60",
+          "version": "repo-lines-v1:sha256:847f227da91766ae0d9a5aed1186de2f2795c699c08b77798c5a240d112f7c34:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDBhZDVhZDYzOThmNjgyYWEwYzY2M2E4NjI1MmRjOTE3MjJjMjRlMmViMGJiMDA0ZTJhMDU1YTRjOWUyMjZmYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2ZjNzJjNjc2YTU3OTNkMjI0ODhlOTc2ZmRiNjVkODdkNDczMDJiYjk2NGMyYjM1MTY1NDg1ZmNlMjI1YjhjZiJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1021-L1027",
+          "version": "repo-lines-v1:sha256:87359958b824f798e370a0f10f769896b8f7352d97cbef3b8142979b3c2fb3c3:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDhkZGZlMTFlYzYxY2MyMTMxZjg2YzMxZmRjNTlmYjUxMzk4MjExNTBhYjk4YmQ2NTc4NzE5MTU5NTlmOTJlMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmUxYjQ5ZGM3MmY2MzI2M2RjNGY4MWRkMjFkZjNlZGJmZTY1ZTk2NWU3YWYyOGM0Mzg4YWYyNzQ1OGVlNjBjZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTdkZGVlNjMwNTQzODE2ZDZhZGQ4ODhiMGNlOWRjMWEwNGQyYTk2ZmIyMjc5ZTA1NTcwZTc3NTY3M2VhNjA4NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjkzZGE5NzZlZjk3MjIyYjg5MTkxODkwZTg4ZGViNjQ0ZTE4YmRkMzA3YzlhMWUyZDMzOGUwNDZhZmVhMDllZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4b332daaed9f44e890f0801517251205",
+      "statement": "State-transition updates do not check whether any row matched, so acknowledging an already-acknowledged incident returns success while changing nothing, yet still appends an event.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L985-L1003",
+          "version": "repo-lines-v1:sha256:328ab3cfb5544c6f258998b0789444be14ef37308ec2137d24c1acbe96d479d8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiMWE5NTM2MTRlZmU3OGMxNjE3MDM1MTk4MDdiNWZiMDJmMGI3NGMzMGVjODczN2Y3OTVmODhlMTQzNDgzNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmNTcwZmMzNDk5NDEzNWUyOGNjMjVkODdjZDBkZDM0NDVlN2E2NzcxM2E5MzY4NTMwYzViMTUyNjJkMmVjYTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkNWZiNzc5NmQ4ZGE2YzcwYzc0NmQwOTU4MDAzY2ZkMzMxNjI5ZTcwYmU3Y2M5Y2MwOWNmMTNmZTFmODc1YzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad14ad27b3484ebe812af93647bb6be8",
+      "statement": "Incident history is an append-only typed event log covering triggered, acknowledged, resolved, assigned, escalated, note_added and updated events, each carrying a JSON payload and an author.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/db/incident_models.go#L199-L207",
+          "version": "repo-lines-v1:sha256:ba0bd605227e9f1526d5054c81e917db37abddd92df788cdce749153d1716a49:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDdiMDA4OGVkYTA3ZDExNjkxYmE1OGJiMDBhMzllY2Y2NWE0MDE0OWYwNWU0NGY2M2U3NmJkOWU3ZWQwMGM5OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGJhNjM4MTlmYzQzOWMxYzczZDE2YjQzMjAwZTExMWVjMTEyOGFkYTk2YTU2YWNkOGFiODFjYTdiMzIyZmNiMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWI2Y2EyYzAzZTM3MTFjMTUwMzJlNTQ3ZmZmMGMwYmEwNjlhZWMzODQyMmM0MjEwZDFlYTFjNDk0MTUxYjNmOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDVjYmVhNGMzOGVlMDA4ZWRkZmZjZjBmNDEwZDZiYTM2NThmYjM5MjE5ODdkOTY4OWFkYmIyOGMwMDQ2N2E5ZSJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1154-L1170",
+          "version": "repo-lines-v1:sha256:72dc337f192f5c810de03d10ae355f2b6a4122ae1a312a1fdcc77cae19d56fc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZDM4NTM3OTIxNTllNDkwMjRkNzMyMTliZGQyMjA3NjYwZTRkNDc0N2ZhMGVjMGVlOGFkOTZlMjQyMDgxZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwMTg3ZDQ2MzQyNDc3ZGE5MjI3ZGEyMDZlNjM1NjFmNzgzMDQ0MWJmYzg4MTAzYWEzNGViYmQxNjUzNjk4NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIxMTgxMzQwMWUyNmI0MTlkYjVlYzAwNzExNmViZDhjOWZmODUzYjAxZWQzODkxOGIzOTFkNmM0YzNlNTQzNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExZTcxOTNiZTNhYTYwYTg0ODU0YjMwYzRiOWY4YTFjZTE0MjA3MDk2M2I3NWQ5ZTMyOTMzZGUwMGZlZDJkNjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_982ece5e9dff46c6b65cdb6b76726077",
+      "statement": "Event payloads denormalise the acting user's display name at write time with a fallback to the raw id, so the incident timeline remains readable even if the user is later renamed or removed.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L1068-L1082",
+          "version": "repo-lines-v1:sha256:bf0c5508b4bc0f0481d306f3550ce3bf0926879183c3f4c0bdf62182a638defe:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0ODRiM2I2NDM2MWRkODBiNTJlNzk5NDZiMDNkMTZiOWU5YWMyM2QwMzQ1NjgzOGM4MWU1YmI0OTE4ZDZkYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiMTAwMjUwNzA4ZjNkN2ZjNjgyY2NlZTI4NjEzYzdhOWNjNjVjYzk2YzI2ZDU1MzcxNWIwMGYzNDA3MDJkM2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwYTExY2ZjY2ExNWFmZTY0NmFmZTcxNjlkZDczOTk3ZDEzZjhmMDExMWEyZjY0YzRhY2ZjMTA4MmIyODdjN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAyYjQzOTkyYWQ3MmQzOGM1YzBlOWRkMjRiZDMyYWM0ZjMwNzRhOWE3NTJkNTcwMWEzOTYzNjFjNzJlODUyMmEifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1089-L1105",
+          "version": "repo-lines-v1:sha256:5e64783873288d21b89c2286e62f8e692df4581577e8f5e831f90de134a3bbbf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1MTA4ZThlOGRkNjQ3YWQyZjQwOWEyY2IyN2NmOTNkMDZkMzhhNGE2ZGIyZGNkOTJlNDdjZTNkOWU1Y2M2OWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZDUxMGFjZTk1YjQ1ZmExNzcyYTVjMzhkZjEyNDk0MGU1MTdhOTFjNDEwNjkyYWNkNWYxNmU3OGZkNDY3NDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzZTNhYTMxNDJiMmRiYjdiYzQxMWIxYjJmNjlmYTAzY2RmZTZiYjFjNTlkYTVmMDMwOWJhZTU1YzY2NTIyNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFjZjkyNzc3YTA5MmU3MmI5NmE4ZDRlMTYyMDk4ZDViODQyODNkOWU1MDFjMTNkZDM2MTQ3MTQ0MDliNjhmY2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1ea99303dde54bb2ad922e8cd423091f",
+      "statement": "Every incident event write discards its error, so a failure to record an audit entry never fails the underlying state transition.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L1000-L1003",
+          "version": "repo-lines-v1:sha256:9f63073468787224f14f6b53dadca373ca8ecf71d4970b077b764d7b3f471b56:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGU0MzFjNDFmYTBlYjRmMzAxNmMzOWYyMTEwZDMzYjg3MjM1MTQ1NDZjM2ViOThiZGExMDNlMjM2NDY0YmY4OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2VkZWZmODlmYmZkYTUxZDYwMGIxYTFiNDBkY2Q0OTJlNDUzMTA1YWU5ZDNkMTMwNTdmNmY2OGMyMzk2ZWE5MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2Q1ZmI3Nzk2ZDhkYTZjNzBjNzQ2ZDA5NTgwMDNjZmQzMzE2MjllNzBiZTdjYzljYzA5Y2YxM2ZlMWY4NzVjNSJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1036-L1039",
+          "version": "repo-lines-v1:sha256:937a62d317e92ba9af3894d96cdc0db3c710df0c7d0c3bb7583417cf07a771e6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzBkN2U5NGVmMDVmN2I0MWY0YmE1NmU0MzE1ZmExYTUyZTc5MjYwMWZjNzI2Y2Q3YmM3ODBmNDU0YjI5NDU0MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjdjODA1NThjYThlZTAzZTE4NjRkNTU1NTVkY2U0OTI4MmZiZTA4ZjdiN2YzNTU4MGQ0N2UxMzliYjNiY2ZhMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWFiNmU5ODU3MWUwYjE1ODVlZmQ3NDQ3YTAyY2YzMmUzMGY4NDE4MzljNTg0ODE4MWY1ZTUzZTRkZDcyNjE5NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWU3MTI5MTgzNGMwNDQ4YzQ3N2QxYTVhYzkyYjBkZGZjYzMzYTNhOGI0MTgzYjJlYWE3NGZlNWM1MDYyYWFlZCJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L830-L840",
+          "version": "repo-lines-v1:sha256:b501810feb104c7c5d3b1ce30401b7c114d1667c3d3f228566867522c539bc68:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhZmI3OWEyYjdiMTQxZDRkZTI0MjI1MTU5ZDZiNmRlNDY2NzAwYWZlOWE2OGVjYjg0YTIyODBkNTgwMjViNjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwMjNjOWZkN2U5ZmM4N2U1YTlhODI1NzY5NjkxMWUxYTFlZDY1NWExNmQ3YmNiM2UwYTM3MmJiNmUwYjU5ZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkYWI1YzEwYTAzNzViMzJhMjJkMDNmMzI2ZTc1OTJjYThhNDFlNzhjM2EwYTg1NDJmMGY4NDZjZDUwMWJhNzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxNTMxNDZiYTJmMjJmZWEyYzRjNDhmYzkxNDI5MjA4NDQ4ZDZkYjZjNzhjNjY3Yjc0MmFlYzE1NTA2MGUzYjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fec91cd18553472a867a0f3b37bc815f",
+      "statement": "AssignIncident updates the assignment and constructs an event payload including the resolved user name and optional note, but returns without ever calling createIncidentEvent, so a direct assignment produces no assigned event.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L1057-L1086",
+          "version": "repo-lines-v1:sha256:10229de9668e18885a8f8629d057c51927b27f255785b5be5ebd034b2bce46a5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhOWE5NjBmZTg0ZWE5Y2JiOWJkYmMyN2NiNDRjZTE3MzdjYTc3ZDc2OGQzNjcxYjY4Y2VkZWNkM2JiNzFiZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2NmZmOTNhOWQyNjk2MDcxNmFiZWYzMGUxN2M2ZWM0Mjk5ZmI1MzBjNzk5OWE2MDkzYTNmNDk4NmRlN2I0NTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ1M2M3M2FhODI0MTFkNzY1ODQ1MzkzZDg0MDRmYTk3ZDM4NTZmMjQzZmIzNGU3ZTg3ZDcxNzc2YWYyNDVhYjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f249fcd3bb1141ac9d45b83130234828",
+      "statement": "Escalation-driven assignment records its own incident event through the worker's separate event-creation path, so escalation history is captured even though direct assignment is not.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L290-L300",
+          "version": "repo-lines-v1:sha256:259d68aa168cb12a0dee7ce0ac5f9dbf9462b129208b9aef23ab6ce604fc233d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhNGQxMDUxMDUwMzVkZTk5OTVjZTY5ZGM1MmZiNjc3MDg5ZGU4NTI1ODcwNWM5ZTkzZDE1ZDM0OWI0ODUxMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwYTlmZDZlM2I5Yjk0ZTI3YWY3MDExYjg1MWI5NDRlZmVhZDQ3YzZiN2I2YTU5ZGE4NWM1MDgwMTI2ZmRhMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5YzExOWZhZGJlZjVhNzQxZGQ4MDRkNTIwNmQ0ZDdkYjEyODVlYzJiNWI4N2E1MjZkMWJiOTI1ODk2OTVjNDUifQ"
+        },
+        {
+          "resource": "repo://server/api/internal/background/incident.go#L613-L631",
+          "version": "repo-lines-v1:sha256:4855a3e319b60d73f1661746fd58a5fdb77ba63632513c314c0edc1796fe1978:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4MDEzMTVkOTljNDI0YTkyNmU2OGQ2ZTc2YzJlYjNiYWNiYmUyYjk3ZjliOTlkZTlmYTVhOTczMTQyODVjZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyNjJmMTY4YTUyYWJjZTY0YTM1ZjU2NWUxZjQzMjQwMTI2OWQyOGE4MDY3NjI4YzNhOWM2NDE5N2Q4OWU5MmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIxMTgxMzQwMWUyNmI0MTlkYjVlYzAwNzExNmViZDhjOWZmODUzYjAxZWQzODkxOGIzOTFkNmM0YzNlNTQzNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0OWM0YjgyNzUwYzdlNDZlMGYyYTk3YTFmNTg4ZWY2MDEwYWE0NmQ5OTA4MDM5NzM4ZWE2NGRiYmNiYjU5NzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4cc1a2a6d01f4cf4b227327fce9a8a9d",
+      "statement": "Incident creation broadcasts a realtime INSERT event only when the incident carries an organization id, because broadcast channels are scoped per organization and an incident without one has no channel to be delivered on.",
+      "evidence": [
+        {
+          "resource": "repo://frontend/inres/src/contexts/NotificationContext.tsx#L163-L175",
+          "version": "repo-lines-v1:sha256:f5b6938fcbc260380e680b76d978deefb14aed00aba649f0a678a5b7d5328dbb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkMzY0NDI2ODYzZjllMmJhZDYwN2VjZmU4ODEwMzE3MmJkMzMzOTRlY2EwMTIyNzhkNmEyMDA1YWNkMzkwZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyYmE0MDg4NTQyZjA3Zjg3MzNiMDZmMmM5OWQ3NTcyNGI5MTM0NjUxODk1YTY3ZmYxNjQxNWNmOTM0ZTk1NjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEyNzRhZGVjNmNkMjcyNTVjNjgzZjgwOGRjMmE5MTU4M2RmMTgzYjgyOWJiZDE1MzYwYWNjMWRkODdmZGU5ZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlNTE1ODZmZDc5YzhlZmVlN2NjYTgxM2E4YjcxMTg2ODNkNTFhOTRkNzIwZDRmMTZjY2E2MmI4ZmJhYzViMTEifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L895-L901",
+          "version": "repo-lines-v1:sha256:6e888354b6023e6e2cdf378b52394cccade44a228c1595a3bf730cd0fbdecf00:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDFlZDcwMDBkNTY1NTViMzljZGJlMDU1ZGY4NTI3MmMwZWI2OWFhMGVlMDk1NmE0OTlkYzJkYWZhODFhNDg5ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWNjM2RiYjUyOGQyMzQwNTZlNGZkYWY5YTQzN2EzYmYwYTcxMGI4ZGUxODdlMjhmNWI3ODdkY2Q5Njg0Y2NlNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTA4ZTgxM2QwMGZhMmNkNmIxMzUzYjJhY2Q2YWE1NGEzYjBhZTNkY2Y4MWMwMzQ3NzE2Y2QzMDI2OWRjMWI1ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f02df665a3db43b9bb34d940398ec66f",
+      "statement": "Acknowledgement and resolution notifications are dispatched from goroutines so a slow Slack update cannot delay the HTTP response, and they exist so that an action taken in the web UI updates the corresponding Slack message.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L1004-L1016",
+          "version": "repo-lines-v1:sha256:a3cb8a10cecf24ea365113c5f67c9bdaf3f87a0e1d9e6262735b0068d3b5a6d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViYmEyNmY2M2U5NGVhMjI3YTU1MDIwMWM0N2M3ZmNmYjEzNDdjODQ3NWRiNDNiODllMzZmNGNmZGJmYmVhMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkMzcxYmM4ZjUxZTIyMDcwNmFiYWU4ZjIwMjM3NDVjMjRjZDllMGMzMDgxZWJmNGVmOTk3NzgxZDI1ZWI4MDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQzMDViMTBmMmVmZmQzYWVkYTJjNTBmM2I0NzQ3NzE3YmZmNDkzYjM0ZWYyZTdmMzEyZmQzOWEzYjU3MmQ0MWIifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1040-L1052",
+          "version": "repo-lines-v1:sha256:e26db682426160430dc5927bde102585288abf7c24905a237b92897f3e8404ba:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViZjMyMzcwYzJmMDYxNTAwMjdhYWIxN2U0MDJkNzM4Y2VlMTg3NTBmY2FmZjM3MDY3MzZjZGFjMjUwYTA4OTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6b485c4138c24a9abbbb443d6fa8a24a",
+      "statement": "AI incident analysis is published to a PGMQ queue rather than performed inline, so the Python agent consumes the message, analyses the incident and writes insights back after the incident already exists.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident_analytics_service.go#L31-L92",
+          "version": "repo-lines-v1:sha256:328f6987bac690defe13fb64798eb02e0d3171635e5a83d08f151e1cca6316ba:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3YWQyOTdiZDczMmNjNmJmNTgxYzlkN2QwMDgxYTJiOTdkNGM4M2U5NTQwMTA1YjA1OWYzY2NlZGZiMDFiYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMxNWE5OTJjZDdmYTMzMzg1MmU0ODliMjgzZjRkMjFlODQ4MTExNmE0YTRlNWM5YWU5ZGIwZjRmMzU1ZTI5ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2a41c1792fbc4edba44c07e1785d0748",
+      "statement": "Analysis queueing is gated on the AI incident analytics enabled flag, returning early with a log line when AI Pilot is disabled.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident_analytics_service.go#L42-L49",
+          "version": "repo-lines-v1:sha256:44f5fea419e8bbd82e5fe457dd2868c7dfe2df7576bfb18df2834f2c39019632:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjllMmRmZmNmMGUxYzVhNTM2MGQxMGU5OTg5NDdkZGQxMWQ3ZmM2MGU3ZTYzOGRhYWIxYTg4MGZhNDUxZTMxZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDA3YTJkODY5N2E5MmRhNDJiYzEyMWE5OWUxZGZhNWZkNTQ1ZWQyYWZlNjQxZmFjMThjZTA2YmY4YzliZTEzMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTRjZTdhYjlkYTg2MDFkOWU4ZWU2NWMwNmQ0NmE2MDAwOTA4ODA1ZmQ1ZWJmODI3N2Y0ODE1NjRmNzlkNTkwZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2960159ae290431f86a65a290dc57a20",
+      "statement": "The analysis payload carries organization_id, explicitly marked as required for ReBAC tenant isolation, plus an optional project_id, so the consuming worker knows the tenant scope before reading anything further.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident_analytics_service.go#L51-L69",
+          "version": "repo-lines-v1:sha256:76f665585fb0f7aa8ba55ebc4cbb92d12b1b33f59aa5cc0c1774748c89c3e9f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwNWI5NDEwMWEyMTQ5ZjQyMjhhNDFiY2FkMTVmOWYxNGY3MTNjNjQzZDA2ZDUyMjI2NzljODZiYWY4OTI3ZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkNzllMmVmMDE0MWI3MmZiNTY4NzNkMDY3ZmVlNjNmM2VmY2VlNjg1MjVjMGJlNmJiODM2N2RkMTY3YmYwOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3NmVmYWQwYmE4OTgyMThjNmVlNDM0ZmY0NzI4NzcwYWNjMjdhZGY3ZGVjNzRlOTMzZmE4MDBkMzZjM2VmY2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0ZDMzMTI3ZTVjYzUyNmM2NWJmNTE0YWI4OTdkZjE3MTQzMjA5NWIwOTQzMjhhNGZhMDMwN2E0N2YzOTU0YTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f66def9c50d44d25a398ab09f408a77e",
+      "statement": "Handlers enqueue analysis through an asynchronous wrapper that runs in a goroutine and logs rather than returns errors, so an analysis failure can never block incident creation.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/incident.go#L270-L278",
+          "version": "repo-lines-v1:sha256:983d80db51c186cccea9a33b12cb573146fd58cdbf52c128e37977a962727349:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjdmYWFmNzFhNDAxNTM4YWM3ZjU0NDM5MmI1YWE2ZTY1MzE2YjIyZDgzYzcxY2E2ZTEwNmNiN2I1OWYyYjJkMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGU4N2FjNGZkYzRjZGZmZWVmODkyNTEwMmQyNjQ4NjAyN2FlYjQyNjQ1MWZiNTkxOGVhZGRkOTI5ZjU5MTljOCJ9"
+        },
+        {
+          "resource": "repo://server/api/services/incident_analytics_service.go#L94-L107",
+          "version": "repo-lines-v1:sha256:bd0425acdaa5aabc69ca6baca9e63eaa3ae839635134eb12a9bb75ef40579bec:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3OTc5MDFiNzNhMzA5MDU5ZjMxZjU0MDA1NGYyNDI2M2ZlMWUyYmE2MWRjOWU1MDQ4MjY4ZGVjMjk1ZmYzYzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkMTY4NTJmMTdiMWRiMzc1OTRiYTQ5MTQwZDhjYTM5ODIyN2EyZmIxN2I3ZGQ3OGQxZTYwNGQ2NmEyZjExMjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b12f2080738b47329506dd409e140e78",
+      "statement": "A responder can escalate an incident immediately rather than waiting for its timeout, resolving the next level through the same escalation policy the background worker uses.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L1554-L1570",
+          "version": "repo-lines-v1:sha256:755465c90cb00b548e9e63d5388726089ede75090c6a406b5ac4511e56328238:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZWM3NmMwMjVmMWZhNWZkMWNiNDEzZDZiMzVhYTAxMjRmZDhlNzM1MGQyYjU1M2IxNDdiZDg4YjZkNTgxNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmMTM0Y2E4OWMwMjVjODY4ZDFhODI0MDBhYWY1ZGY5NmM0NTY3Y2RmMTU4YzM0YTc1NWRjZTI5NTBjNmE2NDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhNTlkYTI4ZTZkMWMxNjUyMWU3MjYzOTliMTJjNmUwNzRhMjJiYWUyZTJmZTcwZTYwOTliMTEzZWFkNDMxOTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNjMxYWQxZjY0YzAyMTFmNTlhNmNmZThlMDk2ZWY0N2YxZDkwMmNmMzUxNTQ2MmJjMTQ0NzYyNTJlOTQ1ZGYifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1754-L1785",
+          "version": "repo-lines-v1:sha256:c22211621d9b327028c24fbb0e7a561398c1482bfb04c2ae18de9554be9aa2ed:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlNjU3ZWRiMGIxODI5YjQ5NDE2ZDkzOTMyNzllYzdkNGQ0OWUxOWE2NzQ1YzFjYzMxOTViZGRlN2ZlYTI1ZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxYmQ1NTk5NzU1NGYyYzAzMjg0NWFhNzJiNzJkNWM5NzI2NDk3NDk0MDA2NGUzYjlmZTRlZGQ4NmMwNjY3NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2NmNlNGZkMGVlZTJhYmVjMTI3NmU3OTVmNjNjZjAwODgxYzQzYjJmMDRlMDczMjM5NzNkMmViOTdiMGNiNDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxYTc5YTI3ODU4Zjg2ZjEyMGVlNGQ3MzE0MWU4Yzk0ZTQ0NjE2MDYzZGNjNzliNGQ4YWVkZTI1MDEzOTdmYjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f31b0aded47f46a0b3ccba812d59d9de",
+      "statement": "Assignee resolution from an escalation policy delegates to scheduler-based or group-based on-call lookup, and is what the webhook handler calls before creating an incident so that an alert arrives already assigned.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/webhook.go#L976-L995",
+          "version": "repo-lines-v1:sha256:d3304b6f13cf7b84cc7069b4c282a2bf397eac5a73c6411bba134ab79f9bce15:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmN2QyYzliZWI2ZTA4Nzc4NTQwYWYyMTg5ZGM4NDc5MjQxY2RlNTk4MzJkOGE2MzYzZWQzZTFmOWY1ZDRhYTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyYzVjMzUzYmVkY2I5MTU0MDVlYTBhY2NkMTUzZWM0MDU0YzU4OTNjNDhiMGM4NTBiZDEwNzVkNzJkNTE5YzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlNDA3ZDI3NTI0YjQ2NWQ0Yjk2ZWIxYTQwODIwZDlhZjU0ZmUyMGIzZGFiMTM1ZTkzNmViNTQzMmMyODJiYmEifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1425-L1445",
+          "version": "repo-lines-v1:sha256:eb2653b4558107531f1392d22cb87dac03a4cbbb2fcc0a3125e0f64d6ccb7a5e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2NzlkNmZjNTFiOWE5ZGIxY2EyOGFjZDRiZjZlOGNjMzViYjZmYzQyNTMzYjljNzQ2OTg0M2ZiZWNiYjgwODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4M2I4OTRmZWYwNjFlNWY2NjkzYWYyZGNlOTA4OGQ4NDUyYTBmY2Q0MGRhMjEwYzhkMDUyMGRlZjk3NGVhMTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhNTE3MmRhNmEyOTllYjFlNTg3YWUzOWM3NWIyZmJlNDQ5YzY4N2ZhNzMwNTI2NjcwNmM5ODg3ODhlNzZhMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkOGQ0NzU3NzczNDViNGEyNzgyZGRhM2FlOTUzMmViYjJlNmRkMTI5ODE2YmEwNTQ4MDQwYmIxNTJiNjFjY2IifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L1489-L1553",
+          "version": "repo-lines-v1:sha256:f7b9142708605a4fa54af91743e80fc7c243ef67bac22692f726b2f29baf2ed2:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwNDk1MjZhZGQ0ZGFhOTZhYzAxODkzZGMyMGIzNzU0ODVkOWUwMGEyNWQ0YTc1YzQwZDNmMWVmMWQ1YTM0MDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0NmFkZmJmNmIxMDBjMWQ2NTE0MmY5YjRhNmE4YTYwMzdhMWMxY2U5OTUxOTMzMzAwMGZhYzZjYmFiMTk0MmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhYzQ1YjQ4ZWQ1OTJmYjU1YTRlNDdlNmYyYThjMjBiMTZiOWFlYjMyZDQ1MDBmZjQ2Y2FmNmU3NWRlMTNkZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzYWVkZWM5MTE4OGJjYjU3MGU5M2JiMWEzMWMyYzI0NTNhNTQyNjNhNjRjOTVkZDY0NTdhNTJlOGY5MTczNjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0832b27eb8b84ce2ac75fb28e4f18e9e",
+      "statement": "Incident listing accepts the filter map produced by the shared ReBAC helper, so tenant scoping is applied uniformly rather than reimplemented per endpoint.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/authz/middleware.go#L336-L390",
+          "version": "repo-lines-v1:sha256:18a52d63a00273f031e604d80752c6c2e289d3ab66d67952864ba71be86f9fee:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjYjUyOWM1OTE4MzZjOTdiNTY2MWNjZjRiNGE0YzA5ODZiMDlhOTZiNGI2OTcxNGRhMGVjOTIwODgxNGNiY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjY2U4NzdiZjQ1NTQzZTk1ZTI5OWI5NDIyYmVkODEyMGI2NTRhZmYyNGJkOTczMzQzOGNkZjFlYThlNzEzZjYifQ"
+        },
+        {
+          "resource": "repo://server/api/services/incident.go#L167-L180",
+          "version": "repo-lines-v1:sha256:31b0336ebd4dc3033015d3f9c7ac8df8e21d60370460d0237fcdf1aaad8d4eeb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzMTJmOWE5ZjY0Y2YyYTYzMDQ5MThiMmYxNmE5YmUxYzhjNDA3NzkxNGZiNGEyZTc1YjU0YTMxMWNmMzI2YzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyMGJjZjVhMDk5ODRlMmQwM2U1YmFkOGI0NWEyM2Y2NzFhZjdhOGRjMjVkMTkwOWMxM2RjNGYyZWRlNWQyZjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjczNTI1Yzk5NmM4Yzc5MTAyMDljMjhkOGQxOTY4ODZhM2U5NTc3OTQ1YWE2NDIzMTYzNTI3MDkyM2UxNzkzNjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1313781b7ce44218ee5eab9024fc3f2",
+      "statement": "Reading a single incident joins assignee, acknowledger, resolver, group, service and escalation policy in one query so the detail view renders without follow-up requests.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/services/incident.go#L503-L520",
+          "version": "repo-lines-v1:sha256:a7d9731e67918b8027662bd316426ec22a4467440e77ce5a0e62ad0b4ff540aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1NGYxYWQwNzdlMWQwMWE0M2JmZGM2NzM1MjViYzk5NTAwYjZiZDE3NWNhODIwMzM3ZTAyOTE3ZjY3NDVlN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlYzc3MTg1NDgzYmE5MzYwNTJlZmZjNWNjYzg4MzBjNTYyZTFhYmI5OTEwYWI5ODVhNWQ3MDYxOGUxYTQ3MDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3ZDhkM2Y1OWI5NmUzNjQzNmEzNzlhNjMwOTQyZTUzN2JjOTczZTgzYTEwNTVhOTk3NjA1NTU2MmIzMDkyZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhNmUzNzljODkyMjBhNmM2OGFhNWZjNmU5ZTJiZDg1N2M3NjViNTE0NGYzY2VjNTVhOTBiN2I2ZWUwYWU3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d6a08098b4db4a5389620f1cab0484af",
+      "statement": "ReBAC enforcement on incident reads is pinned by a handler-level test that runs the real incident service against a mocked database and authorizer, asserting both the permitted and denied outcomes.",
+      "evidence": [
+        {
+          "resource": "repo://server/api/handlers/incident_test.go#L77-L120",
+          "version": "repo-lines-v1:sha256:bf956a0baa87dfd29be506d5cf0ae09ba90cc6ba34f948f3244e12d1276d085a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyNjM0N2UxNTMwZjBiZWUxMGViNmI1NjA0ZjU1ZWEzNDcyNTZhMzUyYzM1Mzk0ZWRkZjJiOGNmMmJiMDUxODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwM2FiMjczMTBhNzkxZmJlODI1NjFjMTBkNGE4Y2QzYWQwNjZhOGNjNzY5ZjZjZDA3NzE4NjhhYmQ3MzUxZDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxYTFlNDNkOWM1NWU4YTM3MmZiOThjYTYwN2U2NjRhMzMzZTMwNGE1MWMwODI5YTViODA2OWE1MWZkYmJiYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmYWIwZGNjZTNiMzAwNjA5MDU5ZDM2Y2JmZDA0NWMwOGNhNjJjNWY5MDVmZDg3NDAzMjliYTEwZTkxYTgyNGIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.4.3",
+    "at": "2026-09-17T10:09:55.322Z"
+  }
+}
