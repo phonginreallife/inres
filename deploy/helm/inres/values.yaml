@@ -152,6 +152,23 @@ components:
     replicas: 1
     image:
       name: inres-agent
+    # The agent is the slowest to become ready: it loads config, brings up MCP
+    # servers and starts the audit service before uvicorn serves. startupProbe
+    # covers that window so a slow boot is never mistaken for a failure, and
+    # liveness is deliberately lax - a restart loop on a wedged dependency is
+    # worse than a pod that is briefly unresponsive.
+    startupProbe:
+      httpGet: { path: /health, port: 8002 }
+      periodSeconds: 5
+      failureThreshold: 30
+    readinessProbe:
+      httpGet: { path: /health, port: 8002 }
+      periodSeconds: 10
+      failureThreshold: 3
+    livenessProbe:
+      httpGet: { path: /health, port: 8002 }
+      periodSeconds: 20
+      failureThreshold: 6
     service:
       enabled: true
       type: ClusterIP
@@ -230,6 +247,18 @@ components:
   api:
     image:
       name: inres-api
+    startupProbe:
+      httpGet: { path: /health, port: 8080 }
+      periodSeconds: 5
+      failureThreshold: 24
+    readinessProbe:
+      httpGet: { path: /health, port: 8080 }
+      periodSeconds: 10
+      failureThreshold: 3
+    livenessProbe:
+      httpGet: { path: /health, port: 8080 }
+      periodSeconds: 20
+      failureThreshold: 6
     service:
       enabled: true
       type: ClusterIP
@@ -338,6 +367,18 @@ components:
   web:
     image:
       name: inres-frontend
+    startupProbe:
+      httpGet: { path: /, port: 3000 }
+      periodSeconds: 5
+      failureThreshold: 24
+    readinessProbe:
+      httpGet: { path: /, port: 3000 }
+      periodSeconds: 10
+      failureThreshold: 3
+    livenessProbe:
+      httpGet: { path: /, port: 3000 }
+      periodSeconds: 20
+      failureThreshold: 6
     service:
       enabled: true
       type: ClusterIP
@@ -348,6 +389,22 @@ components:
       repository: kong
       tag: "2.8.1"
       pullPolicy: IfNotPresent
+    # TCP rather than HTTP on purpose: GET / on the proxy port is forwarded to
+    # the web upstream, so an HTTP probe would mark Kong unready whenever web
+    # was down and take the whole ingress with it. A TCP check asks only
+    # whether Kong itself is listening.
+    startupProbe:
+      tcpSocket: { port: 8000 }
+      periodSeconds: 5
+      failureThreshold: 24
+    readinessProbe:
+      tcpSocket: { port: 8000 }
+      periodSeconds: 10
+      failureThreshold: 3
+    livenessProbe:
+      tcpSocket: { port: 8000 }
+      periodSeconds: 20
+      failureThreshold: 6
     service:
       enabled: true
       type: ClusterIP
