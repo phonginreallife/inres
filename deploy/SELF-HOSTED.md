@@ -1,6 +1,6 @@
 # Self-hosted install runbook
 
-Bringing up the platform layer — Postgres and Supabase — on an existing
+Bringing up the platform layer - Postgres and Supabase - on an existing
 Kubernetes cluster, before any inres component is installed.
 
 Everything here runs **once per environment**. The inres chart is the last
@@ -26,7 +26,7 @@ reference `auth.users` and `storage.buckets`, and those schemas are created by
 GoTrue and supabase-storage when they run their own migrations at startup. Run
 the migrations first and 22 of the 49 files fail.
 
-Each step below ends with a check. Do not move on until it passes — a failure
+Each step below ends with a check. Do not move on until it passes - a failure
 caught at step 4 costs minutes, the same failure discovered at step 10 looks
 like an application bug.
 
@@ -35,14 +35,14 @@ like an application bug.
 | | |
 |---|---|
 | Kubernetes | 1.28+, with `kubectl` pointed at it |
-| Storage | a default StorageClass that can provision `ReadWriteOnce` volumes. On EKS this means the **EBS CSI driver add-on** — it is not built in |
+| Storage | a default StorageClass that can provision `ReadWriteOnce` volumes. On EKS this means the **EBS CSI driver add-on** - it is not built in |
 | Ingress | an ingress controller, or a load balancer you can point at a Service |
 | Object storage | an S3 bucket (or compatible) for Postgres backups and Supabase Storage |
 | CLI tools | `helm` 3.12+, `kubectl`, `openssl`, `docker` |
 
 ---
 
-## Step 1 — Namespace and secrets
+## Step 1 - Namespace and secrets
 
 **Purpose:** every later step reads these. Creating them first means no step
 half-succeeds and leaves you reconciling state.
@@ -103,10 +103,10 @@ in step 9, and the keys cannot be regenerated without reissuing every token.
 
 ---
 
-## Step 2 — CloudNativePG operator
+## Step 2 - CloudNativePG operator
 
 **Purpose:** CNPG turns Postgres from a pod you babysit into a managed
-resource — failover, replicas and point-in-time recovery come from the
+resource - failover, replicas and point-in-time recovery come from the
 operator rather than from runbooks.
 
 ```bash
@@ -122,7 +122,7 @@ kubectl -n cnpg-system wait --for=condition=Available deploy/cnpg-controller-man
 
 ---
 
-## Step 3 — Build the Postgres image
+## Step 3 - Build the Postgres image
 
 **Purpose:** neither stock image works here. `supabase/postgres` is Nix-based
 and does not match CNPG's layout, uid or barman expectations; CNPG's own image
@@ -176,15 +176,15 @@ restore that file from a hosted dump, step 7 will fail on them again.
 
 ---
 
-## Step 4 — Postgres cluster
+## Step 4 - Postgres cluster
 
 **Purpose:** the database everything else depends on. Two settings here are
 load-bearing:
 
-- `wal_level: logical` and replication slots — Supabase Realtime consumes a
+- `wal_level: logical` and replication slots - Supabase Realtime consumes a
   logical replication slot. Without these it starts, connects, and silently
   never delivers an event.
-- `instances: 3` — one primary, two replicas, automatic failover.
+- `instances: 3` - one primary, two replicas, automatic failover.
 
 Backups are deliberately **not** configured here. They are step 8, once the
 cluster is real and an IAM role exists. Configuring a backup destination the
@@ -258,12 +258,12 @@ kubectl -n supabase exec -it supabase-db-1 -- \
   psql -U postgres -c "CREATE EXTENSION IF NOT EXISTS pgmq; SELECT extversion FROM pg_extension WHERE extname='pgmq';"
 ```
 
-An empty result means the image is wrong. Fix it here — every later failure
+An empty result means the image is wrong. Fix it here - every later failure
 would be a confusing symptom of this one.
 
 ---
 
-## Step 5 — Bootstrap roles and schemas
+## Step 5 - Bootstrap roles and schemas
 
 **Purpose:** the inres migrations do not stand alone. They were produced by
 `supabase db pull` against a hosted project, so they assume everything
@@ -365,14 +365,14 @@ service_role|f|t
 agent connect as, and RLS policies are not written to admit it.
 
 ---
-## Step 6 — Supabase services
+## Step 6 - Supabase services
 
 **Purpose:** Auth, Storage, Realtime and the gateway that fronts them. The
-community chart is used here rather than hand-written manifests — four
+community chart is used here rather than hand-written manifests - four
 Deployments with interlocking config is a maintenance burden with no upside.
 
 Only four components are enabled. This codebase makes **no** PostgREST calls
-(no `.from('table')` anywhere — all data access goes through the Go API), and
+(no `.from('table')` anywhere - all data access goes through the Go API), and
 uses no Edge Functions, so those are switched off along with the developer
 tooling.
 
@@ -452,7 +452,7 @@ Deployment.
 
 ---
 
-## Step 7 — Apply inres migrations
+## Step 7 - Apply inres migrations
 
 **Purpose:** creates the inres schema, the RLS policies and the PGMQ queues.
 
@@ -491,7 +491,7 @@ You should see the inres tables and the queues from
 
 ---
 
-## Step 8 — Enable backups
+## Step 8 - Enable backups
 
 **Purpose:** now that the cluster is real, give it somewhere to archive to.
 Deferred from step 4 because a backup destination the cluster cannot reach will
@@ -612,7 +612,7 @@ notes for the operator version you pinned in step 2 before assuming the shape
 above is current.
 
 ---
-## Step 9 — Point inres at it
+## Step 9 - Point inres at it
 
 **Purpose:** the application reads all of this from one Secret. Both the Go API
 and the agent verify HS256 tokens against `supabase_jwt_secret`; if it does not
@@ -620,7 +620,7 @@ match what GoTrue signs with, every request is rejected as unauthenticated and
 the chat WebSocket closes with `4001`.
 
 ```yaml
-# config.yaml — becomes the inres-secrets Secret
+# config.yaml - becomes the inres-secrets Secret
 database_url: "postgresql://postgres:<PG_PASSWORD>@supabase-db-rw.supabase.svc.cluster.local:5432/postgres?sslmode=disable"
 
 supabase_url: "http://supabase-kong.supabase.svc.cluster.local:8000"
@@ -649,7 +649,7 @@ shows your values and no placeholders.
 
 ---
 
-## Step 10 — Install inres
+## Step 10 - Install inres
 
 Only now.
 
@@ -666,7 +666,7 @@ kubectl -n inres logs deploy/inres-ai | grep "Chat Agent:"
 ```
 
 The agent logs its resolved model and settings at startup. Then open the UI,
-sign in with the user from step 6, and ask the assistant a question — that one
+sign in with the user from step 6, and ask the assistant a question - that one
 request crosses the frontend, Kong, the agent, the Claude CLI, the incident
 tools, the Go API and Postgres, which is the fastest way to confirm the whole
 chain.
@@ -675,8 +675,8 @@ chain.
 
 ## Notes on what this leaves out
 
-**Realtime may not be worth operating.** It is the fiddliest component — its
-own role, a logical replication slot, its own failure modes — and the Go API
+**Realtime may not be worth operating.** It is the fiddliest component - its
+own role, a logical replication slot, its own failure modes - and the Go API
 already broadcasts over plain HTTP to `/realtime/v1/api/broadcast`. A small SSE
 endpoint on the API would replace it and remove a service. Worth deciding
 before you commit to running it.
