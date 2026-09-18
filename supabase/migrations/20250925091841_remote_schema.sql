@@ -12,7 +12,8 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 
-CREATE EXTENSION IF NOT EXISTS "pg_net" WITH SCHEMA "extensions";
+-- pg_net removed: arrived with a dump of a hosted Supabase project and is not
+-- available in the self-hosted image. Nothing in this codebase calls net.http_*.
 
 
 
@@ -23,7 +24,8 @@ COMMENT ON SCHEMA "public" IS 'All performance indexes have been dropped - only 
 
 
 
-CREATE EXTENSION IF NOT EXISTS "pg_graphql" WITH SCHEMA "graphql";
+-- pg_graphql removed: same origin, same reason. All data access goes through
+-- the Go API; no GraphQL endpoint is served off Postgres.
 
 
 
@@ -52,7 +54,7 @@ CREATE EXTENSION IF NOT EXISTS "pgmq" WITH SCHEMA "pgmq";
 
 
 
-CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
+-- supabase_vault removed: same origin, same reason. No vault.* references exist.
 
 
 
