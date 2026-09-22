@@ -8,7 +8,11 @@ replicaCount: 1
 # Default image settings
 image:
   repository: ghcr.io/phonginreallife/
-  pullPolicy: IfPresent
+  # "IfNotPresent", not "IfPresent". Kubernetes accepts only Always,
+  # IfNotPresent and Never, and deployment.yaml's `| default "IfNotPresent"`
+  # only fires on an empty value - so a wrong-but-present string went straight
+  # into the manifest and every Deployment in the release was rejected.
+  pullPolicy: IfNotPresent
   # Empty means "use Chart.AppVersion", so the chart version and the images it
   # deploys move together and cannot drift apart. Override per deploy with
   # --set image.tag=X. Never set this to "latest": a rollback then has nothing
@@ -181,19 +185,35 @@ components:
         value: "0.0.0.0"
       - name: USER_WORKSPACES_DIR
         value: "/app/workspaces"
-      - name: INRES_CONFIG_PATH
-        value: "/app/config/config.yaml"
+      # Lowercase "inres_" is deliberate: both the Go API
+      # (server/api/cmd/server/main.go) and the Python agent
+      # (server/agent/config/settings.py) read os.Getenv("inres_CONFIG_PATH").
+      # Env lookups are case-sensitive, so INRES_CONFIG_PATH was silently
+      # ignored and every component fell back to defaults.
+      #
+      # The path is /etc/inres, NOT /app/config: the agent image ships a Python
+      # package at /app/config (__init__.py, loader.py, settings.py), and
+      # mounting the secret there replaced it, so "from config import loader"
+      # failed with "unknown location".
+      - name: inres_CONFIG_PATH
+        value: "/etc/inres/config.yaml"
     ingress:
       enabled: false
 
-    # Resource limits
+    # Requests are what the scheduler reserves, so they must fit on a single
+    # node. Requesting a full 2 CPUs made this pod unschedulable on any node
+    # smaller than roughly 2.5 vCPU - and because the cluster autoscaler
+    # simulates against the same instance type, adding nodes never helped; the
+    # pod just stayed Pending. Keep requests modest and let the limit absorb
+    # the bursts, which is the shape of the workload anyway: the agent idles
+    # until a CLI subprocess runs.
     resources:
       limits:
         cpu: "2"
         memory: "2Gi"
       requests:
-        cpu: "2"
-        memory: "2Gi"
+        cpu: "500m"
+        memory: "1Gi"
     # Persistent storage configuration for user workspaces
     persistence:
       enabled: true
@@ -217,7 +237,7 @@ components:
       - name: ai-claude
         mountPath: /root/.claude
       - name: app-config
-        mountPath: /app/config
+        mountPath: /etc/inres
         readOnly: true
 
     # Volumes definition
@@ -268,13 +288,13 @@ components:
         value: "8080"
       - name: INRES_ENV
         value: "production"
-      - name: INRES_CONFIG_PATH
-        value: "/app/config/config.yaml"
+      - name: inres_CONFIG_PATH
+        value: "/etc/inres/config.yaml"
     
     # Mount config file from secret
     volumeMounts:
       - name: app-config
-        mountPath: /app/config
+        mountPath: /etc/inres
         readOnly: true
       - name: api-data
         mountPath: /app/data
@@ -311,11 +331,11 @@ components:
     env:
       - name: INRES_ENV
         value: "production"
-      - name: INRES_CONFIG_PATH
-        value: "/app/config/config.yaml"
+      - name: inres_CONFIG_PATH
+        value: "/etc/inres/config.yaml"
     volumeMounts:
       - name: app-config
-        mountPath: /app/config
+        mountPath: /etc/inres
         readOnly: true
     volumes:
       - name: app-config
@@ -338,8 +358,8 @@ components:
     service:
       enabled: false
     env:
-      - name: INRES_CONFIG_PATH
-        value: "/app/config/config.yaml"
+      - name: inres_CONFIG_PATH
+        value: "/etc/inres/config.yaml"
       - name: POLL_INTERVAL
         value: "1"
       - name: BATCH_SIZE
@@ -354,7 +374,7 @@ components:
     # Mount config file from secret
     volumeMounts:
       - name: app-config
-        mountPath: /app/config
+        mountPath: /etc/inres
         readOnly: true
     volumes:
       - name: app-config
