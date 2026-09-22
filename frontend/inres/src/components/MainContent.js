@@ -32,7 +32,7 @@ export default function MainContent({ children }) {
             : 'md:ml-64'
           : ''
         }
-        ${isMobile ? 'pt-14' : 'pt-0'}
+        ${isMobile && !isAuthPage ? 'pt-14' : 'pt-0'}
         ${isFullBleed ? 'h-screen' : 'min-h-screen'}
       `}
       style={{ background: 'var(--background)' }}
@@ -49,9 +49,17 @@ export default function MainContent({ children }) {
         <div className={`h-full ${isMobile ? 'h-[calc(100vh-56px)]' : 'h-screen'}`}>
           {children}
         </div>
+      ) : isAuthPage ? (
+        // Auth pages are full-bleed: /login and /signup each supply their own
+        // min-h-screen wrapper, background and padding. Wrapping them in the
+        // app container inset them by 24px horizontally and 56px at the top,
+        // which let the light-theme body show through around the edges of a
+        // page that is always dark. min-h-screen rather than h-screen so a
+        // form taller than the viewport still scrolls.
+        children
       ) : (
         // Standard container layout with Brand-style padding
-        <div className={`mx-auto py-8 px-6 ${isAuthPage ? '' : 'max-w-7xl'}`}>
+        <div className="mx-auto py-8 px-6 max-w-7xl">
           {/* Content */}
           <div className="relative">
             {children}

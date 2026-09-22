@@ -99,8 +99,15 @@ export default function AuthWrapper({ children }) {
     }
   }, [user?.id, session?.access_token, loading, pathname, router, isPublicRoute, isOnboardingPage]);
 
-  // Show loading spinner while checking authentication or onboarding status
-  if (loading || checkingOnboarding) {
+  // Show loading spinner while checking authentication or onboarding status.
+  //
+  // Public routes are excluded deliberately. AuthContext.signIn flips this same
+  // global `loading` flag for the duration of the request, so on /login this
+  // gate swapped the whole tree for a spinner mid-submit. That unmounted the
+  // sign-in form, destroyed its local error state, and remounted it blank - so
+  // a failed sign-in showed the user nothing at all. Public routes own their
+  // own loading UI; the sign-in button already has one.
+  if ((loading || checkingOnboarding) && !isPublicRoute) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
