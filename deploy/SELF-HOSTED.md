@@ -38,7 +38,7 @@ like an application bug.
 | Storage | a default StorageClass that can provision `ReadWriteOnce` volumes. On EKS this means the **EBS CSI driver add-on** - it is not built in |
 | Ingress | an ingress controller, or a load balancer you can point at a Service |
 | Object storage | an S3 bucket (or compatible) for Postgres backups and Supabase Storage |
-| CLI tools | `helm` 3.12+, `kubectl`, `openssl`, `docker` |
+| CLI tools | `helm` 3.12+, `kubectl`, `openssl`, `docker`, and **`psql`** - steps 5 and 7 are unusable without a Postgres client. On macOS, `brew install libpq` gives you one without a server; it is keg-only, so add `$(brew --prefix libpq)/bin` to your PATH |
 
 ---
 
@@ -61,16 +61,17 @@ export PG_PASSWORD="$(openssl rand -base64 32 | tr -d '\n=/+')"
 ```
 
 Mint the two API keys from that secret. Any JWT tool will do; this uses
-`python3` so there is nothing to install:
+`python3` so there is nothing to install. Note the `read` - the keys have to
+land in shell variables, not just on your screen:
 
 ```bash
-python3 - <<'PY'
+read -r ANON_KEY SERVICE_ROLE_KEY <<< "$(python3 - <<'PY'
 import base64, hashlib, hmac, json, os, time
 
 def sign(role, secret, years=5):
+    now = int(time.time())
     h = {"alg": "HS256", "typ": "JWT"}
-    p = {"role": role, "iss": "supabase",
-         "iat": int(time.time()), "exp": int(time.time()) + years*365*24*3600}
+    p = {"role": role, "iss": "supabase", "iat": now, "exp": now + years*365*24*3600}
     b = lambda d: base64.urlsafe_b64encode(json.dumps(d, separators=(",", ":")).encode()).rstrip(b"=")
     msg = b(h) + b"." + b(p)
     sig = base64.urlsafe_b64encode(
@@ -78,12 +79,18 @@ def sign(role, secret, years=5):
     return (msg + b"." + sig).decode()
 
 s = os.environ["JWT_SECRET"]
-print("ANON_KEY=" + sign("anon", s))
-print("SERVICE_ROLE_KEY=" + sign("service_role", s))
+print(sign("anon", s), sign("service_role", s))
 PY
+)"
+export ANON_KEY SERVICE_ROLE_KEY
 ```
 
-Export both, then store everything:
+An earlier version of this runbook printed the keys and told you to "export
+both" without showing how. Miss that and `$ANON_KEY` is empty, the secret is
+created with empty values, and nothing complains - Kong serves requests happily
+until the first authenticated call, several steps later, returns `401`.
+
+Now store everything:
 
 ```bash
 kubectl -n supabase create secret generic supabase-jwt \
@@ -91,12 +98,27 @@ kubectl -n supabase create secret generic supabase-jwt \
   --from-literal=anonKey="$ANON_KEY" \
   --from-literal=serviceKey="$SERVICE_ROLE_KEY"
 
+# Type matters. CNPG only acts on a superuserSecret of type
+# kubernetes.io/basic-auth; given an Opaque secret it holds the reference and
+# silently never sets a password. See step 4.
 kubectl -n supabase create secret generic supabase-db \
+  --type=kubernetes.io/basic-auth \
   --from-literal=username=postgres \
   --from-literal=password="$PG_PASSWORD"
 ```
 
-**Check:** `kubectl -n supabase get secret supabase-jwt supabase-db` lists both.
+**Check:** all three values are non-empty. Length, not existence - an empty
+value still produces a key.
+
+```bash
+for k in secret anonKey serviceKey; do
+  printf '%-12s %s\n' "$k" \
+    "$(kubectl -n supabase get secret supabase-jwt -o jsonpath="{.data.$k}" | base64 -d | wc -c)"
+done
+```
+
+`secret` should be 64, and both keys a few hundred. Any `0` means the `read`
+above did not run.
 
 Keep `$JWT_SECRET` and both keys somewhere durable now. They are needed again
 in step 9, and the keys cannot be regenerated without reissuing every token.
@@ -227,6 +249,26 @@ spec:
       secret:
         name: supabase-db
 
+  # Both lines are required, and neither is the default.
+  #
+  # Since 1.21 CNPG defaults enableSuperuserAccess to false, and that is not a
+  # passive default - the operator actively keeps the postgres role's password
+  # NULL. bootstrap.initdb.secret above sets the *application* user, which is a
+  # different thing, so without this every password connection as postgres is
+  # rejected no matter what the secret holds.
+  #
+  # superuserSecret points CNPG at the secret from step 1 rather than having it
+  # generate its own; omit it and the password lives in a generated
+  # <cluster>-superuser secret you then have to read back. The secret must be
+  # of type kubernetes.io/basic-auth or CNPG ignores it without logging
+  # anything.
+  #
+  # Step 6 also needs this: the Supabase services connect over the network with
+  # a password.
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: supabase-db
+
   postgresql:
     parameters:
       wal_level: logical           # required by Realtime
@@ -246,12 +288,37 @@ spec:
     limits:   { cpu: "2", memory: 4Gi }
 ```
 
+Size `instances` and `resources` to the nodes you actually have. Requests are
+what the scheduler reserves, so a request larger than a single node's
+allocatable capacity is unschedulable forever - and because the cluster
+autoscaler simulates against the same instance type, adding nodes does not
+help. Check before applying:
+
 ```bash
-kubectl apply -f postgres-cluster.yaml
-kubectl -n supabase wait --for=condition=Ready cluster/supabase-db --timeout=600s
+kubectl get nodes -o custom-columns=\
+'NODE:.metadata.name,CPU:.status.allocatable.cpu,MEM:.status.allocatable.memory'
 ```
 
-**Check:** three pods `Running`, and `pgmq` is present:
+For a first run on small nodes, `instances: 1` with `250m`/`512Mi` requests and
+10Gi/5Gi volumes is enough to validate every later step. Replicas prove
+failover; they prove nothing about bootstrap, service startup or migrations.
+
+```bash
+kubectl apply -f postgres-cluster.yaml
+```
+
+Poll rather than using `kubectl wait` if your API server drops long watches -
+a `client connection lost` error there says nothing about the cluster:
+
+```bash
+while :; do kubectl -n supabase get clusters.postgresql.cnpg.io supabase-db --no-headers; sleep 10; done
+```
+
+Use the fully-qualified `clusters.postgresql.cnpg.io`. On clusters running
+Rancher, the short name `cluster` resolves to `clusters.management.cattle.io`
+instead and returns a bewildering `NotFound`.
+
+**Check:** pods `Running`, and `pgmq` is present:
 
 ```bash
 kubectl -n supabase exec -it supabase-db-1 -- \
@@ -278,20 +345,37 @@ This is the step that is easy to skip and expensive to skip. Measured against
 | role `authenticator` | PostgREST/GoTrue role switching | no | yes |
 | schema `extensions` | every `CREATE EXTENSION ... WITH SCHEMA "extensions"` | no | yes |
 | publication `supabase_realtime` | 11 `ALTER PUBLICATION` calls | no (guarded, so silently skipped if absent) | yes |
-| schema `auth`, `auth.uid()`, `auth.users` | 100 `auth.uid()` calls, 7 foreign keys | no | **no - step 6** |
-| schema `storage`, `storage.buckets/objects` | 28 references | no | **no - step 6** |
+| roles `supabase_auth_admin`, `supabase_storage_admin`, `supabase_admin` | the Supabase services authenticate as these, not as `postgres` | no | yes |
+| schema `auth`, `auth.uid()`, `auth.users` | 100 `auth.uid()` calls, 7 foreign keys | no | **contents come from step 6** |
+| schema `storage`, `storage.buckets/objects` | 28 references | no | **contents come from step 6** |
 
-The last two rows are why migrations are step 7 and not this step. `auth` and
-`storage` are created by GoTrue and supabase-storage when they run their own
-migrations at startup, so the services have to come up first. Run the inres
-migrations before that and 22 of the 49 files fail.
+The last two rows are why migrations are step 7 and not this step. The schemas
+are created here so the services can own them, but their *tables* are written
+by GoTrue and supabase-storage when they run their own migrations at startup.
+Run the inres migrations before that and 22 of the 49 files fail: 13 on a
+missing `auth`, 10 on a missing `storage`, the rest cascading from those.
+
+The service-role row is the one most likely to catch you. Each Supabase
+component connects as its own role with its own schema, and none of them
+connect as `postgres`:
+
+| Service | Connects as | Owns |
+|---|---|---|
+| auth (GoTrue) | `supabase_auth_admin` | `auth` |
+| storage | `supabase_storage_admin` | `storage` |
+| realtime | `supabase_admin` | `_realtime` |
+
+Write the SQL below to a **file**. Pasting it into a shell does not work: `$$`
+expands to the shell's PID, and you get a screen of `command not found`. The
+quoted heredoc delimiter is what prevents that.
 
 ```bash
 kubectl -n supabase port-forward svc/supabase-db-rw 5432:5432 &
 export DATABASE_URL="postgresql://postgres:$PG_PASSWORD@localhost:5432/postgres"
 ```
 
-```sql
+```bash
+cat > bootstrap.sql <<'SQL'
 -- bootstrap.sql - run once, before any migration
 CREATE SCHEMA IF NOT EXISTS extensions;
 
@@ -330,16 +414,65 @@ BEGIN
   END IF;
 END
 $$;
+
+-- Service roles. Each Supabase component logs in as its own role; they all
+-- read the same password from the connection secret created in step 6.
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_auth_admin') THEN
+    EXECUTE format('CREATE ROLE supabase_auth_admin LOGIN NOINHERIT CREATEROLE PASSWORD %L',
+                   current_setting('bootstrap.service_password'));
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_storage_admin') THEN
+    EXECUTE format('CREATE ROLE supabase_storage_admin LOGIN NOINHERIT CREATEROLE PASSWORD %L',
+                   current_setting('bootstrap.service_password'));
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_admin') THEN
+    EXECUTE format('CREATE ROLE supabase_admin LOGIN NOINHERIT CREATEROLE CREATEDB REPLICATION BYPASSRLS PASSWORD %L',
+                   current_setting('bootstrap.service_password'));
+  END IF;
+END
+$$;
+
+-- Each service migrates into a schema it must own.
+CREATE SCHEMA IF NOT EXISTS auth      AUTHORIZATION supabase_auth_admin;
+CREATE SCHEMA IF NOT EXISTS storage   AUTHORIZATION supabase_storage_admin;
+CREATE SCHEMA IF NOT EXISTS _realtime AUTHORIZATION supabase_admin;
+
+-- Without these, GoTrue's migrator creates its schema_migrations table in the
+-- default search_path - "$user", public - and PostgreSQL 15+ no longer grants
+-- CREATE on public, so it dies with "permission denied for schema public".
+-- Realtime does not need one: it sets its own via DB_AFTER_CONNECT_QUERY.
+ALTER ROLE supabase_auth_admin    SET search_path TO auth;
+ALTER ROLE supabase_storage_admin SET search_path TO storage;
+
+GRANT USAGE ON SCHEMA public     TO supabase_auth_admin, supabase_storage_admin;
+GRANT USAGE ON SCHEMA extensions TO supabase_auth_admin, supabase_storage_admin, supabase_admin;
+GRANT anon, authenticated, service_role TO supabase_admin;
+SQL
 ```
 
-The `authenticator` password is passed as a session setting rather than
-interpolated into the file, because psql does not substitute `-v` variables
-inside dollar-quoted blocks. `-c` and `-f` share one session, so the `SET`
-reaches the `DO` block:
+Passwords are passed as session settings rather than interpolated into the
+file, because psql does not substitute `-v` variables inside dollar-quoted
+blocks. `-c` and `-f` share one session, so the `SET` reaches the `DO` block:
 
 ```bash
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 \
-  -c "SET bootstrap.authenticator_password = '$PG_PASSWORD';" -f bootstrap.sql
+  -c "SET bootstrap.authenticator_password = '$PG_PASSWORD';" \
+  -c "SET bootstrap.service_password = '$PG_PASSWORD';" \
+  -f bootstrap.sql
+```
+
+If the port-forward keeps dropping, pipe through the pod instead - it needs no
+password, because local socket connections are trusted. Note the `printf`: the
+`SET` has to be in the same stream, since psql exits after `-c` without reading
+stdin.
+
+```bash
+{ printf "SET bootstrap.authenticator_password = '%s';\n" "$PG_PASSWORD"
+  printf "SET bootstrap.service_password = '%s';\n"       "$PG_PASSWORD"
+  cat bootstrap.sql
+} | kubectl -n supabase exec -i supabase-db-1 -- psql -U postgres -v ON_ERROR_STOP=1
 ```
 
 Re-running is safe; every statement is guarded.
@@ -349,7 +482,9 @@ Re-running is safe; every statement is guarded.
 ```bash
 psql "$DATABASE_URL" -At -c \
   "SELECT rolname, rolcanlogin, rolbypassrls FROM pg_roles
-     WHERE rolname IN ('anon','authenticated','service_role','authenticator') ORDER BY 1;"
+     WHERE rolname IN ('anon','authenticated','service_role','authenticator',
+                       'supabase_auth_admin','supabase_storage_admin','supabase_admin')
+     ORDER BY 1;"
 ```
 
 Expected, exactly:
@@ -359,10 +494,15 @@ anon|f|f
 authenticated|f|f
 authenticator|t|f
 service_role|f|t
+supabase_admin|t|t
+supabase_auth_admin|t|f
+supabase_storage_admin|t|f
 ```
 
 `service_role` must show `rolbypassrls = t` - it is the role the Go API and the
-agent connect as, and RLS policies are not written to admit it.
+agent connect as, and RLS policies are not written to admit it. The three
+`supabase_*` roles must show `rolcanlogin = t`, or step 6 crash-loops on
+`password authentication failed`.
 
 ---
 ## Step 6 - Supabase services
@@ -376,56 +516,93 @@ Only four components are enabled. This codebase makes **no** PostgREST calls
 uses no Edge Functions, so those are switched off along with the developer
 tooling.
 
+The services need a connection secret of their own. The chart reads `host`,
+`port`, `database` and `password` from it, and the step 1 secret has
+`username`/`password` instead - so make a second one rather than editing the
+one CNPG owns:
+
+```bash
+PG_PASSWORD="$(kubectl -n supabase get secret supabase-db -o jsonpath='{.data.password}' | base64 -d)"
+
+kubectl -n supabase create secret generic supabase-db-conn \
+  --from-literal=host=supabase-db-rw.supabase.svc.cluster.local \
+  --from-literal=port=5432 \
+  --from-literal=database=postgres \
+  --from-literal=password="$PG_PASSWORD"
+```
+
 ```yaml
-# supabase-values.yaml
+# supabase-values.yaml  - chart 0.8.0
 secret:
   jwt:
-    existingSecret: supabase-jwt
+    secretRef: supabase-jwt       # NOT existingSecret - see below
   db:
-    existingSecret: supabase-db
+    secretRef: supabase-db-conn
+    # Required, and not optional metadata. The template tests
+    # `hasKey .Values.secret.db.secretRefKey "host"` - that is, whether you
+    # declared the mapping, not whether the secret contains the key. Omit this
+    # block and rendering aborts with "secret.db.host must be set".
+    secretRefKey:
+      host: host
+      port: port
+      database: database
+      password: password
 
-db:
-  enabled: false                  # CNPG owns Postgres; do not run the bundled one
+# Every component toggle lives under `deployment`. A top-level `db: {enabled:
+# false}` is silently ignored, and you get a second Postgres alongside CNPG.
+deployment:
+  db:        { enabled: false }   # CNPG owns Postgres
+  auth:      { enabled: true }
+  storage:   { enabled: true }
+  realtime:  { enabled: true }
+  kong:      { enabled: true }
+  rest:      { enabled: false }   # unused - no .from() calls anywhere
+  functions: { enabled: false }
+  studio:    { enabled: false }   # developer tooling
+  meta:      { enabled: false }
+  analytics: { enabled: false }
+  imgproxy:  { enabled: false }
+  vector:    { enabled: false }
+  minio:     { enabled: false }
 
-auth:
-  enabled: true
-  environment:
-    GOTRUE_DB_DATABASE_URL: "postgres://postgres:$(DB_PASSWORD)@supabase-db-rw:5432/postgres"
-    GOTRUE_SITE_URL: "https://inres.example.com"
-    GOTRUE_JWT_EXP: "3600"
-
-storage:
-  enabled: true
-  environment:
-    STORAGE_BACKEND: s3           # not 'file': the agent creates a bucket per
-    GLOBAL_S3_BUCKET: <bucket>    # user, and a PVC makes that your backup problem
-    REGION: <region>
-
-realtime:
-  enabled: true
-
-rest:      { enabled: false }     # unused - no .from() calls anywhere
-functions: { enabled: false }
-studio:    { enabled: false }     # developer tooling
-meta:      { enabled: false }
-analytics: { enabled: false }
-imgproxy:  { enabled: false }
-vector:    { enabled: false }
-
-kong:
-  enabled: true
+# The chart defaults to ingressClassName "nginx" with nginx-specific
+# annotations. On a cluster with a different controller the admission webhook
+# rejects the whole release. Nothing external needs to reach Supabase - inres
+# talks to Kong over cluster DNS - so leave it off and port-forward to verify.
+ingress:
+  enabled: false
 ```
+
+**`secretRef`, not `existingSecret`.** Helm ignores unknown values without
+complaint, so the wrong name leaves the chart on its built-in defaults - which
+for `secret.jwt` are the demo keys published in Supabase's own documentation,
+identical on every default install. Auth then appears to work while accepting
+tokens anyone can mint.
 
 ```bash
 helm repo add supabase https://supabase-community.github.io/supabase-kubernetes
 helm upgrade --install supabase supabase/supabase \
-  -n supabase -f supabase-values.yaml
+  --version 0.8.0 -n supabase -f supabase-values.yaml
 ```
 
-**Check:** auth answers, and a token round-trips:
+Pin the chart version. These field names have already moved once.
+
+Before installing, confirm the toggles took effect - `--dry-run` will not tell
+you, because ignored keys are not errors:
 
 ```bash
-kubectl -n supabase port-forward svc/supabase-kong 8000:8000 &
+helm template supabase supabase/supabase --version 0.8.0 \
+  -n supabase -f supabase-values.yaml | grep -E "^kind: Deployment" -A3 | grep "name:"
+```
+
+Four names only: auth, storage, realtime, kong. Anything else - especially a
+`db` - means a toggle is in the wrong place.
+
+**Check:** auth answers, and a token round-trips. Note the service name carries
+the release name, so installing as `supabase` gives `supabase-supabase-kong`:
+
+```bash
+kubectl -n supabase port-forward svc/supabase-supabase-kong 8000:8000 &
 
 curl -s http://localhost:8000/auth/v1/health -H "apikey: $ANON_KEY"
 
@@ -439,14 +616,19 @@ A `401` here almost always means the keys were minted from a different secret
 than the one GoTrue is using. Go back to step 1 rather than debugging forward.
 
 **Second check, and step 7 depends on it:** both services have run their own
-migrations against the database.
+migrations against the database. Step 5 created the schemas, so their existence
+proves nothing - count the tables in them:
 
 ```bash
 psql "$DATABASE_URL" -At -c \
-  "SELECT nspname FROM pg_namespace WHERE nspname IN ('auth','storage') ORDER BY 1;"
+  "SELECT table_schema, count(*) FROM information_schema.tables
+    WHERE table_schema IN ('auth','storage') GROUP BY 1 ORDER BY 1;"
+psql "$DATABASE_URL" -At -c "SELECT to_regclass('auth.users') IS NOT NULL;"
 ```
 
-Both must be listed. A healthy pod is not the same as a migrated schema - Auth
+Expect roughly 20 tables in `auth` and 10 in `storage`, and `t` for
+`auth.users` - 7 migration files hold foreign keys into it. A healthy pod is
+not the same as a migrated schema - Auth
 reports ready before it has finished, so check the database rather than the
 Deployment.
 
@@ -517,7 +699,8 @@ that one ServiceAccount:
 }
 ```
 
-Permissions, scoped to the one prefix rather than the bucket:
+Permissions. Object writes are confined to the one prefix; the bucket-level
+grant is not:
 
 ```json
 {
@@ -530,13 +713,21 @@ Permissions, scoped to the one prefix rather than the bucket:
     },
     {
       "Effect": "Allow",
-      "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::<your-bucket>",
-      "Condition": { "StringLike": { "s3:prefix": "supabase-db/*" } }
+      "Action": ["s3:ListBucket", "s3:GetBucketLocation"],
+      "Resource": "arn:aws:s3:::<your-bucket>"
     }
   ]
 }
 ```
+
+Do **not** add an `s3:prefix` condition to the `ListBucket` statement, however
+tempting it looks. Barman calls `HeadBucket` before anything else, `HeadBucket`
+sends no prefix, so the condition can never match and every archive fails with
+`403 Forbidden` - after the credential chain has resolved correctly, which
+makes it read like an IRSA problem. Give the bucket a dedicated purpose
+instead; there is then nothing in it for the prefix to protect.
+
+`s3:GetBucketLocation` is what barman uses to resolve the region.
 
 Then add both blocks to the Cluster and re-apply:
 
@@ -558,6 +749,13 @@ spec:
     retentionPolicy: "30d"
 ```
 
+Substitute `<your-bucket>` everywhere before applying. Left literal, barman
+reports `InvalidBucketName ... when calling the CreateBucket operation`, which
+reads as though the bucket name is malformed rather than unsubstituted. It also
+tells you barman creates the bucket if it is missing - and the policy above
+deliberately does not grant `s3:CreateBucket`, so the bucket must already
+exist.
+
 `inheritFromIAMRole: true` does not mean "use the node role". It means "use no
 Secret, walk the AWS SDK credential chain": env vars, then the IRSA web
 identity token, then IMDS. The annotation above is what puts a credential at
@@ -568,6 +766,22 @@ means every pod on the node can write to your backup bucket.
 Not on EKS, or no OIDC provider? Drop `inheritFromIAMRole` and point
 `s3Credentials` at a Secret with `accessKeyId` and `secretAccessKey` keys
 instead.
+
+**Restart the instance after adding the annotation.** The IRSA web-identity
+token is injected when a pod is created, so a pod that was already running
+never receives one:
+
+```bash
+kubectl -n supabase delete pod supabase-db-1
+```
+
+At `instances: 1` that is a brief outage with no replica to fail over to. Do it
+deliberately rather than discovering it. Confirm the token arrived:
+
+```bash
+kubectl -n supabase get pod supabase-db-1 \
+  -o jsonpath='{.spec.containers[0].env[?(@.name=="AWS_ROLE_ARN")].name}{"\n"}'
+```
 
 WAL archiving alone recovers nothing - there has to be a base backup to replay
 onto. That is a separate resource:
@@ -619,33 +833,69 @@ and the agent verify HS256 tokens against `supabase_jwt_secret`; if it does not
 match what GoTrue signs with, every request is rejected as unauthenticated and
 the chat WebSocket closes with `4001`.
 
-```yaml
-# config.yaml - becomes the inres-secrets Secret
-database_url: "postgresql://postgres:<PG_PASSWORD>@supabase-db-rw.supabase.svc.cluster.local:5432/postgres?sslmode=disable"
+Derive the values from the cluster rather than retyping them. Nearly every
+failure in this runbook has been a value that looked right and did not match:
 
-supabase_url: "http://supabase-kong.supabase.svc.cluster.local:8000"
+```bash
+kubectl create namespace inres
+
+PG_PASSWORD="$(kubectl -n supabase get secret supabase-db  -o jsonpath='{.data.password}'   | base64 -d)"
+JWT_SECRET="$( kubectl -n supabase get secret supabase-jwt -o jsonpath='{.data.secret}'     | base64 -d)"
+ANON_KEY="$(   kubectl -n supabase get secret supabase-jwt -o jsonpath='{.data.anonKey}'    | base64 -d)"
+SERVICE_KEY="$(kubectl -n supabase get secret supabase-jwt -o jsonpath='{.data.serviceKey}' | base64 -d)"
+```
+
+```bash
+cat > config.yaml <<YAML
+database_url: "postgresql://postgres:${PG_PASSWORD}@supabase-db-rw.supabase.svc.cluster.local:5432/postgres?sslmode=disable"
+port: "8080"
+
+inres_api_url: "http://inres-api:8080"
+inres_web_url: "http://inres-web:3000"
+backend_url: "http://inres-api:8080"
+data_dir: "./data"
+
+# The release name is part of the service name: installing the Supabase chart
+# as "supabase" produces supabase-supabase-kong.
+supabase_url: "http://supabase-supabase-kong.supabase.svc.cluster.local:8000"
 public_supabase_url: "https://inres.example.com"
-supabase_anon_key: "<ANON_KEY>"
-supabase_service_role_key: "<SERVICE_ROLE_KEY>"
-supabase_jwt_secret: "<JWT_SECRET>"
+supabase_anon_key: "${ANON_KEY}"
+supabase_service_role_key: "${SERVICE_KEY}"
+supabase_jwt_secret: "${JWT_SECRET}"
 
 # Exactly one Anthropic credential. An API key takes precedence wherever it is
-# found, so leave it empty to use an OAuth token.
-anthropic_api_key: "sk-ant-..."
+# found, so it must be genuinely empty for an OAuth token to be used - see
+# step 10.
+anthropic_api_key: ""
 
 ai_agent:
   model: "claude-opus-5"
   require_tool_approval: true
   max_concurrent_cli: 8
+YAML
+
+kubectl -n inres create secret generic inres-secrets --from-file=config.yaml
+rm -f config.yaml
 ```
+
+Delete the file afterwards. It holds the JWT secret and the database password
+in plaintext, in whatever directory you happened to be in.
+
+`public_supabase_url` is the browser-facing address and is the one value you
+cannot derive - it must be whatever hostname users reach. For a port-forwarded
+smoke test, the internal address works.
+
+**Check:** every value is populated. An unexpanded variable produces an empty
+string, not an error:
 
 ```bash
-kubectl create namespace inres
-kubectl -n inres create secret generic inres-secrets --from-file=config.yaml
+kubectl -n inres get secret inres-secrets -o jsonpath='{.data.config\.yaml}' | base64 -d \
+  | grep -E "^(supabase_anon_key|supabase_service_role_key|supabase_jwt_secret):" \
+  | sed -E 's/: "(.{0,6}).*"/: \1... /'
 ```
 
-**Check:** `kubectl -n inres get secret inres-secrets -o jsonpath='{.data.config\.yaml}' | base64 -d | head`
-shows your values and no placeholders.
+Three non-empty prefixes. Any bare `: ...` means that shell variable was empty
+when the heredoc ran.
 
 ---
 
@@ -653,23 +903,107 @@ shows your values and no placeholders.
 
 Only now.
 
+**Chart version and app version move independently.** The chart is at `0.x`;
+the images it deploys are at `1.x`. Passing an app version where a chart
+version belongs fails with a bare `not found`. List what exists:
+
 ```bash
-helm upgrade --install inres oci://ghcr.io/phonginreallife/charts/inres \
-  -n inres --version <chart-version>
+TOK=$(curl -s "https://ghcr.io/token?scope=repository%3A<owner>%2Fcharts%2Finres%3Apull&service=ghcr.io" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['token'])")
+curl -s -H "Authorization: Bearer $TOK" \
+  "https://ghcr.io/v2/<owner>/charts/inres/tags/list" | python3 -m json.tool
 ```
+
+If you authenticate with an OAuth token rather than an API key, the agent needs
+it in the environment. Store it separately - it does not belong in the config
+secret, which is mounted as a file:
+
+```bash
+claude setup-token
+read -rs TOKEN && kubectl -n inres create secret generic inres-claude-oauth \
+  --from-literal=token="$TOKEN" && unset TOKEN
+```
+
+```yaml
+# inres-values.yaml
+components:
+  ai:
+    # Helm replaces lists, it does not merge them. Every entry the chart
+    # already sets has to be repeated here or it is lost - including
+    # inres_CONFIG_PATH, without which the agent cannot find its config.
+    env:
+      - name: PORT
+        value: "8002"
+      - name: HOST
+        value: "0.0.0.0"
+      - name: USER_WORKSPACES_DIR
+        value: "/app/workspaces"
+      - name: inres_CONFIG_PATH
+        value: "/etc/inres/config.yaml"
+      - name: CLAUDE_CODE_OAUTH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: inres-claude-oauth
+            key: token
+
+  # Needs SLACK_BOT_TOKEN and SLACK_APP_TOKEN; crash-loops without them.
+  slack-worker:
+    replicas: 0
+
+  # cmd/server already runs the escalation workers in-process, so a separate
+  # worker Deployment puts two uncoordinated consumers on the same queue.
+  worker:
+    replicas: 0
+```
+
+```bash
+helm upgrade --install inres oci://ghcr.io/<owner>/charts/inres \
+  -n inres --version 0.4.0 -f inres-values.yaml
+```
+
+Keep `inres-values.yaml`. Every later `helm upgrade` needs it, and omitting it
+silently drops the OAuth token and the config path together.
+
+Leave `migration.enabled` at its default of `false` - step 7 already applied
+every migration, and the job needs three secret keys this runbook does not
+create.
+
+**On upgrades:** if you have scaled or edited anything through `kubectl` or
+k9s, server-side apply records that tool as the owner of those fields and helm
+refuses to overwrite them. Add `--force-conflicts` to take ownership back. On
+Helm 4, `--force` means `--force-replace`, which is a different thing and is
+rejected outright alongside server-side apply.
 
 **Check:**
 
 ```bash
 kubectl -n inres get pods            # all Running and Ready
-kubectl -n inres logs deploy/inres-ai | grep "Chat Agent:"
+kubectl -n inres logs deploy/inres-ai | head -30
 ```
 
-The agent logs its resolved model and settings at startup. Then open the UI,
-sign in with the user from step 6, and ask the assistant a question - that one
-request crosses the frontend, Kong, the agent, the Claude CLI, the incident
-tools, the Go API and Postgres, which is the fastest way to confirm the whole
-chain.
+The agent logs its resolved settings at startup. Two lines prove the config
+secret was read rather than defaulted: `PGMQ queue 'incident_analysis_queue'
+ready` means `database_url` parsed and connected, and `Agent CLI concurrency
+limit set to N` echoes your `ai_agent.max_concurrent_cli`.
+
+Confirm the credential actually reached the container, since a healthy pod
+proves nothing here - the agent starts fine without one and fails on the first
+message:
+
+```bash
+kubectl -n inres exec deploy/inres-ai -- sh -c \
+  'printf "oauth len: "; printf "%s" "$CLAUDE_CODE_OAUTH_TOKEN" | wc -c
+   printf "api key:   "; test -n "$ANTHROPIC_API_KEY" && echo "set - shadows OAuth" || echo "unset"'
+```
+
+Then open the UI, sign in with the user from step 6, and ask the assistant a
+question - that one request crosses the frontend, Kong, the agent, the Claude
+CLI, the incident tools, the Go API and Postgres, which is the fastest way to
+confirm the whole chain.
+
+The agent's CORS allowlist defaults to `localhost:3000` and `localhost:8000`,
+so port-forward to port 8000 for this test; any other hostname needs
+`AI_ALLOWED_ORIGINS` set.
 
 ---
 
@@ -694,12 +1028,25 @@ restore works.
 **What here is verified, and what is not.** Worth knowing which is which before
 you trust a step.
 
+**Every step here has now been run end to end** on a live EKS cluster, from an
+empty namespace to an agent answering over the WebSocket. The version of this
+document that preceded that run read perfectly well and failed at eleven
+separate points, so a few notes on what that changed:
+
 | | |
 |---|---|
-| Verified | The Postgres image: it builds, is published, `CREATE EXTENSION pgmq` succeeds, and a queue round-trips a message. The extension inventory in step 3 was read off the built image. |
-| Verified | The step 5 bootstrap SQL: run against that image, it succeeds, is idempotent on a second run, and produces exactly the four roles with the attributes the check expects. |
-| Verified | The step 5 -> 6 -> 7 ordering. Against a database with only the bootstrap applied, 22 of the 49 migration files fail - 13 on missing `auth`, 10 on missing `storage`, the rest cascading from those. With `auth` and `storage` present, all 49 apply cleanly. |
-| Not run | The CNPG Cluster spec, the backup and IRSA config, and the Supabase chart values. These are written from component requirements and have not been applied to a live cluster. |
-| Not run | Step 7 was verified against stand-ins for `auth` and `storage`, not against GoTrue and supabase-storage themselves. The ordering is proven; the exact shape those services create is not. |
+| Verified | The Postgres image, the bootstrap SQL, the Supabase chart values, the migration ordering, backups with a completed base backup and `ContinuousArchiving: True`, and the full inres install. |
+| Verified | Kong's auth chain end to end - a valid `anon` key returns 200, a missing or wrong one returns 401. This is worth testing explicitly; empty JWT keys pass every earlier check. |
+| Environment-specific | The IAM policies and IRSA trust are written for EKS. The shape is right; the ARNs, OIDC issuer and bucket are yours to fill in. |
+| Still unproven | Restore. Backups reported success and the objects are in S3, but no recovery has been performed from them. |
 
-Treat step 4, step 6 and step 8 as the places to slow down.
+The failures clustered in two places, and both are worth slowing down for:
+**step 5**, where a missing role surfaces several steps later as an
+authentication error, and **step 6**, where a wrong field name is not an error
+at all - Helm ignores unknown values, so the chart quietly keeps its defaults.
+
+A pattern worth carrying into any step not covered here: check the thing
+itself, not its proxy. A `Running` pod does not mean a migrated schema, an
+existing schema does not mean it has tables, a populated secret key does not
+mean a non-empty value, and `barmanObjectStore` reporting success does not mean
+a backup you can restore.
