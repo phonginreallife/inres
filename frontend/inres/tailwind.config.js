@@ -107,8 +107,15 @@ module.exports = {
                 'pulse-slow': 'pulse 3s infinite',
                 'glow': 'glow 2s ease-in-out infinite alternate',
                 'gradient': 'gradient 8s ease infinite',
+                'trace': 'trace 3.2s linear infinite',
             },
             keyframes: {
+                // Draws a waveform left to right, then clears it.
+                trace: {
+                    '0%':   { strokeDashoffset: '260' },
+                    '55%':  { strokeDashoffset: '0' },
+                    '100%': { strokeDashoffset: '-260' },
+                },
                 fadeIn: {
                     '0%': { opacity: '0', transform: 'translateY(-10px)' },
                     '100%': { opacity: '1', transform: 'translateY(0)' },

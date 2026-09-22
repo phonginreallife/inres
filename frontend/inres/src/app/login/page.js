@@ -16,8 +16,7 @@ import {
   ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
-import { BrandLockup } from '../../components/ui/BrandMark';
-import ProductPreview from '../../components/auth/ProductPreview';
+import { BrandLockup, LiveSignal } from '../../components/ui/BrandMark';
 
 const FEATURES = [
   { Icon: SparklesIcon, label: 'AI-powered incident analysis' },
@@ -129,7 +128,25 @@ export default function LoginPage() {
             on-call management &mdash; unified in one platform.
           </p>
 
-          <ProductPreview className="mt-9" />
+          {/*
+            A live trace rather than a mock product view. A miniature
+            service-health card invites the reader to evaluate it as a product
+            screenshot - names, states, whether the numbers are real - which is
+            a lot of attention spent on the half of the page that is not the
+            form. This carries the same idea with far less to read.
+          */}
+          <div className="mt-10 max-w-md" aria-hidden="true">
+            <div className="mb-2 flex items-center gap-2.5">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-70 motion-safe:animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-400" />
+              </span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">
+                Signals monitored continuously
+              </span>
+            </div>
+            <LiveSignal className="h-11 w-full text-primary-400" />
+          </div>
         </div>
 
         <ul className="relative space-y-3.5">

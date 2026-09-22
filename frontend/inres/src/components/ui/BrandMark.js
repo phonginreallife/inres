@@ -70,4 +70,42 @@ export const BrandLockup = ({ size = 'md', className = '' }) => {
   );
 };
 
+/**
+ * A waveform that draws itself on a loop.
+ *
+ * Pure SVG and CSS - no JS, no timers, nothing to leak on unmount. The trace is
+ * one path drawn twice: a dim baseline so the shape is always legible, and a
+ * bright copy animated via stroke-dashoffset. `motion-safe:` means anyone who
+ * has asked their OS to reduce motion gets the fully drawn, static shape.
+ */
+export const LiveSignal = ({ className = '' }) => (
+  <svg
+    viewBox="0 0 260 44"
+    fill="none"
+    className={className}
+    aria-hidden="true"
+    focusable="false"
+    preserveAspectRatio="none"
+  >
+    <path
+      d="M0 24h38l7-13 9 26 8-19 7 6h34l6-10 8 20 7-14 6 4h36l7-16 9 30 8-22 7 8h30l6-9 8 18 7-11h28"
+      stroke="currentColor"
+      strokeOpacity="0.16"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M0 24h38l7-13 9 26 8-19 7 6h34l6-10 8 20 7-14 6 4h36l7-16 9 30 8-22 7 8h30l6-9 8 18 7-11h28"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeDasharray="260"
+      strokeDashoffset="260"
+      className="motion-safe:animate-trace motion-reduce:[stroke-dashoffset:0] motion-reduce:[stroke-opacity:0.5]"
+    />
+  </svg>
+);
+
 export default BrandMark;
