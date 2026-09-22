@@ -8,6 +8,7 @@ import { useSidebar } from '../contexts/SidebarContext';
 import OrgSwitcher from './OrgSwitcher';
 import ProjectSwitcher from './ProjectSwitcher';
 import ThemeToggle from './ThemeToggle';
+import { BrandMark } from './ui/BrandMark';
 
 const NAV_ITEMS = [
   {
@@ -159,15 +160,10 @@ export default function Sidebar() {
       {/* Logo Header */}
       <div className={`flex items-center h-16 px-4 border-b border-navy-700/50 ${collapsed ? 'justify-center' : 'justify-between'}`}>
         <Link href="/dashboard" className="flex items-center gap-3">
-          {/* Brand-style logo */}
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            {/* Glow effect */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 blur-lg opacity-30" />
+          {/* Brand mark - shared with the sign-in page, see ui/BrandMark.js */}
+          <div className="w-10 h-10 rounded-xl bg-primary-500 text-white flex items-center justify-center
+                          ring-1 ring-inset ring-white/15 shadow-lg shadow-primary-500/25">
+            <BrandMark className="w-6 h-6" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
