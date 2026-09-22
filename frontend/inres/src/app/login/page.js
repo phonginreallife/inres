@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { BrandLockup, BrandMark } from '../../components/ui/BrandMark';
+import { BrandLockup, LiveSignal } from '../../components/ui/BrandMark';
 
 /**
  * Feature icons.
@@ -113,16 +113,35 @@ export default function LoginPage() {
       {/* Left - brand and value proposition */}
       <div className="hidden lg:flex lg:w-[52%] relative z-10 flex-col justify-center px-16 xl:px-24">
         <div className="max-w-lg">
-          <BrandLockup size="lg" className="mb-14" />
+          <BrandLockup size="lg" live className="mb-14" />
 
           <h2 className="text-[2.75rem] leading-[1.1] font-semibold tracking-tight text-white mb-5">
             Intelligent incident
             <span className="block text-primary-400">response</span>
           </h2>
-          <p className="text-lg leading-relaxed text-slate-400 mb-12 max-w-md">
+          <p className="text-lg leading-relaxed text-slate-400 mb-8 max-w-md">
             AI-powered on-call management, incident response, and monitoring -
             all in one platform.
           </p>
+
+          {/*
+            A live trace, not a decoration. It redraws continuously so the page
+            reads as a system that is currently watching - the same reason the
+            badge carries a halo. Pure SVG and CSS, so it costs no JS and stops
+            entirely for anyone with reduced motion enabled.
+          */}
+          <div className="mb-12 max-w-md" aria-hidden="true">
+            <div className="flex items-center gap-2.5 mb-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-70 motion-safe:animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-400" />
+              </span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">
+                Signals monitored continuously
+              </span>
+            </div>
+            <LiveSignal className="w-full h-11 text-primary-400" />
+          </div>
 
           <ul className="space-y-3">
             {features.map((feature) => (
@@ -144,7 +163,7 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-6 py-12 lg:px-12 relative z-10">
         <div className="w-full max-w-[26rem]">
           <div className="lg:hidden flex justify-center mb-10">
-            <BrandLockup size="md" />
+            <BrandLockup size="md" live />
           </div>
 
           <div className="bg-navy-900/70 backdrop-blur-xl rounded-2xl border border-white/[0.07] p-8 sm:p-10 shadow-2xl shadow-navy-950/60">
