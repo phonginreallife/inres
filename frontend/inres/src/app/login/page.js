@@ -16,7 +16,8 @@ import {
   ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
-import { BrandLockup, LiveSignal } from '../../components/ui/BrandMark';
+import { BrandLockup } from '../../components/ui/BrandMark';
+import LiveMonitor from '../../components/auth/LiveMonitor';
 
 const FEATURES = [
   { Icon: SparklesIcon, label: 'AI-powered incident analysis' },
@@ -115,7 +116,7 @@ export default function LoginPage() {
         </div>
 
         <div className="relative">
-          <BrandLockup size="lg" />
+          <BrandLockup size="lg" glow />
         </div>
 
         <div className="relative max-w-[30rem]">
@@ -128,25 +129,7 @@ export default function LoginPage() {
             on-call management &mdash; unified in one platform.
           </p>
 
-          {/*
-            A live trace rather than a mock product view. A miniature
-            service-health card invites the reader to evaluate it as a product
-            screenshot - names, states, whether the numbers are real - which is
-            a lot of attention spent on the half of the page that is not the
-            form. This carries the same idea with far less to read.
-          */}
-          <div className="mt-10 max-w-md" aria-hidden="true">
-            <div className="mb-2 flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-70 motion-safe:animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-400" />
-              </span>
-              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">
-                Signals monitored continuously
-              </span>
-            </div>
-            <LiveSignal className="h-11 w-full text-primary-400" />
-          </div>
+          <LiveMonitor className="mt-10 max-w-md" />
         </div>
 
         <ul className="relative space-y-3.5">
@@ -171,7 +154,7 @@ export default function LoginPage() {
             held back to sm so the phone layout stays form-first.
           */}
           <div className="mb-9 lg:hidden">
-            <BrandLockup size="md" />
+            <BrandLockup size="md" glow />
             <h2 className="mt-7 text-[1.65rem] sm:text-[1.875rem] font-semibold leading-[1.15] tracking-[-0.02em] text-white">
               Resolve incidents.
               <span className="block text-primary-400">Restore confidence.</span>

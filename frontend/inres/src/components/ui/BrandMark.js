@@ -32,18 +32,35 @@ export const BrandMark = ({ className = 'w-8 h-8' }) => (
 
 const badgeSizes = {
   sm: { box: 'w-9 h-9 rounded-[10px]', mark: 'w-[18px] h-[18px]' },
-  md: { box: 'w-10 h-10 rounded-[11px]', mark: 'w-5 h-5' },
-  lg: { box: 'w-11 h-11 rounded-xl', mark: 'w-[22px] h-[22px]' },
+  md: { box: 'w-11 h-11 rounded-xl', mark: 'w-[22px] h-[22px]' },
+  lg: { box: 'w-[52px] h-[52px] rounded-[14px]', mark: 'w-7 h-7' },
 };
 
-export const BrandBadge = ({ size = 'md', className = '' }) => {
+/**
+ * The badge.
+ *
+ * `glow` adds a blurred colour field behind it. That layer animates opacity
+ * only - scaling or blurring on a keyframe forces a repaint every frame, and
+ * at this size nobody would see the difference anyway.
+ */
+export const BrandBadge = ({ size = 'md', glow = false, className = '' }) => {
   const d = badgeSizes[size];
   return (
-    <div
-      className={`${d.box} flex-shrink-0 bg-primary-500 text-white flex items-center justify-center
-                  ring-1 ring-inset ring-white/20 ${className}`}
-    >
-      <BrandMark className={d.mark} />
+    <div className={`relative flex-shrink-0 ${className}`}>
+      {glow && (
+        <div
+          aria-hidden="true"
+          className={`absolute -inset-2.5 ${d.box} bg-primary-500/45 blur-xl motion-safe:animate-breathe`}
+        />
+      )}
+      <div
+        className={`relative ${d.box} flex items-center justify-center text-white
+                    bg-gradient-to-br from-primary-400 via-primary-500 to-primary-600
+                    ring-1 ring-inset ring-white/25
+                    shadow-[0_0_0_1px_rgba(26,117,255,0.25),0_8px_24px_-6px_rgba(26,117,255,0.65)]`}
+      >
+        <BrandMark className={d.mark} />
+      </div>
     </div>
   );
 };
@@ -55,57 +72,24 @@ export const BrandBadge = ({ size = 'md', className = '' }) => {
  * "InRes" reads as the name and "Incident Response" as the category rather
  * than the two competing at similar weight.
  */
-export const BrandLockup = ({ size = 'md', className = '' }) => {
-  const nameSize = { sm: 'text-[15px]', md: 'text-[17px]', lg: 'text-lg' }[size];
+export const BrandLockup = ({ size = 'md', glow = false, className = '' }) => {
+  const nameSize = { sm: 'text-[16px]', md: 'text-[19px]', lg: 'text-[22px]' }[size];
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <BrandBadge size={size} />
+    <div className={`flex items-center gap-3.5 ${className}`}>
+      <BrandBadge size={size} glow={glow} />
       <div className="leading-none">
-        <div className={`${nameSize} font-semibold tracking-tight text-white`}>InRes</div>
-        <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-slate-500">
+        <div
+          className={`${nameSize} font-semibold tracking-tight text-white
+                      [text-shadow:0_0_18px_rgba(26,117,255,0.45)]`}
+        >
+          InRes
+        </div>
+        <div className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent-400">
           Incident Response
         </div>
       </div>
     </div>
   );
 };
-
-/**
- * A waveform that draws itself on a loop.
- *
- * Pure SVG and CSS - no JS, no timers, nothing to leak on unmount. The trace is
- * one path drawn twice: a dim baseline so the shape is always legible, and a
- * bright copy animated via stroke-dashoffset. `motion-safe:` means anyone who
- * has asked their OS to reduce motion gets the fully drawn, static shape.
- */
-export const LiveSignal = ({ className = '' }) => (
-  <svg
-    viewBox="0 0 260 44"
-    fill="none"
-    className={className}
-    aria-hidden="true"
-    focusable="false"
-    preserveAspectRatio="none"
-  >
-    <path
-      d="M0 24h38l7-13 9 26 8-19 7 6h34l6-10 8 20 7-14 6 4h36l7-16 9 30 8-22 7 8h30l6-9 8 18 7-11h28"
-      stroke="currentColor"
-      strokeOpacity="0.16"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M0 24h38l7-13 9 26 8-19 7 6h34l6-10 8 20 7-14 6 4h36l7-16 9 30 8-22 7 8h30l6-9 8 18 7-11h28"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeDasharray="260"
-      strokeDashoffset="260"
-      className="motion-safe:animate-trace motion-reduce:[stroke-dashoffset:0] motion-reduce:[stroke-opacity:0.5]"
-    />
-  </svg>
-);
 
 export default BrandMark;

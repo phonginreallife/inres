@@ -107,14 +107,36 @@ module.exports = {
                 'pulse-slow': 'pulse 3s infinite',
                 'glow': 'glow 2s ease-in-out infinite alternate',
                 'gradient': 'gradient 8s ease infinite',
-                'trace': 'trace 3.2s linear infinite',
+                'trace': 'trace 4s cubic-bezier(.45,0,.55,1) infinite',
+                'comet': 'comet 4s cubic-bezier(.45,0,.55,1) infinite',
+                'breathe': 'breathe 4s ease-in-out infinite',
+                'blip': 'blip 2.4s ease-in-out infinite',
             },
             keyframes: {
-                // Draws a waveform left to right, then clears it.
+                // Draws the waveform left to right, then clears it.
                 trace: {
-                    '0%':   { strokeDashoffset: '260' },
+                    '0%':   { strokeDashoffset: '520' },
                     '55%':  { strokeDashoffset: '0' },
-                    '100%': { strokeDashoffset: '-260' },
+                    '100%': { strokeDashoffset: '-520' },
+                },
+                // A short bright dash riding the same path - the leading pulse.
+                comet: {
+                    '0%':   { strokeDashoffset: '520', opacity: '0' },
+                    '6%':   { opacity: '1' },
+                    '88%':  { opacity: '1' },
+                    '100%': { strokeDashoffset: '0',   opacity: '0' },
+                },
+                // Glow behind the logo. Opacity only - scaling a blurred layer
+                // forces repaint on every frame for no visible gain.
+                breathe: {
+                    '0%, 100%': { opacity: '0.35' },
+                    '50%':      { opacity: '0.7' },
+                },
+                // Service dots. Deliberately out of phase with everything else
+                // so the composition never pulses in unison.
+                blip: {
+                    '0%, 100%': { opacity: '1' },
+                    '50%':      { opacity: '0.45' },
                 },
                 fadeIn: {
                     '0%': { opacity: '0', transform: 'translateY(-10px)' },
