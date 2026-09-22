@@ -3,43 +3,27 @@
 /**
  * Live-monitoring visualisation for the sign-in page.
  *
- * A glowing waveform with a pulse riding its leading edge, over a row of
- * service-health indicators.
+ * A glowing waveform with a pulse riding its leading edge.
  *
  * Everything is SVG and CSS. No JS, no timers, no state - so there is nothing
  * to leak on unmount and nothing recalculating on the main thread while
  * someone types their password. The glow is a real SVG blur rather than a
  * stack of translucent copies, which keeps it to one filter pass.
  *
- * The service names are invented and the waveform is a fixed path. Neither is
- * sampled from anything, which is why the header carries an "Illustrative"
- * marker - a monitoring visual that looks like telemetry is making a claim,
- * and this one is not entitled to make it.
+ * The waveform is a fixed path, not sampled from anything. It reads as motion
+ * rather than as a reading, which is the point: it carries no service name, no
+ * figure and no status, so there is nothing here that could be mistaken for
+ * telemetry and nothing to disclaim.
  *
  * All motion sits behind `motion-safe:`. With reduced motion the waveform
- * renders fully drawn and static, the pulse is absent, and the dots hold at
- * full opacity - a still image rather than a degraded animation.
+ * renders fully drawn and static and the pulse is absent - a still image
+ * rather than a degraded animation.
  */
 
 const WAVE =
   'M0 30 H44 l9-17 11 34 10-25 9 8 h46 l8-13 10 26 9-18 8 5 h48 l9-21 11 39 10-28 9 10 h40 l8-12 10 24 9-14 h36';
 
-const SERVICES = [
-  { name: 'api-gateway', tone: 'ok' },
-  { name: 'checkout-service', tone: 'warn' },
-  { name: 'auth-service', tone: 'ok' },
-];
 
-const TONES = {
-  ok: {
-    dot: 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]',
-    text: 'text-slate-400',
-  },
-  warn: {
-    dot: 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]',
-    text: 'text-amber-300/90',
-  },
-};
 
 export const LiveMonitor = ({ className = '' }) => (
   <div className={className}>
@@ -51,10 +35,6 @@ export const LiveMonitor = ({ className = '' }) => (
       </span>
       <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
         Signals monitored continuously
-      </span>
-      <span aria-hidden="true" className="text-slate-700">&middot;</span>
-      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-slate-600">
-        Illustrative
       </span>
     </div>
 
@@ -115,19 +95,6 @@ export const LiveMonitor = ({ className = '' }) => (
       />
     </svg>
 
-    {/* Service-health indicators */}
-    <ul className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-2">
-      {SERVICES.map(({ name, tone }, i) => (
-        <li key={name} className="flex items-center gap-2">
-          <span
-            aria-hidden="true"
-            className={`h-1.5 w-1.5 rounded-full motion-safe:animate-blip ${TONES[tone].dot}`}
-            style={{ animationDelay: `${i * 0.5}s` }}
-          />
-          <span className={`font-mono text-[11.5px] ${TONES[tone].text}`}>{name}</span>
-        </li>
-      ))}
-    </ul>
   </div>
 );
 

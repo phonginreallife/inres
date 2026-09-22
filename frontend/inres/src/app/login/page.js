@@ -99,7 +99,7 @@ export default function LoginPage() {
       {/* ---------------------------------------------------------------- */}
       {/* Left: product. Hidden below lg - on a phone the form is the page. */}
       {/* ---------------------------------------------------------------- */}
-      <section className="relative hidden lg:flex flex-col justify-between overflow-hidden border-r border-white/[0.06] px-12 py-14 xl:px-16">
+      <section className="relative hidden lg:flex flex-col overflow-hidden border-r border-white/[0.06] px-12 py-14 xl:px-16">
         {/* One ambient wash and a masked grid. Low contrast on purpose. */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute -top-40 -left-24 h-[28rem] w-[28rem] rounded-full bg-primary-500/10 blur-[120px]" />
@@ -119,27 +119,23 @@ export default function LoginPage() {
           <BrandLockup size="lg" glow />
         </div>
 
-        <div className="relative max-w-[30rem]">
+        <div className="relative flex flex-1 flex-col justify-center max-w-[30rem]">
           <h2 className="text-[2.5rem] xl:text-[2.75rem] font-semibold leading-[1.12] tracking-[-0.02em] text-white">
             Resolve incidents.
             <span className="block text-primary-400">Restore confidence.</span>
           </h2>
-          <p className="mt-5 text-[15px] leading-relaxed text-slate-400">
-            AI-powered incident analysis, real-time observability, and intelligent
-            on-call management &mdash; unified in one platform.
-          </p>
 
           <LiveMonitor className="mt-10 max-w-md" />
-        </div>
 
-        <ul className="relative space-y-3.5">
-          {FEATURES.map(({ Icon, label }) => (
-            <li key={label} className="flex items-center gap-3 text-[14px] text-slate-400">
-              <Icon className="h-[18px] w-[18px] flex-shrink-0 text-primary-400/80" strokeWidth={1.5} />
-              <span>{label}</span>
-            </li>
-          ))}
-        </ul>
+          <ul className="mt-11 space-y-3.5">
+            {FEATURES.map(({ Icon, label }) => (
+              <li key={label} className="flex items-center gap-3 text-[14px] text-slate-400">
+                <Icon className="h-[18px] w-[18px] flex-shrink-0 text-primary-400/80" strokeWidth={1.5} />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* ---------------------------------------------------------------- */}
@@ -159,10 +155,6 @@ export default function LoginPage() {
               Resolve incidents.
               <span className="block text-primary-400">Restore confidence.</span>
             </h2>
-            <p className="mt-3 hidden text-[14px] leading-relaxed text-slate-400 sm:block">
-              AI-powered incident analysis, real-time observability, and
-              intelligent on-call management &mdash; unified in one platform.
-            </p>
           </div>
 
           <header className="mb-7 border-t border-white/[0.06] pt-7 lg:border-0 lg:pt-0">
