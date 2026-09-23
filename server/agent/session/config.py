@@ -211,7 +211,117 @@ def _sdk_env() -> Dict[str, str]:
         value = os.getenv(key)
         if value:
             env[key] = value
+
+    _warn_on_ambiguous_credentials()
     return env
+
+
+# ---------------------------------------------------------------------------
+# Credential sanity
+# ---------------------------------------------------------------------------
+#
+# Two credentials can reach the CLI: ANTHROPIC_API_KEY and
+# CLAUDE_CODE_OAUTH_TOKEN. The CLI prefers the key, silently. That silence cost
+# a working deployment several hours: config.yaml carried an invalid
+# anthropic_api_key, config/loader.py exported it into the environment at
+# import, and it shadowed a perfectly good OAuth token. Every turn spent about
+# three minutes in the CLI's 401 retry loop under a "thinking..." spinner, then
+# failed. Nothing anywhere said "you have two credentials and the wrong one is
+# winning". These two functions say it.
+
+_credentials_warned = False
+
+
+def describe_credentials(env: Optional[Dict[str, str]] = None) -> Optional[str]:
+    """
+    Explain which credential the CLI will use, or None if there is no ambiguity.
+
+    Pure: takes an environment mapping so it can be unit-tested without
+    touching the real one.
+    """
+    env = os.environ if env is None else env
+    has_key = bool(env.get("ANTHROPIC_API_KEY"))
+    has_oauth = bool(env.get("CLAUDE_CODE_OAUTH_TOKEN"))
+
+    if has_key and has_oauth:
+        return (
+            "Both ANTHROPIC_API_KEY and CLAUDE_CODE_OAUTH_TOKEN are set. The CLI "
+            "will use the API key and ignore the OAuth token. If the key is wrong, "
+            "every turn fails with 401 after a long retry. Remove one - usually "
+            "anthropic_api_key from config.yaml, which config/loader.py exports "
+            "into the environment."
+        )
+    if not has_key and not has_oauth:
+        return (
+            "Neither ANTHROPIC_API_KEY nor CLAUDE_CODE_OAUTH_TOKEN is set; the CLI "
+            "will fail to authenticate on the first message."
+        )
+    return None
+
+
+def _warn_on_ambiguous_credentials() -> None:
+    """Log describe_credentials() once per process, at connect time."""
+    global _credentials_warned
+    if _credentials_warned:
+        return
+    _credentials_warned = True
+    message = describe_credentials()
+    if message:
+        logger.warning("Credential check: %s", message)
+
+
+async def verify_api_key_at_startup(timeout_s: float = 8.0) -> Optional[bool]:
+    """
+    If an API key is configured, confirm Anthropic accepts it. Non-fatal.
+
+    Returns True (accepted), False (rejected) or None (not configured, or the
+    check could not run). One cheap authenticated GET at boot turns "chat hangs
+    for three minutes then says 401" into a single CRITICAL log line that names
+    the fix, and it costs nothing when no key is configured.
+    """
+    import asyncio
+    import urllib.error
+    import urllib.request
+
+    key = os.getenv("ANTHROPIC_API_KEY")
+    if not key:
+        return None
+
+    def _probe() -> int:
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/models",
+            headers={"x-api-key": key, "anthropic-version": "2023-06-01"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout_s) as resp:
+                return resp.status
+        except urllib.error.HTTPError as exc:
+            return exc.code
+
+    try:
+        status = await asyncio.to_thread(_probe)
+    except Exception as exc:
+        logger.warning("Credential check: could not reach api.anthropic.com (%s); skipping", exc)
+        return None
+
+    if status == 401:
+        logger.critical(
+            "Credential check: ANTHROPIC_API_KEY is REJECTED by Anthropic (401). "
+            "Every chat turn will fail after a long retry. "
+            "%s",
+            "It also shadows CLAUDE_CODE_OAUTH_TOKEN, which is set - remove the key "
+            "and the OAuth token will be used."
+            if os.getenv("CLAUDE_CODE_OAUTH_TOKEN")
+            else "Fix or remove anthropic_api_key in config.yaml.",
+        )
+        return False
+
+    if 200 <= status < 300:
+        logger.info("Credential check: ANTHROPIC_API_KEY accepted")
+        return True
+
+    logger.warning("Credential check: unexpected HTTP %s from api.anthropic.com", status)
+    return None
 
 
 def _workspace_for(user_id: str) -> Optional[str]:

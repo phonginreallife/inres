@@ -70,7 +70,12 @@ def load_config():
         for config_key, env_key in env_mapping.items():
             if config_key in config and config[config_key]:
                 os.environ[env_key] = str(config[config_key])
-                logger.info(f"[config_loader] Set {env_key}={str(config[config_key])[:30]}...")
+                # Name and length only. This list is mostly secrets, and the
+                # first 30 characters of an API key or JWT secret is not a
+                # redaction - it went straight into the pod logs.
+                logger.info(
+                    f"[config_loader] Set {env_key} (len={len(str(config[config_key]))})"
+                )
 
     except Exception as e:
         logger.error(f"Failed to load config file: {e}")

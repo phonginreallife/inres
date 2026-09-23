@@ -64,6 +64,7 @@ from routes import (
 from config import config
 from errors import sanitize_error_message
 from session import configure_concurrency, events
+from session.config import describe_credentials, verify_api_key_at_startup
 from streaming.mcp_client import MCPToolManager, get_mcp_pool
 from ws_chat import ChatConnection, build_session_config
 
@@ -169,6 +170,15 @@ async def lifespan(app: FastAPI):
     """
     # Startup
     logger.info("Starting application...")
+
+    # Say which credential the CLI will use, and prove it works, before the
+    # first message does it the slow way. config/loader.py has already exported
+    # config.yaml values into the environment by this point, so this sees
+    # exactly what the CLI subprocess will inherit.
+    ambiguity = describe_credentials()
+    if ambiguity:
+        logger.warning("Credential check: %s", ambiguity)
+    await verify_api_key_at_startup()
 
     # Initialize audit service
     await init_audit_service()
