@@ -91,6 +91,31 @@ gloo:
     - inres.your-domain.com
   routePrefix: "/webhook/*"
 
+# Supabase runs as its own Helm release in its own namespace, so Kong needs an
+# explicit upstream for it. Without one, /auth/v1/* falls through to the
+# catch-all "/" route, gets served by the Next.js web pod, and every login or
+# signup comes back as a 404 that looks like the API is down.
+#
+# Cross-namespace form is <service>.<namespace>.svc.cluster.local. Point this
+# at GoTrue directly rather than at the Supabase Kong: one less hop, and it
+# does not depend on that gateway's consumer keys being provisioned.
+supabase:
+  auth:
+    enabled: true
+    url: "http://supabase-supabase-auth.supabase.svc.cluster.local:9999"
+  storage:
+    enabled: true
+    url: "http://supabase-supabase-storage.supabase.svc.cluster.local:5000"
+  realtime:
+    enabled: true
+    # Note the /socket suffix: Supabase maps /realtime/v1/* onto the Phoenix
+    # endpoint at /socket/*, so the rewrite has to be baked into the upstream
+    # URL rather than left to strip_path alone.
+    url: "http://supabase-supabase-realtime.supabase.svc.cluster.local:4000/socket"
+  # PostgREST is deliberately absent. Every .from() in the web app is
+  # supabase.storage.from(<bucket>), so nothing calls /rest/v1 and the Supabase
+  # release leaves that component disabled.
+
 # Default resource limits
 resources: {}
   # limits:
@@ -197,6 +222,18 @@ components:
       # failed with "unknown location".
       - name: inres_CONFIG_PATH
         value: "/etc/inres/config.yaml"
+      # The incident tools run inside the Claude CLI subprocess, and
+      # session/config.py::_sdk_env() only forwards inres_API_URL when this
+      # process already has it. Without it the tools fall back to a default
+      # that does not resolve in-cluster, so every incident question comes back
+      # as "the backing API is unreachable" even when the agent itself is fine.
+      - name: inres_API_URL
+        value: "http://inres-api:8080"
+      - name: CLAUDE_CODE_OAUTH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: inres-claude-oauth
+            key: token
     ingress:
       enabled: false
 

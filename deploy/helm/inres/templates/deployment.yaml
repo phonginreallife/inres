@@ -29,9 +29,20 @@ spec:
       {{- include "inres.componentSelectorLabels" (dict "root" $root "name" $name) | nindent 6 }}
   template:
     metadata:
-      {{- with $root.Values.podAnnotations }}
+      {{- $hasConfigMap := and $comp.configMap $comp.configMap.enabled }}
+      {{- if or $root.Values.podAnnotations $hasConfigMap }}
       annotations:
+        {{- with $root.Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if $hasConfigMap }}
+        # Kong reads its declarative config once, when the container starts, so
+        # editing the ConfigMap alone changes no routing until the pod restarts
+        # - a helm upgrade would report success while the old routes stayed
+        # live. Folding the config hash into the pod template makes the upgrade
+        # roll the pods whenever the config actually changed.
+        checksum/config: {{ include (print $root.Template.BasePath "/configmap.yaml") $root | sha256sum }}
+        {{- end }}
       {{- end }}
       labels:
         {{- include "inres.componentLabels" (dict "root" $root "name" $name) | nindent 8 }}

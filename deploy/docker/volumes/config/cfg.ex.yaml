@@ -17,6 +17,15 @@ inres_web_url: "http://inres-web:3000"
 # public_url: external URL for mobile/clients
 public_url: "https://api.your-domain.com"
 
+# webhook_api_base_url: the origin that alert sources (Alertmanager, Datadog,
+# Grafana, PagerDuty, Coralogix, ...) can reach. The API bakes it into every
+# integration's webhook URL at creation time and stores the result, so set it
+# before creating integrations: with it empty every URL the UI hands out reads
+# http://localhost:8080/webhook/..., and changing this later does not rewrite
+# integrations that already exist. Use the public host; Kong routes /webhook
+# straight to the API.
+webhook_api_base_url: "https://your-domain.com"
+
 # agent_url: AI Agent service URL
 agent_url: "https://agent.your-domain.com"
 
