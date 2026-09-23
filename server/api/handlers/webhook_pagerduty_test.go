@@ -492,3 +492,90 @@ func TestPagerDutyWebhookLegacyProcessing(t *testing.T) {
 		t.Errorf("Status = %v, want firing", alert.Status)
 	}
 }
+
+// PagerDuty's "Send Test Event" button emits pagey.ping, and services emit
+// service.* events. None of them carry incident data, so before this guard each
+// one became an incident with an empty title and no fingerprint to dedupe on.
+func TestProcessPagerDutyWebhookIgnoresNonIncidentEvents(t *testing.T) {
+	handler := &WebhookHandler{}
+
+	nonIncident := []struct {
+		name    string
+		payload string
+	}{
+		{
+			name: "pagey.ping from the Send Test Event button",
+			payload: `{
+				"event": {
+					"id": "01TESTPING",
+					"event_type": "pagey.ping",
+					"resource_type": "pagey",
+					"occurred_at": "2024-01-15T10:30:00Z",
+					"agent": null,
+					"client": null,
+					"data": {"message": "Hello from your friend Pagey!", "type": "ping"}
+				}
+			}`,
+		},
+		{
+			name: "service.updated",
+			payload: `{
+				"event": {
+					"id": "01SVCUPD",
+					"event_type": "service.updated",
+					"resource_type": "service",
+					"occurred_at": "2024-01-15T10:30:00Z",
+					"data": {"id": "PSVC123", "type": "service", "name": "Production API"}
+				}
+			}`,
+		},
+	}
+
+	for _, tt := range nonIncident {
+		t.Run(tt.name, func(t *testing.T) {
+			var payload map[string]interface{}
+			if err := json.Unmarshal([]byte(tt.payload), &payload); err != nil {
+				t.Fatalf("Failed to parse test payload: %v", err)
+			}
+			alerts := handler.processPagerDutyWebhook(payload)
+			if len(alerts) != 0 {
+				t.Fatalf("expected no alerts for %s, got %d: %+v", tt.name, len(alerts), alerts)
+			}
+		})
+	}
+
+	// The legacy path reads event_type from the raw map; it must apply the
+	// same rule, but keep accepting payloads that have no event_type at all.
+	t.Run("legacy path ignores pagey.ping", func(t *testing.T) {
+		payload := map[string]interface{}{
+			"event": map[string]interface{}{"event_type": "pagey.ping", "data": map[string]interface{}{}},
+		}
+		if got := handler.processPagerDutyWebhookLegacy(payload); len(got) != 0 {
+			t.Fatalf("expected no alerts, got %d", len(got))
+		}
+	})
+	t.Run("legacy path still accepts a payload with no event_type", func(t *testing.T) {
+		payload := map[string]interface{}{"title": "Disk full", "status": "triggered"}
+		if got := handler.processPagerDutyWebhookLegacy(payload); len(got) != 1 {
+			t.Fatalf("expected one alert, got %d", len(got))
+		}
+	})
+}
+
+func TestIsPagerDutyIncidentEvent(t *testing.T) {
+	cases := map[string]bool{
+		"incident.triggered":          true,
+		"incident.resolved":           true,
+		"incident.acknowledged":       true,
+		"INCIDENT.TRIGGERED":          true,
+		"":                            true, // no event_type: let the legacy path decide
+		"pagey.ping":                  false,
+		"service.updated":             false,
+		"incident_workflow.completed": false,
+	}
+	for eventType, want := range cases {
+		if got := isPagerDutyIncidentEvent(eventType); got != want {
+			t.Errorf("isPagerDutyIncidentEvent(%q) = %v, want %v", eventType, got, want)
+		}
+	}
+}

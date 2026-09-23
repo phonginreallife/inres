@@ -443,6 +443,17 @@ func (h *WebhookHandler) processAWSWebhookLegacy(payload map[string]interface{})
 	return alerts
 }
 
+// isPagerDutyIncidentEvent reports whether a PagerDuty v3 webhook event_type
+// is one of the incident.* family. An empty event_type is accepted so that
+// payloads without one (older or hand-rolled senders) keep flowing through the
+// legacy field-by-field path rather than being dropped.
+func isPagerDutyIncidentEvent(eventType string) bool {
+	if eventType == "" {
+		return true
+	}
+	return strings.HasPrefix(strings.ToLower(eventType), "incident.")
+}
+
 // Process PagerDuty webhook
 func (h *WebhookHandler) processPagerDutyWebhook(payload map[string]interface{}) []ProcessedAlert {
 	var alerts []ProcessedAlert
@@ -458,6 +469,15 @@ func (h *WebhookHandler) processPagerDutyWebhook(payload map[string]interface{})
 	if err := json.Unmarshal(payloadBytes, &webhook); err != nil {
 		log.Printf("WARN: Failed to unmarshal PagerDuty webhook, falling back to legacy: %v", err)
 		return h.processPagerDutyWebhookLegacy(payload)
+	}
+
+	// Only incident.* events describe something to page on. PagerDuty also
+	// sends pagey.ping (the "Send Test Event" button) and service.* / other
+	// resource events; those carry no incident data, so converting them
+	// produced an incident with an empty title and no fingerprint to dedupe on.
+	if !isPagerDutyIncidentEvent(webhook.Event.EventType) {
+		log.Printf("INFO: Ignoring non-incident PagerDuty event: event_type=%q", webhook.Event.EventType)
+		return alerts
 	}
 
 	// Convert to ProcessedAlert
@@ -484,10 +504,15 @@ func (h *WebhookHandler) processPagerDutyWebhookLegacy(payload map[string]interf
 		data = event
 	}
 
+	eventType := getStringFromMap(event, "event_type", "")
+	if eventType != "" && !isPagerDutyIncidentEvent(eventType) {
+		log.Printf("INFO: Ignoring non-incident PagerDuty event (legacy path): event_type=%q", eventType)
+		return alerts
+	}
+
 	// Extract fields
 	title := getStringFromMap(data, "title", "pagerduty-alert")
 	dataStatus := getStringFromMap(data, "status", "triggered")
-	eventType := getStringFromMap(event, "event_type", "")
 	urgency := getStringFromMap(data, "urgency", "high")
 	incidentKey := getStringFromMap(data, "incident_key", "")
 	incidentID := getStringFromMap(data, "id", "")
